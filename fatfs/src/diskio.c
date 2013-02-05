@@ -46,6 +46,10 @@ static BYTE *Buffer, *RamDisk;	/* Poiter to the data transfer buffer and ramdisk
 /* Timer Functions                                                       */
 /*-----------------------------------------------------------------------*/
 
+VOID StopTmrThread() {
+	TerminateThread(hTmrThread, 0);
+	CloseHandle(hTmrThread);
+}
 
 DWORD WINAPI tmr_thread (LPVOID parms)
 {

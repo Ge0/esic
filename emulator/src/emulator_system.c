@@ -7,7 +7,7 @@
 #include <esic/eapi/keyboard_event.h>
 
 
-extern int assign_drives(void);
+
 
 static const vtable_Object s_object_vtable = {
 	EmulatorSystem_destructor,
@@ -57,10 +57,6 @@ static void _initFileSystem(PAbstractSystem self) {
 	DSTATUS status;
 	FIL file;
 
-	/* Specific to Windows layer: drives assignment */
-	assign_drives();
-
-
 	/* Enforce initialization */
 	status = disk_initialize(VOLUME_NUMBER);
 
@@ -74,7 +70,7 @@ static void _initFileSystem(PAbstractSystem self) {
 
 void EmulatorSystem_destructor(PObject self) {
 
-
+	//StopTmrThread();
 }
 
 void EmulatorSystem_waitEvent(PAstractSystem self, PPEvent systemEvent) {

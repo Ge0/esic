@@ -90,6 +90,7 @@
     <ClInclude Include="..\includes\esic\elcd\lcd_font_header.h" />
     <ClInclude Include="..\includes\esic\elcd\lcd_font_table.h" />
     <ClInclude Include="..\includes\esic\elcd\lcd_font_table_header.h" />
+    <ClInclude Include="..\includes\esic\elcd\lcd_icon_header.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

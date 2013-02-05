@@ -46,5 +46,8 @@
     <ClInclude Include="..\includes\esic\elcd\lcd_font_table_header.h">
       <Filter>includes</Filter>
     </ClInclude>
+    <ClInclude Include="..\includes\esic\elcd\lcd_icon_header.h">
+      <Filter>includes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

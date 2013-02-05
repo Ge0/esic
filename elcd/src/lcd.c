@@ -69,7 +69,7 @@ void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags) {
 		s_double_buf = s_frame_buffer;
 	}
 
-	memset(s_frame_buffer, 0, size * sizeof(WORD));
+	memset(s_frame_buffer, 0xff, size * sizeof(WORD));
 	memcpy(s_double_buf, s_frame_buffer, size * sizeof(WORD));
 
 	/* Ensure the allocation succeeded if we use the double buffering option */
@@ -359,4 +359,14 @@ float* _linear_interpolation(WORD t0, float f0, WORD t1, float f1) {
 	}
 	return values;
 
+}
+
+void Lcd_drawPicture(WORD x, WORD y, WORD width, WORD height, WORD* raw_buffer) {
+	WORD i, j;
+
+	for(j = 0; j < height; ++j) {
+		for(i = 0; i < width; ++i) {
+			Lcd_setPixel(x+i, y+j, raw_buffer[j * width + i]);
+		}
+	}
 }

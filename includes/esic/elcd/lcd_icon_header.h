@@ -8,6 +8,8 @@ typedef struct _LcdIconHeader {
 	WORD  version;
 	WORD  width;
 	WORD  height;
+	BYTE clrpalette;
+	BYTE bpp; 
 } LcdIconHeader;
 
 // foo

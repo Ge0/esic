@@ -39,7 +39,17 @@ typedef unsigned long int ULONG ;  /* entier 32 bits non signé */
 typedef int16_t SWORD;
 typedef int32_t SDWORD ;   /* entier 32 bits signé */
 
+// GR
+
+#define RGB_16B( r, g, b ) \
+   ( ( ( ( (DWORD)(r) >> 3u ) & 0x1fu ) << 11u ) | \
+     ( ( ( (DWORD)(g) >> 2u ) & 0x3fu ) <<  5u ) | \
+     ( ( ( (DWORD)(b) >> 3u ) & 0x1fu ) <<  0u ) )
+
+
 #endif
+
+
 
 /*-------------------------------------------------------------------------*/
 /* Constantes et macros de base                                            */

@@ -37,7 +37,7 @@ typedef struct{
 }Color, *PColor; 
 
 /**
- * initialise the lcd screen with dimensions of width*height
+ * initialize the lcd screen with dimensions of width*height
  * \param width: width of the screen
  * \param height: height of the screen
  * \param framebuffer: pointer to an external framebuffer
@@ -90,5 +90,7 @@ void Lcd_setFont(const PLcdFont plcd_font);
 void Lcd_drawString(WORD x, WORD y, WORD color, const char* string);
 
 void Lcd_drawTriangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD filling_color, WORD border_color);
+
+void Lcd_drawPicture(WORD x, WORD y, WORD width, WORD height, WORD* raw_buffer);
 
 #endif /* _LCD_H_ */
