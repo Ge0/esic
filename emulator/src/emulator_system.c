@@ -62,13 +62,13 @@ static void _initFileSystem(PAbstractSystem self) {
 
 
 	/* Enforce initialization */
-	status = disk_initialize(1);
+	status = disk_initialize(2);
 
 	/* Mount the volume */
-	ret = f_mount(1, &real_self->fat);
+	ret = f_mount(2, &real_self->fat);
 
 	/* Change current drive */
-	ret = f_chdrive(1);
+	ret = f_chdrive(2);
 
 }
 

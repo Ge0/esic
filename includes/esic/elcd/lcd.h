@@ -23,7 +23,18 @@
 
 #define TO_INDEX(x,y,width,height) (((y * width) % (width*height)) + (x % width))
 
+typedef enum _BPP {
+	BPP1=0x01,
+	BPP8,
+	BPP16,
+	BPP24
+} BPP, *PBPP;
 
+typedef struct{
+	unsigned char R;
+	unsigned char V;
+	unsigned char B;
+}Color, *PColor; 
 
 /**
  * initialise the lcd screen with dimensions of width*height
