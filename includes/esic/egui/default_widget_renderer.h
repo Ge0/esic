@@ -13,5 +13,6 @@ typedef struct _DefaultWidgetRenderer {
 /* AbstractWidgetRenderer */
 void DefaultWidgetRenderer_paintLabel(PLabel);
 void DefaultWidgetRenderer_paintTextBox(PTextBox);
+void DefaultWidgetRenderer_paintImage(PImage);
 
 #endif /* _DEFAULT_WIDGET_RENDERER_ */

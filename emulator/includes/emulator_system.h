@@ -7,6 +7,8 @@
 
 #include "SDL\SDL.h"
 
+#define VOLUME_NUMBER	1
+
 typedef struct _EmulatorSystem {
 	AbstractSystem abstract_system;
 	SDL_Surface* screen;
