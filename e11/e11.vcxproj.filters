@@ -32,5 +32,8 @@
     <ClInclude Include="..\includes\esic\test\testFreeType.h">
       <Filter>includes</Filter>
     </ClInclude>
+    <ClInclude Include="includes\toolbox.h">
+      <Filter>includes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
