@@ -16,9 +16,10 @@
 /* TEST END */
 
 extern unsigned char image[HEIGHT][WIDTH];
+extern PLcdFont _build_font(const char* font_name);
 
 void e11(PAbstractSystem system) {
-	Lcd_init(480, 272, system->vtable->getFrameBuffer(system), 0);
+	Lcd_init(320, 240, system->vtable->getFrameBuffer(system), 0);
 	_e11_splashscreen(system);
 	_e11_mainloop(system);
 	Lcd_destroy();
@@ -34,7 +35,6 @@ void _e11_mainloop(PAbstractSystem system) {
 	FIL icon_file;
 	LcdIconHeader icon_hdr;
 	BYTE* icon_buffer = NULL;
-	
 
 	/* TEST START */
 	PLcdFont testFont = NULL;
@@ -42,7 +42,14 @@ void _e11_mainloop(PAbstractSystem system) {
 	TextBox tbx;
 	Image TTFfont;
 
-	testFont = build_font("6x8.flcd");
+
+	/* FACTORY INIT */
+	LcdFontFactory_init();
+	
+
+	
+	testFont = LcdFontFactory_getLcdFont("6x8.flcd");
+	//testFont = _build_font("6x8.flcd");
 	Label_constructor(&lbl);
 	TextBox_constructor(&tbx);
 
@@ -85,6 +92,7 @@ void _e11_mainloop(PAbstractSystem system) {
 	Lcd_setDrawingMode(LCD_OVER);
 	
 	while(looping) {
+		testFont = LcdFontFactory_getLcdFont("6x8.flcd");
 		if(system->vtable->pollEvent(system, &systemEvent)) {
 			switch(systemEvent->type) {
 			case EVENT_QUIT:
@@ -96,7 +104,19 @@ void _e11_mainloop(PAbstractSystem system) {
 
 		/* TEST : DRAWING PICTURE */
 		if(icon_buffer != NULL) {
-			Lcd_drawPicture(200, 200, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+
+			Lcd_drawPicture(9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
 		}
 		/* END TEST */
 				
@@ -114,7 +134,19 @@ void _e11_mainloop(PAbstractSystem system) {
 	
 	Label_destructor((PObject)&lbl);
 	TextBox_destructor((PObject)&tbx);
-	
-	if(testFont != NULL)
-		DELETE(testFont);		
+
+
+	/*
+	if(testFont != NULL) {
+		DELETE(testFont);
+	}
+	*/
+
+
+	if(icon_buffer != NULL) {
+		SicFree(icon_buffer);
+	}
+
+	/* FACTORY DESTROY */
+	LcdFontFactory_destroy();
 }

@@ -38,9 +38,13 @@ void List_destructor(PObject self) {
 
 	while(iterator != NULL) {
 		PListNode save = iterator->next;
+		/*
 		iterator->data->vtable->destructor(iterator->data);
 		free(iterator->data);
-		free(iterator);
+		*/
+		DELETE(iterator->data);
+		
+		SicFree(iterator);
 		iterator = save;
 
 	}
@@ -51,10 +55,10 @@ void List_pushBack(PContainer self, const PObject data) {
 	PList real_self = (PList)self;
 
 	/* Allocating new node */
-	PListNode new_node = (PListNode) malloc( sizeof(ListNode) );
+	PListNode new_node = (PListNode) SicAlloc( sizeof(ListNode) );
 
 	/* Allocating memory space for the data stored in the node */
-	new_node->data = (PObject)malloc(self->unit_size);
+	new_node->data = (PObject)SicAlloc(self->unit_size);
 
 	/* Ensure the two mallocs succeeded */
 	assert(new_node != NULL && new_node->data != NULL);
@@ -90,7 +94,7 @@ DWORD List_popBack(PContainer self, PObject popped) {
 		memcpy((char*)popped, real_self->tail->data, self->unit_size);
 
 		/* Free the last node */
-		free(real_self->tail->data);
+		SicFree(real_self->tail->data);
 
 		/* Go backward in the list, if possible */
 		if(real_self->tail->prev != NULL) {
@@ -98,13 +102,13 @@ DWORD List_popBack(PContainer self, PObject popped) {
 			real_self->tail = real_self->tail->prev;
 
 			/* Free the next node (which is the old last one as well) */
-			free(real_self->tail->next);
+			SicFree(real_self->tail->next);
 
 			/* Make it pointing to NULL to mark the end of the list */
 			real_self->tail->next = NULL;
 		} else {
 			/* This is the last node remaining: free it and make both the head / tail point to NULL */
-			free(real_self->tail);
+			SicFree(real_self->tail);
 			real_self->tail = real_self->head = NULL;
 		}
 

@@ -1,3 +1,5 @@
+#include <esic/etools/szstring.h>
+#include <esic/etools/hashtable.h>
 #include <esic/elcd/lcd_font_factory.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,15 +13,49 @@ void _lcd_font_read_table_headers(PLcdFont self, FILE* fp);
 void _lcd_font_hydrate_tables(PLcdFont self, FILE* fp);
 */
 
+PLcdFont _build_font(const char* name);
 void _lcd_font_read_header(PLcdFont self, FIL* font_file);
 void _lcd_font_read_table_headers(PLcdFont self, FIL* font_file);
 void _lcd_font_hydrate_tables(PLcdFont self, FIL* font_file);
 
+static Hashtable s_fonts;
+
+void LcdFontFactory_init() {
+	Hashtable_constructor(&s_fonts, 3, sizeof(SzString), sizeof(LcdFont));
+}
+
+void LcdFontFactory_destroy() {
+	Hashtable_destructor(&s_fonts.map.object);
+}
+
+PLcdFont LcdFontFactory_getLcdFont(const char* font_name) {
+	SzString key;
+	PLcdFont return_font = NULL;
+	/* First: check whether the font has been loaded into memory or not */
+	SzString_constructor(&key, font_name);
+
+	if(!Hashtable_containsKey(&s_fonts.map, &key.object)) {
+		/* If not, load the font & add it to the map */
+		return_font = _build_font(font_name);
+
+		if(return_font != NULL) {
+			/* Put in the hashtable & point into it */
+			Hashtable_put(&s_fonts.map, &key.object, &return_font->object);
+			DELETE(return_font);
+			
+		}
+	}
+
+	/* Finally: get the font into the hashtable */
+	return_font = (PLcdFont)Hashtable_get(&s_fonts.map, &key.object);
+
+	SzString_destructor(&key.object);
+
+	return return_font;
+}
 
 /* Temporary function */
-PLcdFont build_font(const char* name) {
-
-	static const char* path_lcd_fonts = "system/lcd_fonts/";
+PLcdFont _build_font(const char* name) {
   
 	char* tmp_file_name = NULL;
 	PLcdFont new_font = NULL;
@@ -27,11 +63,11 @@ PLcdFont build_font(const char* name) {
 
 	/* First of all: make sure the name's length does not exceed LCD_FONT_FILENAME_LENGTH */
 	if(strlen(name) < LCD_FONT_FILENAME_LENGTH) {
-		tmp_file_name = (char*)SicAlloc((strlen(path_lcd_fonts) + strlen(name) + 1) * sizeof(char));
+		tmp_file_name = (char*)SicAlloc((strlen(PATH_LCD_FONTS) + strlen(name) + 1) * sizeof(char));
 
 		assert(tmp_file_name != NULL);
 
-		strcpy(tmp_file_name, path_lcd_fonts);
+		strcpy(tmp_file_name, PATH_LCD_FONTS);
 		strcat(tmp_file_name, name);
 		
 		/* Open the file */
@@ -76,6 +112,8 @@ PLcdFont build_font(const char* name) {
 		_lcd_font_hydrate_tables(new_font, &fontFile);
 
 		SicFree(tmp_file_name);
+
+		f_close(&fontFile);
 
 	}
 

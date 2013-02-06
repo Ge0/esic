@@ -17,6 +17,7 @@ typedef struct _Widget {
 	WORD y;
 	WORD width;
 	WORD height;
+	WORD color;
 } Widget;
 
 /* Virtual functions */

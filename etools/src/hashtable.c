@@ -33,7 +33,7 @@ PHashtable Hashtable_constructor(PHashtable self, size_t size, size_t unit_size_
 
 	/* Allocating INITIAL_SIZE elements first */
 	self->allocated_size = size;
-	self->nodes          = (PPHashnode)malloc(sizeof(PHashnode) * self->allocated_size);
+	self->nodes          = (PPHashnode)SicAlloc(sizeof(PHashnode) * self->allocated_size);
 
 	/* Ensure the allocation succeeded */
 	assert(self->nodes != NULL);
@@ -56,19 +56,28 @@ void Hashtable_destructor(PObject self) {
 			PHashnode node      = real_self->nodes[i];
 			PHashnode next_node = real_self->nodes[i]->next;
 
+			/*
 			node->object.vtable->destructor(&node->object);
 			free(node);
+			*/
+
+			DELETE(node);
 
 			while(next_node != NULL) {
 				node      = next_node;
 				next_node = node->next;
+
+				/*
 				node->object.vtable->destructor(&node->object);
 				free(node);
+				*/
+
+				DELETE(node);
 			}
 		}
 	}
 
-	free(real_self->nodes);
+	SicFree(real_self->nodes);
 }
 
 PObject Hashtable_clone(PObject self, PObject dst) {
@@ -181,12 +190,16 @@ void Hashtable_put(PMap self, PObject key, PObject value) {
 				/* Key found: overwrite and stop the loop */
 				void* clone_value = NULL;
 
-				clone_value = malloc(value->size);
+				clone_value = SicAlloc(value->size);
 				
 				value->vtable->clone(value, (PObject)clone_value);
 
+				/*
 				node->value->vtable->destructor(node->value);
 				free(node->value);
+				*/
+
+				DELETE(node);
 
 				node->value = (PObject)clone_value;
 
@@ -202,9 +215,9 @@ void Hashtable_put(PMap self, PObject key, PObject value) {
 			PObject cloned_key = NULL;
 			PObject cloned_value = NULL;
 
-			node = (PHashnode)malloc(sizeof(Hashnode));
-			cloned_key = (PObject)malloc(self->unit_size_key);
-			cloned_value = (PObject)malloc(self->unit_size_value);
+			node = (PHashnode)SicAlloc(sizeof(Hashnode));
+			cloned_key = (PObject)SicAlloc(self->unit_size_key);
+			cloned_value = (PObject)SicAlloc(self->unit_size_value);
 
 			/* Ensure the allocation succeeded */
 			assert(node != NULL);
@@ -213,7 +226,7 @@ void Hashtable_put(PMap self, PObject key, PObject value) {
 			Hashnode_constructor(node);
 
 			key->vtable->clone(key, cloned_key);
-			key->vtable->clone(value, cloned_value);
+			value->vtable->clone(value, cloned_value);
 
 			/* Allocating new space for key and value as well */
 

@@ -3,6 +3,18 @@
 #include <string.h>
 #include <esic/etools/vector.h>
 
+static const vtable_Object s_object_vtable = {
+	Vector_destructor,
+	Vector_clone,
+	Vector_equalsTo,
+	Vector_hash
+};
+
+static const vtable_Container s_container_vtable = {
+	Vector_pushBack,
+	Vector_popBack,
+	Vector_at
+};
 
 /* Private functions */
 static void _reallocate_size(PVector self);
@@ -17,18 +29,12 @@ PVector Vector_constructor(PVector self, size_t unit_size) {
 	self->container.object.size = sizeof(Vector);
 
 	/* Filling vtable */
-	/*
-	self->container.object.vtable.destructor = Vector_destructor;
-	self->container.vtable.pushBack          = Vector_pushBack;
-	self->container.vtable.popBack           = Vector_popBack;
-	self->container.vtable.at                = Vector_at;
-	*/
-	self->container.object.vtable = &s_vector_object_vtable;
-	self->container.vtable        = &s_vector_container_vtable;
+	self->container.object.vtable = &s_object_vtable;
+	self->container.vtable        = &s_container_vtable;
 
 	/* Allocating INITIAL_SIZE elements first */
 	self->allocated_size = INITIAL_SIZE;
-	self->elements       = malloc(self->container.unit_size * self->allocated_size);
+	self->elements       = SicAlloc(self->container.unit_size * self->allocated_size);
 
 	/* Ensure the allocation succeeded */
 	assert(self->elements != NULL);
@@ -48,13 +54,49 @@ void Vector_destructor(PObject self) {
 	/* Call the destructor of each element */
 	for(i = 0; i < real_self->container.count; ++i) {
 		PObject object = (PObject)((BYTE*)real_self->elements + (i * real_self->container.unit_size));
+		/*
 		object->vtable->destructor(object);
+		*/
+		DELETE(object);
 	}
 
 	/* And free the allocated space */
-	free( real_self->elements );
+	SicFree( real_self->elements );
 	real_self->allocated_size = 0;
 	real_self->elements       = NULL;
+}
+
+PObject Vector_clone(PObject self, PObject dst) {
+	DWORD i;
+	PVector real_self = (PVector)self;
+	PVector real_dst  = (PVector)dst;
+
+	
+	real_dst->container = real_self->container;
+	real_dst->allocated_size = real_self->allocated_size;
+
+	Vector_constructor(real_dst, real_self->container.unit_size);
+
+	/* Copy each element of self into dst */
+	for(i = 0; i < real_self->container.count; ++i) {
+		PObject object = Vector_at(&real_self->container, i);
+		Vector_pushBack(&real_dst->container, object);
+	}
+
+	return dst;
+	
+}
+
+BOOL Vector_equalsTo(PObject self, PObject dst) {
+	/* TODO. */
+
+	return FALSE;
+}
+
+DWORD Vector_hash(PObject self) {
+	/* TODO. */
+
+	return 0;
 }
 
 void Vector_pushBack(PContainer self, const PObject data) {
@@ -62,6 +104,7 @@ void Vector_pushBack(PContainer self, const PObject data) {
 
 	/* Pointer to a Vector instance so we can act on its data members */
 	PVector real_self = (PVector)self;
+	void* cloned_data = SicAlloc(self->object.size);
 
 	/* Firstly: make sure the size of the data equals the unit size */
 	if(data->size == self->unit_size) {
@@ -70,18 +113,14 @@ void Vector_pushBack(PContainer self, const PObject data) {
 			_reallocate_size(real_self);
 		}
 
-		/* Insert the new instance */
-		//tmp_data = malloc( self->unit_size );
+		/* Clone the data properly and insert it */
+		cloned_data = data->vtable->clone(data, (PObject)cloned_data);
 
-		/* Ensure the temporary allocation succeeded */
-		//assert(tmp_data != NULL);
+		_insert(real_self, self->count, cloned_data);
 
-		//new_instance = data->vtable->clone(data, (PObject)tmp_data);
-
-		_insert(real_self, self->count, data);
-
-		//free(tmp_data);
-
+		/* Free the temporary buf since it's saved into the vector (thanks to _insert...) */
+		SicFree(cloned_data);
+	
 	}
 
 }
@@ -107,7 +146,7 @@ PObject Vector_at(PContainer self, DWORD index) {
 
 static void _reallocate_size(PVector self) {
 
-	struct _Object* new_space = (PObject)malloc(self->container.unit_size * self->allocated_size * 2);
+	struct _Object* new_space = (PObject)SicAlloc(self->container.unit_size * self->allocated_size * 2);
 
 	/* Ensure the allocation succeeded */
 	assert(new_space != NULL);
@@ -118,7 +157,7 @@ static void _reallocate_size(PVector self) {
 	/* Simply double the available space */
 	self->allocated_size *= 2;
 
-	free(self->elements);
+	SicFree(self->elements);
 	self->elements = new_space;
 
 }
@@ -148,5 +187,5 @@ static void _insert(PVector self, DWORD position, const void* data) {
 }
 
 static void _remove(PVector self, DWORD position, void* data) {
-
+	/* TODO. */
 }

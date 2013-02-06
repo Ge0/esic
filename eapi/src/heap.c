@@ -85,3 +85,13 @@ void SicHeapClean() {
 		}
 	}
 }
+
+char* SicStrdup(const char* str) {
+	char* ptr = NULL;
+	size_t len = strlen(str);
+
+	ptr = (char*)SicAlloc(len + 1); /* +1 for the '\0' */
+	assert(ptr != NULL);
+	strcpy(ptr, str);
+
+}

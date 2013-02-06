@@ -25,7 +25,7 @@ PHashnode Hashnode_constructor(PHashnode self) {
 
 void Hashnode_setKey(PHashnode self, PObject key) {
 
-	void* cloned_key = malloc(key->size);
+	void* cloned_key = SicAlloc(key->size);
 
 	/* Ensure malloc() succeeded */
 	assert(cloned_key != NULL);
@@ -35,8 +35,11 @@ void Hashnode_setKey(PHashnode self, PObject key) {
 	
 	/* Destroy the old key if necessary */
 	if(key != NULL) {
+		/*
 		key->vtable->destructor(key);
 		free(key);
+		*/
+		DELETE(key);
 	}
 
 	/* Assign to the key member */
@@ -45,7 +48,7 @@ void Hashnode_setKey(PHashnode self, PObject key) {
 }
 
 void Hashnode_setValue(PHashnode self, PObject value) {
-	void* cloned_value = malloc(value->size);
+	void* cloned_value = SicAlloc(value->size);
 
 	/* Ensure malloc() succeeded */
 	assert(cloned_value != NULL);
@@ -55,8 +58,12 @@ void Hashnode_setValue(PHashnode self, PObject value) {
 	
 	/* Destroy the old key if necessary */
 	if(value != NULL) {
+		/*
 		value->vtable->destructor(value);
 		free(value);
+		*/
+
+		DELETE(value);
 	}
 
 	/* Assign to the key member */
@@ -72,13 +79,20 @@ void Hashnode_destructor(PObject self) {
 
 	/* Destruct the key and the value */
 	if(real_self->key != NULL) {
+		/*
 		real_self->key->vtable->destructor(real_self->key);
 		free(real_self->key);
+		*/
+		DELETE(real_self->key);
 	}
 
 	if(real_self->value != NULL) {
+		/*
 		real_self->value->vtable->destructor(real_self->value);
 		free(real_self->value);
+		*/
+
+		DELETE(real_self->value);
 	}
 
 	real_self->next = NULL;
@@ -91,8 +105,8 @@ PObject Hashnode_clone(PObject self, PObject dst) {
 
 	real_dst->object = real_self->object;
 	
-	real_dst->key   = (PObject)malloc(real_self->key->size);
-	real_dst->value = (PObject)malloc(real_self->value->size);
+	real_dst->key   = (PObject)SicAlloc(real_self->key->size);
+	real_dst->value = (PObject)SicAlloc(real_self->value->size);
 
 	/* Ensure allocations succeeded */
 	assert(real_dst->key != NULL && real_dst->value != NULL);

@@ -6,6 +6,7 @@
 
 void* Debug_SicAlloc(size_t size);
 void Debug_SicFree(void* ptr);
+char* SicStrdup(const char* str);
 
 #include <stdlib.h>
 #ifndef _DEBUG

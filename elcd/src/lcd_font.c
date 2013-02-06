@@ -40,8 +40,16 @@ PObject LcdFont_clone(PObject self, PObject dst) {
 
 	/* Copying members */
 	real_dst->object = real_self->object;
+	memset(real_dst->name, '\0', LCD_FONT_FILENAME_LENGTH);
+	strncpy(real_dst->name, real_self->name, LCD_FONT_FILENAME_LENGTH-1);
+	real_dst->header = real_self->header;
 
 	/* TODO. */
+	dst = real_self->tables.container.object.vtable->clone(
+		&real_self->tables.container.object,
+		&real_dst->tables.container.object
+	);
+
 
 	return self;
 }
@@ -49,7 +57,7 @@ PObject LcdFont_clone(PObject self, PObject dst) {
 void LcdFont_destructor(PObject self) {
 	PLcdFont real_self = (PLcdFont)self;
 
-	/* Destruct the vector */
+	/* Destruct the vector that contains the table of characters */
 	Vector_destructor(&real_self->tables.container.object);
 
 }

@@ -40,7 +40,8 @@ PEmulatorSystem EmulatorSystem_constructor(PEmulatorSystem self) {
 	self->abstract_system.object.size   = sizeof(EmulatorSystem);
 
 	error = SDL_Init(SDL_INIT_VIDEO);
-	self->screen = SDL_SetVideoMode(480, 272, 16, SDL_HWSURFACE);
+	self->screen = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE);
+	SDL_ShowCursor(0);
 
 	/* Ensure screen's been created */
 	assert(self->screen != NULL);
@@ -55,7 +56,6 @@ static void _initFileSystem(PAbstractSystem self) {
 	PEmulatorSystem real_self = (PEmulatorSystem)self;
 	FRESULT ret = FR_OK;
 	DSTATUS status;
-	FIL file;
 
 	/* Enforce initialization */
 	status = disk_initialize(VOLUME_NUMBER);

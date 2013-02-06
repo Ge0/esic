@@ -15,7 +15,7 @@ PSzString SzString_constructor(PSzString self, const char* data) {
 	/* Filling members */
 	self->object.size = sizeof(SzString);
 	self->size        = strlen(data);
-	self->data        = strdup(data);
+	self->data        = SicStrdup(data);
 
 	/* Make sure strdup() succeeded */
 	assert(self->data != NULL);
@@ -27,7 +27,7 @@ PSzString SzString_constructor(PSzString self, const char* data) {
 void SzString_destructor(PObject self) {
 	PSzString real_self = (PSzString)self;
 	if(real_self->data != NULL) {
-		free(real_self->data);
+		SicFree(real_self->data);
 	}
 
 }
@@ -44,7 +44,7 @@ PObject SzString_clone(PObject self, PObject dst) {
 
 	real_dst->object = real_self->object;
 
-	real_dst->data = strdup(real_self->data);
+	real_dst->data = SicStrdup(real_self->data);
 	real_dst->size = real_self->size;
 
 	/* Make sure strdup() succeeded */
@@ -76,9 +76,9 @@ DWORD SzString_hash(PObject self) {
 /* SzString methods */
 void SzString_setData(PSzString self, const char* data) {
 	if(self->data != NULL) {
-		free(self->data);
+		SicFree(self->data);
 	}
 
-	self->data = strdup(data);
+	self->data = SicStrdup(data);
 	self->size = strlen(self->data);
 }

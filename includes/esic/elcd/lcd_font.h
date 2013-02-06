@@ -9,8 +9,8 @@
 #include <esic/etools/vector.h>
 
 #include <esic/etools/container.h>
-#include "lcd_font_header.h"
-#include "lcd_font_table.h"
+#include <esic/elcd/lcd_font_header.h>
+#include <esic/elcd/lcd_font_table.h>
 
 /*
 #ifdef _DEBUG

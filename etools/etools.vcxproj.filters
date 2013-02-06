@@ -18,29 +18,6 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes\container.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\hashnode.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\hashtable.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\list.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\map.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\szstring.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\vector.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="src\container.c">
       <Filter>src</Filter>
     </ClCompile>
@@ -62,5 +39,28 @@
     <ClCompile Include="src\vector.c">
       <Filter>src</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\includes\esic\etools\container.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\hashnode.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\hashtable.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\list.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\map.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\szstring.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\vector.h">
+      <Filter>includes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

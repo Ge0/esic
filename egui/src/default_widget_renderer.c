@@ -9,10 +9,10 @@ void DefaultWidgetRenderer_paintLabel(PLabel self) {
 
 void DefaultWidgetRenderer_paintTextBox(PTextBox self) {
 	/* Draw the surrounding rect */
-	Lcd_drawRectangle(self->widget.x, self->widget.y, self->widget.width, 12, RGB_16B(0,0,255), RGB_16B(255,0,0));
+	Lcd_drawRectangle(self->widget.x, self->widget.y, self->widget.width, 12, RGB_16B(200,200,200), RGB_16B(0,0,0));
 
 	/* Draw the content inside */
-	Lcd_drawString(self->widget.x + 2, self->widget.y + 2, RGB_16B(0,255,255), self->text.data);
+	Lcd_drawString(self->widget.x + 2, self->widget.y + 2, RGB_16B(0,0,0), self->text.data);
 }
 
 void DefaultWidgetRenderer_paintImage(PImage self) {
