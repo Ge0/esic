@@ -11,8 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5166EBF8-D896-4EFF-A0A3-78F034FB12D7}</ProjectGuid>
-    <RootNamespace>egui</RootNamespace>
+    <ProjectGuid>{25711063-C19A-4521-B2B2-5193A720B468}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>libroxml</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -37,49 +38,57 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)/includes;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <IncludePath>$(SolutionDir)/includes;$(SolutionDir)/includes/libroxml;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)/includes;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <IncludePath>$(SolutionDir)/includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\includes\esic\egui\abstract_widget_renderer.h" />
-    <ClInclude Include="..\includes\esic\egui\default_widget_renderer.h" />
-    <ClInclude Include="..\includes\esic\egui\image.h" />
-    <ClInclude Include="..\includes\esic\egui\label.h" />
-    <ClInclude Include="..\includes\esic\egui\textbox.h" />
-    <ClInclude Include="..\includes\esic\egui\ui_factory.h" />
-    <ClInclude Include="..\includes\esic\egui\widget.h" />
+    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\default_widget_renderer.c" />
-    <ClCompile Include="src\image.c" />
-    <ClCompile Include="src\label.c" />
-    <ClCompile Include="src\textbox.c" />
-    <ClCompile Include="src\ui_factory.c" />
-    <ClCompile Include="src\widget.c" />
+    <ClCompile Include="src\roxml-internal.c" />
+    <ClCompile Include="src\roxml-parse-engine.c" />
+    <ClCompile Include="src\roxml-parser.c" />
+    <ClCompile Include="src\roxml.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\includes\libroxml\roxml-defines.h" />
+    <ClInclude Include="..\includes\libroxml\roxml-internal.h" />
+    <ClInclude Include="..\includes\libroxml\roxml-parse-engine.h" />
+    <ClInclude Include="..\includes\libroxml\roxml-types.h" />
+    <ClInclude Include="..\includes\libroxml\roxml.h" />
+    <ClInclude Include="..\includes\libroxml\roxml_win32_native.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

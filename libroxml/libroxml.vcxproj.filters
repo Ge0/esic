@@ -15,46 +15,40 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\includes\esic\egui\widget.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\egui\label.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\egui\abstract_widget_renderer.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\egui\default_widget_renderer.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\egui\textbox.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\egui\image.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\egui\ui_factory.h">
-      <Filter>includes</Filter>
-    </ClInclude>
+    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\default_widget_renderer.c">
+    <ClCompile Include="src\roxml.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\label.c">
+    <ClCompile Include="src\roxml-internal.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\textbox.c">
+    <ClCompile Include="src\roxml-parse-engine.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\image.c">
+    <ClCompile Include="src\roxml-parser.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\widget.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui_factory.c">
-      <Filter>src</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\includes\libroxml\roxml.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\libroxml\roxml-defines.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\libroxml\roxml-internal.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\libroxml\roxml-types.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\libroxml\roxml-parse-engine.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\libroxml\roxml_win32_native.h">
+      <Filter>includes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

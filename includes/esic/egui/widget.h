@@ -3,6 +3,7 @@
 
 #include <esic/object.h>
 #include <esic/e11_types.h>
+#include <esic/etools/list.h>
 
 typedef struct _Widget *PWidget;
 
@@ -18,6 +19,8 @@ typedef struct _Widget {
 	WORD width;
 	WORD height;
 	WORD color;
+	PWidget parent;
+	List childs;
 } Widget;
 
 /* Virtual functions */
