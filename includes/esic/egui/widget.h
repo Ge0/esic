@@ -21,10 +21,15 @@ typedef struct _Widget {
 	WORD color;
 	PWidget parent;
 	List childs;
-} Widget;
+} Widget, **PPWidget;
+
+PWidget Widget_constructor(PWidget self);
 
 /* Virtual functions */
 /* Object */
+
+
+void Widget_addChild(PWidget self, PWidget child);
 
 
 #endif /* _WIDGET_H_ */

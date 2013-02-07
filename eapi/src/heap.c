@@ -94,4 +94,5 @@ char* SicStrdup(const char* str) {
 	assert(ptr != NULL);
 	strcpy(ptr, str);
 
+	return ptr;
 }

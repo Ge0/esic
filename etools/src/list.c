@@ -142,3 +142,7 @@ PObject List_at(PContainer self, DWORD index) {
 
 	return value;
 }
+
+PObject List_tail(PList self) {
+	return self->tail->data;
+}

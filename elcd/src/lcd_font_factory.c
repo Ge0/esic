@@ -77,6 +77,7 @@ PLcdFont _build_font(const char* name) {
 		if(f_open(&fontFile, (const TCHAR*)tmp_file_name, FA_READ) != FR_OK) {
 			/* Error... */
 			fprintf(stderr, "Can't open %s!\n", name);
+			SicFree(tmp_file_name);
 			return NULL;
 		}
 

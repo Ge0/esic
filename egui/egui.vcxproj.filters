@@ -33,7 +33,7 @@
     <ClInclude Include="..\includes\esic\egui\image.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\esic\egui\ui_factory.h">
+    <ClInclude Include="..\includes\esic\egui\abstract_ui_factory.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -51,9 +51,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\widget.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui_factory.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

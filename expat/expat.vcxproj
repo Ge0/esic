@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{14958CB1-1FB8-4429-9854-B0923AC04D8E}</ProjectGuid>
+    <ProjectGuid>{6687B8A2-4404-438E-9648-1759292930D5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>e11</RootNamespace>
+    <RootNamespace>expat</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -38,12 +38,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\freetype.\include;$(SolutionDir)/includes;./includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
-    <ReferencePath>$(VCInstallDir)atlmfc\lib;$(VCInstallDir)lib;</ReferencePath>
-    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib;../freetype/objs/win32/vc2010/</LibraryPath>
+    <IncludePath>$(SolutionDir)/includes/expat;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)\freetype.\include;$(SolutionDir)/includes;./includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/includes/expat;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -57,9 +55,6 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <Lib>
-      <AdditionalDependencies>freetype2411_D.lib</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -82,15 +77,29 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\e11.c" />
-    <ClCompile Include="src\testFreeType.c" />
-    <ClCompile Include="src\xml_ui_factory.c" />
+    <ClCompile Include="src\xmlparse.c" />
+    <ClCompile Include="src\xmlrole.c" />
+    <ClCompile Include="src\xmltok.c" />
+    <ClCompile Include="src\xmltok_impl.c" />
+    <ClCompile Include="src\xmltok_ns.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\includes\e11.h" />
-    <ClInclude Include="..\includes\esic\test\testFreeType.h" />
-    <ClInclude Include="includes\toolbox.h" />
-    <ClInclude Include="includes\xml_ui_factory.h" />
+    <ClInclude Include="..\includes\expat\amigaconfig.h" />
+    <ClInclude Include="..\includes\expat\ascii.h" />
+    <ClInclude Include="..\includes\expat\asciitab.h" />
+    <ClInclude Include="..\includes\expat\expat.h" />
+    <ClInclude Include="..\includes\expat\expat_external.h" />
+    <ClInclude Include="..\includes\expat\iasciitab.h" />
+    <ClInclude Include="..\includes\expat\internal.h" />
+    <ClInclude Include="..\includes\expat\latin1tab.h" />
+    <ClInclude Include="..\includes\expat\macconfig.h" />
+    <ClInclude Include="..\includes\expat\nametab.h" />
+    <ClInclude Include="..\includes\expat\utf8tab.h" />
+    <ClInclude Include="..\includes\expat\watcomconfig.h" />
+    <ClInclude Include="..\includes\expat\winconfig.h" />
+    <ClInclude Include="..\includes\expat\xmlrole.h" />
+    <ClInclude Include="..\includes\expat\xmltok.h" />
+    <ClInclude Include="..\includes\expat\xmltok_impl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

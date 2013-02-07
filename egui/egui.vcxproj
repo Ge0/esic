@@ -65,12 +65,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\includes\esic\egui\abstract_ui_factory.h" />
     <ClInclude Include="..\includes\esic\egui\abstract_widget_renderer.h" />
     <ClInclude Include="..\includes\esic\egui\default_widget_renderer.h" />
     <ClInclude Include="..\includes\esic\egui\image.h" />
     <ClInclude Include="..\includes\esic\egui\label.h" />
     <ClInclude Include="..\includes\esic\egui\textbox.h" />
-    <ClInclude Include="..\includes\esic\egui\ui_factory.h" />
     <ClInclude Include="..\includes\esic\egui\widget.h" />
   </ItemGroup>
   <ItemGroup>
@@ -78,7 +78,6 @@
     <ClCompile Include="src\image.c" />
     <ClCompile Include="src\label.c" />
     <ClCompile Include="src\textbox.c" />
-    <ClCompile Include="src\ui_factory.c" />
     <ClCompile Include="src\widget.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

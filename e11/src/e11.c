@@ -15,8 +15,11 @@
 #include <fatfs/ff.h>
 /* TEST END */
 
+#include "xml_ui_factory.h"
+
 extern unsigned char image[HEIGHT][WIDTH];
 extern PLcdFont _build_font(const char* font_name);
+
 
 void e11(PAbstractSystem system) {
 	Lcd_init(320, 240, system->vtable->getFrameBuffer(system), 0);
@@ -24,6 +27,8 @@ void e11(PAbstractSystem system) {
 	_e11_mainloop(system);
 	Lcd_destroy();
 }
+
+
 
 void _e11_splashscreen(PAbstractSystem system) {
 
@@ -36,7 +41,11 @@ void _e11_mainloop(PAbstractSystem system) {
 	LcdIconHeader icon_hdr;
 	BYTE* icon_buffer = NULL;
 
+	
+	
+
 	/* TEST START */
+	PWidget mainWindow;
 	PLcdFont testFont = NULL;
 	Label lbl;
 	TextBox tbx;
@@ -45,6 +54,10 @@ void _e11_mainloop(PAbstractSystem system) {
 
 	/* FACTORY INIT */
 	LcdFontFactory_init();
+
+	/* UI FACTORY TEST */
+	mainWindow = XmlUiFactory_getUI("ui");
+
 	
 
 	
@@ -92,7 +105,6 @@ void _e11_mainloop(PAbstractSystem system) {
 	Lcd_setDrawingMode(LCD_OVER);
 	
 	while(looping) {
-		testFont = LcdFontFactory_getLcdFont("6x8.flcd");
 		if(system->vtable->pollEvent(system, &systemEvent)) {
 			switch(systemEvent->type) {
 			case EVENT_QUIT:

@@ -30,6 +30,8 @@ PObject	List_at(PContainer self, DWORD index);
 
 /* End of virtual functions */
 
+PObject List_tail(PList self);
+
 /* Vtables definition */
 static const vtable_Object s_list_object_vtable       = { List_destructor, NULL, NULL, NULL };
 static const vtable_Container s_list_container_vtable = { List_pushBack, List_popBack, List_at };
