@@ -36,6 +36,9 @@
     <ClInclude Include="..\includes\esic\egui\abstract_ui_factory.h">
       <Filter>includes</Filter>
     </ClInclude>
+    <ClInclude Include="..\includes\esic\egui\widget_ptr.h">
+      <Filter>includes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\default_widget_renderer.c">
@@ -51,6 +54,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\widget.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\widget_ptr.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

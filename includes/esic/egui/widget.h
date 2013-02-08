@@ -13,7 +13,7 @@ typedef struct _vtable_Widget {
 
 typedef struct _Widget {
 	Object object;
-	vtable_Widget vtable;
+	const vtable_Widget* vtable;
 	WORD x;
 	WORD y;
 	WORD width;
@@ -25,9 +25,14 @@ typedef struct _Widget {
 
 PWidget Widget_constructor(PWidget self);
 
+
 /* Virtual functions */
 /* Object */
 
+void Widget_destructor(PObject self);
+PObject Widget_clone(PObject self, PObject dst);
+
+/* End of virtual functions */
 
 void Widget_addChild(PWidget self, PWidget child);
 

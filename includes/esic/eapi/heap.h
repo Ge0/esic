@@ -7,6 +7,8 @@
 void* Debug_SicAlloc(size_t size);
 void Debug_SicFree(void* ptr);
 char* SicStrdup(const char* str);
+void SicHeapDump();
+void SicHeapClean();
 
 #include <stdlib.h>
 #ifndef _DEBUG
@@ -16,6 +18,8 @@ char* SicStrdup(const char* str);
 #define SicAlloc(x) Debug_SicAlloc(x)
 #define SicFree(x)  Debug_SicFree(x)
 #endif
+
+
 
 typedef struct _link {
 	void* ptr;

@@ -4,6 +4,8 @@
 #include <esic/elcd/lcd.h>
 #include <esic/eapi/event.h>
 
+#include <esic/eapi/heap.h>
+
 /* TEST START */
 #include <esic/test/testFreeType.h>
 #include <esic/egui/label.h>
@@ -56,8 +58,11 @@ void _e11_mainloop(PAbstractSystem system) {
 	LcdFontFactory_init();
 
 	/* UI FACTORY TEST */
+	SicHeapDump();
 	mainWindow = XmlUiFactory_getUI("ui");
-
+	SicHeapDump();
+	DELETE(mainWindow);
+	SicHeapDump();
 	
 
 	
@@ -161,4 +166,6 @@ void _e11_mainloop(PAbstractSystem system) {
 
 	/* FACTORY DESTROY */
 	LcdFontFactory_destroy();
+
+	SicHeapDump();
 }

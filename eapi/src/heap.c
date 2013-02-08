@@ -66,11 +66,17 @@ void Debug_SicFree(void* ptr) {
 }
 
 void SicHeapDump() {
+#ifdef _WIN32
+	char buf[4096];
 	/* Simply browse the linked list and show the memory block in a (pseudo) fancy format */
 	plink iterator = NULL;
+	OutputDebugString("-----------\n");
 	for(iterator = s_pointers_list; iterator != NULL; iterator = iterator->next) {
-		printf("Block at %p: %5d byte(s).\n", iterator->ptr, iterator->memory_space);
+		sprintf(buf, "Block at %p: %5d byte(s).\n", iterator->ptr, iterator->memory_space);
+		OutputDebugString(buf);
 	}
+	OutputDebugString("-----------\n");
+#endif
 }
 
 void SicHeapClean() {

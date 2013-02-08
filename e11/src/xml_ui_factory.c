@@ -3,6 +3,7 @@
 #define XML_STATIC
 #include <expat/expat.h>
 
+#include <esic/egui/widget_ptr.h>
 #include <esic/etools/list.h>
 
 /* Available widgets */
@@ -57,7 +58,7 @@ PWidget XmlUiFactory_getUI(const char* ui_name) {
 			return NULL;
 		}
 	} while(!done);
-
+	XML_ParserFree(parser);
 	SicFree(path);
 	fclose(fp);
 	return built_widget;
@@ -76,12 +77,14 @@ static void _start_element(void *user_data, const char *name, const char **atts)
 
 		/* Given the type of the widget, instantiate the appropriated structure */
 		if(strcmp(name, "label") == 0) {
-			PLabel new_label = (PLabel)new_widget;
-			new_label = NEW(new_label, Label);
+			PLabel new_label = NEW(new_label, Label);
+			new_widget = (PWidget)new_label;
 		} else if(strcmp(name, "textbox") == 0) {
-			PTextBox new_textbox = (PTextBox)new_widget;
-			new_textbox = NEW(new_textbox, TextBox);
+			PTextBox new_textbox = NEW(new_textbox, TextBox);
+			new_widget = (PWidget)new_textbox;
 		}
+
+
 
 		/* If the widget is constructed, hydrate it */
 		if(new_widget != NULL) {
@@ -90,14 +93,15 @@ static void _start_element(void *user_data, const char *name, const char **atts)
 			/* Associate the relationship */
 			new_widget->parent = *p_widget;
 
-			/* Append to the list of childs of the current widgets */
-			List_pushBack(&(*p_widget)->childs.container, (PObject)new_widget);
+			/* Append to the list of childs of the current widget */
+			Widget_addChild(*p_widget, new_widget);
+			//List_pushBack(&(*p_widget)->childs.container, (PObject)new_widget);
 
-			/* Delete the widget since it's been added */
-			DELETE(new_widget);
+			/* Delete the widget since it's been added (NOOOO) */
+			//DELETE(new_widget);
 
 			/* Updates the current parent widget as the one that has just been pushed back */
-			*p_widget = (PWidget)List_tail(&(*p_widget)->childs);
+			*p_widget = ((PWidgetPtr)List_tail(&(*p_widget)->childs))->widget;
 		}
 	}
 }

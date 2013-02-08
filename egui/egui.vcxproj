@@ -72,6 +72,7 @@
     <ClInclude Include="..\includes\esic\egui\label.h" />
     <ClInclude Include="..\includes\esic\egui\textbox.h" />
     <ClInclude Include="..\includes\esic\egui\widget.h" />
+    <ClInclude Include="..\includes\esic\egui\widget_ptr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\default_widget_renderer.c" />
@@ -79,6 +80,7 @@
     <ClCompile Include="src\label.c" />
     <ClCompile Include="src\textbox.c" />
     <ClCompile Include="src\widget.c" />
+    <ClCompile Include="src\widget_ptr.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

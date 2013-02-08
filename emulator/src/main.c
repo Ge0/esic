@@ -16,7 +16,6 @@ int main(int argc, char** argv) {
 
 	EmulatorSystem sys;
 
-	parser = XML_ParserCreate(NULL);
 
 	/* Specific to Windows layer: drives assignment */
 	assign_drives();

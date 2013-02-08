@@ -14,6 +14,7 @@ PLabel Label_constructor(PLabel self);
 /* Virtual functions */
 /* Object */
 void Label_destructor(PObject self);
+PObject Label_clone(PObject self, PObject dst);
 
 /* Widget */
 void Label_paint(PWidget self);
