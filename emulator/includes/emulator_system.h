@@ -22,8 +22,8 @@ PEmulatorSystem EmulatorSystem_constructor(PEmulatorSystem self);
 void EmulatorSystem_destructor(PObject self);
 
 /* AbstractSystem vtable */
-void	EmulatorSystem_waitEvent(PAbstractSystem, PPEvent);
-BOOL	EmulatorSystem_pollEvent(PAbstractSystem, PPEvent);
+void	EmulatorSystem_waitEvent(PAbstractSystem, PEvent);
+BOOL	EmulatorSystem_pollEvent(PAbstractSystem, PEvent);
 void	EmulatorSystem_update(PAbstractSystem);
 void	EmulatorSystem_delay(PAbstractSystem, DWORD);
 DWORD	EmulatorSystem_getTicks(PAbstractSystem self);

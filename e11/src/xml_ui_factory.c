@@ -18,6 +18,8 @@ static void _start_element(void *user_data, const char *name, const char **atts)
 static void _end_element(void *user_data, const char *name);
 
 void _hydrate_widget(PWidget widget, const char** atts);
+void _hydrate_label(PLabel label, const char** atts);
+void _hydrate_textbox(PTextBox textbox, const char** atts);
 
 PWidget XmlUiFactory_getUI(const char* ui_name) {
 	PWidget built_widget = NULL;
@@ -78,9 +80,11 @@ static void _start_element(void *user_data, const char *name, const char **atts)
 		/* Given the type of the widget, instantiate the appropriated structure */
 		if(strcmp(name, "label") == 0) {
 			PLabel new_label = NEW(new_label, Label);
+			_hydrate_label(new_label, atts);
 			new_widget = (PWidget)new_label;
 		} else if(strcmp(name, "textbox") == 0) {
 			PTextBox new_textbox = NEW(new_textbox, TextBox);
+			_hydrate_textbox(new_textbox, atts);
 			new_widget = (PWidget)new_textbox;
 		}
 
@@ -118,7 +122,9 @@ void _hydrate_widget(PWidget widget, const char** atts) {
 	DWORD i;
 
 	for (i = 0; atts[i]; i += 2) {
-		if(strcmp(atts[i], "x") == 0) {
+		if(strcmp(atts[i], "id") == 0) {
+			widget->id = atoi(atts[i+1]);
+		} else if(strcmp(atts[i], "x") == 0) {
 			widget->x = atoi(atts[i+1]);
 		} else if(strcmp(atts[i], "y") == 0) {
 			widget->y = atoi(atts[i+1]);
@@ -130,4 +136,26 @@ void _hydrate_widget(PWidget widget, const char** atts) {
 			widget->color = atoi(atts[i+1]);
 		}
 	}
+}
+
+void _hydrate_label(PLabel label, const char** atts) {
+	DWORD i;
+
+	for(i = 0; atts[i]; i += 2) {
+		if(strcmp(atts[i], "caption") == 0) {
+			Label_setCaption(label, atts[i+1]);
+		}
+	}
+
+}
+
+void _hydrate_textbox(PTextBox textbox, const char** atts) {
+	DWORD i;
+
+	for(i = 0; atts[i]; i += 2) {
+		if(strcmp(atts[i], "text") == 0) {
+			TextBox_setText(textbox, atts[i+1]);
+		}
+	}
+
 }

@@ -9,8 +9,11 @@ static const vtable_Object s_object_vtable = {
 };
 
 static const vtable_Widget s_widget_vtable = {
+	Widget_defaultProc,
 	TextBox_paint
 };
+
+
 
 PTextBox TextBox_constructor(PTextBox self) {
 
@@ -52,9 +55,13 @@ PObject TextBox_clone(PObject self, PObject dst) {
 
 }
 
-void TextBox_paint(PWidget self) {
+void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* TODO */
 
 	/* TEST */
-	DefaultWidgetRenderer_paintTextBox((PTextBox)self);
+	DefaultWidgetRenderer_paintTextBox((PTextBox)self, base_x, base_y);
+}
+
+void TextBox_setText(PTextBox self, const char* text) {
+	SzString_setData(&self->text, text);
 }

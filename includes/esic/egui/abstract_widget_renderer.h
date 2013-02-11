@@ -6,8 +6,8 @@
 #include <esic/egui/textbox.h>
 
 typedef struct _vtable_AbstractWidgetRenderer {
-	void (*paintLabel)(PLabel);
-	void (*paintTextBox)(PTextBox);
+	void (*paintLabel)(PLabel, WORD, WORD);
+	void (*paintTextBox)(PTextBox, WORD, WORD);
 } vtable_AbstractWidgetRenderer;
 
 typedef struct _AbstractWidgetRenderer {

@@ -1,5 +1,6 @@
+#include <esic/eapi/event.h>
 #include <esic/egui/label.h>
-#include <esic/egui/default_widget_renderer.h>
+#include <esic/egui/default_widget_renderer.h> /* Only for testing */
 
 static const vtable_Object s_object_vtable = {
 	Label_destructor,
@@ -9,6 +10,7 @@ static const vtable_Object s_object_vtable = {
 };
 
 static const vtable_Widget s_widget_vtable = {
+	Widget_defaultProc,
 	Label_paint
 };
 
@@ -52,9 +54,21 @@ PObject Label_clone(PObject self, PObject dst) {
 
 }
 
-void Label_paint(PWidget self) {
+void Label_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* TODO */
 
 	/* TEST */
-	DefaultWidgetRenderer_paintLabel((PLabel)self);
+	DefaultWidgetRenderer_paintLabel((PLabel)self, base_x, base_y);
+}
+
+DWORD Label_defaultProc(PWidget self, const PEvent system_event) {
+	switch(system_event->type) {
+	default:
+		return Label_defaultProc(self, system_event);
+	}
+	return 0;
+}
+
+void Label_setCaption(PLabel self, const char* text) {
+	SzString_setData(&self->caption, text);
 }

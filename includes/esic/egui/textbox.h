@@ -16,6 +16,9 @@ PTextBox TextBox_constructor(PTextBox self);
 void TextBox_destructor(PObject self);
 
 /* Widget */
-void TextBox_paint(PWidget self);
+void TextBox_paint(PWidget self, WORD base_x, WORD base_y);
+
+/* Others */
+void TextBox_setText(PTextBox self, const char* text);
 
 #endif /* _LABEL_H_ */

@@ -3,17 +3,20 @@
 
 #include <esic/object.h>
 #include <esic/e11_types.h>
+#include <esic/eapi/event.h>
 #include <esic/etools/list.h>
 
 typedef struct _Widget *PWidget;
 
 typedef struct _vtable_Widget {
-	void (*paint)(PWidget);
+	DWORD (*defaultProc)(PWidget, const PEvent);
+	void (*paint)(PWidget, WORD, WORD);
 } vtable_Widget;
 
 typedef struct _Widget {
 	Object object;
 	const vtable_Widget* vtable;
+	WORD id;
 	WORD x;
 	WORD y;
 	WORD width;
@@ -28,9 +31,12 @@ PWidget Widget_constructor(PWidget self);
 
 /* Virtual functions */
 /* Object */
-
 void Widget_destructor(PObject self);
 PObject Widget_clone(PObject self, PObject dst);
+
+/* Widget */
+void Widget_paint(PWidget self);
+DWORD Widget_defaultProc(PWidget self, const PEvent system_event);
 
 /* End of virtual functions */
 

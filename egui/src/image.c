@@ -36,11 +36,11 @@ void Image_destructor(PObject self) {
 	SzString_destructor(&real_self->text.object);
 }
 
-void Image_paint(PWidget self) {
+void Image_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* TODO */
 
 	/* TEST */
-	DefaultWidgetRenderer_paintImage((PImage)self);
+	DefaultWidgetRenderer_paintImage((PImage)self, base_x, base_y);
 }
 
 void createRawImageFrom2DBuffer(PImage self, const char* buffer, WORD pHeight, WORD pWidth, BPP bpp)

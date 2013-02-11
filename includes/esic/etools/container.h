@@ -9,6 +9,8 @@ typedef struct _Container* PContainer;
 typedef struct _vtable_Container {
 	void (*pushBack)(PContainer, const PObject);
 	DWORD (*popBack)(PContainer, PObject);
+	void (*pushFront)(PContainer, const PObject);
+	DWORD (*popFront)(PContainer, PObject);
 	PObject (*at)(PContainer, DWORD);
 } vtable_Container;
 
@@ -23,7 +25,7 @@ typedef struct _Container {
 PContainer	Container_constructor(PContainer self, size_t unit_size);
 void		Container_destructor(PObject self);
 
-static const vtable_Object s_container_object_vtable = { Container_destructor, NULL, NULL, NULL };
+
 
 
 #endif /* _CONTAINER_H_ */

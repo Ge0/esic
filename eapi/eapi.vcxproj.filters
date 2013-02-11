@@ -38,5 +38,8 @@
     <ClInclude Include="..\includes\esic\eapi\keyboard_event.h">
       <Filter>includes</Filter>
     </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\paint_event.h">
+      <Filter>includes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

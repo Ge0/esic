@@ -27,7 +27,7 @@ static const vtable_AbstractSystem s_abstract_system_vtable = {
 
 
 /* Private functions */
-static void _createEvent(PPEvent event, const SDL_Event* psdl_event);
+static void _createEventFromSDL(PEvent systemEvent, const SDL_Event* psdl_event);
 static void _initFileSystem(PAbstractSystem self);
 
 
@@ -73,19 +73,19 @@ void EmulatorSystem_destructor(PObject self) {
 	//StopTmrThread();
 }
 
-void EmulatorSystem_waitEvent(PAstractSystem self, PPEvent systemEvent) {
+void EmulatorSystem_waitEvent(PAstractSystem self, PEvent systemEvent) {
 	SDL_Event sdl_event;
 	SDL_WaitEvent(&sdl_event);
-	_createEvent(systemEvent, &sdl_event);
+	_createEventFromSDL(systemEvent, &sdl_event);
 
 }
 
-BOOL EmulatorSystem_pollEvent(PAstractSystem self, PPEvent systemEvent) {
+BOOL EmulatorSystem_pollEvent(PAstractSystem self, PEvent systemEvent) {
 	SDL_Event sdl_event;
 	BOOL ret = FALSE;
 	if(SDL_PollEvent(&sdl_event)) {
-		_createEvent(systemEvent, &sdl_event);
-		if(*systemEvent != NULL) {
+		_createEventFromSDL(systemEvent, &sdl_event);
+		if(systemEvent != NULL) {
 			ret = TRUE;
 		}
 	}
@@ -97,16 +97,36 @@ void EmulatorSystem_update(PAstractSystem self) {
 	SDL_Flip(real_self->screen);
 }
 
-static void _createEvent(PPEvent systemEvent, const SDL_Event* psdl_event) {
+static void _createEventFromSDL(PEvent systemEvent, const SDL_Event* psdl_event) {
 	switch(psdl_event->type) {
 	case SDL_KEYDOWN:
-		//*systemEvent = NEW(*systemEvent, 
+		systemEvent->type = EVENT_KEYBOARD_KDOWN;
+		/* TODO. */
 		break;
 
 	case SDL_QUIT:
-		*systemEvent = NEW(*systemEvent, Event);
-		(*systemEvent)->type = EVENT_QUIT;
+		systemEvent->type = EVENT_QUIT;
 		break;
+	}
+}
+
+static void _createEventToSDL(PEvent systemEvent, SDL_Event* psdl_event) {
+	switch(systemEvent->type) {
+	case EVENT_KEYBOARD_KDOWN:
+		psdl_event->type = SDL_KEYDOWN;
+		/* TODO. */
+		break;
+
+	case EVENT_QUIT:
+		psdl_event->type = SDL_QUIT;
+		break;
+
+	case EVENT_PAINT:
+		psdl_event->type = SDL_USEREVENT;
+		psdl_event->user.code = EVENT_PAINT;
+		//psdl_event->user.data1 = systemEvent->real_event.
+		/* TODO. */
+
 	}
 }
 
@@ -144,4 +164,8 @@ DWORD get_fattime (void)
 			| (WORD)(tm.wHour << 11)
 			| (WORD)(tm.wMinute << 5)
 			| (WORD)(tm.wSecond >> 1);
+}
+
+void EmulatorSystem_enqueueEvent(PAbstractSystem self, PEvent systemEvent) {
+
 }

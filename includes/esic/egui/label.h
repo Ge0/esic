@@ -17,6 +17,10 @@ void Label_destructor(PObject self);
 PObject Label_clone(PObject self, PObject dst);
 
 /* Widget */
-void Label_paint(PWidget self);
+void Label_paint(PWidget self, WORD base_x, WORD base_y);
+DWORD Label_defaultProc(PWidget self, const PEvent system_event);
+
+/* Other */
+void Label_setCaption(PLabel self, const char* text);
 
 #endif /* _LABEL_H_ */

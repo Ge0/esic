@@ -3,41 +3,36 @@
 
 // GR
 //#define _DEBUG 1
-
-/*-------------------------------------------------------------------------*/
-/* Types de base                                                           */
-/*-------------------------------------------------------------------------*/
-
-
 #ifndef _WIN32
 
 #include <stdint.h>
-typedef unsigned char BYTE ;       /* entier 8 bits non signé */
-typedef int16_t SWORD ;   /* entier 16 bits signé */
-typedef uint16_t  WORD ;  /* entier 16 bits non signé */
-typedef int32_t SDWORD ;   /* entier 32 bits signé */
-typedef uint32_t DWORD ;  /* entier 32 bits non signé */
-typedef unsigned short BOOL ;  /* booléen */
-typedef unsigned long long QWORD;
-typedef signed long long SQWORD;
+typedef uint8_t BYTE;
+typedef int16_t SWORD;
+typedef uint16_t  WORD;
+typedef int32_t SDWORD;
+typedef uint32_t DWORD;
+typedef uint8_t BOOL;
+typedef uint64_t QWORD;
+typedef int64_t SQWORD;
+typedef void VOID;
+typedef int8_t CHAR;
+typedef uint8_t UCHAR;
 
-   /* Note : pour compatibilité avec Lib68331.h, LibE7.h et LibE9.h */
+typedef signed short int INT;
+typedef unsigned short int UINT;
 
-typedef signed char CHAR ;         /* entier 8 bits signé */
-typedef unsigned char UCHAR ;      /* entier 8 bits non signé */
+typedef signed long int LONG;
+typedef unsigned long int ULONG;
 
-typedef signed short int INT ;     /* entier 16 bits signé */
-typedef unsigned short int UINT ;  /* entier 16 bits non signé */
-
-typedef signed long int LONG ;     /* entier 32 bits signé */
-typedef unsigned long int ULONG ;  /* entier 32 bits non signé */
+#define HIWORD(value) ((value >> 16) & 0xFFFF)
+#define LOWORD(value) (value & 0xFFFF)
 
 #else
 #include <Windows.h>
 #include <stdint.h>
 
 typedef int16_t SWORD;
-typedef int32_t SDWORD ;   /* entier 32 bits signé */
+typedef int32_t SDWORD;
 
 // GR
 

@@ -7,8 +7,8 @@
 typedef struct _AbstractSystem* PAbstractSystem;
 
 typedef struct _vtable_AbstractSystem {
-	void	(*waitEvent)(PAbstractSystem, PPEvent);
-	BOOL	(*pollEvent)(PAbstractSystem, PPEvent);
+	void	(*waitEvent)(PAbstractSystem, PEvent);
+	BOOL	(*pollEvent)(PAbstractSystem, PEvent);
 	void	(*update)(PAbstractSystem);
 	void	(*delay)(PAbstractSystem, DWORD);
 	DWORD	(*getTicks)(PAbstractSystem);

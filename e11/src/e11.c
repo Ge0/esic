@@ -37,7 +37,6 @@ void _e11_splashscreen(PAbstractSystem system) {
 }
 
 void _e11_mainloop(PAbstractSystem system) {
-	PEvent systemEvent = NULL;
 	BOOL looping = TRUE;
 	FIL icon_file;
 	LcdIconHeader icon_hdr;
@@ -60,12 +59,14 @@ void _e11_mainloop(PAbstractSystem system) {
 	/* UI FACTORY TEST */
 	SicHeapDump();
 	mainWindow = XmlUiFactory_getUI("ui");
-	SicHeapDump();
-	DELETE(mainWindow);
-	SicHeapDump();
+	if(mainWindow != NULL) {
+		SicHeapDump();
+		DELETE(mainWindow);
+		SicHeapDump();
+	}
 	
 
-	
+	/*
 	testFont = LcdFontFactory_getLcdFont("6x8.flcd");
 	//testFont = _build_font("6x8.flcd");
 	Label_constructor(&lbl);
@@ -81,6 +82,7 @@ void _e11_mainloop(PAbstractSystem system) {
 	SzString_setData(&tbx.text, "Geoffrey");
 
 	Lcd_setFont(testFont);
+	*/
 
 	/* Test ilcd (image lcd) */
 	if(f_open(&icon_file, (const TCHAR*)"system/icons/chemistry.ilcd", FA_READ) == FR_OK) {
@@ -108,40 +110,53 @@ void _e11_mainloop(PAbstractSystem system) {
 	/* TEST END */
 
 	Lcd_setDrawingMode(LCD_OVER);
+
+	/* TEST : DRAWING PICTURE */
+	if(icon_buffer != NULL) {
+		Lcd_drawPicture(9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+		Lcd_drawPicture(9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+
+		Lcd_drawPicture(9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+		Lcd_drawPicture(9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+	}
+	/* END TEST */
 	
+	
+	Lcd_drawRectangle(0, 0, 319, 14, RGB_16B(255,255,255), RGB_16B(0,0,0));
+
+	/*
+	Label_paint(&lbl.widget, 0, 0);
+	TextBox_paint(&tbx.widget, 0, 0);
+	*/
+
+	//Lcd_drawTriangle(50, 100, 100, 50, 150, 214, RGB(255,255,255), RGB(255,0,255));
+	//Image_paint(&TTFfont.widget);		
+	
+	mainWindow = XmlUiFactory_getUI("ui");
+	if(mainWindow != NULL) {
+		SicHeapDump();
+		mainWindow->vtable->paint(mainWindow, 0, 16);
+		SicHeapDump();
+	}
 	while(looping) {
+		Event systemEvent;
 		if(system->vtable->pollEvent(system, &systemEvent)) {
-			switch(systemEvent->type) {
+			switch(systemEvent.type) {
 			case EVENT_QUIT:
 				looping = !looping;
 				break;
 			}
-			DELETE(systemEvent);
 		}
 
-		/* TEST : DRAWING PICTURE */
-		if(icon_buffer != NULL) {
-			Lcd_drawPicture(9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-			Lcd_drawPicture(9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-			Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-
-			Lcd_drawPicture(9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-			Lcd_drawPicture(9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-			Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-			Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		}
-		/* END TEST */
-				
-		Lcd_drawRectangle(0, 0, 319, 14, RGB_16B(255,255,255), RGB_16B(0,0,0));
-		Label_paint(&lbl.widget);
-		TextBox_paint(&tbx.widget);
-		//Lcd_drawTriangle(50, 100, 100, 50, 150, 214, RGB(255,255,255), RGB(255,0,255));
-		//Image_paint(&TTFfont.widget);		
+		
 
 		system->vtable->update(system);
 		Lcd_update();
@@ -149,8 +164,12 @@ void _e11_mainloop(PAbstractSystem system) {
 		system->vtable->delay(system, 33);		
 	}
 	
+	DELETE(mainWindow);
+
+	/*
 	Label_destructor((PObject)&lbl);
 	TextBox_destructor((PObject)&tbx);
+	*/
 
 
 	/*

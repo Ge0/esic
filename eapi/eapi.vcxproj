@@ -86,6 +86,7 @@
     <ClInclude Include="..\includes\esic\eapi\event.h" />
     <ClInclude Include="..\includes\esic\eapi\heap.h" />
     <ClInclude Include="..\includes\esic\eapi\keyboard_event.h" />
+    <ClInclude Include="..\includes\esic\eapi\paint_event.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

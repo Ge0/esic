@@ -3,27 +3,27 @@
 #include <esic/egui/label.h>
 #include <esic/egui/image.h>
 
-void DefaultWidgetRenderer_paintLabel(PLabel self) {
-	Lcd_drawString(self->widget.x, self->widget.y, 0xabcd, self->caption.data);
+void DefaultWidgetRenderer_paintLabel(PLabel self, WORD base_x, WORD base_y) {
+	Lcd_drawString(base_x + self->widget.x, base_y + self->widget.y, 0xabcd, self->caption.data);
 }
 
-void DefaultWidgetRenderer_paintTextBox(PTextBox self) {
+void DefaultWidgetRenderer_paintTextBox(PTextBox self, WORD base_x, WORD base_y) {
 	/* Draw the surrounding rect */
-	Lcd_drawRectangle(self->widget.x, self->widget.y, self->widget.width, 12, RGB_16B(200,200,200), RGB_16B(0,0,0));
+	Lcd_drawRectangle(base_x + self->widget.x, base_y + self->widget.y, self->widget.width, 12, RGB_16B(200,200,200), RGB_16B(0,0,0));
 
 	/* Draw the content inside */
-	Lcd_drawString(self->widget.x + 2, self->widget.y + 2, RGB_16B(0,0,0), self->text.data);
+	Lcd_drawString(base_x + self->widget.x + 2, base_y + self->widget.y + 2, RGB_16B(0,0,0), self->text.data);
 }
 
-void DefaultWidgetRenderer_paintImage(PImage self) {
+void DefaultWidgetRenderer_paintImage(PImage self, WORD base_x, WORD base_y) {
 
 	WORD i,j;
 
 	/* Draw the surrounding rect */
-	Lcd_drawRectangle(self->widget.x, self->widget.y, self->widget.width, self->widget.height, 0x0000, 0x8888);
+	Lcd_drawRectangle(base_x + self->widget.x, base_y + self->widget.y, self->widget.width, self->widget.height, 0x0000, 0x8888);
 
 	/* Draw the content inside */
-	Lcd_drawString(self->widget.x + 2, self->widget.y + 2, 0xabcd, self->text.data);
+	Lcd_drawString(base_x + self->widget.x + 2, base_y + self->widget.y + 2, 0xabcd, self->text.data);
 
 	/* Draw the image */	
 	for ( i = 0; i < self->widget.height; i++)

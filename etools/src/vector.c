@@ -13,6 +13,8 @@ static const vtable_Object s_object_vtable = {
 static const vtable_Container s_container_vtable = {
 	Vector_pushBack,
 	Vector_popBack,
+	Vector_pushFront,
+	Vector_popFront,
 	Vector_at
 };
 
@@ -43,6 +45,8 @@ PVector Vector_constructor(PVector self, size_t unit_size) {
 
 }
 
+
+
 void Vector_destructor(PObject self) {
 	PVector real_self = NULL;
 	DWORD i;
@@ -54,10 +58,10 @@ void Vector_destructor(PObject self) {
 	/* Call the destructor of each element */
 	for(i = 0; i < real_self->container.count; ++i) {
 		PObject object = (PObject)((BYTE*)real_self->elements + (i * real_self->container.unit_size));
-		/*
+		
 		object->vtable->destructor(object);
-		*/
-		DELETE(object);
+		
+		//DELETE(object);
 	}
 
 	/* And free the allocated space */
@@ -106,6 +110,9 @@ void Vector_pushBack(PContainer self, const PObject data) {
 	PVector real_self = (PVector)self;
 	void* cloned_data = SicAlloc(self->object.size);
 
+	/* Ensure allocation succeeded */
+	assert(cloned_data != NULL);
+
 	/* Firstly: make sure the size of the data equals the unit size */
 	if(data->size == self->unit_size) {
 		/* If there is not anymore data available, allocate some */
@@ -134,6 +141,47 @@ DWORD Vector_popBack(PContainer self, PObject popped) {
 		memcpy((char*)popped, (BYTE*)real_self->elements + (self->count-1) * self->unit_size, self->unit_size);
 		ret = 1;
 		--self->count;
+	}
+
+	return ret;
+}
+
+void Vector_pushFront(PContainer self, const PObject data) {
+	/* Pointer to a Vector instance so we can act on its data members */
+	PVector real_self = (PVector)self;
+	void* cloned_data = SicAlloc(self->object.size);
+
+	/* Ensure allocation succeeded */
+	assert(cloned_data != NULL);
+
+	/* Firstly: make sure the size of the data equals the unit size */
+	if(data->size == self->unit_size) {
+		/* If there is not anymore data available, allocate some */
+		if(self->count == real_self->allocated_size) {
+			_reallocate_size(real_self);
+		}
+
+		/* Clone the data properly and insert it */
+		cloned_data = data->vtable->clone(data, (PObject)cloned_data);
+
+		_insert(real_self, 0, cloned_data);
+
+		/* Free the temporary buf since it's saved into the vector (thanks to _insert...) */
+		SicFree(cloned_data);
+	
+	}
+}
+
+DWORD Vector_popFront(PContainer self, PObject popped) {
+	PVector real_self = (PVector)self;
+	DWORD ret = 0;
+
+	/* Ensure there is at least one element in the container */
+	if(self->count > 0) {
+		/* Pop the first element, so copy the memory space & shift the whole content of the vector */
+		memcpy((char*)popped, (BYTE*)real_self->elements, self->unit_size);
+		memmove((BYTE*)real_self->elements, (BYTE*)real_self->elements + self->unit_size, (--self->count) * self->unit_size);
+		ret = 1;
 	}
 
 	return ret;

@@ -29,6 +29,8 @@ DWORD Vector_hash(PObject self);
 /* Container */
 void Vector_pushBack(PContainer self, const PObject data);
 DWORD Vector_popBack(PContainer self, PObject popped);
+void Vector_pushFront(PContainer self, const PObject data);
+DWORD Vector_popFront(PContainer self, PObject popped);
 PObject Vector_at(PContainer self, DWORD index);
 
 /* End of virtual functions */

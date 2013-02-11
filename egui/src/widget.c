@@ -9,11 +9,18 @@ static const vtable_Object s_vtable_object = {
 	NULL
 };
 
+static const vtable_Widget s_vtable_widget = {
+	Widget_defaultProc,
+	Widget_paint
+	
+};
+
 PWidget Widget_constructor(PWidget self) {
 	self->object.size = sizeof(Widget);
 
 	/* Filling vtable */
 	self->object.vtable = &s_vtable_object;
+	self->vtable        = &s_vtable_widget;
 
 	/* Initialize properties so they don't get dummy random values */
 	self->x = self->y = self->width = self->height = self->color = 0;
@@ -80,7 +87,27 @@ void Widget_addChild(PWidget self, PWidget child) {
 	WidgetPtr_destructor(&widgetptr.object);
 }
 
-void Widget_defaultProc(PWidget self, PEvent systemEvent) {
-
+DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
+	switch(system_event->type) {
+	case EVENT_PAINT:
+		if(self->parent != NULL) {
+			self->vtable->paint(self, self->parent->x, self->parent->y);
+		} else {
+			self->vtable->paint(self, 0, 0);
+		}
+		break;
+	}
 }
 
+
+void Widget_paint(PWidget self, WORD base_x, WORD base_y) {
+	/* Default painting procedure... Simply paint every childs */
+	PListNode iterator = self->childs.head;
+
+	while(iterator != NULL) {
+		PWidget current_child = (PWidget)((PWidgetPtr)iterator->data)->widget;
+		current_child->vtable->paint(current_child, base_x + current_child->x, base_y + current_child->y);
+
+		iterator = iterator->next;
+	}
+}

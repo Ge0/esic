@@ -1,8 +1,6 @@
 #ifndef _KEYBOARD_EVENT_H_
 #define _KEYBOARD_EVENT_H_
 
-#include <esic/eapi/keyboard_event.h>
-
 typedef enum  _Keycode {
         /** @name ASCII mapped keysyms
          *  The keyboard syms have been cleverly chosen to map to ASCII
@@ -277,7 +275,6 @@ typedef enum  _Keycode {
 } Keycode;
 
 typedef struct _KeyboardEvent {
-	Event event;
 	uint8_t type;
 	uint8_t state;
 	Keycode code;

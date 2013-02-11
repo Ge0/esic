@@ -2,14 +2,15 @@
 #define _EVENT_H_
 
 #include <esic/object.h>
-
-
+#include <esic/eapi/keyboard_event.h>
+#include <esic/eapi/paint_event.h>
 
 typedef enum _EventType {
-	EVENT_QUIT,
+	EVENT_QUIT = 0,
 	EVENT_KEYBOARD_KDOWN,
 	EVENT_KEYBOARD_KUP,
-	EVENT_TIMER
+	EVENT_TIMER,
+	EVENT_PAINT
 } EventType, *PEventType;
 
 typedef struct _Event* PEvent;
@@ -22,6 +23,10 @@ typedef struct _Event {
 	Object object;
 	const vtable_Event* vtable;
 	EventType type;
+	union {
+		KeyboardEvent keyboard_event;
+		PaintEvent paint_event;
+	} real_event;
 } Event, **PPEvent;
 
 PEvent Event_constructor(PEvent self);
