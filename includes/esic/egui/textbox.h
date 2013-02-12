@@ -23,7 +23,7 @@ void TextBox_destructor(PObject self);
 PObject TextBox_clone(PObject self, PObject dst);
 
 /* Widget */
-void TextBox_paint(PWidget self, WORD base_x, WORD base_y);
+void TextBox_paint(PWidget self, PAbstractPainter painter, WORD base_x, WORD base_y);
 
 /* Others */
 void TextBox_setText(PTextBox self, const char* text);

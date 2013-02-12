@@ -52,19 +52,20 @@ PObject Label_clone(PObject self, PObject dst) {
 	/* Copying members */
 	SzString_clone(&real_self->caption.object, &real_dst->caption.object);
 
+	return self;
 }
 
 void Label_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* TODO */
 
 	/* TEST */
-	DefaultWidgetRenderer_paintLabel((PLabel)self, base_x, base_y);
+	GetDefaultWidgetRenderer()->vtable->paintLabel(GetDefaultWidgetRenderer(), (PLabel)self, base_x, base_y);
 }
 
 DWORD Label_defaultProc(PWidget self, const PEvent system_event) {
 	switch(system_event->type) {
 	default:
-		return Label_defaultProc(self, system_event);
+		return Widget_defaultProc(self, system_event);
 	}
 	return 0;
 }

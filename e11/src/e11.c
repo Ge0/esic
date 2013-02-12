@@ -12,9 +12,10 @@
 #include <esic/egui/textbox.h>
 #include <esic/egui/image.h>
 #include <esic/etools/szstring.h>
-#include <esic/elcd/lcd_font_factory.h>
-#include <esic/elcd/lcd_icon_factory.h>
-#include <esic/elcd/lcd_icon_header.h>
+#include <esic/eapi/raster_font_factory.h>
+#include <esic/eapi/raster_icon_factory.h>
+#include <esic/eapi/raster_icon_header.h>
+#include <esic/egui/default_widget_renderer.h>
 #include <fatfs/ff.h>
 /* TEST END */
 
@@ -25,9 +26,26 @@ extern PLcdFont _build_font(const char* font_name);
 
 
 void e11(PAbstractSystem system) {
+	PDefaultWidgetRenderer widget_renderer = NULL;
+
 	Lcd_init(320, 240, system->vtable->getFrameBuffer(system), 0);
+
+	/* FACTORY INIT */
+	RasterFontFactory_init();
+	RasterIconFactory_init();
+	widget_renderer = NEW(widget_renderer, DefaultWidgetRenderer);
+	SetDefaultWidgetRenderer((PAbstractWidgetRenderer)widget_renderer);
+
+	//system->painter.raster_font = RasterFontFactory_getRasterFont("6x8.flcd");
 	_e11_splashscreen(system);
 	_e11_mainloop(system);
+	
+	DELETE(widget_renderer);
+
+	/* FACTORY DESTROY */
+	RasterIconFactory_destroy();
+	RasterFontFactory_destroy();
+
 	Lcd_destroy();
 }
 
@@ -39,9 +57,9 @@ void _e11_splashscreen(PAbstractSystem system) {
 
 void _e11_mainloop(PAbstractSystem system) {
 	BOOL looping = TRUE;
-	LcdIconHeader icon_hdr;
+	RasterIconHeader icon_hdr;
 	BYTE* icon_buffer = NULL;
-	PLcdIcon pen_icon = NULL,
+	PRasterIcon pen_icon = NULL,
 		edit_icon = NULL,
 		preview_icon = NULL,
 		list_icon = NULL,
@@ -50,26 +68,18 @@ void _e11_mainloop(PAbstractSystem system) {
 
 	/* TEST START */
 	PWidget main_window;
-	PLcdFont test_font = NULL;
+	PRasterFont test_font = NULL;
 	Image TTFfont;
-
-
-	/* FACTORY INIT */
-	LcdFontFactory_init();
-	LcdIconFactory_init();
 
 	Lcd_setDrawingMode(LCD_OVER);
 
-	/* Loading font test */
-	test_font = LcdFontFactory_getLcdFont("6x8.flcd");
-
 	/* Loading icons test */
-	pen_icon      = LcdIconFactory_getLcdIcon("dotpen.ilcd");
-	edit_icon     = LcdIconFactory_getLcdIcon("edition.ilcd");
-	preview_icon  = LcdIconFactory_getLcdIcon("preview.ilcd");
-	list_icon     = LcdIconFactory_getLcdIcon("list.ilcd");
-	settings_icon = LcdIconFactory_getLcdIcon("settings.ilcd");
-	ask_icon      = LcdIconFactory_getLcdIcon("ask.ilcd");
+	pen_icon      = RasterIconFactory_getRasterIcon("dotpen.ilcd");
+	edit_icon     = RasterIconFactory_getRasterIcon("edition.ilcd");
+	preview_icon  = RasterIconFactory_getRasterIcon("preview.ilcd");
+	list_icon     = RasterIconFactory_getRasterIcon("list.ilcd");
+	settings_icon = RasterIconFactory_getRasterIcon("settings.ilcd");
+	ask_icon      = RasterIconFactory_getRasterIcon("ask.ilcd");
 
 	/* TEST : DRAWING PICTURE */
 	if(pen_icon != NULL) {
@@ -98,9 +108,11 @@ void _e11_mainloop(PAbstractSystem system) {
 	}
 
 	/* Applying the font */
+	/*
 	if(test_font != NULL) {
 		Lcd_setFont(test_font);
 	}
+	*/
 
 	/* END TEST */
 	
@@ -139,7 +151,9 @@ void _e11_mainloop(PAbstractSystem system) {
 		system->vtable->delay(system, 33);		
 	}
 	
-	DELETE(main_window);
+	if(main_window != NULL) {
+		DELETE(main_window);
+	}
 
 	/*
 	Label_destructor((PObject)&lbl);
@@ -153,9 +167,7 @@ void _e11_mainloop(PAbstractSystem system) {
 	}
 	*/
 
-	/* FACTORY DESTROY */
-	LcdIconFactory_destroy();
-	LcdFontFactory_destroy();
+	
 
 	SicHeapDump();
 }

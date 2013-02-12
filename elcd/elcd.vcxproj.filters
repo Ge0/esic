@@ -17,19 +17,7 @@
     <ClCompile Include="src\lcd.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\lcd_font.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lcd_font_factory.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lcd_font_table.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lcd_icon_factory.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lcd_icon.c">
+    <ClCompile Include="src\lcd_painter.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -37,28 +25,7 @@
     <ClInclude Include="..\includes\esic\elcd\lcd.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_font.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_font_factory.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_font_header.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_font_table.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_font_table_header.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_icon_header.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_icon_factory.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_icon.h">
+    <ClInclude Include="..\includes\esic\elcd\lcd_painter.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

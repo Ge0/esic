@@ -80,13 +80,28 @@
   <ItemGroup>
     <ClCompile Include="src\event.c" />
     <ClCompile Include="src\heap.c" />
+    <ClCompile Include="src\raster_font.c" />
+    <ClCompile Include="src\raster_font_factory.c" />
+    <ClCompile Include="src\raster_font_table.c" />
+    <ClCompile Include="src\raster_icon.c" />
+    <ClCompile Include="src\raster_icon_factory.c" />
+    <ClCompile Include="src\raster_icon_header.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\includes\esic\eapi\abstract_painter.h" />
     <ClInclude Include="..\includes\esic\eapi\abstract_system.h" />
     <ClInclude Include="..\includes\esic\eapi\event.h" />
     <ClInclude Include="..\includes\esic\eapi\heap.h" />
     <ClInclude Include="..\includes\esic\eapi\keyboard_event.h" />
     <ClInclude Include="..\includes\esic\eapi\paint_event.h" />
+    <ClInclude Include="..\includes\esic\eapi\raster_font.h" />
+    <ClInclude Include="..\includes\esic\eapi\raster_font_factory.h" />
+    <ClInclude Include="..\includes\esic\eapi\raster_font_header.h" />
+    <ClInclude Include="..\includes\esic\eapi\raster_font_table.h" />
+    <ClInclude Include="..\includes\esic\eapi\raster_font_table_header.h" />
+    <ClInclude Include="..\includes\esic\eapi\raster_icon.h" />
+    <ClInclude Include="..\includes\esic\eapi\raster_icon_factory.h" />
+    <ClInclude Include="..\includes\esic\eapi\raster_icon_header.h" />
     <ClInclude Include="..\includes\esic\eapi\vertice.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,50 +2,126 @@
 #include <esic/elcd/lcd.h>
 #include <esic/egui/label.h>
 #include <esic/egui/image.h>
+#include <esic/elcd/lcd_painter.h>
+#include <esic/eapi/raster_font_factory.h>
 
-void DefaultWidgetRenderer_paintLabel(PLabel self, WORD base_x, WORD base_y) {
-	Lcd_drawString(base_x + self->widget.x, base_y + self->widget.y, self->widget.color, self->caption.data);
+static const vtable_Object s_object_vtable = {
+	DefaultWidgetRenderer_destructor,
+	DefaultWidgetRenderer_clone,
+	NULL,
+	NULL
+};
+
+static const vtable_AbstractWidgetRenderer s_abstract_widget_renderer_vtable = {
+	DefaultWidgetRenderer_paintLabel,
+	DefaultWidgetRenderer_paintTextBox
+};
+
+static PAbstractWidgetRenderer s_default_renderer;
+
+PDefaultWidgetRenderer DefaultWidgetRenderer_constructor(PDefaultWidgetRenderer self) {
+	self->abstract_widget_renderer.object.size = sizeof(DefaultWidgetRenderer);
+	self->abstract_widget_renderer.object.vtable = &s_object_vtable;
+	self->abstract_widget_renderer.vtable = &s_abstract_widget_renderer_vtable;
+	self->painter = NEW(self->painter, LcdPainter);
+	self->painter->abstract_painter.raster_font = RasterFontFactory_getRasterFont("6x8.flcd");
+
+	return self;
 }
 
-void DefaultWidgetRenderer_paintTextBox(PTextBox self, WORD base_x, WORD base_y) {
+void DefaultWidgetRenderer_destructor(PObject self) {
+	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
+
+	DELETE(real_self->painter);
+}
+
+PObject DefaultWidgetRenderer_clone(PObject self, PObject dst) {
+	/* TODO. */
+
+	return dst;
+}
+
+void SetDefaultWidgetRenderer(PAbstractWidgetRenderer renderer) {
+	s_default_renderer = renderer;
+}
+
+PAbstractWidgetRenderer GetDefaultWidgetRenderer() {
+	return s_default_renderer;
+}
+
+void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer self, PLabel label, WORD base_x, WORD base_y) {
+	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
+
+	real_self->painter->abstract_painter.vtable->drawString(
+		&real_self->painter->abstract_painter,
+		base_x + label->widget.x,
+		base_y + label->widget.y,
+		label->widget.color,
+		label->caption.data
+	);
+	//Lcd_drawString(base_x + label->widget.x, base_y + label->widget.y, label->widget.color, label->caption.data);
+}
+
+void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox textbox, WORD base_x, WORD base_y) {
+	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
+
 	/* Draw the surrounding rect */
-	Lcd_drawRectangle(base_x + self->widget.x, base_y + self->widget.y, self->widget.width, 12, RGB_16B(200,200,200), RGB_16B(0,0,0));
+	//Lcd_drawRectangle(base_x + textbox->widget.x, base_y + textbox->widget.y, textbox->widget.width, 12, RGB_16B(200,200,200), RGB_16B(0,0,0));
 
+
+	real_self->painter->abstract_painter.vtable->drawRectangle(
+		&real_self->painter->abstract_painter,
+		base_x + textbox->widget.x,
+		base_y + textbox->widget.y,
+		textbox->widget.width,
+		12,
+		textbox->background_color,
+		textbox->border_color
+	);
+	
+	
 	/* Draw the content inside */
-	Lcd_drawString(base_x + self->widget.x + 2, base_y + self->widget.y + 2, RGB_16B(0,0,0), self->text.data);
+	//Lcd_drawString(base_x + textbox->widget.x + 2, base_y + textbox->widget.y + 2, RGB_16B(0,0,0), textbox->text.data);
+
+	real_self->painter->abstract_painter.vtable->drawString(
+		&real_self->painter->abstract_painter,
+		base_x + textbox->widget.x + 2,
+		base_y + textbox->widget.y + 2,
+		RGB_16B(0,0,0),
+		textbox->text.data
+	);
 }
 
+/*
 void DefaultWidgetRenderer_paintImage(PImage self, WORD base_x, WORD base_y) {
 
 	WORD i,j;
 
-	/* Draw the surrounding rect */
+
 	Lcd_drawRectangle(base_x + self->widget.x, base_y + self->widget.y, self->widget.width, self->widget.height, 0x0000, 0x8888);
 
-	/* Draw the content inside */
 	Lcd_drawString(base_x + self->widget.x + 2, base_y + self->widget.y + 2, 0xabcd, self->text.data);
 
-	/* Draw the image */	
+
 	for ( i = 0; i < self->widget.height; i++)
 	{
 		for ( j = 0; j < self->widget.width; j++)
 		{
-			//*self->rawBuffer++ = self->rawBuffer[i * self->widget.width + j];
-			/* get the pixel color */
+
 			switch(self->bpp){
 			case BPP1:
-				/* no color, used default to black and white */
+
 				Lcd_setPixel(j + self->widget.x, i + self->widget.y, self->rawBuffer[i * self->widget.width + j]); 
 				break;
 			case BPP8:
-				/* 8 bits per pixel, using grey level */
+
 				Lcd_setPixel(j + self->widget.x, i + self->widget.y, self->rawBuffer[i * self->widget.width + j]); 
 				break;
 			case BPP16:
-				/* use of a palette */
+
 				break;
 			case BPP24:
-				/* use RGB directly */
+
 				break;
 
 			}
@@ -54,3 +130,4 @@ void DefaultWidgetRenderer_paintImage(PImage self, WORD base_x, WORD base_y) {
 		}
 	}
 }
+*/

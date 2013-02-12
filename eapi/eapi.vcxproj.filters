@@ -24,6 +24,24 @@
     <ClCompile Include="src\event.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\raster_font.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\raster_font_factory.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\raster_font_table.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\raster_icon_factory.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\raster_icon_header.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\raster_icon.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\eapi\heap.h">
@@ -42,6 +60,33 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\esic\eapi\vertice.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\abstract_painter.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\raster_font_factory.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\raster_font_header.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\raster_font_table.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\raster_font_table_header.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\raster_font.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\raster_icon.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\raster_icon_factory.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\raster_icon_header.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

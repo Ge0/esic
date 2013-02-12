@@ -32,4 +32,6 @@ PObject WidgetPtr_clone(PObject self, PObject dst) {
 	dst->size        = self->size;
 	dst->vtable      = self->vtable;
 	real_dst->widget = real_self->widget;
+
+	return dst;
 }

@@ -5,6 +5,7 @@
 #include <esic/e11_types.h>
 #include <esic/eapi/event.h>
 #include <esic/etools/list.h>
+#include <esic/eapi/abstract_painter.h>
 
 typedef struct _Widget *PWidget;
 
@@ -35,7 +36,7 @@ void Widget_destructor(PObject self);
 PObject Widget_clone(PObject self, PObject dst);
 
 /* Widget */
-void Widget_paint(PWidget self);
+void Widget_paint(PWidget self, WORD base_x, WORD base_y);
 DWORD Widget_defaultProc(PWidget self, const PEvent system_event);
 
 /* End of virtual functions */

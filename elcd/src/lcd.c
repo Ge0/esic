@@ -235,7 +235,7 @@ void Lcd_drawString(WORD x, WORD y, WORD color, const char* string) {
 			}
 
 			/* Retrieve the character's data */
-			character_data = LcdFont_getCharacterData(s_current_font, utf8_code, &len, &character_width, &character_height);
+			//character_data = LcdFont_getCharacterData(s_current_font, utf8_code, &len, &character_width, &character_height);
 
 			/* Data found? Map it into the framebuffer ! */
 			if(character_data != NULL) {

@@ -1,32 +1,41 @@
-#include <esic/elcd/lcd_font_table.h>
+#include <esic/eapi/raster_font_table.h>
 #include <string.h>
 #include <math.h>
 
-PLcdFontTable LcdFontTable_constructor(PLcdFontTable self) {
+/* Vtables definition */
+static const vtable_Object s_object_vtable = {
+	RasterFontTable_destructor,
+	RasterFontTable_clone,
+	NULL,
+	NULL
+};
+
+
+PRasterFontTable RasterFontTable_constructor(PRasterFontTable self) {
 	/* Call the parent constructor */
 	/* Base structure is Object: no need to construct (Object is abstract!) */
 
 	/* Filling the size member */
-	self->object.size = sizeof(LcdFontTable);
+	self->object.size = sizeof(RasterFontTable);
 
 	/* Filling object's vtable */
 	/*
-	self->object.vtable.destructor	= LcdFontTable_destructor;
-	self->object.vtable.clone		= LcdFontTable_clone;
+	self->object.vtable.destructor	= RasterFontTable_destructor;
+	self->object.vtable.clone		= RasterFontTable_clone;
 	*/
-	self->object.vtable = &s_font_table_object_vtable;
+	self->object.vtable = &s_object_vtable;
 
 	self->data = NULL;
 	
-	memset(&self->header, 0, sizeof(LcdFontTableHeader));
+	memset(&self->header, 0, sizeof(RasterFontTableHeader));
 
 	return self;
 
 }
 
-PObject LcdFontTable_clone(PObject self, PObject dst) {
-	PLcdFontTable real_self = (PLcdFontTable)self;
-	PLcdFontTable real_dst  = (PLcdFontTable)dst;
+PObject RasterFontTable_clone(PObject self, PObject dst) {
+	PRasterFontTable real_self = (PRasterFontTable)self;
+	PRasterFontTable real_dst  = (PRasterFontTable)dst;
 	DWORD size_to_alloc = 0;
 
 	real_dst->object = real_self->object;
@@ -64,8 +73,8 @@ PObject LcdFontTable_clone(PObject self, PObject dst) {
 	return (PObject)real_dst;
 }
 
-void LcdFontTable_destructor(PObject self) {
-	PLcdFontTable real_self = (PLcdFontTable)self;
+void RasterFontTable_destructor(PObject self) {
+	PRasterFontTable real_self = (PRasterFontTable)self;
 	if(real_self->data != NULL) {
 		SicFree(real_self->data);
 		real_self->data = NULL;

@@ -5,14 +5,16 @@
 #include <esic/egui/label.h>
 #include <esic/egui/textbox.h>
 
+typedef struct _AbstractWidgetRenderer* PAbstractWidgetRenderer;
+
 typedef struct _vtable_AbstractWidgetRenderer {
-	void (*paintLabel)(PLabel, WORD, WORD);
-	void (*paintTextBox)(PTextBox, WORD, WORD);
+	void (*paintLabel)(PAbstractWidgetRenderer, PLabel, WORD, WORD);
+	void (*paintTextBox)(PAbstractWidgetRenderer, PTextBox, WORD, WORD);
 } vtable_AbstractWidgetRenderer;
 
 typedef struct _AbstractWidgetRenderer {
 	Object object;
-	vtable_AbstractWidgetRenderer vtable;
-} AbstractWidgetRenderer, *PAbstractWidgetRenderer;
+	const vtable_AbstractWidgetRenderer* vtable;
+} AbstractWidgetRenderer;
 
 #endif /* _WIDGET_RENDERER_ */

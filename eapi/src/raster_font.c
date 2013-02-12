@@ -1,47 +1,47 @@
-#include <esic/elcd/lcd_font.h>
-#include <esic/elcd/lcd_font_table_header.h>
+#include <esic/eapi/raster_font.h>
+#include <esic/eapi/raster_font_table_header.h>
 #include <esic/etools/vector.h>
 #include <math.h>
 #include <string.h>
 
 static const vtable_Object s_lcdfont_object_vtable = {
-  LcdFont_destructor,
-  LcdFont_clone,
+  RasterFont_destructor,
+  RasterFont_clone,
   NULL,
   NULL
 };
 
-PLcdFont LcdFont_constructor(PLcdFont self) {
+PRasterFont RasterFont_constructor(PRasterFont self) {
 	/* Call the parent constructor */
 	
 	/* Base structure is Object: no need to construct (Object is abstract!) */
 
 	/* Filling the size member */
-	self->object.size = sizeof(LcdFont);
+	self->object.size = sizeof(RasterFont);
 
 	/* Filling object's vtable */
 	/*
-	self->object.vtable.destructor	= LcdFont_destructor;
-	self->object.vtable.clone		= LcdFont_clone;
+	self->object.vtable.destructor	= RasterFont_destructor;
+	self->object.vtable.clone		= RasterFont_clone;
 	*/
 	self->object.vtable = &s_lcdfont_object_vtable;
 
 	/* Construct the vector */
-	Vector_constructor(&self->tables, sizeof(LcdFontTable));
+	Vector_constructor(&self->tables, sizeof(RasterFontTable));
 
 	return self;
 }
 
-PObject LcdFont_clone(PObject self, PObject dst) {
+PObject RasterFont_clone(PObject self, PObject dst) {
 	
-	PLcdFont real_self = (PLcdFont)self;
-	PLcdFont real_dst  = (PLcdFont)dst;
+	PRasterFont real_self = (PRasterFont)self;
+	PRasterFont real_dst  = (PRasterFont)dst;
 
 
 	/* Copying members */
 	real_dst->object = real_self->object;
-	memset(real_dst->name, '\0', LCD_FONT_FILENAME_LENGTH);
-	strncpy(real_dst->name, real_self->name, LCD_FONT_FILENAME_LENGTH-1);
+	memset(real_dst->name, '\0', RASTER_FONT_FILENAME_LENGTH);
+	strncpy(real_dst->name, real_self->name, RASTER_FONT_FILENAME_LENGTH-1);
 	real_dst->header = real_self->header;
 
 	/* TODO. */
@@ -54,32 +54,32 @@ PObject LcdFont_clone(PObject self, PObject dst) {
 	return self;
 }
 
-void LcdFont_destructor(PObject self) {
-	PLcdFont real_self = (PLcdFont)self;
+void RasterFont_destructor(PObject self) {
+	PRasterFont real_self = (PRasterFont)self;
 
 	/* Destruct the vector that contains the table of characters */
 	Vector_destructor(&real_self->tables.container.object);
 
 }
 
-void _lcd_font_init(PLcdFont self) {
-	Vector_constructor(&self->tables, sizeof(LcdFontTable));
+void _raster_font_init(PRasterFont self) {
+	Vector_constructor(&self->tables, sizeof(RasterFontTable));
 }
 
-char* LcdFont_getCharacterData(PLcdFont self, DWORD utf8_code, DWORD* size, BYTE* unit_width, BYTE* unit_height) {
+char* RasterFont_getCharacterData(PRasterFont self, DWORD utf8_code, DWORD* size, BYTE* unit_width, BYTE* unit_height) {
 	/* First of all, locate the appropriated table */
 	DWORD i;
 	char* character_data		= NULL;
-	PLcdFontTable current_table	= NULL;
+	PRasterFontTable current_table	= NULL;
 
 	/* Retrieve the appropriated table */
 	for(i = 0; i < self->header.number_of_tables, current_table == NULL; ++i) {
-		current_table = (PLcdFontTable)Vector_at(&self->tables.container, i);
+		current_table = (PRasterFontTable)Vector_at(&self->tables.container, i);
 
 		/* If the current utf8 code is within the table, it means that we found it */
 		if(utf8_code >= current_table->header.utf8_base_code_point && utf8_code <=
 			current_table->header.utf8_base_code_point + current_table->header.number_of_characters) {
-				PLcdFontTable current_table = (PLcdFontTable)Vector_at(&self->tables.container, i);
+				PRasterFontTable current_table = (PRasterFontTable)Vector_at(&self->tables.container, i);
 		}
 	}
 

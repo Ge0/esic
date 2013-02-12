@@ -53,13 +53,14 @@ PObject TextBox_clone(PObject self, PObject dst) {
 	/* Copying members */
 	SzString_clone(&real_self->text.object, &real_dst->text.object);
 
+	return self;
 }
 
 void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* TODO */
 
 	/* TEST */
-	DefaultWidgetRenderer_paintTextBox((PTextBox)self, base_x, base_y);
+	GetDefaultWidgetRenderer()->vtable->paintTextBox(GetDefaultWidgetRenderer(), (PTextBox)self, base_x, base_y);
 }
 
 void TextBox_setText(PTextBox self, const char* text) {

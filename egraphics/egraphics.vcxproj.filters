@@ -21,9 +21,18 @@
     <ClCompile Include="src\vertice.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\triangle.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\egraphics\vertice.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\egraphics\triangle.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\egraphics\shape.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>
