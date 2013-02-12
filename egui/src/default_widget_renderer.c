@@ -4,7 +4,7 @@
 #include <esic/egui/image.h>
 
 void DefaultWidgetRenderer_paintLabel(PLabel self, WORD base_x, WORD base_y) {
-	Lcd_drawString(base_x + self->widget.x, base_y + self->widget.y, 0xabcd, self->caption.data);
+	Lcd_drawString(base_x + self->widget.x, base_y + self->widget.y, self->widget.color, self->caption.data);
 }
 
 void DefaultWidgetRenderer_paintTextBox(PTextBox self, WORD base_x, WORD base_y) {

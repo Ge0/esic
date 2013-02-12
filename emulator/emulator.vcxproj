@@ -52,7 +52,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>SDL_main</EntryPointSymbol>
-      <AdditionalDependencies>expat.lib;e11.lib;eapi.lib;egui.lib;etools.lib;elcd.lib;fatfs.lib;SDL.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>egraphics.lib;expat.lib;e11.lib;eapi.lib;egui.lib;etools.lib;elcd.lib;fatfs.lib;SDL.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>

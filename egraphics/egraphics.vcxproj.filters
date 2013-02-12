@@ -18,30 +18,12 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\heap.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\event.c">
+    <ClCompile Include="src\vertice.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\includes\esic\eapi\heap.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\eapi\abstract_system.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\eapi\event.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\eapi\keyboard_event.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\eapi\paint_event.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\eapi\vertice.h">
+    <ClInclude Include="..\includes\esic\egraphics\vertice.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

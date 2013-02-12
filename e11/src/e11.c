@@ -13,6 +13,7 @@
 #include <esic/egui/image.h>
 #include <esic/etools/szstring.h>
 #include <esic/elcd/lcd_font_factory.h>
+#include <esic/elcd/lcd_icon_factory.h>
 #include <esic/elcd/lcd_icon_header.h>
 #include <fatfs/ff.h>
 /* TEST END */
@@ -38,95 +39,69 @@ void _e11_splashscreen(PAbstractSystem system) {
 
 void _e11_mainloop(PAbstractSystem system) {
 	BOOL looping = TRUE;
-	FIL icon_file;
 	LcdIconHeader icon_hdr;
 	BYTE* icon_buffer = NULL;
-
-	
-	
+	PLcdIcon pen_icon = NULL,
+		edit_icon = NULL,
+		preview_icon = NULL,
+		list_icon = NULL,
+		settings_icon = NULL,
+		ask_icon = NULL;
 
 	/* TEST START */
-	PWidget mainWindow;
-	PLcdFont testFont = NULL;
-	Label lbl;
-	TextBox tbx;
+	PWidget main_window;
+	PLcdFont test_font = NULL;
 	Image TTFfont;
 
 
 	/* FACTORY INIT */
 	LcdFontFactory_init();
-
-	/* UI FACTORY TEST */
-	SicHeapDump();
-	mainWindow = XmlUiFactory_getUI("ui");
-	if(mainWindow != NULL) {
-		SicHeapDump();
-		DELETE(mainWindow);
-		SicHeapDump();
-	}
-	
-
-	/*
-	testFont = LcdFontFactory_getLcdFont("6x8.flcd");
-	//testFont = _build_font("6x8.flcd");
-	Label_constructor(&lbl);
-	TextBox_constructor(&tbx);
-
-	lbl.widget.x = 20;
-	lbl.widget.y = 100;
-	SzString_setData(&lbl.caption, "Enter your name: ");
-
-	tbx.widget.x     = 120;
-	tbx.widget.y     = 98;
-	tbx.widget.width = 70;
-	SzString_setData(&tbx.text, "Geoffrey");
-
-	Lcd_setFont(testFont);
-	*/
-
-	/* Test ilcd (image lcd) */
-	if(f_open(&icon_file, (const TCHAR*)"system/icons/chemistry.ilcd", FA_READ) == FR_OK) {
-		UINT br;
-		f_read(&icon_file, &icon_hdr, sizeof(LcdIconHeader), &br);
-		icon_buffer = (BYTE*)SicAlloc(icon_hdr.height * icon_hdr.width * sizeof(WORD));
-		assert(icon_buffer != NULL);
-		f_read(&icon_file, icon_buffer, icon_hdr.height * icon_hdr.width * sizeof(WORD), &br);
-	}
-	
-	
-	/* test TTF font */
-	/*
-	testLoadFreeType();		//create a row image in &image
-	Image_constructor(&TTFfont);
-	createRawImageFrom2DBuffer(&TTFfont, (const char*)&image, HEIGHT, WIDTH, BPP1);		
-	TTFfont.widget.x  = 20;
-	TTFfont.widget.y  = 125;	
-	TTFfont.bpp = 1;
-	TTFfont.palette = 16;	
-	TTFfont.widget.width = WIDTH;
-	TTFfont.widget.height = HEIGHT;
-	SzString_setData(&TTFfont.text, "raster from TTF:");
-	*/
-	/* TEST END */
+	LcdIconFactory_init();
 
 	Lcd_setDrawingMode(LCD_OVER);
 
-	/* TEST : DRAWING PICTURE */
-	if(icon_buffer != NULL) {
-		Lcd_drawPicture(9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		Lcd_drawPicture(9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+	/* Loading font test */
+	test_font = LcdFontFactory_getLcdFont("6x8.flcd");
 
-		Lcd_drawPicture(9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		Lcd_drawPicture(9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208-36, icon_hdr.width, icon_hdr.height, (WORD*)icon_buffer);
+	/* Loading icons test */
+	pen_icon      = LcdIconFactory_getLcdIcon("dotpen.ilcd");
+	edit_icon     = LcdIconFactory_getLcdIcon("edition.ilcd");
+	preview_icon  = LcdIconFactory_getLcdIcon("preview.ilcd");
+	list_icon     = LcdIconFactory_getLcdIcon("list.ilcd");
+	settings_icon = LcdIconFactory_getLcdIcon("settings.ilcd");
+	ask_icon      = LcdIconFactory_getLcdIcon("ask.ilcd");
+
+	/* TEST : DRAWING PICTURE */
+	if(pen_icon != NULL) {
+		Lcd_drawPicture(9, 208, pen_icon->header.width, pen_icon->header.height, (WORD*)pen_icon->data);
 	}
+
+	if(edit_icon != NULL) {
+		Lcd_drawPicture(9+32+9+4+9, 208, edit_icon->header.width, edit_icon->header.height, (WORD*)edit_icon->data);
+	}
+
+	if(preview_icon != NULL) {
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 208, preview_icon->header.width, preview_icon->header.height, (WORD*)preview_icon->data);
+		
+	}
+
+	if(list_icon != NULL) {
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 208, list_icon->header.width, list_icon->header.height, (WORD*)list_icon->data);
+	}
+
+	if(settings_icon != NULL) {
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, settings_icon->header.width, settings_icon->header.height, (WORD*)settings_icon->data);
+	}
+
+	if(ask_icon != NULL) {
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, ask_icon->header.width, ask_icon->header.height, (WORD*)ask_icon->data);
+	}
+
+	/* Applying the font */
+	if(test_font != NULL) {
+		Lcd_setFont(test_font);
+	}
+
 	/* END TEST */
 	
 	
@@ -140,10 +115,10 @@ void _e11_mainloop(PAbstractSystem system) {
 	//Lcd_drawTriangle(50, 100, 100, 50, 150, 214, RGB(255,255,255), RGB(255,0,255));
 	//Image_paint(&TTFfont.widget);		
 	
-	mainWindow = XmlUiFactory_getUI("ui");
-	if(mainWindow != NULL) {
+	main_window = XmlUiFactory_getUI("ui");
+	if(main_window != NULL) {
 		SicHeapDump();
-		mainWindow->vtable->paint(mainWindow, 0, 16);
+		main_window->vtable->paint(main_window, 0, 16);
 		SicHeapDump();
 	}
 	while(looping) {
@@ -164,7 +139,7 @@ void _e11_mainloop(PAbstractSystem system) {
 		system->vtable->delay(system, 33);		
 	}
 	
-	DELETE(mainWindow);
+	DELETE(main_window);
 
 	/*
 	Label_destructor((PObject)&lbl);
@@ -178,12 +153,8 @@ void _e11_mainloop(PAbstractSystem system) {
 	}
 	*/
 
-
-	if(icon_buffer != NULL) {
-		SicFree(icon_buffer);
-	}
-
 	/* FACTORY DESTROY */
+	LcdIconFactory_destroy();
 	LcdFontFactory_destroy();
 
 	SicHeapDump();

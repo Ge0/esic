@@ -41,6 +41,9 @@ typedef int32_t SDWORD;
      ( ( ( (DWORD)(g) >> 2u ) & 0x3fu ) <<  5u ) | \
      ( ( ( (DWORD)(b) >> 3u ) & 0x1fu ) <<  0u ) )
 
+#define RED(value)		((value >> 16) & 0xFF)
+#define GREEN(value)	((value >> 8) & 0xFF)
+#define BLUE(value) 	((value) & 0xFF)
 
 #endif
 

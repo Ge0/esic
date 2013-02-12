@@ -3,7 +3,7 @@
 
 static const vtable_Object s_object_vtable = {
 	TextBox_destructor,
-	NULL,
+	TextBox_clone,
 	NULL,
 	NULL
 };

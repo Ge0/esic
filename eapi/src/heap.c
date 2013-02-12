@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 static plink s_pointers_list = NULL;
 
@@ -67,15 +68,20 @@ void Debug_SicFree(void* ptr) {
 
 void SicHeapDump() {
 #ifdef _WIN32
+	DWORD total = 0;
+	float ko;
 	char buf[4096];
 	/* Simply browse the linked list and show the memory block in a (pseudo) fancy format */
 	plink iterator = NULL;
 	OutputDebugString("-----------\n");
 	for(iterator = s_pointers_list; iterator != NULL; iterator = iterator->next) {
+		total += iterator->memory_space,
 		sprintf(buf, "Block at %p: %5d byte(s).\n", iterator->ptr, iterator->memory_space);
 		OutputDebugString(buf);
 	}
-	OutputDebugString("-----------\n");
+	ko = (float)total/1024.0;
+	sprintf(buf,"TOTAL: %d bytes (%.0f Ko.)\n-----------\n", total, ceil(ko));
+	OutputDebugString(buf);
 #endif
 }
 

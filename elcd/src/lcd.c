@@ -323,10 +323,6 @@ void Lcd_drawTriangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD
 		_lcd_fill_bottom_flat_triangle(x0, y0, x1, y1, x3, y3, filling_color);
 		_lcd_fill_top_flat_triangle(x1, y1, x3, y3, x2, y2, filling_color);
 
-		/*
-		_lcd_fill_bottom_flat_triangle(g, vt1, vt2, v4);
-		_lcd_fill_top_flat_triangle(g, vt2, v4, vt3);
-		*/
 	}
 
 	/* Drawing edges */
