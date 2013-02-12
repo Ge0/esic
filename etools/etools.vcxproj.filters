@@ -39,9 +39,6 @@
     <ClCompile Include="src\vector.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\queue.c">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\etools\container.h">
@@ -63,9 +60,6 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\esic\etools\vector.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\etools\queue.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

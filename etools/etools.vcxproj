@@ -83,7 +83,6 @@
     <ClCompile Include="src\hashtable.c" />
     <ClCompile Include="src\list.c" />
     <ClCompile Include="src\map.c" />
-    <ClCompile Include="src\queue.c" />
     <ClCompile Include="src\szstring.c" />
     <ClCompile Include="src\vector.c" />
   </ItemGroup>
@@ -93,7 +92,6 @@
     <ClInclude Include="..\includes\esic\etools\hashtable.h" />
     <ClInclude Include="..\includes\esic\etools\list.h" />
     <ClInclude Include="..\includes\esic\etools\map.h" />
-    <ClInclude Include="..\includes\esic\etools\queue.h" />
     <ClInclude Include="..\includes\esic\etools\szstring.h" />
     <ClInclude Include="..\includes\esic\etools\vector.h" />
   </ItemGroup>
