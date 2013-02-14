@@ -83,28 +83,35 @@ void _e11_mainloop(PAbstractSystem system) {
 
 	/* TEST : DRAWING PICTURE */
 	if(pen_icon != NULL) {
-		Lcd_drawPicture(9, 208, pen_icon->header.width, pen_icon->header.height, (WORD*)pen_icon->data);
+		Lcd_drawPicture(9, 204, pen_icon->header.width, pen_icon->header.height, (WORD*)pen_icon->data);
+		Lcd_drawPicture(9, 204-36, pen_icon->header.width, pen_icon->header.height, (WORD*)pen_icon->data);
 	}
 
 	if(edit_icon != NULL) {
-		Lcd_drawPicture(9+32+9+4+9, 208, edit_icon->header.width, edit_icon->header.height, (WORD*)edit_icon->data);
+		Lcd_drawPicture(9+32+9+4+9, 204, edit_icon->header.width, edit_icon->header.height, (WORD*)edit_icon->data);
+		Lcd_drawPicture(9+32+9+4+9, 204-36, edit_icon->header.width, edit_icon->header.height, (WORD*)edit_icon->data);
+
 	}
 
 	if(preview_icon != NULL) {
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 208, preview_icon->header.width, preview_icon->header.height, (WORD*)preview_icon->data);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 204, preview_icon->header.width, preview_icon->header.height, (WORD*)preview_icon->data);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 204-36, preview_icon->header.width, preview_icon->header.height, (WORD*)preview_icon->data);
 		
 	}
 
 	if(list_icon != NULL) {
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 208, list_icon->header.width, list_icon->header.height, (WORD*)list_icon->data);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 204, list_icon->header.width, list_icon->header.height, (WORD*)list_icon->data);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 204-36, list_icon->header.width, list_icon->header.height, (WORD*)list_icon->data);
 	}
 
 	if(settings_icon != NULL) {
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, settings_icon->header.width, settings_icon->header.height, (WORD*)settings_icon->data);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 204, settings_icon->header.width, settings_icon->header.height, (WORD*)settings_icon->data);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 204-36, settings_icon->header.width, settings_icon->header.height, (WORD*)settings_icon->data);
 	}
 
 	if(ask_icon != NULL) {
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 208, ask_icon->header.width, ask_icon->header.height, (WORD*)ask_icon->data);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 204, ask_icon->header.width, ask_icon->header.height, (WORD*)ask_icon->data);
+		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 204-36, ask_icon->header.width, ask_icon->header.height, (WORD*)ask_icon->data);
 	}
 
 	/* Applying the font */
