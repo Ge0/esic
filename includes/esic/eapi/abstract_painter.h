@@ -19,7 +19,7 @@ typedef struct _AbstractPainter {
 	Object object;
 	const vtable_AbstractPainter* vtable;
 	PRasterFont raster_font;
-} AbstractPainter, *PAbstractPainter;
+} AbstractPainter;
 
 
 #endif /* _ABSTRACT_SYSTEM_H_ */

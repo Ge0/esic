@@ -95,7 +95,7 @@
 /                   Changed option name _FS_SHARE to _FS_LOCK.
 /---------------------------------------------------------------------------*/
 
-#include <fatfs/ff.h>		/* FatFs configurations and declarations */
+#include <fatfs/ff.h>			/* FatFs configurations and declarations */
 #include <fatfs/diskio.h>		/* Declarations of low level disk I/O functions */
 
 
@@ -2423,7 +2423,7 @@ FRESULT f_read (
 	FRESULT res;
 	DWORD clst, sect, remain;
 	UINT rcnt, cc;
-	BYTE csect, *rbuff = (BYTE*)buff;
+	BYTE csect, *rbuff = buff;
 
 
 	*br = 0;	/* Clear read byte counter */

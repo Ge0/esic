@@ -2,7 +2,7 @@
 #define _WIDGET_H_
 
 #include <esic/object.h>
-#include <esic/e11_types.h>
+#include <esic/esic.h>
 #include <esic/eapi/event.h>
 #include <esic/etools/list.h>
 #include <esic/eapi/abstract_painter.h>

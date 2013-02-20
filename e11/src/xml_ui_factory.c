@@ -5,6 +5,7 @@
 
 #include <esic/egui/widget_ptr.h>
 #include <esic/etools/list.h>
+#include <fatfs/ff.h>
 
 /* Available widgets */
 #include <esic/egui/label.h>
@@ -24,19 +25,22 @@ void _hydrate_textbox(PTextBox textbox, const char** atts);
 PWidget XmlUiFactory_getUI(const char* ui_name) {
 	PWidget built_widget = NULL;
 	char* path = NULL;
-	FILE* fp = NULL;
+	FIL ui_file;
 	XML_Parser parser = NULL;
 	int done;
+	UINT br;
 	char buf[BUFSIZ];
 
 	/* TODO. */
 
 	/* Build path */
-	path = (char*)SicAlloc((strlen(ui_name) + 5) * sizeof(char)); /* +5 = ".xml\0" */
-	strcpy(path, ui_name);
+	path = (char*)SicAlloc((strlen(PATH_USER_INTERFACES) + strlen(ui_name) + 5) * sizeof(char)); /* +5 = ".xml\0" */
+	strcpy(path, PATH_USER_INTERFACES);
+	strcat(path, ui_name);
 	strcat(path, ".xml");
 
-	if((fp = fopen(path, "r")) == NULL) {
+	//if((fp = fopen(path, "r")) == NULL) {
+	if(f_open(&ui_file, path, FA_READ) != FR_OK) {
 		/* Error... */
 		SicFree(path);
 		return NULL;
@@ -53,16 +57,17 @@ PWidget XmlUiFactory_getUI(const char* ui_name) {
 	XML_SetElementHandler(parser, _start_element, _end_element);
 
 	do {
-		int len = fread(buf, sizeof(char), sizeof(buf), fp);
-		done = len < sizeof(buf);
-		if(XML_Parse(parser, buf, len, done) == XML_STATUS_ERROR) {
+		//int len = fread(buf, sizeof(char), sizeof(buf), fp);
+		f_read(&ui_file, buf, sizeof(buf) * sizeof(char), &br);
+		done = br < sizeof(buf);
+		if(XML_Parse(parser, buf, br, done) == XML_STATUS_ERROR) {
 			/* Error... */
 			return NULL;
 		}
 	} while(!done);
 	XML_ParserFree(parser);
 	SicFree(path);
-	fclose(fp);
+	f_close(&ui_file);
 	return built_widget;
 }
 

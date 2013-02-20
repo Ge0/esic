@@ -10,6 +10,6 @@ typedef struct _vtable_Shape {
 typedef struct _Shape {
 	Object object;
 	const vtable_Shape* vtable;
-} Shape, *PShape;
+} Shape;
 
 #endif /* _SHAPE_H_ */

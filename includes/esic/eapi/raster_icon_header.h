@@ -1,7 +1,7 @@
 #ifndef _RASTER_ICON_HEADER_H_
 #define _RASTER_ICON_HEADER_H_
 
-#include <esic/e11_types.h>
+#include <esic/esic.h>
 
 typedef struct _RasterIconHeader {
 	DWORD signature;

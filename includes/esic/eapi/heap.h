@@ -2,7 +2,7 @@
 #define _HEAP_H_
 
 #include <stdio.h>
-#include <esic/e11_types.h>
+#include <esic/esic.h>
 
 void* Debug_SicAlloc(size_t size);
 void Debug_SicFree(void* ptr);

@@ -3,6 +3,8 @@
 
 #include <esic/egui/abstract_ui_factory.h>
 
+#define PATH_USER_INTERFACES "system/user_interfaces/"
+
 typedef struct _XmlUIFactory {
 	AbstractUIFactory abstract_ui_factory;
 } XmlUiFactory, *PXmlUIFactory;

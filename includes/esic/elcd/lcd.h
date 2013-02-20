@@ -1,7 +1,7 @@
 #ifndef _LCD_H_
 #define _LCD_H_
 
-#include <esic/e11_types.h>
+#include <esic/esic.h>
 #include <esic/elcd/lcd_font.h>
 
 /* Flags? */

@@ -1,5 +1,5 @@
 #include "e11.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 #include <esic/elcd/lcd.h>
 #include <esic/eapi/event.h>
@@ -56,7 +56,7 @@ void _e11_splashscreen(PAbstractSystem system) {
 }
 
 void _e11_mainloop(PAbstractSystem system) {
-	BOOL looping = TRUE;
+	BOOL looping = 1;
 	RasterIconHeader icon_hdr;
 	BYTE* icon_buffer = NULL;
 	PRasterIcon pen_icon = NULL,

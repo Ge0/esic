@@ -25,7 +25,7 @@
 /   1258  Vietnam (OEM, Windows)
 */
 
-#include "../ff.h"
+#include <fatfs/ff.h>
 
 
 #if _CODE_PAGE == 437

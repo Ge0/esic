@@ -2,7 +2,7 @@
 #define _RASTER_FONT_TABLE_HEADER_H_
 
 #include <stdio.h>
-#include <esic/e11_types.h>
+#include <esic/esic.h>
 
 typedef struct _RasterFontTableHeader {
 	DWORD	offset;					/* Offset in the file */

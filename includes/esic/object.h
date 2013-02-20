@@ -2,7 +2,7 @@
 #define _OBJECT_H_
 
 #include <esic/eapi/heap.h>
-#include <esic/e11_types.h>
+#include <esic/esic.h>
 #include <stdio.h>
 
 typedef struct _Object* PObject;

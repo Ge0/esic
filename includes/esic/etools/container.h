@@ -1,7 +1,7 @@
 #ifndef _CONTAINER_H_
 #define _CONTAINER_H_
 
-#include <esic/e11_types.h>
+#include <esic/esic.h>
 #include <esic/object.h>
 
 typedef struct _Container* PContainer;
