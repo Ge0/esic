@@ -87,7 +87,7 @@ void Widget_addChild(PWidget self, PWidget child) {
 	WidgetPtr_destructor(&widgetptr.object);
 }
 
-DWORD Widget_defaultProc(PWidget self, PAbstractPainter painter, const PEvent system_event) {
+DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 	switch(system_event->type) {
 	case EVENT_PAINT:
 		if(self->parent != NULL) {

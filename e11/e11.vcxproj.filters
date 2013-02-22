@@ -27,6 +27,12 @@
     <ClCompile Include="src\xml_ui_factory.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\toolbox.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\e11_ui.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\e11.h">
@@ -39,6 +45,9 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="includes\xml_ui_factory.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\e11_ui.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

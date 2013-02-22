@@ -41,6 +41,7 @@ PEmulatorSystem EmulatorSystem_constructor(PEmulatorSystem self) {
 
 	error = SDL_Init(SDL_INIT_VIDEO);
 	self->screen = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE);
+	Lcd_init(320, 240, self->abstract_system.vtable->getFrameBuffer(&self->abstract_system), 0);
 	SDL_ShowCursor(0);
 
 	/* Ensure screen's been created */

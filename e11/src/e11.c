@@ -28,7 +28,7 @@ extern PLcdFont _build_font(const char* font_name);
 void e11(PAbstractSystem system) {
 	PDefaultWidgetRenderer widget_renderer = NULL;
 
-	Lcd_init(320, 240, system->vtable->getFrameBuffer(system), 0);
+ 
 
 	/* FACTORY INIT */
 	RasterFontFactory_init();
@@ -82,6 +82,7 @@ void _e11_mainloop(PAbstractSystem system) {
 	ask_icon      = RasterIconFactory_getRasterIcon("ask.ilcd");
 
 	/* TEST : DRAWING PICTURE */
+
 	if(pen_icon != NULL) {
 		Lcd_drawPicture(9, 204, pen_icon->header.width, pen_icon->header.height, (WORD*)pen_icon->data);
 		Lcd_drawPicture(9, 204-36, pen_icon->header.width, pen_icon->header.height, (WORD*)pen_icon->data);
