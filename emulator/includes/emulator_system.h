@@ -7,7 +7,9 @@
 
 #include "SDL\SDL.h"
 
+
 #define VOLUME_NUMBER	1
+#define DEFAULT_BACKGROUND_COLOR RGB_16B(240,240,240)
 
 typedef struct _EmulatorSystem {
 	AbstractSystem abstract_system;

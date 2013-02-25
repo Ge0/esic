@@ -16,6 +16,9 @@
 static WORD *s_frame_buffer = NULL;
 static WORD *s_double_buf = NULL;
 
+/* Default background color */
+static DWORD s_default_background_color = RGB_16B(255,255,255);
+
 /* Screen size */
 static DWORD s_width = 0;
 static DWORD s_height = 0;
@@ -47,8 +50,9 @@ void _lcd_fill_top_flat_triangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WO
 /* End Private functions */
 
 
-void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags) {
+void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags, DWORD background_color) {
 	DWORD size;
+	DWORD i;
 	s_width = width;
 	s_height = height;
 	s_flags = flags;
@@ -69,7 +73,10 @@ void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags) {
 		s_double_buf = s_frame_buffer;
 	}
 
-	memset(s_frame_buffer, 0xff, size * sizeof(WORD));
+	//memset(s_frame_buffer, 0xff, size * sizeof(WORD));
+	for(i = 0; i < size; ++i) {
+		s_frame_buffer[i] = background_color;
+	}
 	memcpy(s_double_buf, s_frame_buffer, size * sizeof(WORD));
 
 	/* Ensure the allocation succeeded if we use the double buffering option */
@@ -79,12 +86,6 @@ void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags) {
 }
 
 void Lcd_destroy() {
-	/*
-	if(s_frame_buffer != NULL) {
-		SicFree(s_frame_buffer);
-		s_frame_buffer = NULL;
-	}
-	*/
 
 	if(s_flags & LCD_DOUBLEBUF) {
 		SicFree(s_double_buf);

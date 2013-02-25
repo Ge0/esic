@@ -5,8 +5,8 @@
 
 #define HASHTABLE_SIZE 10
 
-#include "hashnode.h"
-#include "map.h"
+#include <esic/etools/hashnode.h>
+#include <esic/etools/map.h>
 
 typedef struct _Hashtable {
 	Map	map;

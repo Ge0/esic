@@ -22,6 +22,48 @@ void _hydrate_widget(PWidget widget, const char** atts);
 void _hydrate_label(PLabel label, const char** atts);
 void _hydrate_textbox(PTextBox textbox, const char** atts);
 
+VOID XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget) {
+	char* path = NULL;
+	FIL ui_file;
+	XML_Parser parser = NULL;
+	int done;
+	UINT br;
+	char buf[BUFSIZ];
+
+	/* TODO. */
+
+	/* Build path */
+	path = (char*)SicAlloc((strlen(PATH_USER_INTERFACES) + strlen(ui_name) + 5) * sizeof(char)); /* +5 = ".xml\0" */
+	strcpy(path, PATH_USER_INTERFACES);
+	strcat(path, ui_name);
+	strcat(path, ".xml");
+
+	//if((fp = fopen(path, "r")) == NULL) {
+	if(f_open(&ui_file, path, FA_READ) != FR_OK) {
+		/* Error... */
+		SicFree(path);
+	}
+
+	parser = XML_ParserCreate(NULL);
+
+	/* Set our widget as the user data so the callback would be able to hydrate it */
+	XML_SetUserData(parser, (void*)&widget);
+
+	XML_SetElementHandler(parser, _start_element, _end_element);
+
+	do {
+		//int len = fread(buf, sizeof(char), sizeof(buf), fp);
+		f_read(&ui_file, buf, sizeof(buf) * sizeof(char), &br);
+		done = br < sizeof(buf);
+		if(XML_Parse(parser, buf, br, done) == XML_STATUS_ERROR) {
+			/* Error... */
+		}
+	} while(!done);
+	XML_ParserFree(parser);
+	SicFree(path);
+	f_close(&ui_file);
+}
+
 PWidget XmlUiFactory_getUI(const char* ui_name) {
 	PWidget built_widget = NULL;
 	char* path = NULL;

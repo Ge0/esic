@@ -21,6 +21,7 @@ PObject DefaultWidgetRenderer_clone(PObject self, PObject dst);
 /* AbstractWidgetRenderer */
 void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer, PLabel, WORD, WORD);
 void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer, PTextBox, WORD, WORD);
+void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer, PPicture, WORD, WORD);
 //void DefaultWidgetRenderer_paintImage(PImage, WORD, WORD);
 
 PAbstractWidgetRenderer GetDefaultWidgetRenderer();

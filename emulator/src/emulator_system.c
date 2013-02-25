@@ -41,7 +41,7 @@ PEmulatorSystem EmulatorSystem_constructor(PEmulatorSystem self) {
 
 	error = SDL_Init(SDL_INIT_VIDEO);
 	self->screen = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE);
-	Lcd_init(320, 240, self->abstract_system.vtable->getFrameBuffer(&self->abstract_system), 0);
+	Lcd_init(320, 240, self->abstract_system.vtable->getFrameBuffer(&self->abstract_system), 0, DEFAULT_BACKGROUND_COLOR);
 	SDL_ShowCursor(0);
 
 	/* Ensure screen's been created */
@@ -70,7 +70,7 @@ static void _initFileSystem(PAbstractSystem self) {
 }
 
 void EmulatorSystem_destructor(PObject self) {
-
+	Lcd_destroy();
 	//StopTmrThread();
 }
 

@@ -13,6 +13,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="includes\ui">
+      <UniqueIdentifier>{86c2d123-30b9-4ab4-8d4a-3af8c6741280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui">
+      <UniqueIdentifier>{b03bd8dc-3c03-4fd6-b5db-13fdafb209d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -33,6 +39,9 @@
     <ClCompile Include="src\e11_ui.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\main_ui.c">
+      <Filter>src\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\e11.h">
@@ -49,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="includes\e11_ui.h">
       <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\ui\main_ui.h">
+      <Filter>includes\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

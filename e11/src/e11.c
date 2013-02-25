@@ -19,6 +19,9 @@
 #include <fatfs/ff.h>
 /* TEST END */
 
+/* OTHER TEST START */
+#include <ui/main_ui.h>
+
 #include "xml_ui_factory.h"
 
 extern unsigned char image[HEIGHT][WIDTH];
@@ -33,20 +36,27 @@ void e11(PAbstractSystem system) {
 	/* FACTORY INIT */
 	RasterFontFactory_init();
 	RasterIconFactory_init();
+
+	Lcd_setDrawingMode(LCD_OVER);
+
+	/* WIDGET RENDERER INIT */
 	widget_renderer = NEW(widget_renderer, DefaultWidgetRenderer);
 	SetDefaultWidgetRenderer((PAbstractWidgetRenderer)widget_renderer);
 
-	//system->painter.raster_font = RasterFontFactory_getRasterFont("6x8.flcd");
+	/* Splashscreen */
 	_e11_splashscreen(system);
+
+	/* And main loop */
 	_e11_mainloop(system);
 	
+	/* Free the resources */
 	DELETE(widget_renderer);
 
 	/* FACTORY DESTROY */
 	RasterIconFactory_destroy();
 	RasterFontFactory_destroy();
 
-	Lcd_destroy();
+	SicHeapDump();
 }
 
 
@@ -57,90 +67,21 @@ void _e11_splashscreen(PAbstractSystem system) {
 
 void _e11_mainloop(PAbstractSystem system) {
 	BOOL looping = 1;
-	RasterIconHeader icon_hdr;
-	BYTE* icon_buffer = NULL;
-	PRasterIcon pen_icon = NULL,
-		edit_icon = NULL,
-		preview_icon = NULL,
-		list_icon = NULL,
-		settings_icon = NULL,
-		ask_icon = NULL;
 
 	/* TEST START */
 	PWidget main_window;
 	PRasterFont test_font = NULL;
-	Image TTFfont;
 
-	Lcd_setDrawingMode(LCD_OVER);
+	/* Test GR */
+	MainUI main_ui;
 
-	/* Loading icons test */
-	pen_icon      = RasterIconFactory_getRasterIcon("dotpen.ilcd");
-	edit_icon     = RasterIconFactory_getRasterIcon("edition.ilcd");
-	preview_icon  = RasterIconFactory_getRasterIcon("preview.ilcd");
-	list_icon     = RasterIconFactory_getRasterIcon("list.ilcd");
-	settings_icon = RasterIconFactory_getRasterIcon("settings.ilcd");
-	ask_icon      = RasterIconFactory_getRasterIcon("ask.ilcd");
-
-	/* TEST : DRAWING PICTURE */
-
-	if(pen_icon != NULL) {
-		Lcd_drawPicture(9, 204, pen_icon->header.width, pen_icon->header.height, (WORD*)pen_icon->data);
-		Lcd_drawPicture(9, 204-36, pen_icon->header.width, pen_icon->header.height, (WORD*)pen_icon->data);
-	}
-
-	if(edit_icon != NULL) {
-		Lcd_drawPicture(9+32+9+4+9, 204, edit_icon->header.width, edit_icon->header.height, (WORD*)edit_icon->data);
-		Lcd_drawPicture(9+32+9+4+9, 204-36, edit_icon->header.width, edit_icon->header.height, (WORD*)edit_icon->data);
-
-	}
-
-	if(preview_icon != NULL) {
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 204, preview_icon->header.width, preview_icon->header.height, (WORD*)preview_icon->data);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9, 204-36, preview_icon->header.width, preview_icon->header.height, (WORD*)preview_icon->data);
-		
-	}
-
-	if(list_icon != NULL) {
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 204, list_icon->header.width, list_icon->header.height, (WORD*)list_icon->data);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9, 204-36, list_icon->header.width, list_icon->header.height, (WORD*)list_icon->data);
-	}
-
-	if(settings_icon != NULL) {
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 204, settings_icon->header.width, settings_icon->header.height, (WORD*)settings_icon->data);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 204-36, settings_icon->header.width, settings_icon->header.height, (WORD*)settings_icon->data);
-	}
-
-	if(ask_icon != NULL) {
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 204, ask_icon->header.width, ask_icon->header.height, (WORD*)ask_icon->data);
-		Lcd_drawPicture(9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9+32+9+4+9, 204-36, ask_icon->header.width, ask_icon->header.height, (WORD*)ask_icon->data);
-	}
-
-	/* Applying the font */
-	/*
-	if(test_font != NULL) {
-		Lcd_setFont(test_font);
-	}
-	*/
-
-	/* END TEST */
+	MainUI_constructor(&main_ui);
 	
-	
-	Lcd_drawRectangle(0, 0, 319, 14, RGB_16B(255,255,255), RGB_16B(0,0,0));
+	/* System Top rectangle */
+	Lcd_drawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
 
-	/*
-	Label_paint(&lbl.widget, 0, 0);
-	TextBox_paint(&tbx.widget, 0, 0);
-	*/
 
-	//Lcd_drawTriangle(50, 100, 100, 50, 150, 214, RGB(255,255,255), RGB(255,0,255));
-	//Image_paint(&TTFfont.widget);		
-	
-	main_window = XmlUiFactory_getUI("ui");
-	if(main_window != NULL) {
-		SicHeapDump();
-		main_window->vtable->paint(main_window, 0, 16);
-		SicHeapDump();
-	}
+	main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 16);
 	while(looping) {
 		Event systemEvent;
 		if(system->vtable->pollEvent(system, &systemEvent)) {
@@ -148,6 +89,9 @@ void _e11_mainloop(PAbstractSystem system) {
 			case EVENT_QUIT:
 				looping = !looping;
 				break;
+
+			default:
+				main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &systemEvent);
 			}
 		}
 
@@ -159,23 +103,7 @@ void _e11_mainloop(PAbstractSystem system) {
 		system->vtable->delay(system, 33);		
 	}
 	
-	if(main_window != NULL) {
-		DELETE(main_window);
-	}
 
-	/*
-	Label_destructor((PObject)&lbl);
-	TextBox_destructor((PObject)&tbx);
-	*/
+	MainUI_destructor(&main_ui.e11ui.widget.object);
 
-
-	/*
-	if(testFont != NULL) {
-		DELETE(testFont);
-	}
-	*/
-
-	
-
-	SicHeapDump();
 }

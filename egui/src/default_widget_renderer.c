@@ -1,6 +1,7 @@
 #include <esic/egui/default_widget_renderer.h>
 #include <esic/elcd/lcd.h>
 #include <esic/egui/label.h>
+#include <esic/egui/picture.h>
 #include <esic/egui/image.h>
 #include <esic/elcd/lcd_painter.h>
 #include <esic/eapi/raster_font_factory.h>
@@ -14,7 +15,8 @@ static const vtable_Object s_object_vtable = {
 
 static const vtable_AbstractWidgetRenderer s_abstract_widget_renderer_vtable = {
 	DefaultWidgetRenderer_paintLabel,
-	DefaultWidgetRenderer_paintTextBox
+	DefaultWidgetRenderer_paintTextBox,
+	DefaultWidgetRenderer_paintPicture
 };
 
 static PAbstractWidgetRenderer s_default_renderer;
@@ -90,6 +92,22 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 		RGB_16B(0,0,0),
 		textbox->text.data
 	);
+}
+
+void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture picture, WORD base_x, WORD base_y) {
+	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
+
+	if(picture->icon != NULL) {
+		real_self->painter->abstract_painter.vtable->drawBuffer(
+			&real_self->painter->abstract_painter,
+			base_x + picture->widget.x,
+			base_y + picture->widget.y,
+			picture->icon->header.width,
+			picture->icon->header.height,
+			(WORD*)picture->icon->data
+		);
+	}
+
 }
 
 /*

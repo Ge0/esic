@@ -1,19 +1,26 @@
 #ifndef _E11_UI_H_
 #define _E11_UI_H_
 
-#define NUMBER_OF_ICONS 12
+#define ICONS_BASE_X			9
+#define ICONS_BASE_Y			164
+#define ICONS_PER_LINE			6
+#define NUMBER_OF_ICONS			12
+#define BORDER_THICKNESS		2
+#define MARGIN_SECOND_ICON_LINE	39
+#define BACKGROUND_FIRST_ROW RGB_16B(0,162,232)
+#define BACKGROUND_SECOND_ROW RGB_16B(171,220,24)
 
-#include <esic/eapi/raster_icon.h>
+#include <esic/egui/picture.h>
 #include <esic/egui/widget.h>
 
 typedef struct _E11UI {
 	Widget widget;
-	PRasterIcon icons[NUMBER_OF_ICONS];
+	Picture icons[NUMBER_OF_ICONS];
 } E11UI, *PE11UI;
 
 PE11UI E11UI_constructor(PE11UI self);
-PRasterIcon E11UI_getIcon(PE11UI self, DWORD index);
-PRasterIcon E11UI_setIcon(PE11UI self, DWORD index, PRasterIcon icon);
+PPicture E11UI_getPicture(PE11UI self, DWORD index);
+void E11UI_setPicture(PE11UI self, DWORD index, const PPicture picture);
 
 /* Virtual functions */
 /* Object */

@@ -62,7 +62,8 @@ void List_pushBack(PContainer self, const PObject data) {
 	/* If there is no node at first, just assign the new node to the head */
 	if(real_self->head == NULL) {
 		new_node->prev  = NULL;
-		real_self->head = real_self->tail = new_node;
+		real_self->head = new_node;
+		real_self->tail = new_node;
 	} else {
 		/* Otherwise, append the node at the end of the list */
 		new_node->prev = real_self->tail;

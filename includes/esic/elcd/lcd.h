@@ -42,8 +42,9 @@ typedef struct{
  * \param height: height of the screen
  * \param framebuffer: pointer to an external framebuffer
  * \param flags: flags for the lcd initialization
+ * \param background_color: background_color of the screen
  */
-void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags);
+void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags, DWORD background_color);
 
 /**
  * updates the lcd screen; useful if the double buffering mode is enabled,
@@ -92,5 +93,7 @@ void Lcd_drawString(WORD x, WORD y, WORD color, const char* string);
 void Lcd_drawTriangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD filling_color, WORD border_color);
 
 void Lcd_drawPicture(WORD x, WORD y, WORD width, WORD height, WORD* raw_buffer);
+
+void Lcd_setBackgroundColor(WORD background_color);
 
 #endif /* _LCD_H_ */
