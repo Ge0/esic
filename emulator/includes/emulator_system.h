@@ -30,6 +30,7 @@ void	EmulatorSystem_update(PAbstractSystem);
 void	EmulatorSystem_delay(PAbstractSystem, DWORD);
 DWORD	EmulatorSystem_getTicks(PAbstractSystem self);
 void*	EmulatorSystem_getFrameBuffer(PAbstractSystem self);
+void	EmulatorSystem_enqueueEvent(PAbstractSystem self, PEvent system_event);
 
 
 /* Vtables definition */

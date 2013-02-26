@@ -14,22 +14,18 @@ typedef struct _vtable_AbstractSystem {
 	void	(*delay)(PAbstractSystem, DWORD);
 	DWORD	(*getTicks)(PAbstractSystem);
 	void*	(*getFrameBuffer)(PAbstractSystem);
+	void	(*enqueueEvent)(PAbstractSystem, PEvent);
 } vtable_AbstractSystem;
 
 typedef struct _AbstractSystem {
 	Object object;
 	const vtable_AbstractSystem* vtable;
 	PAbstractPainter painter;
-} AbstractSystem, *PAstractSystem;
+} AbstractSystem, *PAbstractSystem;
 
 /* Virtual functions */
 void AbstractSystem_destructor(PObject self);
 
-static PAbstractSystem g_abstract_system = NULL;
-
-/* Vtables definitions */
-static const vtable_AbstractSystem s_abstract_system_vtable;
-
-
+PAbstractSystem singleton_system();
 
 #endif /* _ABSTRACT_SYSTEM_H_ */

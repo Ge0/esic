@@ -24,10 +24,6 @@
 
 #include "xml_ui_factory.h"
 
-extern unsigned char image[HEIGHT][WIDTH];
-extern PLcdFont _build_font(const char* font_name);
-
-
 void e11(PAbstractSystem system) {
 	PDefaultWidgetRenderer widget_renderer = NULL;
 
@@ -67,7 +63,7 @@ void _e11_splashscreen(PAbstractSystem system) {
 
 void _e11_mainloop(PAbstractSystem system) {
 	BOOL looping = 1;
-
+	DWORD ticks1, ticks2;
 	/* TEST START */
 	PWidget main_window;
 	PRasterFont test_font = NULL;
@@ -80,27 +76,44 @@ void _e11_mainloop(PAbstractSystem system) {
 	/* System Top rectangle */
 	Lcd_drawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
 
-
-	main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 16);
+	main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 0);
+	
+	ticks1 = system->vtable->getTicks(system);
 	while(looping) {
 		Event systemEvent;
 		if(system->vtable->pollEvent(system, &systemEvent)) {
 			switch(systemEvent.type) {
 			case EVENT_QUIT:
-				looping = !looping;
+ 				looping = !looping;
 				break;
+			case EVENT_KEYBOARD_KDOWN:
 
+				/* To remove later */
+				if(systemEvent.real_event.keyboard_event.code == KEY_F12) {
+					looping = !looping;
+				}
+				main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &systemEvent);
+				break;
 			default:
 				main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &systemEvent);
 			}
 		}
 
+		/* test */
+		ticks2 = system->vtable->getTicks(system);
+		if(ticks2 - ticks1 >= 550) {
+			/* One second elapsed */
+			Event timer_event;
+			timer_event.type = EVENT_TIMER;
+			timer_event.real_event.timer_event.id = 1;
+			singleton_system()->vtable->enqueueEvent(singleton_system(), &timer_event);
+			ticks1 = ticks2;
+		}
 		
 
 		system->vtable->update(system);
 		Lcd_update();
 
-		system->vtable->delay(system, 33);		
 	}
 	
 

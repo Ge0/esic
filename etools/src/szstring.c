@@ -4,6 +4,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Vtables definition */
+static const vtable_Object s_szstring_object_vtable = {
+	SzString_destructor,
+	SzString_clone,
+	SzString_equalsTo,
+	SzString_hash
+};
+
+
+
 
 PSzString SzString_constructor(PSzString self, const char* data) {
 	/* Base structure is Object: no need to construct (Object is abstract!) */
@@ -81,4 +91,41 @@ void SzString_setData(PSzString self, const char* data) {
 
 	self->data = SicStrdup(data);
 	self->size = strlen(self->data);
+}
+
+void SzString_append(PSzString self, char ch) {
+	char* buf = (char*)SicAlloc(self->size + 2); /* +2 for the new ch & the \0 */
+	assert(buf != NULL);
+	strcpy(buf, self->data);
+	buf[self->size] = ch;
+	buf[self->size+1] = '\0';
+	++self->size;
+	SicFree(self->data);
+	self->data = buf;
+}
+
+void SzString_removeLastChar(PSzString self) {
+	if(self->size > 0) {
+		char* buf = (char*)SicAlloc(strlen(self->data));
+		assert(buf != NULL);
+		--self->size;
+		self->data[self->size] = '\0';
+		strcpy(buf, self->data);
+		SicFree(self->data);
+		self->data = buf;
+	}
+}
+
+void SzString_insertCharAt(PSzString self, DWORD pos, char ch) {
+	if(pos >= 0 && pos <= self->size) {
+		char* buf = (char*)SicAlloc(self->size + 2); /* +2 for both ch & \0 */
+		assert(buf != NULL);
+		memcpy(buf, self->data, pos);
+		buf[pos] = ch;
+		strcpy(buf+pos+1, self->data + pos);
+		++self->size;
+		buf[self->size] = '\0';
+		SicFree(self->data);
+		self->data = buf;
+	}
 }

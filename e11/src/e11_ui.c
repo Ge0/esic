@@ -1,5 +1,7 @@
+#include <esic/eapi/abstract_system.h>
 #include <esic/egui/default_widget_renderer.h>
 #include <esic/elcd/lcd.h>
+#include <esic/egui/widget_ptr.h>
 #include "e11_ui.h"
 
 static const vtable_Object s_object_vtable = {
@@ -21,6 +23,10 @@ PE11UI E11UI_constructor(PE11UI self) {
 	/* Calling parent constructor */
 	Widget_constructor(&self->widget);
 
+	/* Define later */
+	self->widget.x =  0;
+	self->widget.y = 16;
+
 	/* Filling vtables */
 	self->widget.object.vtable = &s_object_vtable;
 	self->widget.vtable        = &s_widget_vtable;
@@ -29,6 +35,8 @@ PE11UI E11UI_constructor(PE11UI self) {
 	for(i = 0; i < NUMBER_OF_ICONS; i++) {
 		Picture_constructor(&self->icons[i]);
 	}
+
+	//self->hot_widget = NULL;
 
 	return self;
 }
@@ -55,8 +63,80 @@ PObject E11UI_clone(PObject self, PObject dst) {
 
 DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 	/* TODO. */
-	switch(system_event->type) {
+	static PListNode hot_widget = NULL;
+	PListNode it = NULL;
+	PE11UI real_self = (PE11UI)self;
+	PWidget current_child;
+	Event custom_event;
+	/* if there are no hot widget, pick up the first focusable widget */
+	if(hot_widget == NULL) {
+		hot_widget = self->childs.head;
+		while(hot_widget != NULL) {
+			current_child = ((PWidgetPtr)hot_widget->data)->widget;
+			if(current_child->is_focusable) {
+				/* if the current widget is focusable, break the loop */
+				break;
+			}
+			hot_widget = hot_widget->next;
+		}
+	}
+
 	
+
+
+	switch(system_event->type) {
+	case EVENT_KEYBOARD_KDOWN:
+		/* Need a hot widget to handle the event */
+		if(hot_widget != NULL) {
+			current_child = ((PWidgetPtr)hot_widget->data)->widget;
+
+			if(system_event->real_event.keyboard_event.code == KEY_TAB) {
+				/* Tab pressed: switch to the next hot widget */
+				while(1) {
+					if(hot_widget->next == NULL) {
+						hot_widget = self->childs.head;
+					} else {
+						hot_widget = hot_widget->next;
+					}
+
+					current_child = ((PWidgetPtr)hot_widget->data)->widget;
+
+					if(current_child->is_focusable) {
+						/* if the current widget is focusable, break the loop */
+						break;
+					}
+				}
+			}
+			current_child->vtable->defaultProc(current_child, system_event);
+		}
+
+		break;
+
+	case EVENT_PAINT:
+	
+		it = self->childs.head;
+
+		/* No id? dispatch the event to every child */
+		while(it != NULL) {
+			PWidget chld = ((PWidgetPtr)it->data)->widget;
+			/* If the event is to the current child, forward it. */
+			if(system_event->real_event.paint_event.id == chld->id || system_event->real_event.paint_event.id == 0) {
+				chld->vtable->defaultProc(chld, system_event);
+			}
+			it = it->next;
+		}
+
+		/*
+		current_child = ((PWidgetPtr)hot_widget->data)->widget;
+		current_child->vtable->defaultProc(current_child, system_event);
+		*/
+		
+		break;
+
+	case EVENT_TIMER:
+		current_child = ((PWidgetPtr)hot_widget->data)->widget;
+		current_child->vtable->defaultProc(current_child, system_event);
+		break;
 	default:
 		return Widget_defaultProc(self, system_event);
 	}

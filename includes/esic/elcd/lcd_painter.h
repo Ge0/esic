@@ -20,4 +20,7 @@ void LcdPainter_drawString(PAbstractPainter, WORD, WORD, WORD, const char*);
 void LcdPainter_drawPixel(PAbstractPainter, WORD, WORD, WORD);
 void LcdPainter_drawBuffer(PAbstractPainter, WORD, WORD, WORD, WORD, WORD*);
 
+/* Test GR */
+void LcdPainter_drawStringWithCarret(PAbstractPainter self, WORD x, WORD y , WORD color, const char* string, WORD carret_pos);
+
 #endif /* _LCD_PAINTER_H_ */

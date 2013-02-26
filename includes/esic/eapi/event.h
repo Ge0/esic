@@ -4,6 +4,7 @@
 #include <esic/object.h>
 #include <esic/eapi/keyboard_event.h>
 #include <esic/eapi/paint_event.h>
+#include <esic/eapi/timer_event.h>
 
 typedef enum _EventType {
 	EVENT_QUIT = 0,
@@ -26,6 +27,7 @@ typedef struct _Event {
 	union {
 		KeyboardEvent keyboard_event;
 		PaintEvent paint_event;
+		TimerEvent timer_event;
 	} real_event;
 } Event, **PPEvent;
 

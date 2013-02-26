@@ -19,6 +19,9 @@ PLabel Label_constructor(PLabel self) {
 	/* Calling parent constructor */
 	Widget_constructor(&self->widget);
 
+	self->widget.is_focusable = FALSE;
+
+
 	/* Filling vtables */
 	self->widget.object.vtable = &s_object_vtable;
 	self->widget.vtable        = &s_widget_vtable;
@@ -64,6 +67,7 @@ void Label_paint(PWidget self, WORD base_x, WORD base_y) {
 
 DWORD Label_defaultProc(PWidget self, const PEvent system_event) {
 	switch(system_event->type) {
+
 	default:
 		return Widget_defaultProc(self, system_event);
 	}

@@ -1,6 +1,9 @@
 #ifndef _KEYBOARD_EVENT_H_
 #define _KEYBOARD_EVENT_H_
 
+#define KEYBOARD_EVENT_RELEASED	0x00
+#define KEYBOARD_EVENT_PRESSED	0x01
+
 typedef enum  _Keycode {
         /** @name ASCII mapped keysyms
          *  The keyboard syms have been cleverly chosen to map to ASCII
@@ -275,7 +278,6 @@ typedef enum  _Keycode {
 } Keycode;
 
 typedef struct _KeyboardEvent {
-	uint8_t type;
 	uint8_t state;
 	Keycode code;
 } KeyboardEvent, *PKeyboardEvent;

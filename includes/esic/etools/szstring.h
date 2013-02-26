@@ -23,10 +23,9 @@ DWORD	SzString_hash(PObject self);
 
 /* Methods */
 void SzString_setData(PSzString self, const char* data);
-
-/* Vtables definition */
-static const vtable_Object s_szstring_object_vtable  = { SzString_destructor, SzString_clone, SzString_equalsTo, SzString_hash };
-
+void SzString_append(PSzString self, char ch);
+void SzString_removeLastChar(PSzString self);
+void SzString_insertCharAt(PSzString self, DWORD pos, char ch);
 
 
 #endif /* _SZSTRING_H_ */

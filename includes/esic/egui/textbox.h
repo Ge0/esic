@@ -12,6 +12,8 @@ typedef struct _TextBox {
 	Widget widget;
 	WORD background_color;
 	WORD border_color;
+	WORD carret_pos;
+	BOOL draw_carret;
 	SzString text;
 } TextBox, *PTextBox;
 
@@ -24,8 +26,10 @@ PObject TextBox_clone(PObject self, PObject dst);
 
 /* Widget */
 void TextBox_paint(PWidget self, WORD base_x, WORD base_y);
+DWORD TextBox_defaultProc(PWidget self, const PEvent system_event);
 
 /* Others */
 void TextBox_setText(PTextBox self, const char* text);
+void TextBox_removeLastChar(PTextBox self);
 
 #endif /* _LABEL_H_ */

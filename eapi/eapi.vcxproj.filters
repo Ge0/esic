@@ -89,5 +89,8 @@
     <ClInclude Include="..\includes\esic\eapi\raster_icon_header.h">
       <Filter>includes</Filter>
     </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\timer_event.h">
+      <Filter>includes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

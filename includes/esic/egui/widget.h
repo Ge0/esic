@@ -23,6 +23,7 @@ typedef struct _Widget {
 	WORD width;
 	WORD height;
 	WORD color;
+	BOOL is_focusable;
 	PWidget parent;
 	List childs;
 } Widget, **PPWidget;

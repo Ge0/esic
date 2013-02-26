@@ -16,6 +16,7 @@
 typedef struct _E11UI {
 	Widget widget;
 	Picture icons[NUMBER_OF_ICONS];
+	WORD hot_widget_id; /* Test */
 } E11UI, *PE11UI;
 
 PE11UI E11UI_constructor(PE11UI self);

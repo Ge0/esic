@@ -108,7 +108,10 @@ void Widget_paint(PWidget self, WORD base_x, WORD base_y) {
 
 	while(iterator != NULL) {
 		PWidget current_child = (PWidget)((PWidgetPtr)iterator->data)->widget;
-		current_child->vtable->paint(current_child, base_x + current_child->x, base_y + current_child->y);
+		current_child->vtable->paint(
+			current_child,
+			base_x + self->x,
+			base_y + self->y);
 
 		iterator = iterator->next;
 	}

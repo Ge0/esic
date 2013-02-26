@@ -85,6 +85,7 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 	/* Draw the content inside */
 	//Lcd_drawString(base_x + textbox->widget.x + 2, base_y + textbox->widget.y + 2, RGB_16B(0,0,0), textbox->text.data);
 
+	/*
 	real_self->painter->abstract_painter.vtable->drawString(
 		&real_self->painter->abstract_painter,
 		base_x + textbox->widget.x + 2,
@@ -92,6 +93,25 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 		RGB_16B(0,0,0),
 		textbox->text.data
 	);
+	*/
+	if(textbox->draw_carret) {
+		real_self->painter->abstract_painter.vtable->drawStringWithCarret(
+			&real_self->painter->abstract_painter,
+			base_x + textbox->widget.x + 2,
+			base_y + textbox->widget.y + 2,
+			RGB_16B(0,0,0),
+			textbox->text.data,
+			textbox->carret_pos
+		);
+	} else {
+		real_self->painter->abstract_painter.vtable->drawString(
+		&real_self->painter->abstract_painter,
+		base_x + textbox->widget.x + 2,
+		base_y + textbox->widget.y + 2,
+		RGB_16B(0,0,0),
+		textbox->text.data
+	);
+	}
 }
 
 void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture picture, WORD base_x, WORD base_y) {
