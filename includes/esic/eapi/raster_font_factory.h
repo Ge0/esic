@@ -1,3 +1,6 @@
+/**
+ * \file raster_font_factory.h
+ */
 #ifndef _RASTER_FONT_FACTORY_H_
 #define _RASTER_FONT_FACTORY_H_
 #include <esic/eapi/raster_font.h>

@@ -16,6 +16,7 @@
 #include <esic/eapi/raster_icon_factory.h>
 #include <esic/eapi/raster_icon_header.h>
 #include <esic/egui/default_widget_renderer.h>
+#include <esic/etools/szstring.h>
 #include <fatfs/ff.h>
 /* TEST END */
 
@@ -67,16 +68,27 @@ void _e11_mainloop(PAbstractSystem system) {
 	/* TEST START */
 	PWidget main_window;
 	PRasterFont test_font = NULL;
+	SzString s1, s2;
+	
 
 	/* Test GR */
 	MainUI main_ui;
 
 	MainUI_constructor(&main_ui);
+
+	SzString_constructor(&s1, "Hello world");
+	SzString_constructor(&s2, "");
+
+	SzString_subString(&s1, -4, 0, &s2);
+
+	printf("%s", s2.data);
 	
 	/* System Top rectangle */
 	Lcd_drawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
 
-	main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 0);
+	//main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 0);
+
+
 	
 	ticks1 = system->vtable->getTicks(system);
 	while(looping) {
@@ -118,5 +130,8 @@ void _e11_mainloop(PAbstractSystem system) {
 	
 
 	MainUI_destructor(&main_ui.e11ui.widget.object);
+
+	SzString_destructor(&s1.object);
+	SzString_destructor(&s2.object);
 
 }

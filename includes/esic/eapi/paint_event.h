@@ -1,3 +1,6 @@
+/**
+ * \file paint_event.h
+ */
 #ifndef _PAINT_EVENT_
 #define _PAINT_EVENT_
 

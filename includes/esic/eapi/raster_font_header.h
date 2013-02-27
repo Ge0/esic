@@ -1,3 +1,6 @@
+/**
+ * \file raster_font_header.h
+ */
 #ifndef _RASTER_FONT_HEADER_H_
 #define _RASTER_FONT_HEADER_H_
 

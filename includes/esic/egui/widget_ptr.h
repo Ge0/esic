@@ -1,3 +1,6 @@
+/**
+ * \file widget_ptr.h
+ */
 #ifndef _WIDGET_PTR_H_
 #define _WIDGET_PTR_H_
 

@@ -1,3 +1,6 @@
+/**
+ * \file raster_font_factory.c
+ */
 #include <esic/etools/szstring.h>
 #include <esic/etools/hashtable.h>
 #include <esic/eapi/raster_font_factory.h>

@@ -1,3 +1,6 @@
+/**
+ * szstring.h
+ */
 #ifndef _SZSTRING_H_
 #define _SZSTRING_H_
 
@@ -26,6 +29,8 @@ void SzString_setData(PSzString self, const char* data);
 void SzString_append(PSzString self, char ch);
 void SzString_removeLastChar(PSzString self);
 void SzString_insertCharAt(PSzString self, DWORD pos, char ch);
+void SzString_subString(PSzString self, DWORD start, DWORD n, PSzString out);
+void SzString_removeCharAt(PSzString self, DWORD pos);
 
 
 #endif /* _SZSTRING_H_ */

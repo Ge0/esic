@@ -1,3 +1,6 @@
+/**
+ * \file widget.c
+ */
 #include <esic/egui/widget.h>
 #include <esic/egui/widget_ptr.h>
 #include <esic/eapi/event.h>
@@ -16,6 +19,7 @@ static const vtable_Widget s_vtable_widget = {
 };
 
 PWidget Widget_constructor(PWidget self) {
+
 	self->object.size = sizeof(Widget);
 
 	/* Filling vtable */
@@ -88,7 +92,35 @@ void Widget_addChild(PWidget self, PWidget child) {
 }
 
 DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
+	static PListNode hot_widget = NULL;
+	PListNode it = NULL;
+	PWidget current_child;
+	Event custom_event;
 	switch(system_event->type) {
+
+
+	/* These three events have to be transmitted to childs only when requested */
+	case EVENT_BLUR:
+	case EVENT_FOCUS:
+		it = self->childs.head;
+
+		/* No id? dispatch the event to every child */
+		while(it != NULL) {
+			PWidget chld = ((PWidgetPtr)it->data)->widget;
+			/* If the event is to the current child, forward it. */
+			if(system_event->real_event.widget_event.id == chld->id || system_event->real_event.widget_event.id == 0) {
+				chld->vtable->defaultProc(chld, system_event);
+			}
+			it = it->next;
+		}
+		break;
+
+	case EVENT_TIMER:
+		current_child = ((PWidgetPtr)hot_widget->data)->widget;
+		current_child->vtable->defaultProc(current_child, system_event);
+		break;
+
+	
 	case EVENT_PAINT:
 		if(self->parent != NULL) {
 			self->vtable->paint(self, self->parent->x, self->parent->y);

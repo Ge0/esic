@@ -1,3 +1,6 @@
+/**
+ * \file default_widget_renderer.c
+ */
 #include <esic/egui/default_widget_renderer.h>
 #include <esic/elcd/lcd.h>
 #include <esic/egui/label.h>
@@ -54,6 +57,7 @@ PAbstractWidgetRenderer GetDefaultWidgetRenderer() {
 void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer self, PLabel label, WORD base_x, WORD base_y) {
 	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
 
+	/* Simply draw the caption */
 	real_self->painter->abstract_painter.vtable->drawString(
 		&real_self->painter->abstract_painter,
 		base_x + label->widget.x,
@@ -61,57 +65,76 @@ void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer self, PLabel label
 		label->widget.color,
 		label->caption.data
 	);
-	//Lcd_drawString(base_x + label->widget.x, base_y + label->widget.y, label->widget.color, label->caption.data);
+
 }
 
 void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox textbox, WORD base_x, WORD base_y) {
 	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
+	SzString visible_text;
 
-	/* Draw the surrounding rect */
-	//Lcd_drawRectangle(base_x + textbox->widget.x, base_y + textbox->widget.y, textbox->widget.width, 12, RGB_16B(200,200,200), RGB_16B(0,0,0));
-
-
+	/* Draw the surrounding rect with border */
 	real_self->painter->abstract_painter.vtable->drawRectangle(
 		&real_self->painter->abstract_painter,
 		base_x + textbox->widget.x,
 		base_y + textbox->widget.y,
 		textbox->widget.width,
-		12,
+		textbox->widget.height + 4,
 		textbox->background_color,
 		textbox->border_color
 	);
 	
-	
-	/* Draw the content inside */
-	//Lcd_drawString(base_x + textbox->widget.x + 2, base_y + textbox->widget.y + 2, RGB_16B(0,0,0), textbox->text.data);
+	/* Draw the only visible part of text */
+	SzString_constructor(&visible_text, "");
 
-	/*
-	real_self->painter->abstract_painter.vtable->drawString(
-		&real_self->painter->abstract_painter,
-		base_x + textbox->widget.x + 2,
-		base_y + textbox->widget.y + 2,
-		RGB_16B(0,0,0),
-		textbox->text.data
-	);
-	*/
-	if(textbox->draw_carret) {
-		real_self->painter->abstract_painter.vtable->drawStringWithCarret(
+	SzString_subString(&textbox->text, textbox->text_offset, textbox->widget.width / 6, &visible_text); /* Remove the '6'... */
+
+	/* Draw the string & the carret at its physical position */
+		real_self->painter->abstract_painter.vtable->drawString(
 			&real_self->painter->abstract_painter,
 			base_x + textbox->widget.x + 2,
 			base_y + textbox->widget.y + 2,
 			RGB_16B(0,0,0),
-			textbox->text.data,
-			textbox->carret_pos
+			visible_text.data
 		);
-	} else {
-		real_self->painter->abstract_painter.vtable->drawString(
-		&real_self->painter->abstract_painter,
-		base_x + textbox->widget.x + 2,
-		base_y + textbox->widget.y + 2,
-		RGB_16B(0,0,0),
-		textbox->text.data
-	);
-	}
+
+		if(textbox->draw_carret) {
+			real_self->painter->abstract_painter.vtable->drawRectangle(
+				&real_self->painter->abstract_painter,
+				base_x + textbox->widget.x + 2 + ((textbox->carret_position - textbox->text_offset) * 6) , /* Change the '6'... */
+				base_y + textbox->widget.y + 2,
+				1,
+				textbox->widget.height,
+				RGB_16B(0,0,0),
+				RGB_16B(0,0,0)
+			);
+		}
+
+		/* Draw indicators at the beginning if there are characters non printed */
+		if(textbox->text_offset) {
+			real_self->painter->abstract_painter.vtable->drawRectangle(
+				&real_self->painter->abstract_painter,
+				base_x + textbox->widget.x ,
+				base_y + textbox->widget.y,
+				2,
+				textbox->widget.height+4,
+				RGB_16B(20,20,20),
+				RGB_16B(20,20,20)
+			);
+		}
+
+		if(textbox->text_offset + (textbox->widget.width / 6) < textbox->text.size) {
+			real_self->painter->abstract_painter.vtable->drawRectangle(
+				&real_self->painter->abstract_painter,
+				base_x + textbox->widget.x + textbox->widget.width-2 ,
+				base_y + textbox->widget.y,
+				2,
+				textbox->widget.height+4,
+				RGB_16B(20,20,20),
+				RGB_16B(20,20,20)
+			);
+		}
+
+	SzString_destructor(&visible_text.object);
 }
 
 void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture picture, WORD base_x, WORD base_y) {

@@ -1,8 +1,11 @@
+/**
+ * \file lcd.h
+ */
 #ifndef _LCD_H_
 #define _LCD_H_
 
 #include <esic/esic.h>
-#include <esic/elcd/lcd_font.h>
+#include <esic/eapi/raster_font.h>
 
 /* Flags? */
 #define	LCD_DOUBLEBUF	0x01
@@ -85,8 +88,6 @@ void Lcd_drawRectangle(WORD x, WORD y, WORD width, WORD height, WORD filling_col
 void Lcd_setPixel(WORD x, WORD y, WORD color);
 
 void Lcd_useFont(const char* font_name);
-
-void Lcd_setFont(const PLcdFont plcd_font);
 
 void Lcd_drawString(WORD x, WORD y, WORD color, const char* string);
 

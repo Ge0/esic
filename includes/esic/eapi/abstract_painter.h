@@ -1,3 +1,6 @@
+/**
+ * \file abstract_painter.h
+ */
 #ifndef _ABSTRACT_PAINTER_H_
 #define _ABSTRACT_PAINTER_H_
 
@@ -11,7 +14,6 @@ typedef struct _vtable_AbstractPainter {
 	void (*drawLine)(PAbstractPainter, WORD, WORD, WORD, WORD, WORD);
 	void (*drawRectangle)(PAbstractPainter, WORD, WORD, WORD, WORD, WORD, WORD);
 	void (*drawString)(PAbstractPainter, WORD, WORD, WORD, const char*);
-	void (*drawStringWithCarret)(PAbstractPainter, WORD, WORD, WORD, const char*, WORD);
 	void (*drawPixel)(PAbstractPainter, WORD, WORD, WORD);
 	void (*drawBuffer)(PAbstractPainter, WORD, WORD, WORD, WORD, WORD*);
 } vtable_AbstractPainter;

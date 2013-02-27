@@ -1,4 +1,6 @@
-
+/**
+ * \file raster_icon.c
+ */
 #include <assert.h>
 #include <esic/eapi/raster_icon.h>
 

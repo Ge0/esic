@@ -1,3 +1,6 @@
+/**
+ * \file raster_font_table.c
+ */
 #include <esic/eapi/raster_font_table.h>
 #include <string.h>
 #include <math.h>

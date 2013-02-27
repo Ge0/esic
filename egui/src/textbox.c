@@ -1,3 +1,6 @@
+/**
+ * \file textbox.c
+ */
 #include <esic/eapi/abstract_system.h>
 #include <esic/egui/textbox.h>
 #include <esic/egui/default_widget_renderer.h>
@@ -17,6 +20,7 @@ static const vtable_Widget s_widget_vtable = {
 
 /* Private functions */
 void _update_carret_position(PTextBox self, Keycode code);
+void _update_offset_text_position(PTextBox self);
 
 PTextBox TextBox_constructor(PTextBox self) {
 
@@ -37,6 +41,7 @@ PTextBox TextBox_constructor(PTextBox self) {
 	/* Default properties */
 	self->widget.is_focusable = TRUE;
 	self->draw_carret         = FALSE;
+	self->text_offset         = 0;
 
 	return self;
 }
@@ -72,21 +77,31 @@ void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
 }
 
 void TextBox_appendChar(PTextBox self, char ch) {
-	SzString_insertCharAt(&self->text, self->carret_pos, ch);
+	SzString_insertCharAt(&self->text, self->carret_position, ch);
 	//SzString_append(&self->text, ch);
-	++self->carret_pos;
+	++self->carret_position;
+	_update_offset_text_position(self);
 }
 
 void TextBox_removeLastChar(PTextBox self) {
 	if(self->text.size > 0) {
 		SzString_removeLastChar(&self->text);
-		--self->carret_pos;
+		--self->carret_position;
+		_update_offset_text_position(self);
+	}
+}
+
+void TextBox_removeCharAt(PTextBox self, DWORD pos) {
+	if(pos >= 0 && pos < self->text.size) {
+		SzString_removeCharAt(&self->text, pos);
+		--self->carret_position;
+		_update_offset_text_position(self);
 	}
 }
 
 void TextBox_setText(PTextBox self, const char* text) {
 	SzString_setData(&self->text, text);
-	self->carret_pos = self->text.size;
+	self->carret_position = self->text.size;
 }
 
 DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
@@ -95,6 +110,28 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 	Event custom_event;
 
 	switch(system_event->type) {
+
+	case EVENT_BLUR:
+		/* Do not draw the carret anymore */
+		real_self->draw_carret = FALSE;
+
+		/* Repaint the widget without the carret */
+		custom_event.type = EVENT_PAINT;
+		custom_event.real_event.widget_event.id = self->id;
+		singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+		break;
+
+	case EVENT_FOCUS:
+		/* Draw the carret */
+		real_self->draw_carret = TRUE;
+
+		/* Repaint the widget */
+		custom_event.type = EVENT_PAINT;
+		custom_event.real_event.widget_event.id = self->id;
+		singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+
+		break;
+
 	case EVENT_PAINT:
 		TextBox_paint(self, self->parent->x, self->parent->y);
 		break;
@@ -105,7 +142,12 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 		/* From A to Z */
 		if(system_event->real_event.keyboard_event.code >= KEY_a && 
 			system_event->real_event.keyboard_event.code <= KEY_z) {
-			TextBox_appendChar(real_self, system_event->real_event.keyboard_event.code);
+			BYTE key = system_event->real_event.keyboard_event.code;
+			BYTE* keyboard = singleton_system()->vtable->getKeyState(singleton_system());
+			if(keyboard[KEY_RSHIFT] || keyboard[KEY_LSHIFT]) {
+				key &= 0xDF; /* Switch to uppercase if shift is pressed */
+			}
+			TextBox_appendChar(real_self, key);
 			request_paint = 1;
 
 		/* Other printable characters... */
@@ -116,8 +158,10 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 		/* Backspace (char removal) */
 		} else if(system_event->real_event.keyboard_event.code == KEY_BACKSPACE) {
-			TextBox_removeLastChar(real_self);
-			request_paint = 1;
+			if(real_self->carret_position > 0) {
+				TextBox_removeCharAt(real_self, real_self->carret_position-1);
+				request_paint = 1;
+			}
 		}
 
 		/* Arrows left / right in order to move carret position */
@@ -129,7 +173,7 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 		if(request_paint) {
 			custom_event.type = EVENT_PAINT;
-			custom_event.real_event.paint_event.id = self->id;
+			custom_event.real_event.widget_event.id = self->id;
 
 			singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
 		}
@@ -141,7 +185,7 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 			real_self->draw_carret = !real_self->draw_carret;
 
 			custom_event.type = EVENT_PAINT;
-			custom_event.real_event.paint_event.id = self->id;
+			custom_event.real_event.widget_event.id = self->id;
 
 			singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
 		}
@@ -156,14 +200,38 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 void _update_carret_position(PTextBox self, Keycode code) {
 	switch(code) {
 	case KEY_LEFT:
-		if(self->carret_pos > 0) {
-			--self->carret_pos;
+		if(self->carret_position > 0) {
+			--self->carret_position;
+			/* Offset recomputing */
+			_update_offset_text_position(self);
 		}
 		break;
 	case KEY_RIGHT:
-		if(self->carret_pos < self->text.size) {
-			++self->carret_pos;
+		if(self->carret_position < self->text.size) {
+			++self->carret_position;
+			/* Offset recomputing */
+			_update_offset_text_position(self);
 		}
 		break;
 	}
+}
+
+void _update_offset_text_position(PTextBox self) {
+	WORD size_in_letters = self->widget.width / 6; /* Remove the '6'... */
+
+	if(self->carret_position - self->text_offset > size_in_letters
+		&& size_in_letters < self->text.size) {
+		self->text_offset = self->carret_position - size_in_letters;
+		return;
+	}
+
+	if(self->carret_position < self->text_offset) {
+		self->text_offset = self->carret_position;
+	}
+
+	/*
+	if(self->carret_position - self->text_offset > size_in_letters) {
+		self->text_offset = self->carret_position - size_in_letters;
+	}
+	*/
 }

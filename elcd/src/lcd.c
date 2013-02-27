@@ -1,5 +1,8 @@
+/**
+ * \file lcd.c
+ */
 #include <esic/elcd/lcd.h>
-#include <esic/elcd/lcd_font.h>
+#include <esic/eapi/raster_font.h>
 #include <esic/etools/vector.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -33,7 +36,7 @@ static DWORD s_flags = 0;
 const WORD* g_lcd_frame_buffer = NULL;
 
 /* Pointer to current font */
-PLcdFont s_current_font = NULL;
+PRasterFont s_current_font = NULL;
 
 
 /* Private functions */
@@ -211,9 +214,6 @@ void _Lcd_draw(DWORD index, WORD color) {
 	}
 }
 
-void Lcd_setFont(const PLcdFont plcd_font) {
-	s_current_font = plcd_font;
-}
 
 void Lcd_drawString(WORD x, WORD y, WORD color, const char* string) {
 	if(s_current_font != NULL) {

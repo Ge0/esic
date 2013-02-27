@@ -1,3 +1,6 @@
+/**
+ * \file vertice.h
+ */
 #ifndef _VERTICE_H_
 #define _VERTICE_H_
 

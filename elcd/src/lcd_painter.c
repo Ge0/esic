@@ -1,3 +1,6 @@
+/**
+ * \file lcd_painter.c
+ */
 #include <esic/elcd/lcd_painter.h>
 #include <esic/elcd/lcd.h>
 
@@ -12,7 +15,6 @@ static const vtable_AbstractPainter s_abstract_painter_vtable = {
 	LcdPainter_drawLine,
 	LcdPainter_drawRectangle,
 	LcdPainter_drawString,
-	LcdPainter_drawStringWithCarret,
 	LcdPainter_drawPixel,
 	LcdPainter_drawBuffer
 };
@@ -91,59 +93,6 @@ void LcdPainter_drawString(PAbstractPainter self, WORD x, WORD y , WORD color, c
 				SicFree(character_data);
 
 			}
-		}
-	}
-}
-
-void LcdPainter_drawStringWithCarret(PAbstractPainter self, WORD x, WORD y , WORD color, const char* string, WORD carret_pos) {
-	PLcdPainter real_self = (PLcdPainter)self;
-	if(self->raster_font != NULL) {
-		DWORD i, j, len;
-		BYTE character_width, character_height;
-		DWORD size_string = strlen(string);
-		char* character_data = NULL;
-
-
-		/* For each character */
-		for(i = 0; i < size_string; ++i) {
-
-			int utf8_code = 0;
-
-			/* If the code of the char is above 0x7F, then this is UTF-8) */
-			if(string[i] > 0x7F) {
-
-			} else {
-				/* Sample ASCII */
-				utf8_code = string[i];
-			}
-
-			/* Retrieve the character's data */
-			character_data = RasterFont_getCharacterData(self->raster_font, utf8_code, &len, &character_width, &character_height);
-
-			if(i == carret_pos) {
-				self->vtable->drawRectangle(self, x+(i*character_width),y,1,character_height,color, color);
-			}
-
-			/* Data found? Map it into the framebuffer ! */
-			if(character_data != NULL) {
-
-				for(j = 0; j < len*8; j++) {
-					DWORD bit = GET_BIT_STRING_BIGENDIAN(character_data, j);
-					/* If the current bit is 1, switch the pixel on */
-					if(bit == 1) {
-						DWORD x_dest = (x + i * character_width + (j % character_width));
-						DWORD y_dest = y + (j / character_width) /* + ((x_dest / 320) * character_height) */;
-						Lcd_setPixel(x_dest, y_dest, color);
-					}
-				}
-
-				SicFree(character_data);
-
-			}
-		}
-
-		if(i == carret_pos && size_string > 0) {
-			self->vtable->drawRectangle(self, x+(i*character_width),y,1,character_height,color, color);
 		}
 	}
 }

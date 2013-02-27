@@ -1,3 +1,6 @@
+/**
+ * \file raster_icon_factory.c
+ */
 #include <assert.h>
 #include <esic/eapi/heap.h>
 #include <esic/eapi/raster_icon_factory.h>

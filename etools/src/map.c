@@ -1,3 +1,6 @@
+/**
+ * map.c
+ */
 #include <esic/etools/map.h>
 
 PMap Map_constructor(PMap self, size_t sizeof_key, size_t sizeof_value) {

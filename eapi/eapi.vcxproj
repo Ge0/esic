@@ -93,7 +93,6 @@
     <ClInclude Include="..\includes\esic\eapi\event.h" />
     <ClInclude Include="..\includes\esic\eapi\heap.h" />
     <ClInclude Include="..\includes\esic\eapi\keyboard_event.h" />
-    <ClInclude Include="..\includes\esic\eapi\paint_event.h" />
     <ClInclude Include="..\includes\esic\eapi\raster_font.h" />
     <ClInclude Include="..\includes\esic\eapi\raster_font_factory.h" />
     <ClInclude Include="..\includes\esic\eapi\raster_font_header.h" />
@@ -104,6 +103,7 @@
     <ClInclude Include="..\includes\esic\eapi\raster_icon_header.h" />
     <ClInclude Include="..\includes\esic\eapi\timer_event.h" />
     <ClInclude Include="..\includes\esic\eapi\vertice.h" />
+    <ClInclude Include="..\includes\esic\eapi\widget_event.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

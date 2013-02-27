@@ -1,3 +1,6 @@
+/**
+ * \file vertice.c
+ */
 #include <esic/egraphics/vertice.h>
 
 static const vtable_Object s_vtable_object = {

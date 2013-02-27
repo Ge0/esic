@@ -1,3 +1,6 @@
+/**
+ * hashnode.c
+ */
 #include <esic/etools/hashnode.h>
 
 #include <assert.h>

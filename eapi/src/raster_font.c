@@ -1,3 +1,6 @@
+/**
+ * \file raster_font.c
+ */
 #include <esic/eapi/raster_font.h>
 #include <esic/eapi/raster_font_table_header.h>
 #include <esic/etools/vector.h>

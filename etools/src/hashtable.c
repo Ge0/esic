@@ -1,3 +1,6 @@
+/**
+ * hashtable.c
+ */
 #include <esic/etools/hashtable.h>
 #include <assert.h>
 #include <stdlib.h>

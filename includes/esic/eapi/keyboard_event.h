@@ -1,3 +1,6 @@
+/**
+ * \file keyboard_event.h
+ */
 #ifndef _KEYBOARD_EVENT_H_
 #define _KEYBOARD_EVENT_H_
 

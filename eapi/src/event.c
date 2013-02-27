@@ -1,3 +1,6 @@
+/**
+ * \file event.c
+ */
 #include <esic/eapi/event.h>
 
 static const vtable_Object s_vtable_object = { Event_destructor, NULL, NULL, NULL };

@@ -1,3 +1,6 @@
+/**
+ * \file emulator_system.h
+ */
 #ifndef _EMULATOR_SYSTEM_H_
 #define _EMULATOR_SYSTEM_H_
 
@@ -31,6 +34,7 @@ void	EmulatorSystem_delay(PAbstractSystem, DWORD);
 DWORD	EmulatorSystem_getTicks(PAbstractSystem self);
 void*	EmulatorSystem_getFrameBuffer(PAbstractSystem self);
 void	EmulatorSystem_enqueueEvent(PAbstractSystem self, PEvent system_event);
+BYTE*	EmulatorSystem_getKeyState(PAbstractSystem self);
 
 
 /* Vtables definition */

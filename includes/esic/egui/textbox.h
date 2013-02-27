@@ -1,3 +1,6 @@
+/**
+ * \file textbox.h
+ */
 #ifndef _TEXTBOX_H_
 #define _TEXTBOX_H_
 
@@ -12,7 +15,8 @@ typedef struct _TextBox {
 	Widget widget;
 	WORD background_color;
 	WORD border_color;
-	WORD carret_pos;
+	WORD text_offset;
+	WORD carret_position;
 	BOOL draw_carret;
 	SzString text;
 } TextBox, *PTextBox;
@@ -31,5 +35,6 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event);
 /* Others */
 void TextBox_setText(PTextBox self, const char* text);
 void TextBox_removeLastChar(PTextBox self);
+void TextBox_removeCharAt(PTextBox self, DWORD pos);
 
 #endif /* _LABEL_H_ */

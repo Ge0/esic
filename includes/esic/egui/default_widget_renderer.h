@@ -1,3 +1,6 @@
+/**
+ * \file default_widget_renderer.h
+ */
 #ifndef _DEFAULT_WIDGET_RENDERER_
 #define _DEFAULT_WIDGET_RENDERER_
 

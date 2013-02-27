@@ -18,6 +18,7 @@ static const vtable_Widget s_widget_vtable = {
 
 
 PE11UI E11UI_constructor(PE11UI self) {
+	Event widget_event;
 	DWORD i;
 
 	/* Calling parent constructor */
@@ -37,6 +38,12 @@ PE11UI E11UI_constructor(PE11UI self) {
 	}
 
 	//self->hot_widget = NULL;
+
+	
+	/* Request the widget to be painted */
+	widget_event.type = EVENT_PAINT;
+	widget_event.real_event.widget_event.id = 0; /* Paint everything? */
+	singleton_system()->vtable->enqueueEvent(singleton_system(), &widget_event);
 
 	return self;
 }
@@ -81,17 +88,23 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 		}
 	}
 
-	
-
 
 	switch(system_event->type) {
 	case EVENT_KEYBOARD_KDOWN:
 		/* Need a hot widget to handle the event */
 		if(hot_widget != NULL) {
+			
 			current_child = ((PWidgetPtr)hot_widget->data)->widget;
 
 			if(system_event->real_event.keyboard_event.code == KEY_TAB) {
 				/* Tab pressed: switch to the next hot widget */
+
+				/* Inform the current widget that he's lost the focus */
+				
+				custom_event.real_event.widget_event.id = current_child->id;
+				custom_event.type = EVENT_BLUR;
+				singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+
 				while(1) {
 					if(hot_widget->next == NULL) {
 						hot_widget = self->childs.head;
@@ -107,31 +120,37 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 					}
 				}
 			}
+
+			/* Inform the new widget that it as gained the focus */
+			custom_event.real_event.widget_event.id = current_child->id;
+			custom_event.type = EVENT_FOCUS;
+			singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+
 			current_child->vtable->defaultProc(current_child, system_event);
 		}
 
 		break;
 
 	case EVENT_PAINT:
-	
-		it = self->childs.head;
+		if(system_event->real_event.widget_event.id == 0) {
+			return Widget_defaultProc(self, system_event);
+		} else {
+			/* If the id equals 0, paint every childs, otherwise find the good one & paint it */
+			it = self->childs.head;
 
-		/* No id? dispatch the event to every child */
-		while(it != NULL) {
-			PWidget chld = ((PWidgetPtr)it->data)->widget;
-			/* If the event is to the current child, forward it. */
-			if(system_event->real_event.paint_event.id == chld->id || system_event->real_event.paint_event.id == 0) {
-				chld->vtable->defaultProc(chld, system_event);
+			/* No id? dispatch the event to every child */
+			while(it != NULL) {
+				PWidget chld = ((PWidgetPtr)it->data)->widget;
+				/* If the event is to the current child, forward it. */
+				if(system_event->real_event.widget_event.id == chld->id) {
+					chld->vtable->defaultProc(chld, system_event);
+				}
+				it = it->next;
 			}
-			it = it->next;
 		}
-
-		/*
-		current_child = ((PWidgetPtr)hot_widget->data)->widget;
-		current_child->vtable->defaultProc(current_child, system_event);
-		*/
 		
 		break;
+
 
 	case EVENT_TIMER:
 		current_child = ((PWidgetPtr)hot_widget->data)->widget;

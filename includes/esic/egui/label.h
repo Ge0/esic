@@ -1,3 +1,6 @@
+/**
+ * \file label.h
+ */
 #ifndef _LABEL_H_
 #define _LABEL_H_
 

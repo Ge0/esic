@@ -1,3 +1,6 @@
+/**
+ * \file widget_ptr.c
+ */
 #include <esic/egui/widget_ptr.h>
 
 static const vtable_Object s_vtable_object = {

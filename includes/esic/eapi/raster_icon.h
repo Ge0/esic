@@ -1,3 +1,6 @@
+/**
+ * \file raster_icon.h
+ */
 #ifndef _RASTER_ICON_H_
 #define _RASTER_ICON_H_
 

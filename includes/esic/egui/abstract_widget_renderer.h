@@ -1,3 +1,6 @@
+/**
+ * \file abstract_widget_renderer.h
+ */
 #ifndef _ABSTRACT_WIDGET_RENDERER_
 #define _ABSTRACT_WIDGET_RENDERER_
 

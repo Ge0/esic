@@ -1,3 +1,6 @@
+/**
+ * szstring.c
+ */
 #include <esic/etools/szstring.h>
 
 #include <assert.h>
@@ -116,6 +119,21 @@ void SzString_removeLastChar(PSzString self) {
 	}
 }
 
+void SzString_subString(PSzString self, DWORD start, DWORD n, PSzString out) {
+	if(self->size > 0) {
+		if(start < self->size) {
+			SzString_setData(out, self->data + start);
+			if(n > 0) {
+				if(n < out->size) {
+					out->data[n] = '\0';
+					out->size    = strlen(out->data);
+				}
+			}
+		}
+
+	}
+}
+
 void SzString_insertCharAt(PSzString self, DWORD pos, char ch) {
 	if(pos >= 0 && pos <= self->size) {
 		char* buf = (char*)SicAlloc(self->size + 2); /* +2 for both ch & \0 */
@@ -127,5 +145,16 @@ void SzString_insertCharAt(PSzString self, DWORD pos, char ch) {
 		buf[self->size] = '\0';
 		SicFree(self->data);
 		self->data = buf;
+	}
+}
+
+void SzString_removeCharAt(PSzString self, DWORD pos) {
+	if(pos >= 0 && pos < self->size) {
+		DWORD i;
+		for(i = pos; i < (self->size-1); ++i) {
+			self->data[i] = self->data[i+1];
+		}
+		--self->size;
+		self->data[self->size] = '\0';
 	}
 }

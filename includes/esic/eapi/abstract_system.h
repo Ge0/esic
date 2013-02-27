@@ -1,3 +1,6 @@
+/**
+ * \file abstract_system.h
+ */
 #ifndef _ABSTRACT_SYSTEM_H_
 #define _ABSTRACT_SYSTEM_H_
 
@@ -15,6 +18,7 @@ typedef struct _vtable_AbstractSystem {
 	DWORD	(*getTicks)(PAbstractSystem);
 	void*	(*getFrameBuffer)(PAbstractSystem);
 	void	(*enqueueEvent)(PAbstractSystem, PEvent);
+	BYTE*   (*getKeyState)(PAbstractSystem);
 } vtable_AbstractSystem;
 
 typedef struct _AbstractSystem {

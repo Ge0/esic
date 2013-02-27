@@ -1,3 +1,6 @@
+/**
+ * \file main.c
+ */
 #include "SDL/SDL.h"
 #include "emulator_system.h"
 #include <e11.h>

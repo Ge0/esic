@@ -1,3 +1,6 @@
+/**
+ * \file emulator_system.c
+ */
 #include <assert.h>
 #include <SDL/SDL.h>
 #include <esic/elcd/lcd.h>
@@ -27,7 +30,8 @@ static const vtable_AbstractSystem s_abstract_system_vtable = {
 	EmulatorSystem_delay,
 	EmulatorSystem_getTicks,
 	EmulatorSystem_getFrameBuffer,
-	EmulatorSystem_enqueueEvent
+	EmulatorSystem_enqueueEvent,
+	EmulatorSystem_getKeyState
 };
 
 
@@ -47,6 +51,7 @@ PEmulatorSystem EmulatorSystem_constructor(PEmulatorSystem self) {
 
 	error = SDL_Init(SDL_INIT_VIDEO);
 	self->screen = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE);
+	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	Lcd_init(320, 240, self->abstract_system.vtable->getFrameBuffer(&self->abstract_system), 0, DEFAULT_BACKGROUND_COLOR);
 	SDL_ShowCursor(0);
 
@@ -122,7 +127,7 @@ static void _createEventFromSDL(PEvent system_event, const SDL_Event* psdl_event
 
 	case SDL_USEREVENT:
 		system_event->type = (EventType)psdl_event->user.code;
-		system_event->real_event.paint_event.id = (WORD)psdl_event->user.data1;
+		system_event->real_event.widget_event.id = (WORD)psdl_event->user.data1;
 		break;
 
 	case SDL_QUIT:
@@ -145,7 +150,7 @@ static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event) {
 	case EVENT_PAINT:
 		psdl_event->type = SDL_USEREVENT;
 		psdl_event->user.code = EVENT_PAINT;
-		psdl_event->user.data1 = (void*)system_event->real_event.paint_event.id;
+		psdl_event->user.data1 = (void*)system_event->real_event.widget_event.id;
 		psdl_event->user.data2 = 0;
 		break;
 
@@ -153,6 +158,20 @@ static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event) {
 		psdl_event->type = SDL_USEREVENT;
 		psdl_event->user.code = EVENT_TIMER;
 		psdl_event->user.data1 = (void*)system_event->real_event.timer_event.id;
+		psdl_event->user.data2 = 0;
+		break;
+
+	case EVENT_BLUR:
+		psdl_event->type = SDL_USEREVENT;
+		psdl_event->user.code = EVENT_BLUR;
+		psdl_event->user.data1 = (void*)system_event->real_event.widget_event.id;
+		psdl_event->user.data2 = 0;
+		break;
+
+	case EVENT_FOCUS:
+		psdl_event->type = SDL_USEREVENT;
+		psdl_event->user.code = EVENT_FOCUS;
+		psdl_event->user.data1 = (void*)system_event->real_event.widget_event.id;
 		psdl_event->user.data2 = 0;
 		break;
 
@@ -169,6 +188,10 @@ DWORD EmulatorSystem_getTicks(PAbstractSystem self) {
 
 void* EmulatorSystem_getFrameBuffer(PAbstractSystem self) {
 	return ((PEmulatorSystem)self)->screen->pixels;
+}
+
+BYTE* EmulatorSystem_getKeyState(PAbstractSystem self) {
+	return (BYTE*)SDL_GetKeyState(NULL);
 }
 
 void EmulatorSystem_enqueueEvent(PAbstractSystem self, PEvent system_event) {

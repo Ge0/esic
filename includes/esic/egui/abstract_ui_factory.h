@@ -1,3 +1,6 @@
+/**
+ * \file abstract_ui_factory.h
+ */
 #ifndef _UI_FACTORY_H_
 #define _UI_FACTORY_H_
 

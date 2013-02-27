@@ -56,9 +56,6 @@
     <ClInclude Include="..\includes\esic\eapi\keyboard_event.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\esic\eapi\paint_event.h">
-      <Filter>includes</Filter>
-    </ClInclude>
     <ClInclude Include="..\includes\esic\eapi\vertice.h">
       <Filter>includes</Filter>
     </ClInclude>
@@ -90,6 +87,9 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\esic\eapi\timer_event.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\widget_event.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

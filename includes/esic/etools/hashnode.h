@@ -1,3 +1,6 @@
+/**
+ * hashnode.h
+ */
 #ifndef _HASHNODE_H_
 #define _HASHNODE_H_
 
