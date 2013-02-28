@@ -26,6 +26,10 @@
 	typedef int             INT;
 	typedef unsigned int	UINT;
 
+	#define ESIC_MACROS
+	#define HIWORD(value) ((value >> 16) & 0xFFFF)
+	#define LOWORD(value) (value & 0xFFFF)
+
 #else
 	#include <Windows.h>
 	#include <stdint.h>
@@ -35,9 +39,7 @@
 	typedef int32_t SDWORD;
 #endif
 	
-#define ESIC_MACROS
-#define HIWORD(value) ((value >> 16) & 0xFFFF)
-#define LOWORD(value) (value & 0xFFFF)
+
 
 	
 

@@ -16,6 +16,8 @@ static const vtable_Widget s_widget_vtable = {
 	E11UI_paint
 };
 
+void _handle_keyboard_keydown_event(PWidget self, PEvent system_event);
+
 
 PE11UI E11UI_constructor(PE11UI self) {
 	Event widget_event;
@@ -24,7 +26,7 @@ PE11UI E11UI_constructor(PE11UI self) {
 	/* Calling parent constructor */
 	Widget_constructor(&self->widget);
 
-	/* Define later */
+	/* TODO: put defines later */
 	self->widget.x =  0;
 	self->widget.y = 16;
 
@@ -37,8 +39,11 @@ PE11UI E11UI_constructor(PE11UI self) {
 		Picture_constructor(&self->icons[i]);
 	}
 
-	//self->hot_widget = NULL;
+	/* set every Function function pointers to NULL */
+	memset(self->onFunction, '\0', sizeof(void (*)(PE11UI)) * NUMBER_OF_FUNCTIONS);
 
+	/* No focused widget for the moment */
+	self->focused_widget = NULL;
 	
 	/* Request the widget to be painted */
 	widget_event.type = EVENT_PAINT;
@@ -70,64 +75,33 @@ PObject E11UI_clone(PObject self, PObject dst) {
 
 DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 	/* TODO. */
-	static PListNode hot_widget = NULL;
 	PListNode it = NULL;
 	PE11UI real_self = (PE11UI)self;
 	PWidget current_child;
 	Event custom_event;
+	BYTE* keyboard_state = NULL;
+
 	/* if there are no hot widget, pick up the first focusable widget */
-	if(hot_widget == NULL) {
-		hot_widget = self->childs.head;
-		while(hot_widget != NULL) {
-			current_child = ((PWidgetPtr)hot_widget->data)->widget;
+	if(real_self->focused_widget == NULL) {
+		real_self->focused_widget = self->childs.head;
+		while(real_self->focused_widget != NULL) {
+			current_child = ((PWidgetPtr)real_self->focused_widget->data)->widget;
 			if(current_child->is_focusable) {
-				/* if the current widget is focusable, break the loop */
+				/* if the current widget is focusable, inform it's been focused, & break the loop */
+				custom_event.real_event.widget_event.id = current_child->id;
+				custom_event.type = EVENT_FOCUS;
+				singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
 				break;
 			}
-			hot_widget = hot_widget->next;
+			real_self->focused_widget = real_self->focused_widget->next;
 		}
 	}
 
 
 	switch(system_event->type) {
 	case EVENT_KEYBOARD_KDOWN:
-		/* Need a hot widget to handle the event */
-		if(hot_widget != NULL) {
-			
-			current_child = ((PWidgetPtr)hot_widget->data)->widget;
 
-			if(system_event->real_event.keyboard_event.code == KEY_TAB) {
-				/* Tab pressed: switch to the next hot widget */
-
-				/* Inform the current widget that he's lost the focus */
-				
-				custom_event.real_event.widget_event.id = current_child->id;
-				custom_event.type = EVENT_BLUR;
-				singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-
-				while(1) {
-					if(hot_widget->next == NULL) {
-						hot_widget = self->childs.head;
-					} else {
-						hot_widget = hot_widget->next;
-					}
-
-					current_child = ((PWidgetPtr)hot_widget->data)->widget;
-
-					if(current_child->is_focusable) {
-						/* if the current widget is focusable, break the loop */
-						break;
-					}
-				}
-			}
-
-			/* Inform the new widget that it as gained the focus */
-			custom_event.real_event.widget_event.id = current_child->id;
-			custom_event.type = EVENT_FOCUS;
-			singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-
-			current_child->vtable->defaultProc(current_child, system_event);
-		}
+		_handle_keyboard_keydown_event(self, system_event);	
 
 		break;
 
@@ -153,7 +127,7 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 
 
 	case EVENT_TIMER:
-		current_child = ((PWidgetPtr)hot_widget->data)->widget;
+		current_child = ((PWidgetPtr)real_self->focused_widget->data)->widget;
 		current_child->vtable->defaultProc(current_child, system_event);
 		break;
 	default:
@@ -164,12 +138,12 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 
 void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 	PE11UI real_self = (PE11UI)self;
-	DWORD i;
+	WORD i;
 	/* Call parent paint */
 	Widget_paint(self, base_x, base_y);
 
 	/* Draw icons */
-	for(i = 0; i < 12; i++) {
+	for(i = 0; i < NUMBER_OF_ICONS; i++) {
 		/* Paint each icon */
 		real_self->icons[i].widget.vtable->paint(
 			&real_self->icons[i].widget,
@@ -182,7 +156,7 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 		/* Top border */
 		Lcd_drawRectangle(
 			ICONS_BASE_X + (54*(i%ICONS_PER_LINE)) - BORDER_THICKNESS,
-			ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(i/6)) - BORDER_THICKNESS,
+			ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*((WORD)i/6)) - BORDER_THICKNESS,
 			real_self->icons[i].icon->header.width + BORDER_THICKNESS,
 			BORDER_THICKNESS,
 			(i < 6 ? BACKGROUND_FIRST_ROW : BACKGROUND_SECOND_ROW),
@@ -234,5 +208,70 @@ PPicture E11UI_getPicture(PE11UI self, DWORD index) {
 void E11UI_setIcon(PE11UI self, DWORD index, const PPicture icon) {
 	if(index >= 0 && index < NUMBER_OF_ICONS) {
 		self->icons[index] = *icon;
+	}
+}
+
+void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
+	PE11UI real_self = (PE11UI)self;
+	PWidget current_child = NULL;
+	BYTE* keyboard_state = NULL;
+	Event custom_event;
+
+	/* According to the key pressed */
+	if(system_event->real_event.keyboard_event.code >= KEY_F1 &&
+		system_event->real_event.keyboard_event.code <= KEY_F12) {
+		/* Call the appropriate function */
+		if(real_self->onFunction[system_event->real_event.keyboard_event.code - KEY_F1] != NULL) {
+			real_self->onFunction[system_event->real_event.keyboard_event.code - KEY_F1](real_self);
+		}
+	} else {
+		/* Need a hot widget to handle the event */
+		if(real_self->focused_widget != NULL) {
+			
+			current_child = ((PWidgetPtr)(real_self->focused_widget)->data)->widget;
+
+			if(system_event->real_event.keyboard_event.code == KEY_TAB) {
+				/* Tab pressed: switch to the next hot widget */
+
+				/* Inform the current widget that he's lost the focus */
+				
+				custom_event.real_event.widget_event.id = current_child->id;
+				custom_event.type = EVENT_BLUR;
+				singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+				keyboard_state = singleton_system()->vtable->getKeyState(singleton_system());
+
+				while(1) {
+					/* If alt is pressed, loop through widgets backward, otherwise go forward */
+					if(keyboard_state[KEY_RSHIFT] || keyboard_state[KEY_LSHIFT]) {
+						if(real_self->focused_widget->prev == NULL) {
+							real_self->focused_widget = self->childs.tail;
+						} else {
+							real_self->focused_widget = real_self->focused_widget->prev;
+						}
+					} else {
+						if(real_self->focused_widget->next == NULL) {
+							real_self->focused_widget = self->childs.head;
+						} else {
+							real_self->focused_widget = real_self->focused_widget->next;
+						}
+					}
+
+					current_child = ((PWidgetPtr)real_self->focused_widget->data)->widget;
+
+					if(current_child->is_focusable) {
+						/* if the current widget is focusable, break the loop */
+						break;
+					}
+				}
+			}
+
+			/* Inform the new widget that it as gained the focus */
+			custom_event.real_event.widget_event.id = current_child->id;
+			custom_event.type = EVENT_FOCUS;
+			singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+
+			/* Forward the event to the focused widget */
+			current_child->vtable->defaultProc(current_child, system_event);
+		}
 	}
 }

@@ -95,13 +95,13 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 	static PListNode hot_widget = NULL;
 	PListNode it = NULL;
 	PWidget current_child;
-	Event custom_event;
 	switch(system_event->type) {
 
 
-	/* These three events have to be transmitted to childs only when requested */
+	/* These two events have to be transmitted to childs only when requested */
 	case EVENT_BLUR:
 	case EVENT_FOCUS:
+
 		it = self->childs.head;
 
 		/* No id? dispatch the event to every child */

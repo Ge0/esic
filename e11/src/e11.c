@@ -66,7 +66,6 @@ void _e11_mainloop(PAbstractSystem system) {
 	BOOL looping = 1;
 	DWORD ticks1, ticks2;
 	/* TEST START */
-	PWidget main_window;
 	PRasterFont test_font = NULL;
 	SzString s1, s2;
 	
@@ -124,6 +123,7 @@ void _e11_mainloop(PAbstractSystem system) {
 		
 
 		system->vtable->update(system);
+		system->vtable->delay(system, 15);
 		Lcd_update();
 
 	}

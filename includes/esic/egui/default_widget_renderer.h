@@ -9,6 +9,8 @@
 #include <esic/egui/label.h>
 #include <esic/egui/textbox.h>
 
+#define TEXTBOX_DEFAULT_WIDTH_CHARACTER	6
+
 typedef struct _DefaultWidgetRenderer {
 	AbstractWidgetRenderer abstract_widget_renderer;
 	PLcdPainter painter;

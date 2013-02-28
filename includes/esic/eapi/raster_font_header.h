@@ -10,7 +10,11 @@
 typedef struct _RasterFontHeader {
 	DWORD			signature;				/* Signature of a raster font file (must be: 0x0151c51c) */
 	WORD			version;				/* To support extensions? */
-	WORD			number_of_tables;		/* Number of tables */
+	WORD			number_of_tables;		/* Number of character tables */
+	/* V2: */
+	BYTE			base_character_width;
+	BYTE			base_character_height;
+	WORD			alignment;
 } RasterFontHeader, *PRasterFontHeader;
 
 

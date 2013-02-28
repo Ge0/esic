@@ -53,7 +53,7 @@ void _lcd_fill_top_flat_triangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WO
 /* End Private functions */
 
 
-void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags, DWORD background_color) {
+void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags, WORD background_color) {
 	DWORD size;
 	DWORD i;
 	s_width = width;
@@ -211,51 +211,6 @@ void _Lcd_draw(DWORD index, WORD color) {
 	case LCD_DEL:
 		s_double_buf[index] -= color;
 		break;
-	}
-}
-
-
-void Lcd_drawString(WORD x, WORD y, WORD color, const char* string) {
-	if(s_current_font != NULL) {
-		DWORD i, j, len;
-		BYTE character_width, character_height;
-		DWORD size_string = strlen(string);
-		char* character_data = NULL;
-
-
-		/* For each character */
-		for(i = 0; i < size_string; ++i) {
-			int utf8_code = 0;
-
-			/* If the code of the char is above 0x7F, then this is UTF-8) */
-			if(string[i] > 0x7F) {
-
-			} else {
-				/* Sample ASCII */
-				utf8_code = string[i];
-			}
-
-			/* Retrieve the character's data */
-			//character_data = LcdFont_getCharacterData(s_current_font, utf8_code, &len, &character_width, &character_height);
-
-			/* Data found? Map it into the framebuffer ! */
-			if(character_data != NULL) {
-
-				for(j = 0; j < len*8; j++) {
-					DWORD bit = GET_BIT_STRING_BIGENDIAN(character_data, j);
-					/* If the current bit is 1, switch the pixel on */
-					if(bit == 1) {
-						DWORD x_dest = (x + i * character_width + (j % character_width));
-						DWORD y_dest = y + (j / character_width) + ((x_dest / s_width) * character_height);
-						x_dest %= s_width;
-						_Lcd_draw( TO_INDEX(x_dest, y_dest, s_width, s_height), color);
-					}
-				}
-
-				SicFree(character_data);
-
-			}
-		}
 	}
 }
 

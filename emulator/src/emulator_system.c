@@ -140,6 +140,8 @@ static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event) {
 	switch(system_event->type) {
 	case EVENT_KEYBOARD_KDOWN:
 		psdl_event->type = SDL_KEYDOWN;
+		psdl_event->key.keysym.sym = (SDLKey)system_event->real_event.keyboard_event.code;
+		psdl_event->key.keysym.mod = KMOD_CAPS;
 		/* TODO. */
 		break;
 

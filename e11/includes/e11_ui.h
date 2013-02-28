@@ -1,6 +1,7 @@
 #ifndef _E11_UI_H_
 #define _E11_UI_H_
 
+#define NUMBER_OF_FUNCTIONS		12
 #define ICONS_BASE_X			9
 #define ICONS_BASE_Y			164
 #define ICONS_PER_LINE			6
@@ -13,10 +14,14 @@
 #include <esic/egui/picture.h>
 #include <esic/egui/widget.h>
 
+typedef struct _E11UI *PE11UI;
+
 typedef struct _E11UI {
 	Widget widget;
+	void (*onFunction[NUMBER_OF_FUNCTIONS])(PE11UI);	/* array of function pointers */
 	Picture icons[NUMBER_OF_ICONS];
 	WORD hot_widget_id; /* Test */
+	PListNode focused_widget;
 } E11UI, *PE11UI;
 
 PE11UI E11UI_constructor(PE11UI self);

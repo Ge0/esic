@@ -199,8 +199,10 @@ void _hydrate_label(PLabel label, const char** atts) {
 void _hydrate_textbox(PTextBox textbox, const char** atts) {
 	DWORD i;
 
-	textbox->background_color = TEXTBOX_DEFAULT_BACKGROUND_COLOR;
-	textbox->border_color     = TEXTBOX_DEFAULT_BORDER_COLOR;
+	textbox->background_color         = TEXTBOX_DEFAULT_BACKGROUND_COLOR;
+	textbox->border_color             = TEXTBOX_DEFAULT_BORDER_COLOR;
+	textbox->focused_background_color = TEXTBOX_DEFAULT_FOCUSED_BACKGROUND_COLOR;
+	textbox->focused_border_color     = TEXTBOX_DEFAULT_FOCUSED_BORDER_COLOR;
 
 	for(i = 0; atts[i]; i += 2) {
 		if(strcmp(atts[i], "text") == 0) {
@@ -213,6 +215,14 @@ void _hydrate_textbox(PTextBox textbox, const char** atts) {
 			DWORD color  = atoi(atts[i+1]);
 			WORD  wcolor = RGB_16B(RED(color), GREEN(color), BLUE(color));
 			textbox->border_color = wcolor;
+		} else if(strcmp(atts[i], "focused_background_color") == 0) {
+			DWORD color  = atoi(atts[i+1]);
+			WORD  wcolor = RGB_16B(RED(color), GREEN(color), BLUE(color));
+			textbox->focused_background_color = wcolor;
+		} else if(strcmp(atts[i], "focused_border_color") == 0) {
+			DWORD color  = atoi(atts[i+1]);
+			WORD  wcolor = RGB_16B(RED(color), GREEN(color), BLUE(color));
+			textbox->focused_border_color = wcolor;
 		}
 	}
 

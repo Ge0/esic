@@ -7,6 +7,23 @@
 #define KEYBOARD_EVENT_RELEASED	0x00
 #define KEYBOARD_EVENT_PRESSED	0x01
 
+/** Enumeration of valid key mods (possibly OR'd together) */
+typedef enum _KeyboardMod {
+	KEYBOARDMOD_NONE  = 0x0000,
+	KEYBOARDMOD_LSHIFT= 0x0001,
+	KEYBOARDMOD_RSHIFT= 0x0002,
+	KEYBOARDMOD_LCTRL = 0x0040,
+	KEYBOARDMOD_RCTRL = 0x0080,
+	KEYBOARDMOD_LALT  = 0x0100,
+	KEYBOARDMOD_RALT  = 0x0200,
+	KEYBOARDMOD_LMETA = 0x0400,
+	KEYBOARDMOD_RMETA = 0x0800,
+	KEYBOARDMOD_NUM   = 0x1000,
+	KEYBOARDMOD_CAPS  = 0x2000,
+	KEYBOARDMOD_MODE  = 0x4000,
+	KKEYBOARDMOD_RESERVED = 0x8000
+} KeyboardMod;
+
 typedef enum  _Keycode {
         /** @name ASCII mapped keysyms
          *  The keyboard syms have been cleverly chosen to map to ASCII
@@ -283,6 +300,7 @@ typedef enum  _Keycode {
 typedef struct _KeyboardEvent {
 	uint8_t state;
 	Keycode code;
+	KeyboardMod mode;
 } KeyboardEvent, *PKeyboardEvent;
 
 #endif /* _KEYBOARD_EVENT_H_ */

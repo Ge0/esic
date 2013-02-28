@@ -71,6 +71,13 @@ void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer self, PLabel label
 void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox textbox, WORD base_x, WORD base_y) {
 	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
 	SzString visible_text;
+	WORD character_width = TEXTBOX_DEFAULT_WIDTH_CHARACTER;
+	PRasterFont font6x8 = NULL;
+
+	font6x8 = RasterFontFactory_getRasterFont("6x8.flcd"); /* Font to define dynamically later? */
+	if(font6x8 != NULL) {
+		character_width = font6x8->header.base_character_width;
+	}
 
 	/* Draw the surrounding rect with border */
 	real_self->painter->abstract_painter.vtable->drawRectangle(
@@ -79,14 +86,14 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 		base_y + textbox->widget.y,
 		textbox->widget.width,
 		textbox->widget.height + 4,
-		textbox->background_color,
-		textbox->border_color
+		textbox->is_focused ? textbox->focused_background_color : textbox->background_color,
+		textbox->is_focused ? textbox->focused_border_color : textbox->border_color
 	);
 	
 	/* Draw the only visible part of text */
 	SzString_constructor(&visible_text, "");
 
-	SzString_subString(&textbox->text, textbox->text_offset, textbox->widget.width / 6, &visible_text); /* Remove the '6'... */
+	SzString_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text); 
 
 	/* Draw the string & the carret at its physical position */
 		real_self->painter->abstract_painter.vtable->drawString(
@@ -97,10 +104,10 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 			visible_text.data
 		);
 
-		if(textbox->draw_carret) {
+		if(textbox->draw_carret && textbox->is_focused) {
 			real_self->painter->abstract_painter.vtable->drawRectangle(
 				&real_self->painter->abstract_painter,
-				base_x + textbox->widget.x + 2 + ((textbox->carret_position - textbox->text_offset) * 6) , /* Change the '6'... */
+				base_x + textbox->widget.x + 2 + ((textbox->carret_position - textbox->text_offset) * character_width) ,
 				base_y + textbox->widget.y + 2,
 				1,
 				textbox->widget.height,
@@ -122,7 +129,7 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 			);
 		}
 
-		if(textbox->text_offset + (textbox->widget.width / 6) < textbox->text.size) {
+		if((WORD)(textbox->text_offset + (textbox->widget.width / character_width)) < textbox->text.size) {
 			real_self->painter->abstract_painter.vtable->drawRectangle(
 				&real_self->painter->abstract_painter,
 				base_x + textbox->widget.x + textbox->widget.width-2 ,

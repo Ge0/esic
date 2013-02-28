@@ -47,7 +47,7 @@ typedef struct{
  * \param flags: flags for the lcd initialization
  * \param background_color: background_color of the screen
  */
-void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags, DWORD background_color);
+void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags, WORD background_color);
 
 /**
  * updates the lcd screen; useful if the double buffering mode is enabled,

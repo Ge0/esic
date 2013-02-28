@@ -26,6 +26,8 @@ PPicture Picture_constructor(PPicture self) {
 	self->widget.vtable        = &s_vtable_widget;
 
 	self->icon = NULL;
+
+	return self;
 }
 
 void Picture_destructor(PObject self) {
@@ -34,6 +36,8 @@ void Picture_destructor(PObject self) {
 
 PObject Picture_clone(PObject self, PObject dst) {
 	/* TODO. */
+
+	return dst;
 }
 
 void Picture_paint(PWidget self, WORD base_x, WORD base_y) {

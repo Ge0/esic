@@ -40,7 +40,7 @@ PTextBox TextBox_constructor(PTextBox self) {
 
 	/* Default properties */
 	self->widget.is_focusable = TRUE;
-	self->draw_carret         = FALSE;
+	self->is_focused          = FALSE;
 	self->text_offset         = 0;
 
 	return self;
@@ -113,7 +113,7 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 	case EVENT_BLUR:
 		/* Do not draw the carret anymore */
-		real_self->draw_carret = FALSE;
+		real_self->is_focused  = FALSE;
 
 		/* Repaint the widget without the carret */
 		custom_event.type = EVENT_PAINT;
@@ -123,7 +123,7 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 	case EVENT_FOCUS:
 		/* Draw the carret */
-		real_self->draw_carret = TRUE;
+		real_self->is_focused  = TRUE;
 
 		/* Repaint the widget */
 		custom_event.type = EVENT_PAINT;
@@ -162,10 +162,18 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 				TextBox_removeCharAt(real_self, real_self->carret_position-1);
 				request_paint = 1;
 			}
-		}
+		
+
+		/* Suppr key (still char removal)) */
+		} else if(system_event->real_event.keyboard_event.code == KEY_DELETE) {
+			if(real_self->carret_position < real_self->text.size) {
+				SzString_removeCharAt(&real_self->text, real_self->carret_position);
+				request_paint = 1;
+			}
+
 
 		/* Arrows left / right in order to move carret position */
-		else if(system_event->real_event.keyboard_event.code >= KEY_RIGHT &&
+		} else if(system_event->real_event.keyboard_event.code >= KEY_RIGHT &&
 			system_event->real_event.keyboard_event.code <= KEY_LEFT) {
 			_update_carret_position(real_self, system_event->real_event.keyboard_event.code);
 			request_paint = 1;
@@ -228,10 +236,4 @@ void _update_offset_text_position(PTextBox self) {
 	if(self->carret_position < self->text_offset) {
 		self->text_offset = self->carret_position;
 	}
-
-	/*
-	if(self->carret_position - self->text_offset > size_in_letters) {
-		self->text_offset = self->carret_position - size_in_letters;
-	}
-	*/
 }

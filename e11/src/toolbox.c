@@ -2,6 +2,7 @@
 
 PToolBox ToolBox_constructor(PToolBox self) {
 
+	return self;
 }
 
 PRasterIcon ToolBox_getIcon(PToolBox self, DWORD index) {
