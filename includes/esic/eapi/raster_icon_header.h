@@ -6,6 +6,8 @@
 
 #include <esic/esic.h>
 
+#define RASTER_ICON_MAGIC_WORD 0x51C1C010
+
 typedef struct _RasterIconHeader {
 	DWORD signature;
 	WORD  version;
@@ -15,6 +17,5 @@ typedef struct _RasterIconHeader {
 	BYTE bpp; 
 } RasterIconHeader;
 
-// foo
 
 #endif /* _RASTER_ICON_HEADER_H_ */

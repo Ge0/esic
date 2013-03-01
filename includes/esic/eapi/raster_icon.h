@@ -4,7 +4,7 @@
 #ifndef _RASTER_ICON_H_
 #define _RASTER_ICON_H_
 
-#define RASTER_ICON_MAGIC_WORD 0x51C1C010
+
 #define RASTER_ICON_FILENAME_LENGTH 32
 
 #include <esic/object.h>
