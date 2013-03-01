@@ -21,7 +21,7 @@ typedef struct _TextBox {
 	WORD focused_border_color;
 	WORD text_offset;
 	WORD carret_position;
-	WORD is_focused;
+	BOOL is_focused;
 	BOOL draw_carret;
 	SzString text;
 } TextBox, *PTextBox;
