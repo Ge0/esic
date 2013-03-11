@@ -56,7 +56,8 @@ void LcdPainter_drawRectangle(PAbstractPainter abstract_painter, WORD x, WORD y,
 void LcdPainter_drawString(PAbstractPainter self, WORD x, WORD y , WORD color, const char* string) {
 	PLcdPainter real_self = (PLcdPainter)self;
 	if(self->raster_font != NULL) {
-		DWORD i, j, len;
+		WORD i, j;
+		DWORD len;
 		BYTE character_width, character_height;
 		DWORD size_string = strlen(string);
 		char* character_data = NULL;
@@ -84,8 +85,8 @@ void LcdPainter_drawString(PAbstractPainter self, WORD x, WORD y , WORD color, c
 					DWORD bit = GET_BIT_STRING_BIGENDIAN(character_data, j);
 					/* If the current bit is 1, switch the pixel on */
 					if(bit == 1) {
-						DWORD x_dest = (x + i * character_width + (j % character_width));
-						DWORD y_dest = y + (j / character_width) /* + ((x_dest / 320) * character_height) */;
+						WORD x_dest = (x + i * character_width + (j % character_width));
+						WORD y_dest = y + (j / character_width) /* + ((x_dest / 320) * character_height) */;
 						Lcd_setPixel(x_dest, y_dest, color);
 					}
 				}

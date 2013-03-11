@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\default_widget_renderer.c" />
-    <ClCompile Include="src\image.c" />
     <ClCompile Include="src\label.c" />
     <ClCompile Include="src\picture.c" />
     <ClCompile Include="src\textbox.c" />

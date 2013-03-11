@@ -53,9 +53,6 @@
     <ClCompile Include="src\textbox.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\image.c">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\widget.c">
       <Filter>src</Filter>
     </ClCompile>

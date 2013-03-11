@@ -9,13 +9,11 @@
 #include <crtdbg.h>
 //#endif
 
-#include <expat/expat.h>
 
 extern int assign_drives(void);
 extern VOID StopTmrThread();
 
 int main(int argc, char** argv) {
-	XML_Parser parser; /* Test */
 
 	EmulatorSystem sys;
 
