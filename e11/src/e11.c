@@ -7,7 +7,6 @@
 #include <esic/eapi/heap.h>
 
 /* TEST START */
-#include <esic/test/testFreeType.h>
 #include <esic/egui/label.h>
 #include <esic/egui/textbox.h>
 #include <esic/egui/image.h>

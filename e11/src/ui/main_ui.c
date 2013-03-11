@@ -16,7 +16,7 @@ static const vtable_Widget s_widget_vtable = {
 };
 
 PMainUI MainUI_constructor(PMainUI self) {
-
+	DWORD i;
 	/* Calling parent constructor */
 	E11UI_constructor(&self->e11ui);
 
@@ -42,6 +42,9 @@ PMainUI MainUI_constructor(PMainUI self) {
 	self->e11ui.icons[10].icon = RasterIconFactory_getRasterIcon("settings.ilcd");
 	self->e11ui.icons[11].icon = RasterIconFactory_getRasterIcon("ask.ilcd");
 
+	for(i = 0; i < E11_NUMBER_OF_ICONS; ++i) {
+		assert(self->e11ui.icons[i].icon);
+	}
 
 
 	return self;

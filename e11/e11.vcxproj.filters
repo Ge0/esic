@@ -27,9 +27,6 @@
     <ClCompile Include="src\e11.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\testFreeType.c">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\xml_ui_factory.c">
       <Filter>src</Filter>
     </ClCompile>
@@ -45,9 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\e11.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\test\testFreeType.h">
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="includes\toolbox.h">

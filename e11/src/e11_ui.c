@@ -35,12 +35,12 @@ PE11UI E11UI_constructor(PE11UI self) {
 	self->widget.vtable        = &s_widget_vtable;
 
 	/* Construct picture widgets */
-	for(i = 0; i < NUMBER_OF_ICONS; i++) {
+	for(i = 0; i < E11_NUMBER_OF_ICONS; i++) {
 		Picture_constructor(&self->icons[i]);
 	}
 
 	/* set every Function function pointers to NULL */
-	memset(self->onFunction, '\0', sizeof(void (*)(PE11UI)) * NUMBER_OF_FUNCTIONS);
+	memset(self->onFunction, '\0', sizeof(void (*)(PE11UI)) * E11_NUMBER_OF_ICONS);
 
 	/* No focused widget for the moment */
 	self->focused_widget = NULL;
@@ -60,7 +60,7 @@ void E11UI_destructor(PObject self) {
 	Widget_destructor(self);
 
 	/* Destruct picture widgets */
-	for(i = 0; i < NUMBER_OF_ICONS; i++) {
+	for(i = 0; i < E11_NUMBER_OF_ICONS; i++) {
 		Picture_destructor(&real_self->icons[i].widget.object);
 	}
 }
@@ -143,7 +143,7 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 	Widget_paint(self, base_x, base_y);
 
 	/* Draw icons */
-	for(i = 0; i < NUMBER_OF_ICONS; i++) {
+	for(i = 0; i < E11_NUMBER_OF_ICONS; i++) {
 		/* Paint each icon */
 		real_self->icons[i].widget.vtable->paint(
 			&real_self->icons[i].widget,
@@ -198,7 +198,7 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 }
 
 PPicture E11UI_getPicture(PE11UI self, DWORD index) {
-	if(index >= 0 && index < NUMBER_OF_ICONS) {
+	if(index >= 0 && index < E11_NUMBER_OF_ICONS) {
 		return &self->icons[index];
 	} else {
 		return NULL;
@@ -206,7 +206,7 @@ PPicture E11UI_getPicture(PE11UI self, DWORD index) {
 }
 
 void E11UI_setIcon(PE11UI self, DWORD index, const PPicture icon) {
-	if(index >= 0 && index < NUMBER_OF_ICONS) {
+	if(index >= 0 && index < E11_NUMBER_OF_ICONS) {
 		self->icons[index] = *icon;
 	}
 }

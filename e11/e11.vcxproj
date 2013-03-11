@@ -84,14 +84,12 @@
   <ItemGroup>
     <ClCompile Include="src\e11.c" />
     <ClCompile Include="src\e11_ui.c" />
-    <ClCompile Include="src\testFreeType.c" />
     <ClCompile Include="src\toolbox.c" />
     <ClCompile Include="src\ui\main_ui.c" />
     <ClCompile Include="src\xml_ui_factory.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\e11.h" />
-    <ClInclude Include="..\includes\esic\test\testFreeType.h" />
     <ClInclude Include="includes\e11_ui.h" />
     <ClInclude Include="includes\toolbox.h" />
     <ClInclude Include="includes\ui\main_ui.h" />
