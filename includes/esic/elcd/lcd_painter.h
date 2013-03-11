@@ -5,7 +5,6 @@
 #define _LCD_PAINTER_H_
 
 #include <esic/eapi/abstract_painter.h>
-#include <esic/eapi/carret.h>
 
 typedef struct _LcdPainter {
 	AbstractPainter abstract_painter;
