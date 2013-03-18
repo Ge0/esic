@@ -91,7 +91,7 @@ PWidget XmlUiFactory_getUI(const char* ui_name) {
 	parser = XML_ParserCreate(NULL);
 
 	/* Create the widget of the user interface */
-	built_widget = NEW(built_widget, Widget);
+	NEW(built_widget, Widget);
 
 	/* Set our widget as the user data so the callback would be able to hydrate it */
 	XML_SetUserData(parser, (void*)&built_widget);
@@ -126,11 +126,13 @@ static void _start_element(void *user_data, const char *name, const char **atts)
 
 		/* Given the type of the widget, instantiate the appropriated structure */
 		if(strcmp(name, "label") == 0) {
-			PLabel new_label = NEW(new_label, Label);
+			PLabel new_label;
+			NEW(new_label, Label);
 			_hydrate_label(new_label, atts);
 			new_widget = (PWidget)new_label;
 		} else if(strcmp(name, "textbox") == 0) {
-			PTextBox new_textbox = NEW(new_textbox, TextBox);
+			PTextBox new_textbox;
+			NEW(new_textbox, TextBox);
 			_hydrate_textbox(new_textbox, atts);
 			new_widget = (PWidget)new_textbox;
 		}
@@ -146,10 +148,6 @@ static void _start_element(void *user_data, const char *name, const char **atts)
 
 			/* Append to the list of childs of the current widget */
 			Widget_addChild(*p_widget, new_widget);
-			//List_pushBack(&(*p_widget)->childs.container, (PObject)new_widget);
-
-			/* Delete the widget since it's been added (NOOOO) */
-			//DELETE(new_widget);
 
 			/* Updates the current parent widget as the one that has just been pushed back */
 			*p_widget = ((PWidgetPtr)List_tail(&(*p_widget)->childs))->widget;

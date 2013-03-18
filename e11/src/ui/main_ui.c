@@ -44,8 +44,10 @@ PMainUI MainUI_constructor(PMainUI self) {
 
 	for(i = 0; i < E11_NUMBER_OF_ICONS; ++i) {
 		assert(self->e11ui.icons[i].icon);
-	}
 
+		/* Tmp: add icons to the list of childs widgets so they can be browsed with the TAB */
+		Widget_addChild(&self->e11ui.widget, &self->e11ui.icons[i].widget);
+	}
 
 	return self;
 }

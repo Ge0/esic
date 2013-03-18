@@ -10,7 +10,8 @@
 #include <esic/eapi/widget_event.h>
 
 typedef enum _EventType {
-	EVENT_QUIT = 0,
+	EVENT_NONE = 0,
+	EVENT_QUIT,
 	EVENT_KEYBOARD_KDOWN,
 	EVENT_KEYBOARD_KUP,
 	EVENT_TIMER,
@@ -23,13 +24,8 @@ typedef enum _EventType {
 
 typedef struct _Event* PEvent;
 
-typedef struct _vtable_Event {
-	void* (*data)(PEvent);
-} vtable_Event;
-
 typedef struct _Event {
 	Object object;
-	const vtable_Event* vtable;
 	EventType type;
 	union {
 		KeyboardEvent keyboard_event;

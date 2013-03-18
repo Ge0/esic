@@ -133,9 +133,11 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 		break;
 
+	/*
 	case EVENT_PAINT:
 		TextBox_paint(self, self->parent->x, self->parent->y);
 		break;
+	*/
 
 	case EVENT_KEYBOARD_KDOWN:
 		/* Append the content of the textbox */

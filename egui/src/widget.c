@@ -116,8 +116,10 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 		break;
 
 	case EVENT_TIMER:
-		current_child = ((PWidgetPtr)hot_widget->data)->widget;
-		current_child->vtable->defaultProc(current_child, system_event);
+		if(hot_widget != NULL) {
+			current_child = ((PWidgetPtr)hot_widget->data)->widget;
+			current_child->vtable->defaultProc(current_child, system_event);
+		}
 		break;
 
 	

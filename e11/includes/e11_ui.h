@@ -18,7 +18,7 @@ typedef struct _E11UI *PE11UI;
 
 typedef struct _E11UI {
 	Widget widget;
-	void (*onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI);	/* array of function pointers */
+	void (*onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI, void*);	/* array of function pointers */
 	Picture icons[E11_NUMBER_OF_ICONS];
 	WORD hot_widget_id; /* Test */
 	PListNode focused_widget;

@@ -36,7 +36,7 @@ void e11(PAbstractSystem system) {
 	Lcd_setDrawingMode(LCD_OVER);
 
 	/* WIDGET RENDERER INIT */
-	widget_renderer = NEW(widget_renderer, DefaultWidgetRenderer);
+	NEW(widget_renderer, DefaultWidgetRenderer);
 	SetDefaultWidgetRenderer((PAbstractWidgetRenderer)widget_renderer);
 
 	/* Splashscreen */

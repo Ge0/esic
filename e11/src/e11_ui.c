@@ -37,6 +37,19 @@ PE11UI E11UI_constructor(PE11UI self) {
 	/* Construct picture widgets */
 	for(i = 0; i < E11_NUMBER_OF_ICONS; i++) {
 		Picture_constructor(&self->icons[i]);
+
+		/* Id : 0x8000 + i + 1 */
+		self->icons[i].widget.id = 0x8000 + i + 1;
+
+		/* Filling coordinates information */
+		self->icons[i].widget.x = ICONS_BASE_X + (54*(i%ICONS_PER_LINE));
+		self->icons[i].widget.y = ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(i/6));
+		self->icons[i].border_thickness = BORDER_THICKNESS;
+		if(i < (E11_NUMBER_OF_ICONS / 2)) {
+			self->icons[i].border_color = BACKGROUND_FIRST_ROW;
+		} else {
+			self->icons[i].border_color = BACKGROUND_SECOND_ROW;
+		}
 	}
 
 	/* set every Function function pointers to NULL */
@@ -82,6 +95,8 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 	PWidget current_child;
 	Event custom_event;
 	BYTE* keyboard_state = NULL;
+
+	Event_constructor(&custom_event);
 
 	/* if there are no hot widget, pick up the first focusable widget */
 	if(real_self->focused_widget == NULL) {
@@ -149,53 +164,13 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* Draw icons */
 	for(i = 0; i < E11_NUMBER_OF_ICONS; i++) {
 		/* Paint each icon */
+		/*
 		real_self->icons[i].widget.vtable->paint(
 			&real_self->icons[i].widget,
 			ICONS_BASE_X + (54*(i%ICONS_PER_LINE)),
 			ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(i/6))
 		);
-
-		/* ... & the surronding rect */
-
-		/* Top border */
-		Lcd_drawRectangle(
-			ICONS_BASE_X + (54*(i%ICONS_PER_LINE)) - BORDER_THICKNESS,
-			ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*((WORD)i/6)) - BORDER_THICKNESS,
-			real_self->icons[i].icon->header.width + BORDER_THICKNESS,
-			BORDER_THICKNESS,
-			(i < 6 ? BACKGROUND_FIRST_ROW : BACKGROUND_SECOND_ROW),
-			(i < 6 ? BACKGROUND_FIRST_ROW : BACKGROUND_SECOND_ROW)
-		);
-
-		/* Right border */
-		Lcd_drawRectangle(
-			ICONS_BASE_X + (54*(i%ICONS_PER_LINE)) + real_self->icons[i].icon->header.width,
-			ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(i/6)) - BORDER_THICKNESS,
-			BORDER_THICKNESS,
-			real_self->icons[i].icon->header.height + BORDER_THICKNESS,
-			(i < 6 ? BACKGROUND_FIRST_ROW : BACKGROUND_SECOND_ROW),
-			(i < 6 ? BACKGROUND_FIRST_ROW : BACKGROUND_SECOND_ROW)
-		);
-
-		/* Bottom border */
-		Lcd_drawRectangle(
-			ICONS_BASE_X + (54*(i%ICONS_PER_LINE)),
-			ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(i/6)) + real_self->icons[i].icon->header.height,
-			real_self->icons[i].icon->header.width + BORDER_THICKNESS,
-			BORDER_THICKNESS,
-			(i < 6 ? BACKGROUND_FIRST_ROW : BACKGROUND_SECOND_ROW),
-			(i < 6 ? BACKGROUND_FIRST_ROW : BACKGROUND_SECOND_ROW)
-		);
-
-		/* Left border */
-		Lcd_drawRectangle(
-			ICONS_BASE_X + (54*(i%ICONS_PER_LINE)) - BORDER_THICKNESS,
-			ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(i/6)),
-			BORDER_THICKNESS,
-			real_self->icons[i].icon->header.height + BORDER_THICKNESS,
-			(i < 6 ? BACKGROUND_FIRST_ROW : BACKGROUND_SECOND_ROW),
-			(i < 6 ? BACKGROUND_FIRST_ROW : BACKGROUND_SECOND_ROW)
-		);
+		*/
 
 
 	}
@@ -226,7 +201,7 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 		system_event->real_event.keyboard_event.code <= KEY_F12) {
 		/* Call the appropriate function */
 		if(real_self->onFunction[system_event->real_event.keyboard_event.code - KEY_F1] != NULL) {
-			real_self->onFunction[system_event->real_event.keyboard_event.code - KEY_F1](real_self);
+			real_self->onFunction[system_event->real_event.keyboard_event.code - KEY_F1](real_self, NULL);
 		}
 	} else {
 		/* Need a hot widget to handle the event */

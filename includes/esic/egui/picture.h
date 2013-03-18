@@ -9,6 +9,9 @@
 
 typedef struct _Picture {
 	Widget widget;
+	WORD border_color;
+	WORD border_thickness;
+	BOOL is_focused;
 	PRasterIcon icon;
 } Picture, *PPicture;
 
@@ -21,6 +24,7 @@ PObject Picture_clone(PObject self, PObject dst);
 
 /* Widget */
 void Picture_paint(PWidget self, WORD base_x, WORD base_y);
+DWORD Picture_defaultProc(PWidget self, const PEvent system_event);
 
 
 #endif /* _PICTURE_H_ */

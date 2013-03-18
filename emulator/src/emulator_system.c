@@ -99,7 +99,7 @@ BOOL EmulatorSystem_pollEvent(PAbstractSystem self, PEvent systemEvent) {
 	BOOL ret = FALSE;
 	if(SDL_PollEvent(&sdl_event)) {
 		_createEventFromSDL(systemEvent, &sdl_event);
-		if(systemEvent != NULL) {
+		if(systemEvent->type != EVENT_NONE) {
 			ret = TRUE;
 		}
 	}
@@ -133,6 +133,8 @@ static void _createEventFromSDL(PEvent system_event, const SDL_Event* psdl_event
 	case SDL_QUIT:
 		system_event->type = EVENT_QUIT;
 		break;
+	default:
+		system_event->type = EVENT_NONE;
 	}
 }
 

@@ -67,7 +67,7 @@ PRasterIcon _build_raster_icon(const char* name) {
 		return NULL;
 	}
 
-	return_icon = NEW(return_icon, RasterIcon);
+	NEW(return_icon, RasterIcon);
 
 	
 

@@ -151,11 +151,60 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 		real_self->painter->abstract_painter.vtable->drawBuffer(
 			&real_self->painter->abstract_painter,
 			base_x + picture->widget.x,
-			base_y + picture->widget.y,
+			/*base_y*/0 + picture->widget.y,
 			picture->icon->header.width,
 			picture->icon->header.height,
 			(WORD*)picture->icon->data
 		);
+
+		/* ... & the surronding rect */
+
+		/* Top border */
+		Lcd_drawRectangle(
+			base_x + picture->widget.x - picture->border_thickness,
+			picture->widget.y - picture->border_thickness,
+			picture->icon->header.width + picture->border_thickness,
+			picture->border_thickness,
+			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color,
+			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color
+		);
+
+		
+		/* Right border */
+		Lcd_drawRectangle(
+			base_x + picture->widget.x + picture->icon->header.width,
+			/*base_y*/0 + picture->widget.y - picture->border_thickness,
+			picture->border_thickness,
+			picture->icon->header.height + picture->border_thickness,
+			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color,
+			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color
+		);
+
+		
+		/* Bottom border */
+		Lcd_drawRectangle(
+			base_x + picture->widget.x,
+			/*base_y*/0 + picture->widget.y + picture->icon->header.height,
+			picture->icon->header.width + picture->border_thickness,
+			picture->border_thickness,
+			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color,
+			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color
+		);
+
+
+		/* Left border */
+		Lcd_drawRectangle(
+			base_x + picture->widget.x - picture->border_thickness,
+			/*base_y*/ 0 + picture->widget.y,
+			picture->border_thickness,
+			picture->icon->header.height + picture->border_thickness,
+			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color,
+			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color
+		);
+
+
+
+
 	}
 
 }
