@@ -43,6 +43,7 @@ PEvent Event_constructor(PEvent self);
 /* Virtual functions */
 /* Object */
 void Event_destructor(PObject self);
+PObject Event_clone(PObject self, PObject dst);
 
 
 #endif /* _EVENT_H_ */

@@ -13,7 +13,6 @@
 	typedef uint16_t  WORD;
 	typedef int32_t SDWORD;
 	typedef uint32_t DWORD;
-	typedef uint8_t BOOL;
 	typedef uint64_t QWORD;
 	typedef int64_t SQWORD;
 	typedef void VOID;
@@ -29,6 +28,11 @@
 	#define ESIC_MACROS
 	#define HIWORD(value) ((value >> 16) & 0xFFFF)
 	#define LOWORD(value) (value & 0xFFFF)
+
+	typedef enum _BOOL {
+	  FALSE = 0,
+	  TRUE
+	} BOOL;
 
 #else
 	#include <Windows.h>

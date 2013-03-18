@@ -39,8 +39,8 @@ PTextBox TextBox_constructor(PTextBox self) {
 	SzString_constructor(&self->text, "");
 
 	/* Default properties */
-	self->widget.is_focusable = TRUE;
-	self->is_focused          = FALSE;
+	self->widget.is_focusable = 1;
+	self->is_focused          = 0;
 	self->text_offset         = 0;
 
 	return self;
@@ -108,12 +108,13 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 	PTextBox real_self = (PTextBox)self;
 	DWORD request_paint = 0;
 	Event custom_event;
+	Event_constructor(&custom_event);
 
 	switch(system_event->type) {
 
 	case EVENT_BLUR:
 		/* Do not draw the carret anymore */
-		real_self->is_focused  = FALSE;
+		real_self->is_focused  = 0;
 
 		/* Repaint the widget without the carret */
 		custom_event.type = EVENT_PAINT;
@@ -123,7 +124,7 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 	case EVENT_FOCUS:
 		/* Draw the carret */
-		real_self->is_focused  = TRUE;
+		real_self->is_focused  = 1;
 
 		/* Repaint the widget */
 		custom_event.type = EVENT_PAINT;
@@ -202,6 +203,9 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 	default:
 		return Widget_defaultProc(self, system_event);
 	}
+
+	Event_destructor(&custom_event.object);
+
 	return 0;
 }
 

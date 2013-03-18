@@ -90,22 +90,25 @@ void _e11_mainloop(PAbstractSystem system) {
 	
 	ticks1 = system->vtable->getTicks(system);
 	while(looping) {
-		Event systemEvent;
-		if(system->vtable->pollEvent(system, &systemEvent)) {
-			switch(systemEvent.type) {
+		Event system_event;
+
+		Event_constructor(&system_event);
+
+		if(system->vtable->pollEvent(system, &system_event)) {
+			switch(system_event.type) {
 			case EVENT_QUIT:
  				looping = !looping;
 				break;
 			case EVENT_KEYBOARD_KDOWN:
 
 				/* To remove later */
-				if(systemEvent.real_event.keyboard_event.code == KEY_F12) {
+				if(system_event.real_event.keyboard_event.code == KEY_F12) {
 					looping = !looping;
 				}
-				main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &systemEvent);
+				main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &system_event);
 				break;
 			default:
-				main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &systemEvent);
+				main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &system_event);
 			}
 		}
 
@@ -114,16 +117,20 @@ void _e11_mainloop(PAbstractSystem system) {
 		if(ticks2 - ticks1 >= 550) {
 			/* One second elapsed */
 			Event timer_event;
+			Event_constructor(&timer_event);
 			timer_event.type = EVENT_TIMER;
 			timer_event.real_event.timer_event.id = 1;
 			singleton_system()->vtable->enqueueEvent(singleton_system(), &timer_event);
 			ticks1 = ticks2;
+			Event_destructor(&timer_event.object);
 		}
 		
 
 		system->vtable->update(system);
 		system->vtable->delay(system, 15);
 		Lcd_update();
+
+		Event_destructor(&system_event.object);
 
 	}
 	

@@ -46,9 +46,11 @@ PE11UI E11UI_constructor(PE11UI self) {
 	self->focused_widget = NULL;
 	
 	/* Request the widget to be painted */
+	Event_constructor(&widget_event);
 	widget_event.type = EVENT_PAINT;
 	widget_event.real_event.widget_event.id = 0; /* Paint everything? */
 	singleton_system()->vtable->enqueueEvent(singleton_system(), &widget_event);
+	Event_destructor((PObject)&widget_event);
 
 	return self;
 }
@@ -88,9 +90,11 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 			current_child = ((PWidgetPtr)real_self->focused_widget->data)->widget;
 			if(current_child->is_focusable) {
 				/* if the current widget is focusable, inform it's been focused, & break the loop */
+				Event_constructor(&custom_event);
 				custom_event.real_event.widget_event.id = current_child->id;
 				custom_event.type = EVENT_FOCUS;
 				singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+				Event_destructor(&custom_event.object);
 				break;
 			}
 			real_self->focused_widget = real_self->focused_widget->next;
@@ -234,11 +238,12 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 				/* Tab pressed: switch to the next hot widget */
 
 				/* Inform the current widget that he's lost the focus */
-				
+				Event_constructor(&custom_event);
 				custom_event.real_event.widget_event.id = current_child->id;
 				custom_event.type = EVENT_BLUR;
 				singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
 				keyboard_state = singleton_system()->vtable->getKeyState(singleton_system());
+				Event_destructor(&custom_event.object);
 
 				while(1) {
 					/* If alt is pressed, loop through widgets backward, otherwise go forward */
@@ -266,9 +271,12 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 			}
 
 			/* Inform the new widget that it as gained the focus */
+			Event_constructor(&custom_event);
 			custom_event.real_event.widget_event.id = current_child->id;
 			custom_event.type = EVENT_FOCUS;
 			singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+			Event_destructor(&custom_event.object);
+
 
 			/* Forward the event to the focused widget */
 			current_child->vtable->defaultProc(current_child, system_event);
