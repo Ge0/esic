@@ -1,7 +1,7 @@
 /**
  * \file picture.c
  */
-#include <esic/eapi/abstract_system.h>
+#include <esic/eapi/system.h>
 #include <esic/egui/picture.h>
 #include <esic/egui/default_widget_renderer.h>
 
@@ -62,7 +62,8 @@ DWORD Picture_defaultProc(PWidget self, const PEvent system_event) {
 		/* Repaint the widget without the carret */
 		custom_event.type = EVENT_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
-		singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+		EsicPushEvent(&custom_event);
 		break;
 
 	case EVENT_FOCUS:
@@ -72,8 +73,8 @@ DWORD Picture_defaultProc(PWidget self, const PEvent system_event) {
 		/* Repaint the widget */
 		custom_event.type = EVENT_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
-		singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-
+		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+		EsicPushEvent(&custom_event);
 		break;
 
 	default:

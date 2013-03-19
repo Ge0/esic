@@ -1,114 +1,116 @@
 /**
  * \file emulator_system.c
  */
+#if defined(EMULATOR)
+
 #include <assert.h>
+#include <crtdbg.h>
 #include <SDL/SDL.h>
 #include <esic/elcd/lcd.h>
-#include "emulator_system.h"
+#include <esic/eapi/emulator_system.h>
 #include <Winbase.h>
-
 #include <esic/eapi/event.h>
 
-static PAbstractSystem s_singleton_system = NULL;
-
-PAbstractSystem singleton_system() {
-	return s_singleton_system;
-}
-
-
-static const vtable_Object s_object_vtable = {
-	EmulatorSystem_destructor,
-	NULL,
-	NULL,
-	NULL
-};
-
-static const vtable_AbstractSystem s_abstract_system_vtable = {
-	EmulatorSystem_waitEvent,
-	EmulatorSystem_pollEvent,
-	EmulatorSystem_update,
-	EmulatorSystem_delay,
-	EmulatorSystem_getTicks,
-	EmulatorSystem_getFrameBuffer,
-	EmulatorSystem_enqueueEvent,
-	EmulatorSystem_getKeyState
-};
-
-
+/* Private variables, instances, etc. */
+static SDL_Surface* s_screen;
+static FATFS s_fat;
 
 /* Private functions */
 static void _createEventFromSDL(PEvent systemEvent, const SDL_Event* psdl_event);
+static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event);
 static void _initFileSystem(PAbstractSystem self);
+static void _initFileSystem(void);
 
 
-PEmulatorSystem EmulatorSystem_constructor(PEmulatorSystem self) {
+
+void EmulatorSystemInit(void) {
 	int error;
-
-	/* Calling parent constructor */
-	self->abstract_system.object.vtable = &s_object_vtable;
-	self->abstract_system.vtable        = &s_abstract_system_vtable;
-	self->abstract_system.object.size   = sizeof(EmulatorSystem);
-
 	error = SDL_Init(SDL_INIT_VIDEO);
-	self->screen = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE);
+	s_screen = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-	Lcd_init(320, 240, self->abstract_system.vtable->getFrameBuffer(&self->abstract_system), 0, DEFAULT_BACKGROUND_COLOR);
+	Lcd_init(320, 240, s_screen->pixels, 0, DEFAULT_BACKGROUND_COLOR);
 	SDL_ShowCursor(0);
 
 	/* Ensure screen's been created */
-	assert(self->screen != NULL);
+	assert(s_screen != NULL);
 
-	/* Init file system? */
-	_initFileSystem(&self->abstract_system);
-
-	s_singleton_system = (PAbstractSystem)self;
-
-	return self;
+	/* Init the file system */
+	_initFileSystem();
 }
 
-static void _initFileSystem(PAbstractSystem self) {
-	PEmulatorSystem real_self = (PEmulatorSystem)self;
-	FRESULT ret = FR_OK;
-	DSTATUS status;
 
-	/* Enforce initialization */
-	status = disk_initialize(VOLUME_NUMBER);
 
-	/* Mount the volume */
-	ret = f_mount(VOLUME_NUMBER, &real_self->fat);
+//void EmulatorSystem_addTimer(
 
-	/* Change current drive */
-	ret = f_chdrive(VOLUME_NUMBER);
+/*---------------------------------------------------------*/
+/* User Provided RTC Function for FatFs module             */
+/*---------------------------------------------------------*/
+/* This is a real time clock service to be called from     */
+/* FatFs module. Any valid time must be returned even if   */
+/* the system does not support an RTC.                     */
+/* This function is not required in read-only cfg.         */
 
+DWORD get_fattime (void)
+{
+	SYSTEMTIME tm;
+
+	/* Get local time */
+	GetLocalTime(&tm);
+
+	/* Pack date and time into a DWORD variable */
+	return 	  ((DWORD)(tm.wYear - 1980) << 25)
+			| ((DWORD)tm.wMonth << 21)
+			| ((DWORD)tm.wDay << 16)
+			| (WORD)(tm.wHour << 11)
+			| (WORD)(tm.wMinute << 5)
+			| (WORD)(tm.wSecond >> 1);
 }
 
-void EmulatorSystem_destructor(PObject self) {
+void EmulatorSystemDestroy() {
 	Lcd_destroy();
-	//StopTmrThread();
+
+	StopTmrThread();
+	_CrtDumpMemoryLeaks();
 }
 
-void EmulatorSystem_waitEvent(PAbstractSystem self, PEvent systemEvent) {
+void EmulatorSystemWaitEvent(PEvent esic_event) {
 	SDL_Event sdl_event;
 	SDL_WaitEvent(&sdl_event);
-	_createEventFromSDL(systemEvent, &sdl_event);
-
+	_createEventFromSDL(esic_event, &sdl_event);
 }
 
-BOOL EmulatorSystem_pollEvent(PAbstractSystem self, PEvent systemEvent) {
+BOOL EmulatorSystemPollEvent(PEvent esic_event) {
 	SDL_Event sdl_event;
 	BOOL ret = FALSE;
 	if(SDL_PollEvent(&sdl_event)) {
-		_createEventFromSDL(systemEvent, &sdl_event);
-		if(systemEvent->type != EVENT_NONE) {
+		_createEventFromSDL(esic_event, &sdl_event);
+		if(esic_event->type != EVENT_NONE) {
 			ret = TRUE;
 		}
 	}
 	return ret;
 }
 
-void EmulatorSystem_update(PAbstractSystem self) {
-	PEmulatorSystem real_self = (PEmulatorSystem)self;
-	SDL_Flip(real_self->screen);
+void EmulatorSystemDelay(DWORD milliseconds) {
+	SDL_Delay(milliseconds);
+}
+
+void EmulatorSystemPushEvent(PEvent esic_event) {
+	SDL_Event sdl_event;
+	_createEventToSDL(esic_event, &sdl_event);
+	SDL_PushEvent(&sdl_event);
+}
+
+DWORD EmulatorSystemGetTicks(void) {
+	return SDL_GetTicks();
+}
+
+const BYTE* EmulatorSystemGetKeyboardState() {
+	return (BYTE*)SDL_GetKeyState(NULL);
+}
+
+void EmulatorSystemUpdate() {
+	SDL_Flip(s_screen);
 }
 
 static void _createEventFromSDL(PEvent system_event, const SDL_Event* psdl_event) {
@@ -182,51 +184,19 @@ static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event) {
 	}
 }
 
-void EmulatorSystem_delay(PAbstractSystem self, DWORD milliseconds) {
-	SDL_Delay(milliseconds);
+static void _initFileSystem(void) {
+	FRESULT ret = FR_OK;
+	DSTATUS status;
+
+	/* Enforce initialization */
+	status = disk_initialize(VOLUME_NUMBER);
+
+	/* Mount the volume */
+	ret = f_mount(VOLUME_NUMBER, &s_fat);
+
+	/* Change current drive */
+	ret = f_chdrive(VOLUME_NUMBER);
 }
 
-DWORD EmulatorSystem_getTicks(PAbstractSystem self) {
-	return SDL_GetTicks();
-}
 
-void* EmulatorSystem_getFrameBuffer(PAbstractSystem self) {
-	return ((PEmulatorSystem)self)->screen->pixels;
-}
-
-BYTE* EmulatorSystem_getKeyState(PAbstractSystem self) {
-	return (BYTE*)SDL_GetKeyState(NULL);
-}
-
-void EmulatorSystem_enqueueEvent(PAbstractSystem self, PEvent system_event) {
-	SDL_Event sdl_event;
-	_createEventToSDL(system_event, &sdl_event);
-	SDL_PushEvent(&sdl_event);
-}
-
-//void EmulatorSystem_addTimer(
-
-/*---------------------------------------------------------*/
-/* User Provided RTC Function for FatFs module             */
-/*---------------------------------------------------------*/
-/* This is a real time clock service to be called from     */
-/* FatFs module. Any valid time must be returned even if   */
-/* the system does not support an RTC.                     */
-/* This function is not required in read-only cfg.         */
-
-DWORD get_fattime (void)
-{
-	SYSTEMTIME tm;
-
-	/* Get local time */
-	GetLocalTime(&tm);
-
-	/* Pack date and time into a DWORD variable */
-	return 	  ((DWORD)(tm.wYear - 1980) << 25)
-			| ((DWORD)tm.wMonth << 21)
-			| ((DWORD)tm.wDay << 16)
-			| (WORD)(tm.wHour << 11)
-			| (WORD)(tm.wMinute << 5)
-			| (WORD)(tm.wSecond >> 1);
-}
-
+#endif /* EMULATOR */

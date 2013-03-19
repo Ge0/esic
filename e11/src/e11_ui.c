@@ -1,4 +1,4 @@
-#include <esic/eapi/abstract_system.h>
+#include <esic/eapi/system.h>
 #include <esic/egui/default_widget_renderer.h>
 #include <esic/elcd/lcd.h>
 #include <esic/egui/widget_ptr.h>
@@ -62,7 +62,8 @@ PE11UI E11UI_constructor(PE11UI self) {
 	Event_constructor(&widget_event);
 	widget_event.type = EVENT_PAINT;
 	widget_event.real_event.widget_event.id = 0; /* Paint everything? */
-	singleton_system()->vtable->enqueueEvent(singleton_system(), &widget_event);
+	//singleton_system()->vtable->enqueueEvent(singleton_system(), &widget_event);
+	EsicPushEvent(&widget_event);
 	Event_destructor((PObject)&widget_event);
 
 	return self;
@@ -108,7 +109,8 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 				Event_constructor(&custom_event);
 				custom_event.real_event.widget_event.id = current_child->id;
 				custom_event.type = EVENT_FOCUS;
-				singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+				//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+				EsicPushEvent(&custom_event);
 				Event_destructor(&custom_event.object);
 				break;
 			}
@@ -144,8 +146,8 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 		
 		break;
 
-
 	case EVENT_TIMER:
+		/* Forward the event */
 		current_child = ((PWidgetPtr)real_self->focused_widget->data)->widget;
 		current_child->vtable->defaultProc(current_child, system_event);
 		break;
@@ -193,7 +195,7 @@ void E11UI_setIcon(PE11UI self, DWORD index, const PPicture icon) {
 void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 	PE11UI real_self = (PE11UI)self;
 	PWidget current_child = NULL;
-	BYTE* keyboard_state = NULL;
+	const BYTE* keyboard_state = NULL;
 	Event custom_event;
 
 	/* According to the key pressed */
@@ -216,8 +218,10 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 				Event_constructor(&custom_event);
 				custom_event.real_event.widget_event.id = current_child->id;
 				custom_event.type = EVENT_BLUR;
-				singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-				keyboard_state = singleton_system()->vtable->getKeyState(singleton_system());
+				//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+				EsicPushEvent(&custom_event);
+				//keyboard_state = singleton_system()->vtable->getKeyState(singleton_system());
+				keyboard_state = EsicGetKeyboardState();
 				Event_destructor(&custom_event.object);
 
 				while(1) {
@@ -249,7 +253,8 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 			Event_constructor(&custom_event);
 			custom_event.real_event.widget_event.id = current_child->id;
 			custom_event.type = EVENT_FOCUS;
-			singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+			//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+			EsicPushEvent(&custom_event);
 			Event_destructor(&custom_event.object);
 
 

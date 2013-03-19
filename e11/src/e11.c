@@ -3,13 +3,11 @@
 
 #include <esic/elcd/lcd.h>
 #include <esic/eapi/event.h>
+#include <esic/eapi/system.h>
 
 #include <esic/eapi/heap.h>
 
 /* TEST START */
-#include <esic/egui/label.h>
-#include <esic/egui/textbox.h>
-#include <esic/egui/image.h>
 #include <esic/etools/szstring.h>
 #include <esic/eapi/raster_font_factory.h>
 #include <esic/eapi/raster_icon_factory.h>
@@ -40,10 +38,10 @@ void e11(PAbstractSystem system) {
 	SetDefaultWidgetRenderer((PAbstractWidgetRenderer)widget_renderer);
 
 	/* Splashscreen */
-	_e11_splashscreen(system);
+	_e11_splashscreen();
 
 	/* And main loop */
-	_e11_mainloop(system);
+	_e11_mainloop();
 	
 	/* Free the resources */
 	DELETE(widget_renderer);
@@ -57,44 +55,30 @@ void e11(PAbstractSystem system) {
 
 
 
-void _e11_splashscreen(PAbstractSystem system) {
+void _e11_splashscreen() {
 
 }
 
-void _e11_mainloop(PAbstractSystem system) {
+void _e11_mainloop() {
 	BOOL looping = 1;
 	DWORD ticks1, ticks2;
-	/* TEST START */
-	PRasterFont test_font = NULL;
-	SzString s1, s2;
-	
 
-	/* Test GR */
 	MainUI main_ui;
 
 	MainUI_constructor(&main_ui);
-
-	SzString_constructor(&s1, "Hello world");
-	SzString_constructor(&s2, "");
-
-	SzString_subString(&s1, -4, 0, &s2);
-
-	printf("%s", s2.data);
 	
 	/* System Top rectangle */
 	Lcd_drawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
 
-	//main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 0);
+	main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 0);
 
-
-	
-	ticks1 = system->vtable->getTicks(system);
+	ticks1 = EsicGetTicks();
 	while(looping) {
 		Event system_event;
 
 		Event_constructor(&system_event);
 
-		if(system->vtable->pollEvent(system, &system_event)) {
+		if(EsicPollEvent(&system_event)) {
 			switch(system_event.type) {
 			case EVENT_QUIT:
  				looping = !looping;
@@ -113,31 +97,26 @@ void _e11_mainloop(PAbstractSystem system) {
 		}
 
 		/* test */
-		ticks2 = system->vtable->getTicks(system);
+		ticks2 = EsicGetTicks();
 		if(ticks2 - ticks1 >= 550) {
 			/* One second elapsed */
 			Event timer_event;
 			Event_constructor(&timer_event);
 			timer_event.type = EVENT_TIMER;
 			timer_event.real_event.timer_event.id = 1;
-			singleton_system()->vtable->enqueueEvent(singleton_system(), &timer_event);
+			EsicPushEvent(&timer_event);
 			ticks1 = ticks2;
 			Event_destructor(&timer_event.object);
 		}
 		
-
-		system->vtable->update(system);
-		system->vtable->delay(system, 15);
+		EsicUpdate();
+		//EsicDelay(15);
 		Lcd_update();
 
 		Event_destructor(&system_event.object);
 
 	}
 	
-
 	MainUI_destructor(&main_ui.e11ui.widget.object);
-
-	SzString_destructor(&s1.object);
-	SzString_destructor(&s2.object);
 
 }

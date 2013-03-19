@@ -3,9 +3,9 @@
 
 #include <esic/eapi/abstract_system.h>
 
-void e11(PAbstractSystem system);
+void e11();
 
-void _e11_splashscreen(PAbstractSystem system);
-void _e11_mainloop(PAbstractSystem system);
+void _e11_splashscreen();
+void _e11_mainloop();
 
 #endif /* _E11_H_ */

@@ -1,7 +1,7 @@
 /**
  * \file textbox.c
  */
-#include <esic/eapi/abstract_system.h>
+#include <esic/eapi/system.h>
 #include <esic/egui/textbox.h>
 #include <esic/egui/default_widget_renderer.h>
 
@@ -119,7 +119,8 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 		/* Repaint the widget without the carret */
 		custom_event.type = EVENT_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
-		singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+		EsicPushEvent(&custom_event);
 		break;
 
 	case EVENT_FOCUS:
@@ -129,8 +130,8 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 		/* Repaint the widget */
 		custom_event.type = EVENT_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
-		singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-
+		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+		EsicPushEvent(&custom_event);
 		break;
 
 	/*
@@ -146,7 +147,8 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 		if(system_event->real_event.keyboard_event.code >= KEY_a && 
 			system_event->real_event.keyboard_event.code <= KEY_z) {
 			BYTE key = system_event->real_event.keyboard_event.code;
-			BYTE* keyboard = singleton_system()->vtable->getKeyState(singleton_system());
+			//const BYTE* keyboard = singleton_system()->vtable->getKeyState(singleton_system());
+			const BYTE* keyboard = EsicGetKeyboardState();
 			if(keyboard[KEY_RSHIFT] || keyboard[KEY_LSHIFT]) {
 				key &= 0xDF; /* Switch to uppercase if shift is pressed */
 			}
@@ -186,7 +188,8 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 			custom_event.type = EVENT_PAINT;
 			custom_event.real_event.widget_event.id = self->id;
 
-			singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+			//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+			EsicPushEvent(&custom_event);
 		}
 		break;
 
@@ -198,7 +201,8 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 			custom_event.type = EVENT_PAINT;
 			custom_event.real_event.widget_event.id = self->id;
 
-			singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+			//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+			EsicPushEvent(&custom_event);
 		}
 		break;
 
