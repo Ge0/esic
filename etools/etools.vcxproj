@@ -83,7 +83,7 @@
     <ClCompile Include="src\hashtable.c" />
     <ClCompile Include="src\list.c" />
     <ClCompile Include="src\map.c" />
-    <ClCompile Include="src\szstring.c" />
+    <ClCompile Include="src\zstring.c" />
     <ClCompile Include="src\vector.c" />
   </ItemGroup>
   <ItemGroup>
@@ -92,7 +92,7 @@
     <ClInclude Include="..\includes\esic\etools\hashtable.h" />
     <ClInclude Include="..\includes\esic\etools\list.h" />
     <ClInclude Include="..\includes\esic\etools\map.h" />
-    <ClInclude Include="..\includes\esic\etools\szstring.h" />
+    <ClInclude Include="..\includes\esic\etools\zstring.h" />
     <ClInclude Include="..\includes\esic\etools\vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

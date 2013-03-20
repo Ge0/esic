@@ -5,7 +5,7 @@
 #include <esic/eapi/heap.h>
 #include <esic/eapi/raster_icon_factory.h>
 #include <esic/etools/hashtable.h>
-#include <esic/etools/szstring.h>
+#include <esic/etools/ZString.h>
 #include <fatfs/ff.h>
 
 static Hashtable s_icons;
@@ -13,7 +13,7 @@ static Hashtable s_icons;
 PRasterIcon _build_raster_icon(const char* name);
 
 void RasterIconFactory_init() {
-	Hashtable_constructor(&s_icons, 5, sizeof(SzString), sizeof(RasterIcon));
+	Hashtable_constructor(&s_icons, 5, sizeof(ZString), sizeof(RasterIcon));
 }
 
 void RasterIconFactory_destroy() {
@@ -21,10 +21,10 @@ void RasterIconFactory_destroy() {
 }
 
 PRasterIcon RasterIconFactory_getRasterIcon(const char* icon_name) {
-	SzString key;
+	ZString key;
 	PRasterIcon return_icon = NULL;
 	/* First: check whether the font has been loaded into memory or not */
-	SzString_constructor(&key, icon_name);
+	ZString_constructor(&key, icon_name);
 
 	if(!Hashtable_containsKey(&s_icons.map, &key.object)) {
 		/* If not, load the font & add it to the map */
@@ -41,7 +41,7 @@ PRasterIcon RasterIconFactory_getRasterIcon(const char* icon_name) {
 	/* Finally: get the font into the hashtable */
 	return_icon = (PRasterIcon)Hashtable_get(&s_icons.map, &key.object);
 
-	SzString_destructor(&key.object);
+	ZString_destructor(&key.object);
 
 	return return_icon;
 }

@@ -2,11 +2,11 @@
 #define _IMAGE_H_
 
 #include <esic/egui/widget.h>
-#include <esic/etools/szstring.h>
+#include <esic/etools/ZString.h>
 
 typedef struct _Image {
 	Widget widget;
-	SzString text;
+	ZString text;
 	WORD x;
 	WORD y;
 	WORD width;

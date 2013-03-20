@@ -91,6 +91,7 @@
   <ItemGroup>
     <ClInclude Include="..\includes\esic\eapi\abstract_painter.h" />
     <ClInclude Include="..\includes\esic\eapi\abstract_system.h" />
+    <ClInclude Include="..\includes\esic\eapi\emulator_system.h" />
     <ClInclude Include="..\includes\esic\eapi\event.h" />
     <ClInclude Include="..\includes\esic\eapi\heap.h" />
     <ClInclude Include="..\includes\esic\eapi\keyboard_event.h" />

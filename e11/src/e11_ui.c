@@ -21,7 +21,7 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event);
 
 PE11UI E11UI_constructor(PE11UI self) {
 	Event widget_event;
-	DWORD i;
+	WORD i;
 
 	/* Calling parent constructor */
 	Widget_constructor(&self->widget);
@@ -39,7 +39,7 @@ PE11UI E11UI_constructor(PE11UI self) {
 		Picture_constructor(&self->icons[i]);
 
 		/* Id : 0x8000 + i + 1 */
-		self->icons[i].widget.id = 0x8000 + i + 1;
+		self->icons[i].widget.id = (WORD)(0x8000 + i + 1);
 
 		/* Filling coordinates information */
 		self->icons[i].widget.x = ICONS_BASE_X + (54*(i%ICONS_PER_LINE));

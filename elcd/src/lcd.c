@@ -22,227 +22,101 @@ static WORD *s_double_buf = NULL;
 /* Default background color */
 static DWORD s_default_background_color = RGB_16B(255,255,255);
 
-/* Screen size */
-static DWORD s_width = 0;
-static DWORD s_height = 0;
-
-/* Current drawing mode */
-static DWORD s_drawing_mode = 0;
-
-/* Flags */
-static DWORD s_flags = 0;
-
 /* Pointer to the accessible frame buffer, in read-only mode */
 const WORD* g_lcd_frame_buffer = NULL;
 
 /* Pointer to current font */
 PRasterFont s_current_font = NULL;
 
+/* GR UPDATE */
+static Lcd s_lcd;
+
 
 /* Private functions */
 /**
  * internal function, you don't need to deal with it
  */
-void _Lcd_draw(DWORD index, WORD color);
 float* _linear_interpolation(WORD t0, float f0, WORD t1, float f1);
 
 /* Internal functions for triangles */
-void _lcd_fill_bottom_flat_triangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD color);
-void _lcd_fill_top_flat_triangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD color);
+void _lcd_fill_bottom_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color);
+void _lcd_fill_top_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color);
 
 /* End Private functions */
 
 
-void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags, WORD background_color) {
-	DWORD size;
-	DWORD i;
-	s_width = width;
-	s_height = height;
-	s_flags = flags;
+void _LcdInit(DWORD width, DWORD height, BYTE bpp, void* framebuffer) {
+	s_lcd.width           = width;
+	s_lcd.height          = height;
+	s_lcd.bytes_per_pixel = bpp/8;
+	s_lcd.framebuffer     = framebuffer;
 
-	/* Ensure the provided framebuffer does not point to NULL */
-	assert(framebuffer != NULL);
-
-	/* Calculate the size for any further requirement */
-	size = s_width * s_height;
-
-	s_frame_buffer = (WORD*)framebuffer;
-	//s_frame_buffer = (WORD*)SicAlloc(size * sizeof(WORD));
-	
-	if(s_flags & LCD_DOUBLEBUF) {
-		s_double_buf = (WORD*)SicAlloc(size * sizeof(WORD));
-	} else {
-		/* If there is no double buffering, simply directly write to the frame buffer */
-		s_double_buf = s_frame_buffer;
-	}
-
-	//memset(s_frame_buffer, 0xff, size * sizeof(WORD));
-	for(i = 0; i < size; ++i) {
-		s_frame_buffer[i] = background_color;
-	}
-	memcpy(s_double_buf, s_frame_buffer, size * sizeof(WORD));
-
-	/* Ensure the allocation succeeded if we use the double buffering option */
-	assert(s_double_buf != NULL);
-
-	g_lcd_frame_buffer = s_frame_buffer;
+	// Test
+	//memset(s_lcd.framebuffer, 0xffff, s_lcd.width * s_lcd.height * s_lcd.bytes_per_pixel);
 }
 
-void Lcd_destroy() {
-
-	if(s_flags & LCD_DOUBLEBUF) {
-		SicFree(s_double_buf);
-		s_double_buf = NULL;
-	}
-}
-
-void Lcd_update() {
-	memcpy(s_frame_buffer, s_double_buf, (s_width * s_height) * sizeof(WORD));
-}
-
-void Lcd_setDrawingMode(DWORD mode) {
-	s_drawing_mode = mode;
-}
-
-void Lcd_drawRectangle(WORD x, WORD y, WORD width, WORD height, WORD filling_color, WORD border_color) {
+void LcdDrawRectangle(DWORD x, DWORD y, DWORD width, DWORD height, DWORD filling_color, DWORD border_color) {
 	/* Firstly: draw the rectangle */
 	/* TODO. */
 	int i;
 	for(i = 0; i <= height; i++) {
-		Lcd_drawLine(x, y + i, x + width, y + i, filling_color);
+		LcdDrawLine(x, y + i, x + width, y + i, filling_color);
 	}
 
 	/* Secondly, draw the border */
-	Lcd_drawLine(x, y, x + width, y, border_color);						/* top one */
-	Lcd_drawLine(x + width, y, x + width, y + height, border_color);	/* right one */
-	Lcd_drawLine(x + width, y + height, x, y + height, border_color);	/* bottom one */
-	Lcd_drawLine(x, y + height, x, y, border_color);					/* left one */
+	LcdDrawLine(x, y, x + width, y, border_color);						/* top one */
+	LcdDrawLine(x + width, y, x + width, y + height, border_color);	/* right one */
+	LcdDrawLine(x + width, y + height, x, y + height, border_color);	/* bottom one */
+	LcdDrawLine(x, y + height, x, y, border_color);					/* left one */
 }
 
-void Lcd_setPixel(WORD x, WORD y, WORD color) {
-	//DWORD end = s_width * s_height;
-	//DWORD index = ((y * s_width) % end) + (x % s_width);
-
-	DWORD index = TO_INDEX(x,y,s_width,s_height);
-
-	_Lcd_draw(index, color);
-}
-
-void Lcd_drawLine(WORD x1, WORD y1, WORD x2, WORD y2, WORD color) {
-
-	WORD deltax;
-	WORD deltay;
-	double error;
-	WORD ystep;
-	WORD x;
-	WORD y;
-	BYTE steep;
-	//DWORD end;
-	
-	steep = abs(y2 - y1) > abs(x2 - x1);
-
-	if(steep) {
-		SWAP(x1, y1);
-		SWAP(x2, y2);
-	}
-
-	if(x1 > x2) {
-		SWAP(x1, x2);
-		SWAP(y1, y2);
-	}
-
-	deltax = x2 - x1;
-	deltay = abs(y2 - y1);
-	error = deltax / 2;
-	y = y1;
-
-	if(y1 < y2) {
-		ystep = 1;
-	} else {
-		ystep = -1;
-	}
-
-	//end = s_width * s_height;
-	for(x = x1; x <= x2; ++x) {
-		DWORD index_frame_buffer;
-		if(steep) {
-			//index_frame_buffer = ((x * s_width) % end) + (y % s_width);
-			index_frame_buffer = TO_INDEX(y,x,s_width,s_height);
-		} else {
-			//index_frame_buffer = ((y * s_width) % end) + (x % s_width);
-			index_frame_buffer = TO_INDEX(x,y,s_width,s_height);
-		}
-
-		_Lcd_draw(index_frame_buffer, color);
-
-		error -= deltay;
-
-		if(error < 0) {
-			y += ystep;
-			error += deltax;
-		}
-	}
-	
-}
-
-void Lcd_clear() {
-	if(s_flags & LCD_DOUBLEBUF) {
-		memset(s_double_buf, 0, s_width * s_height * sizeof(WORD));
-	} else {
-		memset(s_frame_buffer, 0, s_width * s_height * sizeof(WORD));
-	}
-}
-
-void _Lcd_draw(DWORD index, WORD color) {
-
-	/* Ensure the index is within in its expected boundaries (no memory access fault) */
-	assert(index < (s_width*s_height));
-
-	/* Draw it */
-	switch(s_drawing_mode) {
-	case LCD_OVER:
-		s_double_buf[index] = color;
+void LcdFill(DWORD color) {
+	switch(s_lcd.bytes_per_pixel) {
+	case 1:
+		memset(s_lcd.framebuffer, (BYTE)color, s_lcd.width * s_lcd.height * s_lcd.bytes_per_pixel);
 		break;
-
-	case LCD_XOR:
-		s_double_buf[index] ^= color;
+	case 2:
+		memset(s_lcd.framebuffer, (WORD)color, s_lcd.width * s_lcd.height * s_lcd.bytes_per_pixel);
 		break;
-
-	case LCD_DEL:
-		s_double_buf[index] -= color;
+	case 3:
+		/* TODO. */
+		break;
+	case 4:
+		/* TODO. */
 		break;
 	}
 }
 
-void _lcd_fill_bottom_flat_triangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD color) {
+void _lcd_fill_bottom_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
 	float invslope1 = (x1 - x0) / (float)(y1 - y0);
 	float invslope2 = (x2 - x0) / (float)(y2 - y0);
 	float curx1 = x0;
 	float curx2 = x0;
-	int scanline_y = y0;
+	DWORD scanline_y = y0;
 
 	for (; scanline_y <= y1; scanline_y++) {
-		Lcd_drawLine((int)curx1, scanline_y, (int)curx2, scanline_y, color);
+		LcdDrawLine((DWORD)curx1, scanline_y, (DWORD)curx2, scanline_y, color);
 		curx1 += invslope1;
 		curx2 += invslope2;
 	}
 }
 
-void _lcd_fill_top_flat_triangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD color) {
-	float invslope1 = (x2 - x0) / (float)(y2 - y0);
-	float invslope2 = (x2 - x1) / (float)(y2 - y1);
-	float curx1 = x2;
-	float curx2 = x2;
+
+void _lcd_fill_top_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
+	double invslope1 = (x2 - x0) / (double)(y2 - y0);
+	double invslope2 = (x2 - x1) / (double)(y2 - y1);
+	double curx1 = x2;
+	double curx2 = x2;
 	int scanline_y = y2;
 
 	for (; scanline_y > y0; scanline_y--) {
 		curx1 -= invslope1;
 		curx2 -= invslope2;
-		Lcd_drawLine((int)curx1, scanline_y, (int)curx2, scanline_y, color);
+		LcdDrawLine((DWORD)curx1, scanline_y, (DWORD)curx2, scanline_y, color);
 	}
 }
 
-void Lcd_drawTriangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD filling_color, WORD border_color) {
+void LcdDrawTriangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD filling_color, DWORD border_color) {
 	/*
 	SWORD dx0;
 	SWORD dx1;
@@ -273,8 +147,8 @@ void Lcd_drawTriangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD
 		_lcd_fill_top_flat_triangle(x0, y0, x1, y1, x2, y2, filling_color);
 	} else {
 		/* general case - split the triangle in a topflat and bottom-flat one */
-		WORD x3 = (int)(x0 + ((float)(y1 - y0) / (float)(y2 - y0)) * (x2 - x0));
-		WORD y3 = y1;
+		DWORD x3 = (int)(x0 + ((float)(y1 - y0) / (float)(y2 - y0)) * (x2 - x0));
+		DWORD y3 = y1;
 	
 		_lcd_fill_bottom_flat_triangle(x0, y0, x1, y1, x3, y3, filling_color);
 		_lcd_fill_top_flat_triangle(x1, y1, x3, y3, x2, y2, filling_color);
@@ -282,9 +156,9 @@ void Lcd_drawTriangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD
 	}
 
 	/* Drawing edges */
-	Lcd_drawLine(x0, y0, x1, y1, border_color);
-	Lcd_drawLine(x1, y1, x2, y2, border_color);
-	Lcd_drawLine(x2, y2, x0, y0, border_color);
+	LcdDrawLine(x0, y0, x1, y1, border_color);
+	LcdDrawLine(x1, y1, x2, y2, border_color);
+	LcdDrawLine(x2, y2, x0, y0, border_color);
 
 }
 
@@ -313,12 +187,81 @@ float* _linear_interpolation(WORD t0, float f0, WORD t1, float f1) {
 
 }
 
-void Lcd_drawPicture(WORD x, WORD y, WORD width, WORD height, WORD* raw_buffer) {
-	WORD i, j;
+void LcdDrawBuffer(DWORD x, DWORD y, DWORD width, DWORD height, void* raw_buffer) {
+	DWORD i, j;
 
 	for(j = 0; j < height; ++j) {
 		for(i = 0; i < width; ++i) {
-			Lcd_setPixel(x+i, y+j, raw_buffer[j * width + i]);
+			LcdSetPixel(x+i, y+j, (DWORD)*((BYTE*)raw_buffer + ((j * width + i) * s_lcd.bytes_per_pixel)));
 		}
 	}
+}
+
+/* GR Update */
+
+void LcdSetPixel(DWORD x, DWORD y, DWORD color) {
+	switch(s_lcd.bytes_per_pixel) {
+	case 1:	/* 8 bpp */
+		*((BYTE*)s_lcd.framebuffer + y * s_lcd.width + x) = (BYTE)color;
+		break;
+	case 2: /* 16 bpp */
+		*((WORD*)s_lcd.framebuffer + y * s_lcd.width + x) = (WORD)color;
+		break;
+	case 3:
+		/* TODO. */
+		break;
+	case 4:
+		/* TODO. */
+		break;
+	}
+}
+
+void LcdDrawLine(DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
+	DWORD deltax;
+	DWORD deltay;
+	double error;
+	DWORD ystep;
+	DWORD x;
+	DWORD y;
+	BYTE steep;
+	
+	steep = abs((long)y2 - (long)y1) > abs((long)x2 - (long)x1);
+
+	if(steep) {
+		SWAP(x1, y1);
+		SWAP(x2, y2);
+	}
+
+	if(x1 > x2) {
+		SWAP(x1, x2);
+		SWAP(y1, y2);
+	}
+
+	deltax = x2 - x1;
+	deltay = abs((long)y2 - (long)y1);
+	error = deltax / 2;
+	y = y1;
+
+	if(y1 < y2) {
+		ystep = 1;
+	} else {
+		ystep = -1;
+	}
+
+	for(x = x1; x <= x2; ++x) {
+		if(steep) {
+			LcdSetPixel(y, x, color);
+		} else {
+			LcdSetPixel(x, y, color);
+		}
+
+
+		error -= deltay;
+
+		if(error < 0) {
+			y += ystep;
+			error += deltax;
+		}
+	}
+	
 }

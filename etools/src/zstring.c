@@ -1,32 +1,32 @@
 /**
- * szstring.c
+ * ZString.c
  */
-#include <esic/etools/szstring.h>
+#include <esic/etools/ZString.h>
 
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
 /* Vtables definition */
-static const vtable_Object s_szstring_object_vtable = {
-	SzString_destructor,
-	SzString_clone,
-	SzString_equalsTo,
-	SzString_hash
+static const vtable_Object s_ZString_object_vtable = {
+	ZString_destructor,
+	ZString_clone,
+	ZString_equalsTo,
+	ZString_hash
 };
 
 
 
 
-PSzString SzString_constructor(PSzString self, const char* data) {
+PZString ZString_constructor(PZString self, const char* data) {
 	/* Base structure is Object: no need to construct (Object is abstract!) */
 
 	/* vtable assignment */
-	self->object.vtable = &s_szstring_object_vtable;
+	self->object.vtable = &s_ZString_object_vtable;
 
 
 	/* Filling members */
-	self->object.size = sizeof(SzString);
+	self->object.size = sizeof(ZString);
 	self->size        = strlen(data);
 	self->data        = SicStrdup(data);
 
@@ -37,16 +37,16 @@ PSzString SzString_constructor(PSzString self, const char* data) {
 }
 
 
-void SzString_destructor(PObject self) {
-	PSzString real_self = (PSzString)self;
+void ZString_destructor(PObject self) {
+	PZString real_self = (PZString)self;
 	if(real_self->data != NULL) {
 		SicFree(real_self->data);
 	}
 
 }
-PObject SzString_clone(PObject self, PObject dst) {
-	PSzString real_self = (PSzString)self;
-	PSzString real_dst  = (PSzString)dst;
+PObject ZString_clone(PObject self, PObject dst) {
+	PZString real_self = (PZString)self;
+	PZString real_dst  = (PZString)dst;
 
 	/*
 	// Removed since dst should'nt be constructed yet??
@@ -66,15 +66,15 @@ PObject SzString_clone(PObject self, PObject dst) {
 	return dst;
 }
 
-BOOL SzString_equalsTo(PObject self, PObject dst) {
-	PSzString real_self = (PSzString)self;
-	PSzString real_dst  = (PSzString)dst;
+BOOL ZString_equalsTo(PObject self, PObject dst) {
+	PZString real_self = (PZString)self;
+	PZString real_dst  = (PZString)dst;
 
 	return strcmp(real_self->data, real_dst->data) == 0;
 }
 
-DWORD SzString_hash(PObject self) {
-	PSzString real_self = (PSzString)self;
+DWORD ZString_hash(PObject self) {
+	PZString real_self = (PZString)self;
 	DWORD hash = 5381;
 	const char* string = real_self->data;
 	while(*string != '\0') {
@@ -86,8 +86,8 @@ DWORD SzString_hash(PObject self) {
 	return hash;
 }
 
-/* SzString methods */
-void SzString_setData(PSzString self, const char* data) {
+/* ZString methods */
+void ZString_setData(PZString self, const char* data) {
 	if(self->data != NULL) {
 		SicFree(self->data);
 	}
@@ -96,7 +96,7 @@ void SzString_setData(PSzString self, const char* data) {
 	self->size = strlen(self->data);
 }
 
-void SzString_append(PSzString self, char ch) {
+void ZString_append(PZString self, char ch) {
 	char* buf = (char*)SicAlloc(self->size + 2); /* +2 for the new ch & the \0 */
 	assert(buf != NULL);
 	strcpy(buf, self->data);
@@ -107,7 +107,7 @@ void SzString_append(PSzString self, char ch) {
 	self->data = buf;
 }
 
-void SzString_removeLastChar(PSzString self) {
+void ZString_removeLastChar(PZString self) {
 	if(self->size > 0) {
 		char* buf = (char*)SicAlloc(strlen(self->data));
 		assert(buf != NULL);
@@ -119,10 +119,10 @@ void SzString_removeLastChar(PSzString self) {
 	}
 }
 
-void SzString_subString(PSzString self, DWORD start, DWORD n, PSzString out) {
+void ZString_subString(PZString self, DWORD start, DWORD n, PZString out) {
 	if(self->size > 0) {
 		if(start < self->size) {
-			SzString_setData(out, self->data + start);
+			ZString_setData(out, self->data + start);
 			if(n > 0) {
 				if(n < out->size) {
 					out->data[n] = '\0';
@@ -134,7 +134,7 @@ void SzString_subString(PSzString self, DWORD start, DWORD n, PSzString out) {
 	}
 }
 
-void SzString_insertCharAt(PSzString self, DWORD pos, char ch) {
+void ZString_insertCharAt(PZString self, DWORD pos, char ch) {
 	if(pos >= 0 && pos <= self->size) {
 		char* buf = (char*)SicAlloc(self->size + 2); /* +2 for both ch & \0 */
 		assert(buf != NULL);
@@ -148,7 +148,7 @@ void SzString_insertCharAt(PSzString self, DWORD pos, char ch) {
 	}
 }
 
-void SzString_removeCharAt(PSzString self, DWORD pos) {
+void ZString_removeCharAt(PZString self, DWORD pos) {
 	if(pos >= 0 && pos < self->size) {
 		DWORD i;
 		for(i = pos; i < (self->size-1); ++i) {

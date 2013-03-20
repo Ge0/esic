@@ -8,12 +8,12 @@
 #include <esic/eapi/heap.h>
 
 /* TEST START */
-#include <esic/etools/szstring.h>
+#include <esic/etools/ZString.h>
 #include <esic/eapi/raster_font_factory.h>
 #include <esic/eapi/raster_icon_factory.h>
 #include <esic/eapi/raster_icon_header.h>
 #include <esic/egui/default_widget_renderer.h>
-#include <esic/etools/szstring.h>
+#include <esic/etools/ZString.h>
 #include <fatfs/ff.h>
 /* TEST END */
 
@@ -22,16 +22,18 @@
 
 #include "xml_ui_factory.h"
 
-void e11(PAbstractSystem system) {
+void e11() {
 	PDefaultWidgetRenderer widget_renderer = NULL;
 
- 
+	
+	/* LCD INIT */
+	LcdInit(320, 240, 16, LCD_DOUBLEBUF);
+	LcdFill(0xffff);
 
 	/* FACTORY INIT */
 	RasterFontFactory_init();
 	RasterIconFactory_init();
 
-	Lcd_setDrawingMode(LCD_OVER);
 
 	/* WIDGET RENDERER INIT */
 	NEW(widget_renderer, DefaultWidgetRenderer);
@@ -68,7 +70,7 @@ void _e11_mainloop() {
 	MainUI_constructor(&main_ui);
 	
 	/* System Top rectangle */
-	Lcd_drawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
+	LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
 
 	main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 0);
 
@@ -111,7 +113,7 @@ void _e11_mainloop() {
 		
 		EsicUpdate();
 		//EsicDelay(15);
-		Lcd_update();
+		LcdUpdate();
 
 		Event_destructor(&system_event.object);
 

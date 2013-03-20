@@ -26,18 +26,23 @@
 
 #define TO_INDEX(x,y,width,height) (((y * width) % (width*height)) + (x % width))
 
-typedef enum _BPP {
-	BPP1=0x01,
-	BPP8,
-	BPP16,
-	BPP24
-} BPP, *PBPP;
 
-typedef struct{
-	unsigned char R;
-	unsigned char V;
-	unsigned char B;
-}Color, *PColor; 
+typedef struct _Lcd {
+	DWORD width;
+	DWORD height;
+	BYTE bytes_per_pixel;
+	void* framebuffer;
+} Lcd, *PLcd;
+
+
+#if defined(EMULATOR)
+#include <esic/elcd/lcd_emulator.h>
+#define LcdInit				LcdEmulatorInit
+#define	LcdDestroy			LcdEmulatorDestroy
+#define LcdUpdate			LcdEmulatorUpdate
+#endif
+
+
 
 /**
  * initialize the lcd screen with dimensions of width*height
@@ -47,54 +52,56 @@ typedef struct{
  * \param flags: flags for the lcd initialization
  * \param background_color: background_color of the screen
  */
-void Lcd_init(WORD width, WORD height, void* framebuffer, DWORD flags, WORD background_color);
+//void LcdInit(WORD width, WORD height, void* framebuffer, DWORD flags, WORD background_color);
 
 /**
  * updates the lcd screen; useful if the double buffering mode is enabled,
  * otherwise no need to call it.
  */
-void Lcd_update();
+//void LcdUpdate();
 
 /**
  * Free the resources allocated by the lcd screen; you must call this function if
  * you don't need to deal with the lcd anymore in your computer program.
  */
-void Lcd_destroy();
+//void LcdDestroy();
 
 /**
  * Change the current drawing mode by the 'mode' parameter (LCD_XOR, LCD_OVER, LCD_DEL)
  * \param mode the new drawing mode
  */
-void Lcd_setDrawingMode(DWORD mode);
+//void Lcd_setDrawingMode(DWORD mode);
 
 /**
  * Clears the lcd (all pixels set to 0)
  */
-void Lcd_clear();
+//void Lcd_clear();
 
 /**
  * Draw a colored line from (x1,y1) to (x2,y2)
  */
-void Lcd_drawLine(WORD x1, WORD y1, WORD x2, WORD y2, WORD color);
+//void LcdDrawLine(DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color);
 
 /**
  * Draw a rectangle which top left corner is (x,y), and left right corner is (x+width), (y+height)
  */
-void Lcd_drawRectangle(WORD x, WORD y, WORD width, WORD height, WORD filling_color, WORD border_color);
+void LcdDrawRectangle(DWORD x, DWORD y, DWORD width, DWORD height, DWORD filling_color, DWORD border_color);
 
 /**
  * set a pixel at (x,y) to color
  */
-void Lcd_setPixel(WORD x, WORD y, WORD color);
+//void LcdSetPixel(DWORD x, DWORD y, DWORD color);
 
-void Lcd_useFont(const char* font_name);
 
-void Lcd_drawString(WORD x, WORD y, WORD color, const char* string);
+void LcdDrawTriangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD filling_color, DWORD border_color);
 
-void Lcd_drawTriangle(WORD x0, WORD y0, WORD x1, WORD y1, WORD x2, WORD y2, WORD filling_color, WORD border_color);
+void LcdDrawBuffer(DWORD x, DWORD y, DWORD width, DWORD height, DWORD* raw_buffer);
 
-void Lcd_drawPicture(WORD x, WORD y, WORD width, WORD height, WORD* raw_buffer);
 
-void Lcd_setBackgroundColor(WORD background_color);
+/* GR Update */
+void LcdFill(DWORD color);
+void LcdDrawLine(DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color);
+void LcdSetPixel(DWORD x, DWORD y, DWORD color);
+void _LcdInit(DWORD width, DWORD height, BYTE bpp, void* framebuffer);
 
 #endif /* _LCD_H_ */

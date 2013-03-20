@@ -36,7 +36,7 @@ PTextBox TextBox_constructor(PTextBox self) {
 	self->widget.object.size = sizeof(TextBox);
 
 	/* Constructing members */
-	SzString_constructor(&self->text, "");
+	ZString_constructor(&self->text, "");
 
 	/* Default properties */
 	self->widget.is_focusable = 1;
@@ -53,7 +53,7 @@ void TextBox_destructor(PObject self) {
 	Widget_destructor(self);
 
 	/* Destructing members */
-	SzString_destructor(&real_self->text.object);
+	ZString_destructor(&real_self->text.object);
 }
 
 PObject TextBox_clone(PObject self, PObject dst) {
@@ -64,7 +64,7 @@ PObject TextBox_clone(PObject self, PObject dst) {
 	Widget_clone(self, dst);
 
 	/* Copying members */
-	SzString_clone(&real_self->text.object, &real_dst->text.object);
+	ZString_clone(&real_self->text.object, &real_dst->text.object);
 
 	return self;
 }
@@ -77,15 +77,15 @@ void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
 }
 
 void TextBox_appendChar(PTextBox self, char ch) {
-	SzString_insertCharAt(&self->text, self->carret_position, ch);
-	//SzString_append(&self->text, ch);
+	ZString_insertCharAt(&self->text, self->carret_position, ch);
+	//ZString_append(&self->text, ch);
 	++self->carret_position;
 	_update_offset_text_position(self);
 }
 
 void TextBox_removeLastChar(PTextBox self) {
 	if(self->text.size > 0) {
-		SzString_removeLastChar(&self->text);
+		ZString_removeLastChar(&self->text);
 		--self->carret_position;
 		_update_offset_text_position(self);
 	}
@@ -93,14 +93,14 @@ void TextBox_removeLastChar(PTextBox self) {
 
 void TextBox_removeCharAt(PTextBox self, DWORD pos) {
 	if(pos >= 0 && pos < self->text.size) {
-		SzString_removeCharAt(&self->text, pos);
+		ZString_removeCharAt(&self->text, pos);
 		--self->carret_position;
 		_update_offset_text_position(self);
 	}
 }
 
 void TextBox_setText(PTextBox self, const char* text) {
-	SzString_setData(&self->text, text);
+	ZString_setData(&self->text, text);
 	self->carret_position = self->text.size;
 }
 
@@ -172,7 +172,7 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 		/* Suppr key (still char removal)) */
 		} else if(system_event->real_event.keyboard_event.code == KEY_DELETE) {
 			if(real_self->carret_position < real_self->text.size) {
-				SzString_removeCharAt(&real_self->text, real_self->carret_position);
+				ZString_removeCharAt(&real_self->text, real_self->carret_position);
 				request_paint = 1;
 			}
 

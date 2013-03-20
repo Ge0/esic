@@ -18,7 +18,6 @@ static FATFS s_fat;
 /* Private functions */
 static void _createEventFromSDL(PEvent systemEvent, const SDL_Event* psdl_event);
 static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event);
-static void _initFileSystem(PAbstractSystem self);
 static void _initFileSystem(void);
 
 
@@ -28,7 +27,7 @@ void EmulatorSystemInit(void) {
 	error = SDL_Init(SDL_INIT_VIDEO);
 	s_screen = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-	Lcd_init(320, 240, s_screen->pixels, 0, DEFAULT_BACKGROUND_COLOR);
+	//LcdInit(320, 240, s_screen->pixels, 0, DEFAULT_BACKGROUND_COLOR);
 	SDL_ShowCursor(0);
 
 	/* Ensure screen's been created */
@@ -67,7 +66,7 @@ DWORD get_fattime (void)
 }
 
 void EmulatorSystemDestroy() {
-	Lcd_destroy();
+	LcdDestroy();
 
 	StopTmrThread();
 	_CrtDumpMemoryLeaks();

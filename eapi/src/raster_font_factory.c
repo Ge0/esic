@@ -1,7 +1,7 @@
 /**
  * \file raster_font_factory.c
  */
-#include <esic/etools/szstring.h>
+#include <esic/etools/ZString.h>
 #include <esic/etools/hashtable.h>
 #include <esic/eapi/raster_font_factory.h>
 #include <stdio.h>
@@ -24,7 +24,7 @@ void _raster_font_hydrate_tables(PRasterFont self, FIL* font_file);
 static Hashtable s_fonts;
 
 void RasterFontFactory_init() {
-	Hashtable_constructor(&s_fonts, 3, sizeof(SzString), sizeof(RasterFont));
+	Hashtable_constructor(&s_fonts, 3, sizeof(ZString), sizeof(RasterFont));
 }
 
 void RasterFontFactory_destroy() {
@@ -32,10 +32,10 @@ void RasterFontFactory_destroy() {
 }
 
 PRasterFont RasterFontFactory_getRasterFont(const char* font_name) {
-	SzString key;
+	ZString key;
 	PRasterFont return_font = NULL;
 	/* First: check whether the font has been loaded into memory or not */
-	SzString_constructor(&key, font_name);
+	ZString_constructor(&key, font_name);
 
 	if(!Hashtable_containsKey(&s_fonts.map, &key.object)) {
 		/* If not, load the font & add it to the map */
@@ -52,7 +52,7 @@ PRasterFont RasterFontFactory_getRasterFont(const char* font_name) {
 	/* Finally: get the font into the hashtable */
 	return_font = (PRasterFont)Hashtable_get(&s_fonts.map, &key.object);
 
-	SzString_destructor(&key.object);
+	ZString_destructor(&key.object);
 
 	return return_font;
 }

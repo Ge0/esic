@@ -37,20 +37,20 @@ void LcdPainter_destructor(PObject self) {
 
 /* AbstractPainter */
 void LcdPainter_drawLine(PAbstractPainter abstract_painter, WORD x1, WORD y1, WORD x2, WORD y2, WORD color) {
-	Lcd_drawLine(x1, y1, x2, y2, color);
+	LcdDrawLine(x1, y1, x2, y2, color);
 }
 void LcdPainter_drawRectangle(PAbstractPainter abstract_painter, WORD x, WORD y, WORD width, WORD height, WORD background_color, WORD border_color) {
 	/* Firstly: draw the rectangle */
 	int i;
 	for(i = 0; i <= height; i++) {
-		Lcd_drawLine(x, y + i, x + width, y + i, background_color);
+		LcdDrawLine(x, y + i, x + width, y + i, background_color);
 	}
 
 	/* Secondly, draw the border */
-	Lcd_drawLine(x, y, x + width, y, border_color);						/* top one */
-	Lcd_drawLine(x + width, y, x + width, y + height, border_color);	/* right one */
-	Lcd_drawLine(x + width, y + height, x, y + height, border_color);	/* bottom one */
-	Lcd_drawLine(x, y + height, x, y, border_color);					/* left one */
+	LcdDrawLine(x, y, x + width, y, border_color);						/* top one */
+	LcdDrawLine(x + width, y, x + width, y + height, border_color);	/* right one */
+	LcdDrawLine(x + width, y + height, x, y + height, border_color);	/* bottom one */
+	LcdDrawLine(x, y + height, x, y, border_color);					/* left one */
 }
 
 void LcdPainter_drawString(PAbstractPainter self, WORD x, WORD y , WORD color, const char* string) {
@@ -87,7 +87,7 @@ void LcdPainter_drawString(PAbstractPainter self, WORD x, WORD y , WORD color, c
 					if(bit == 1) {
 						WORD x_dest = (x + i * character_width + (j % character_width));
 						WORD y_dest = y + (j / character_width) /* + ((x_dest / 320) * character_height) */;
-						Lcd_setPixel(x_dest, y_dest, color);
+						LcdSetPixel(x_dest, y_dest, color);
 					}
 				}
 
@@ -99,7 +99,7 @@ void LcdPainter_drawString(PAbstractPainter self, WORD x, WORD y , WORD color, c
 }
 
 void LcdPainter_drawPixel(PAbstractPainter abstract_painter, WORD x , WORD y , WORD color) {
-	Lcd_setPixel(x, y, color);
+	LcdSetPixel(x, y, color);
 }
 
 void LcdPainter_drawBuffer(PAbstractPainter abstract_painter, WORD x, WORD y, WORD width, WORD height, WORD* raw_buffer) {
@@ -107,7 +107,7 @@ void LcdPainter_drawBuffer(PAbstractPainter abstract_painter, WORD x, WORD y, WO
 
 	for(j = 0; j < height; ++j) {
 		for(i = 0; i < width; ++i) {
-			Lcd_setPixel(x+i, y+j, raw_buffer[j * width + i]);
+			LcdSetPixel(x+i, y+j, raw_buffer[j * width + i]);
 		}
 	}
 }

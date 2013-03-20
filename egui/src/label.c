@@ -33,7 +33,7 @@ PLabel Label_constructor(PLabel self) {
 	self->widget.object.size = sizeof(Label);
 
 	/* Constructing members */
-	SzString_constructor(&self->caption, "");
+	ZString_constructor(&self->caption, "");
 
 	return self;
 }
@@ -45,7 +45,7 @@ void Label_destructor(PObject self) {
 	Widget_destructor(self);
 
 	/* Destructing members */
-	SzString_destructor(&real_self->caption.object);
+	ZString_destructor(&real_self->caption.object);
 }
 
 PObject Label_clone(PObject self, PObject dst) {
@@ -56,7 +56,7 @@ PObject Label_clone(PObject self, PObject dst) {
 	Widget_clone(self, dst);
 
 	/* Copying members */
-	SzString_clone(&real_self->caption.object, &real_dst->caption.object);
+	ZString_clone(&real_self->caption.object, &real_dst->caption.object);
 
 	return self;
 }
@@ -78,5 +78,5 @@ DWORD Label_defaultProc(PWidget self, const PEvent system_event) {
 }
 
 void Label_setCaption(PLabel self, const char* text) {
-	SzString_setData(&self->caption, text);
+	ZString_setData(&self->caption, text);
 }

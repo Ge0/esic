@@ -70,7 +70,7 @@ void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer self, PLabel label
 
 void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox textbox, WORD base_x, WORD base_y) {
 	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
-	SzString visible_text;
+	ZString visible_text;
 	WORD character_width = TEXTBOX_DEFAULT_WIDTH_CHARACTER;
 	PRasterFont font6x8 = NULL;
 
@@ -91,9 +91,9 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 	);
 	
 	/* Draw the only visible part of text */
-	SzString_constructor(&visible_text, "");
+	ZString_constructor(&visible_text, "");
 
-	SzString_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text); 
+	ZString_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text); 
 
 	/* Draw the string & the carret at its physical position */
 		real_self->painter->abstract_painter.vtable->drawString(
@@ -141,7 +141,7 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 			);
 		}
 
-	SzString_destructor(&visible_text.object);
+	ZString_destructor(&visible_text.object);
 }
 
 void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture picture, WORD base_x, WORD base_y) {
@@ -160,7 +160,7 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 		/* ... & the surronding rect */
 
 		/* Top border */
-		Lcd_drawRectangle(
+		LcdDrawRectangle(
 			base_x + picture->widget.x - picture->border_thickness,
 			picture->widget.y - picture->border_thickness,
 			picture->icon->header.width + picture->border_thickness,
@@ -171,7 +171,7 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 
 		
 		/* Right border */
-		Lcd_drawRectangle(
+		LcdDrawRectangle(
 			base_x + picture->widget.x + picture->icon->header.width,
 			/*base_y*/0 + picture->widget.y - picture->border_thickness,
 			picture->border_thickness,
@@ -182,7 +182,7 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 
 		
 		/* Bottom border */
-		Lcd_drawRectangle(
+		LcdDrawRectangle(
 			base_x + picture->widget.x,
 			/*base_y*/0 + picture->widget.y + picture->icon->header.height,
 			picture->icon->header.width + picture->border_thickness,
@@ -193,7 +193,7 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 
 
 		/* Left border */
-		Lcd_drawRectangle(
+		LcdDrawRectangle(
 			base_x + picture->widget.x - picture->border_thickness,
 			/*base_y*/ 0 + picture->widget.y,
 			picture->border_thickness,
@@ -215,7 +215,7 @@ void DefaultWidgetRenderer_paintImage(PImage self, WORD base_x, WORD base_y) {
 	WORD i,j;
 
 
-	Lcd_drawRectangle(base_x + self->widget.x, base_y + self->widget.y, self->widget.width, self->widget.height, 0x0000, 0x8888);
+	LcdDrawRectangle(base_x + self->widget.x, base_y + self->widget.y, self->widget.width, self->widget.height, 0x0000, 0x8888);
 
 	Lcd_drawString(base_x + self->widget.x + 2, base_y + self->widget.y + 2, 0xabcd, self->text.data);
 
@@ -228,11 +228,11 @@ void DefaultWidgetRenderer_paintImage(PImage self, WORD base_x, WORD base_y) {
 			switch(self->bpp){
 			case BPP1:
 
-				Lcd_setPixel(j + self->widget.x, i + self->widget.y, self->rawBuffer[i * self->widget.width + j]); 
+				LcdSetPixel(j + self->widget.x, i + self->widget.y, self->rawBuffer[i * self->widget.width + j]); 
 				break;
 			case BPP8:
 
-				Lcd_setPixel(j + self->widget.x, i + self->widget.y, self->rawBuffer[i * self->widget.width + j]); 
+				LcdSetPixel(j + self->widget.x, i + self->widget.y, self->rawBuffer[i * self->widget.width + j]); 
 				break;
 			case BPP16:
 

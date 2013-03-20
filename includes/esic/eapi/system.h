@@ -15,6 +15,16 @@
 #define EsicGetTicks			EmulatorSystemGetTicks
 #define EsicGetKeyboardState	EmulatorSystemGetKeyboardState
 #define EsicUpdate				EmulatorSystemUpdate
+#elif defined(__LPC177X_8X__)
+#define EsicInit				Lpc1788SystemInit
+#define EsicDestroy				Lpc1788SystemDestroy
+#define EsicWaitEvent			Lpc1788WaitEvent
+#define EsicPollEvent			Lpc1788PollEvent
+#define EsicDelay				Lpc1788Delay
+#define EsicPushEvent			Lpc1788PushEvent
+#define EsicGetTicks			Lpc1788GetTicks
+#define EsicGetKeyboardState	Lpc1788GetKeyboardState
+#define EsicUpdate				Lpc1788Update
 #endif
 
 

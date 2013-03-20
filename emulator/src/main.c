@@ -22,9 +22,5 @@ int main(int argc, char** argv) {
 
 	EsicDestroy();
 
-#if defined (WIN32)
-	
-
-
 	return EXIT_SUCCESS;
 }
