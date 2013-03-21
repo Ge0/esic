@@ -58,8 +58,10 @@ void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer self, PLabel label
 	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
 
 	/* Simply draw the caption */
-	real_self->painter->abstract_painter.vtable->drawString(
-		&real_self->painter->abstract_painter,
+	ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawString(
+	//real_self->painter->abstract_painter.vtable->drawString(
+		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+		//&real_self->painter->abstract_painter,
 		base_x + label->widget.x,
 		base_y + label->widget.y,
 		label->widget.color,
@@ -80,8 +82,10 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 	}
 
 	/* Draw the surrounding rect with border */
-	real_self->painter->abstract_painter.vtable->drawRectangle(
-		&real_self->painter->abstract_painter,
+	ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+	//real_self->painter->abstract_painter.vtable->drawRectangle(
+		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+		//&real_self->painter->abstract_painter,
 		base_x + textbox->widget.x,
 		base_y + textbox->widget.y,
 		textbox->widget.width,
@@ -96,17 +100,21 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 	ZString_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text); 
 
 	/* Draw the string & the carret at its physical position */
-		real_self->painter->abstract_painter.vtable->drawString(
-			&real_self->painter->abstract_painter,
-			base_x + textbox->widget.x + 2,
-			base_y + textbox->widget.y + 2,
-			RGB_16B(0,0,0),
-			visible_text.data
-		);
+	ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawString(
+		//real_self->painter->abstract_painter.vtable->drawString(
+		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+		//&real_self->painter->abstract_painter,
+		base_x + textbox->widget.x + 2,
+		base_y + textbox->widget.y + 2,
+		RGB_16B(0,0,0),
+		visible_text.data
+	);
 
 		if(textbox->draw_carret && textbox->is_focused) {
-			real_self->painter->abstract_painter.vtable->drawRectangle(
-				&real_self->painter->abstract_painter,
+			ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+				ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+				//real_self->painter->abstract_painter.vtable->drawRectangle(
+				//&real_self->painter->abstract_painter,
 				base_x + textbox->widget.x + 2 + ((textbox->carret_position - textbox->text_offset) * character_width) ,
 				base_y + textbox->widget.y + 2,
 				1,
@@ -118,8 +126,10 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 
 		/* Draw indicators at the beginning if there are characters non printed */
 		if(textbox->text_offset) {
-			real_self->painter->abstract_painter.vtable->drawRectangle(
-				&real_self->painter->abstract_painter,
+			ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+				ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+				//real_self->painter->abstract_painter.vtable->drawRectangle(
+				//&real_self->painter->abstract_painter,
 				base_x + textbox->widget.x ,
 				base_y + textbox->widget.y,
 				2,
@@ -130,8 +140,10 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 		}
 
 		if((WORD)(textbox->text_offset + (textbox->widget.width / character_width)) < textbox->text.size) {
-			real_self->painter->abstract_painter.vtable->drawRectangle(
-				&real_self->painter->abstract_painter,
+			ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+				ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+				//real_self->painter->abstract_painter.vtable->drawRectangle(
+				//&real_self->painter->abstract_painter,
 				base_x + textbox->widget.x + textbox->widget.width-2 ,
 				base_y + textbox->widget.y,
 				2,
@@ -141,15 +153,17 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 			);
 		}
 
-	ZString_destructor(&visible_text.object);
+	ZString_destructor(OBJECT(&visible_text));
 }
 
 void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture picture, WORD base_x, WORD base_y) {
 	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
 
 	if(picture->icon != NULL) {
-		real_self->painter->abstract_painter.vtable->drawBuffer(
-			&real_self->painter->abstract_painter,
+		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawBuffer(
+			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+			//real_self->painter->abstract_painter.vtable->drawBuffer(
+			//&real_self->painter->abstract_painter,
 			base_x + picture->widget.x,
 			/*base_y*/0 + picture->widget.y,
 			picture->icon->header.width,
@@ -160,7 +174,11 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 		/* ... & the surronding rect */
 
 		/* Top border */
-		LcdDrawRectangle(
+		//LcdDrawRectangle(
+		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+			//real_self->painter->abstract_painter.vtable->drawRectangle(
+			//&real_self->painter->abstract_painter,
 			base_x + picture->widget.x - picture->border_thickness,
 			picture->widget.y - picture->border_thickness,
 			picture->icon->header.width + picture->border_thickness,
@@ -171,7 +189,11 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 
 		
 		/* Right border */
-		LcdDrawRectangle(
+		//LcdDrawRectangle(
+		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+			//real_self->painter->abstract_painter.vtable->drawRectangle(
+			//&real_self->painter->abstract_painter,
 			base_x + picture->widget.x + picture->icon->header.width,
 			/*base_y*/0 + picture->widget.y - picture->border_thickness,
 			picture->border_thickness,
@@ -182,7 +204,11 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 
 		
 		/* Bottom border */
-		LcdDrawRectangle(
+		//LcdDrawRectangle(
+		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+			//real_self->painter->abstract_painter.vtable->drawRectangle(
+			//&real_self->painter->abstract_painter,
 			base_x + picture->widget.x,
 			/*base_y*/0 + picture->widget.y + picture->icon->header.height,
 			picture->icon->header.width + picture->border_thickness,
@@ -193,7 +219,11 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 
 
 		/* Left border */
-		LcdDrawRectangle(
+		//LcdDrawRectangle(
+		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+			//real_self->painter->abstract_painter.vtable->drawRectangle(
+			//&real_self->painter->abstract_painter,
 			base_x + picture->widget.x - picture->border_thickness,
 			/*base_y*/ 0 + picture->widget.y,
 			picture->border_thickness,

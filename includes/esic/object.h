@@ -37,6 +37,22 @@ typedef struct _Object {
 	SELF = NULL
 
 
+#define VTABLE_START(base_class) \
+	static const vtable_##base_class s_##base_class##_vtable =
+
+#define VTABLE_POINTER(base_class) &s_##base_class##_vtable
+
+/* X-Macro */
+#define OBJECT_VIRTUAL_FUNCTIONS \
+	OBJECT_VFUNCTION(void,		destructor, (PObject self)) \
+	OBJECT_VFUNCTION(PObject,	clone,		(PObject self, PObject dst)) \
+	OBJECT_VFUNCTION(BOOL,		equalsTo,	(PObject self, PObject dst)) \
+	OBJECT_VFUNCTION(DWORD,		hash,		(PObject self))
+
+
+#define OBJECT(x)			((PObject)x)
+#define OBJECT_VTABLE(x)	OBJECT(x)->vtable
+
 /**
 	destructor(self): should be called each time you need to free memory
 	clone(self, dst): will clone self into dst. do *NOT* construct dst, it's already done for you BUT you have to destruct dst then

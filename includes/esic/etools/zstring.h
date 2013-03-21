@@ -19,10 +19,17 @@ PZString ZString_constructor(PZString self, const char* data);
 /* Virtual functions */
 
 /* Object */
+/*
 void	ZString_destructor(PObject self);
 PObject ZString_clone(PObject self, PObject dst);
 BOOL	ZString_equalsTo(PObject self, PObject dst);
 DWORD	ZString_hash(PObject self);
+*/
+#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
+	return_type ZString_##function_name##arguments;
+
+	OBJECT_VIRTUAL_FUNCTIONS
+#undef OBJECT_VFUNCTION
 
 /* Methods */
 void ZString_setData(PZString self, const char* data);

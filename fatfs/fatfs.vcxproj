@@ -78,10 +78,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\diskio.c" />
+    <ClCompile Include="src\diskio_emulator.c" />
     <ClCompile Include="src\ff.c" />
     <ClCompile Include="src\option\unicode.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\includes\fatfs\custom\diskio_emulator.h" />
     <ClInclude Include="..\includes\fatfs\diskio.h" />
     <ClInclude Include="..\includes\fatfs\ff.h" />
     <ClInclude Include="..\includes\fatfs\ffconf.h" />

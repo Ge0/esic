@@ -26,9 +26,30 @@ typedef struct _Container {
 } Container;
 
 PContainer	Container_constructor(PContainer self, size_t unit_size);
+
+/*
 void		Container_destructor(PObject self);
+PObject		Container_clone(PObject self, PObject dst);
+BOOL		Container_equalsTo(PObject self, PObject dst);
+DWORD		Container_hash(PObject self);
+*/
+
+#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
+	return_type Container_##function_name##arguments;
+
+	OBJECT_VIRTUAL_FUNCTIONS
+#undef OBJECT_VFUNCTION
+
+/* X-Macro */
+#define CONTAINER_VIRTUAL_FUNCTIONS \
+	CONTAINER_VFUNCTION(void,		pushBack,	(PContainer self, const PObject)) \
+	CONTAINER_VFUNCTION(DWORD,		popBack,	(PContainer self, PObject popped)) \
+	CONTAINER_VFUNCTION(void,		pushFront,	(PContainer self, PObject dst)) \
+	CONTAINER_VFUNCTION(DWORD,		popFront,	(PContainer self, Pobject popped)) \
+	CONTAINER_VFUNCTION(PObject,	at,			(PContainer self, DWORD index))
 
 
-
+#define CONTAINER(x)			((PContainer)x)
+#define CONTAINER_VTABLE(x)		CONTAINER(x)->vtable
 
 #endif /* _CONTAINER_H_ */

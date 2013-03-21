@@ -110,8 +110,7 @@ void _e11_mainloop() {
 			ticks1 = ticks2;
 			Event_destructor(&timer_event.object);
 		}
-		
-		EsicUpdate();
+
 		//EsicDelay(15);
 		LcdUpdate();
 

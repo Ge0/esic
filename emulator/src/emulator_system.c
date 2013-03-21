@@ -12,7 +12,6 @@
 #include <esic/eapi/event.h>
 
 /* Private variables, instances, etc. */
-static SDL_Surface* s_screen;
 static FATFS s_fat;
 
 /* Private functions */
@@ -25,13 +24,10 @@ static void _initFileSystem(void);
 void EmulatorSystemInit(void) {
 	int error;
 	error = SDL_Init(SDL_INIT_VIDEO);
-	s_screen = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE);
+
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	//LcdInit(320, 240, s_screen->pixels, 0, DEFAULT_BACKGROUND_COLOR);
 	SDL_ShowCursor(0);
-
-	/* Ensure screen's been created */
-	assert(s_screen != NULL);
 
 	/* Init the file system */
 	_initFileSystem();
@@ -106,10 +102,6 @@ DWORD EmulatorSystemGetTicks(void) {
 
 const BYTE* EmulatorSystemGetKeyboardState() {
 	return (BYTE*)SDL_GetKeyState(NULL);
-}
-
-void EmulatorSystemUpdate() {
-	SDL_Flip(s_screen);
 }
 
 static void _createEventFromSDL(PEvent system_event, const SDL_Event* psdl_event) {

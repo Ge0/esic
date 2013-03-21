@@ -32,4 +32,6 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer, PPicture, WORD,
 PAbstractWidgetRenderer GetDefaultWidgetRenderer();
 void SetDefaultWidgetRenderer(PAbstractWidgetRenderer);
 
+#define DEFAULTWIDGETRENDERER(x) ((PDefaultWidgetRenderer)x)
+
 #endif /* _DEFAULT_WIDGET_RENDERER_ */

@@ -261,6 +261,7 @@ DRESULT disk_read (
 			}
 		}
 	} else {
+		//disk_emulator_read(buff, sector, count);
 		memcpy(buff, RamDisk + ofs.LowPart, nc);
 		res = RES_OK;		
 	}

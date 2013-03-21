@@ -27,6 +27,9 @@
     <ClCompile Include="src\option\unicode.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\diskio_emulator.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\fatfs\diskio.h">
@@ -39,6 +42,9 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\fatfs\integer.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\fatfs\custom\diskio_emulator.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

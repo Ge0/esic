@@ -25,4 +25,16 @@ typedef struct _AbstractPainter {
 } AbstractPainter;
 
 
+/* Useful Macro */
+#define ABSTRACTPAINTER(x)			((PAbstractPainter)x)
+#define ABSTRACTPAINTER_VTABLE(x)	ABSTRACTPAINTER(x)->vtable
+
+/* X-Macro */
+#define ABSTRACTPAINTER_VIRTUAL_FUNCTIONS \
+	ABSTRACTPAINTER_VFUNCTION(drawLine), \
+	ABSTRACTPAINTER_VFUNCTION(drawRectangle), \
+	ABSTRACTPAINTER_VFUNCTION(drawString), \
+	ABSTRACTPAINTER_VFUNCTION(drawPixel), \
+	ABSTRACTPAINTER_VFUNCTION(drawBuffer)
+
 #endif /* _ABSTRACT_SYSTEM_H_ */

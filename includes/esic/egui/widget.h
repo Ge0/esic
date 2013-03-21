@@ -37,8 +37,17 @@ PWidget Widget_constructor(PWidget self);
 
 /* Virtual functions */
 /* Object */
+/*
 void Widget_destructor(PObject self);
 PObject Widget_clone(PObject self, PObject dst);
+BOOL Widget_equalsTo(PObject self, PObject dst);
+DWORD Widget_hash(PObject self);
+*/
+#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
+	return_type Widget_##function_name##arguments;
+
+	OBJECT_VIRTUAL_FUNCTIONS
+#undef OBJECT_VFUNCTION
 
 /* Widget */
 void Widget_paint(PWidget self, WORD base_x, WORD base_y);
@@ -47,6 +56,15 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event);
 /* End of virtual functions */
 
 void Widget_addChild(PWidget self, PWidget child);
+
+/* Useful Macro */
+#define WIDGET(x)			((PWidget)x)
+#define WIDGET_VTABLE(x)	WIDGET(x)->vtable
+
+/* X-Macro */
+#define WIDGET_VIRTUAL_FUNCTIONS \
+	WIDGET_VFUNCTION(DWORD, defaultProc, (PWidget self, const PEvent)) \
+	WIDGET_VFUNCTION(void,	paint,		 (PWidget self, WORD base_x, WORD base_y))
 
 
 #endif /* _WIDGET_H_ */

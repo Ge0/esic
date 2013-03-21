@@ -58,7 +58,7 @@ void _LcdInit(DWORD width, DWORD height, BYTE bpp, void* framebuffer) {
 void LcdDrawRectangle(DWORD x, DWORD y, DWORD width, DWORD height, DWORD filling_color, DWORD border_color) {
 	/* Firstly: draw the rectangle */
 	/* TODO. */
-	int i;
+	DWORD i;
 	for(i = 0; i <= height; i++) {
 		LcdDrawLine(x, y + i, x + width, y + i, filling_color);
 	}

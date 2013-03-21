@@ -5,6 +5,7 @@
 #include <esic/egui/textbox.h>
 #include <esic/egui/default_widget_renderer.h>
 
+/*
 static const vtable_Object s_object_vtable = {
 	TextBox_destructor,
 	TextBox_clone,
@@ -15,6 +16,19 @@ static const vtable_Object s_object_vtable = {
 static const vtable_Widget s_widget_vtable = {
 	TextBox_defaultProc,
 	TextBox_paint
+};
+*/
+
+VTABLE_START(Object) {
+#define OBJECT_VFUNCTION(return_type, function_name, arguments) TextBox_##function_name,
+	OBJECT_VIRTUAL_FUNCTIONS
+#undef OBJECT_VFUNCTION
+};
+
+VTABLE_START(Widget) {
+#define WIDGET_VFUNCTION(return_type, function_name, arguments) TextBox_##function_name,
+	WIDGET_VIRTUAL_FUNCTIONS
+#undef WIDGET_VFUNCTION
 };
 
 
@@ -29,8 +43,8 @@ PTextBox TextBox_constructor(PTextBox self) {
 
 
 	/* Filling vtables */
-	self->widget.object.vtable = &s_object_vtable;
-	self->widget.vtable = &s_widget_vtable;
+	self->widget.object.vtable = VTABLE_POINTER(Object);
+	self->widget.vtable = VTABLE_POINTER(Widget);
 
 	/* Filling members */
 	self->widget.object.size = sizeof(TextBox);
@@ -67,6 +81,16 @@ PObject TextBox_clone(PObject self, PObject dst) {
 	ZString_clone(&real_self->text.object, &real_dst->text.object);
 
 	return self;
+}
+
+BOOL TextBox_equalsTo(PObject self, PObject dst) {
+	/* TODO. */
+	return FALSE;
+}
+
+DWORD TextBox_hash(PObject self) {
+	/* TODO. */
+	return 0;
 }
 
 void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {

@@ -20,4 +20,6 @@ PWidgetPtr WidgetPtr_constructor(PWidgetPtr self, PWidget widget);
 void WidgetPtr_destructor(PObject self);
 PObject WidgetPtr_clone(PObject self, PObject dst);
 
+#define WIDGETPTR(x) ((PWidgetPtr)x)
+
 #endif /* _WIDGET_PTR_H_ */
