@@ -39,8 +39,8 @@ DWORD Label_defaultProc(PWidget self, const PEvent system_event);
 #define WIDGET_VFUNCTION(return_type, function_name, arguments) \
 	return_type Label_##function_name##arguments;
 
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
+	WIDGET_VIRTUAL_FUNCTIONS
+#undef WIDGET_VFUNCTION
 
 /* Other */
 void Label_setCaption(PLabel self, const char* text);

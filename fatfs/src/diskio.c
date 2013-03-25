@@ -46,10 +46,6 @@ static BYTE *Buffer, *RamDisk;	/* Poiter to the data transfer buffer and ramdisk
 /* Timer Functions                                                       */
 /*-----------------------------------------------------------------------*/
 
-VOID StopTmrThread() {
-	TerminateThread(hTmrThread, 0);
-	CloseHandle(hTmrThread);
-}
 
 DWORD WINAPI tmr_thread (LPVOID parms)
 {
@@ -71,7 +67,10 @@ DWORD WINAPI tmr_thread (LPVOID parms)
 	}
 }
 
-
+VOID StopTmrThread() {
+	TerminateThread(hTmrThread, 0);
+	CloseHandle(hTmrThread);
+}
 
 int get_status (
 	BYTE drv
@@ -261,7 +260,6 @@ DRESULT disk_read (
 			}
 		}
 	} else {
-		//disk_emulator_read(buff, sector, count);
 		memcpy(buff, RamDisk + ofs.LowPart, nc);
 		res = RES_OK;		
 	}

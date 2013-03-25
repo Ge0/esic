@@ -78,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\diskio.c" />
-    <ClCompile Include="src\diskio_emulator.c" />
     <ClCompile Include="src\ff.c" />
     <ClCompile Include="src\option\unicode.c" />
   </ItemGroup>

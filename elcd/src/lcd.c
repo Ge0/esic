@@ -37,6 +37,7 @@ static Lcd s_lcd;
  * internal function, you don't need to deal with it
  */
 float* _linear_interpolation(WORD t0, float f0, WORD t1, float f1);
+void _LcdFill2BytesPerPixel(DWORD color);
 
 /* Internal functions for triangles */
 void _lcd_fill_bottom_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color);
@@ -76,7 +77,8 @@ void LcdFill(DWORD color) {
 		memset(s_lcd.framebuffer, (BYTE)color, s_lcd.width * s_lcd.height * s_lcd.bytes_per_pixel);
 		break;
 	case 2:
-		memset(s_lcd.framebuffer, (WORD)color, s_lcd.width * s_lcd.height * s_lcd.bytes_per_pixel);
+		//memset(s_lcd.framebuffer, (WORD)color, s_lcd.width * s_lcd.height * s_lcd.bytes_per_pixel);
+		_LcdFill2BytesPerPixel(color);
 		break;
 	case 3:
 		/* TODO. */
@@ -87,11 +89,21 @@ void LcdFill(DWORD color) {
 	}
 }
 
+void _LcdFill2BytesPerPixel(DWORD color) {
+	DWORD i, j;
+	WORD* framebuff = (WORD*)s_lcd.framebuffer;
+	for(j = 0; j < s_lcd.height; ++j) {
+		for(i = 0; i < s_lcd.width; ++i) {
+			framebuff[i * s_lcd.height + j] = color;
+		}
+	}
+}
+
 void _lcd_fill_bottom_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
 	float invslope1 = (x1 - x0) / (float)(y1 - y0);
 	float invslope2 = (x2 - x0) / (float)(y2 - y0);
-	float curx1 = x0;
-	float curx2 = x0;
+	DWORD curx1 = x0;
+	DWORD curx2 = x0;
 	DWORD scanline_y = y0;
 
 	for (; scanline_y <= y1; scanline_y++) {

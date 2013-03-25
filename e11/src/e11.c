@@ -28,7 +28,7 @@ void e11() {
 	
 	/* LCD INIT */
 	LcdInit(320, 240, 16, LCD_DOUBLEBUF);
-	LcdFill(0xffff);
+	LcdFill(RGB_16B(240,240,240));
 
 	/* FACTORY INIT */
 	RasterFontFactory_init();
