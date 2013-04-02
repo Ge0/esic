@@ -42,7 +42,7 @@ PVector Vector_constructor(PVector self, size_t unit_size) {
 	self->elements       = SicAlloc(self->container.unit_size * self->allocated_size);
 
 	/* Ensure the allocation succeeded */
-	assert(self->elements != NULL);
+	//assert(self->elements != NULL);
 
 	return self;
 
@@ -114,7 +114,7 @@ void Vector_pushBack(PContainer self, const PObject data) {
 	void* cloned_data = SicAlloc(self->object.size);
 
 	/* Ensure allocation succeeded */
-	assert(cloned_data != NULL);
+	//assert(cloned_data != NULL);
 
 	/* Firstly: make sure the size of the data equals the unit size */
 	if(data->size == self->unit_size) {
@@ -155,7 +155,7 @@ void Vector_pushFront(PContainer self, const PObject data) {
 	void* cloned_data = SicAlloc(self->object.size);
 
 	/* Ensure allocation succeeded */
-	assert(cloned_data != NULL);
+	//assert(cloned_data != NULL);
 
 	/* Firstly: make sure the size of the data equals the unit size */
 	if(data->size == self->unit_size) {
@@ -200,7 +200,7 @@ static void _reallocate_size(PVector self) {
 	struct _Object* new_space = (PObject)SicAlloc(self->container.unit_size * self->allocated_size * 2);
 
 	/* Ensure the allocation succeeded */
-	assert(new_space != NULL);
+	//assert(new_space != NULL);
 
 	/* Copy the content of the old space into the new one, free the old one and update data member */
 	memcpy(new_space, self->elements, self->container.unit_size * self->allocated_size);
@@ -221,7 +221,7 @@ static void _insert(PVector self, DWORD position, const void* data) {
 	size_t size_to_move = 0;
 
 	/* Ensure the insert function either insert into the allocated space or append to it */
-	assert(position <= self->container.count);
+	//assert(position <= self->container.count);
 
 	src = (BYTE*)self->elements + (position) * self->container.unit_size;
 	dst = src + self->container.unit_size;

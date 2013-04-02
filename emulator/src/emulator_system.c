@@ -3,13 +3,18 @@
  */
 #if defined(EMULATOR)
 
-#include <assert.h>
-#include <crtdbg.h>
+#include <windows.h>
+//#include <assert.h>
+//#include <crtdbg.h>
 #include <SDL/SDL.h>
 #include <esic/elcd/lcd.h>
 #include <esic/eapi/emulator_system.h>
-#include <Winbase.h>
+//#include <Winbase.h>
 #include <esic/eapi/event.h>
+
+
+#include <fatfs/ff.h>
+#include <fatfs/diskio.h>
 
 /* Private variables, instances, etc. */
 static FATFS s_fat;
@@ -66,7 +71,7 @@ void EmulatorSystemDestroy() {
 	LcdDestroy();
 
 	StopTmrThread();
-	_CrtDumpMemoryLeaks();
+	//_CrtDumpMemoryLeaks();
 }
 
 void EmulatorSystemWaitEvent(PEvent esic_event) {

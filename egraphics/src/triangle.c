@@ -42,6 +42,16 @@ PObject Triangle_clone(PObject self, PObject dst) {
 
 }
 
-void Triangle_paint(PShape self) {
+BOOL Triangle_equalsTo(PObject self, PObject dst) {
+	/* TODO. */
+	return FALSE;
+}
+
+DWORD Triangle_hash(PObject self) {
+	/* TODO. */
+	return 0;
+}
+
+void Triangle_paint(PShape self, PAbstractPainter painter) {
 
 }

@@ -8,8 +8,8 @@
 
 typedef struct _Vertice {
 	Object object;
-	WORD x;
-	WORD y;
+	DWORD x;
+	DWORD y;
 } Vertice, *PVertice;
 
 PVertice Vertice_constructor(PVertice self);

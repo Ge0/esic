@@ -21,7 +21,7 @@ void LcdEmulatorInit(DWORD width, DWORD height, BYTE bpp, DWORD flags) {
 	s_screen = SDL_SetVideoMode(width, height, bpp, internal_flags);
 	_LcdInit(width, height, bpp, (void*)s_screen->pixels);
 
-	assert(s_screen != NULL);
+	//assert(s_screen != NULL);
 
 	s_framebuffer = (void*)s_screen->pixels;
 

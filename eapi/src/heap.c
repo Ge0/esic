@@ -2,10 +2,15 @@
  * \file heap.c
  */
 #include <esic/eapi/heap.h>
-#include <assert.h>
+//#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
+
+#if defined (WIN32)
+//#include <Windows.h>
+#endif
 
 static plink s_pointers_list = NULL;
 
@@ -26,7 +31,7 @@ void* Debug_SicAlloc(size_t size) {
 	new_link = (plink)malloc(sizeof(link));
 
 	/* Ensure SicAlloc() succeeded in here */
-	assert(new_link != NULL);
+	//assert(new_link != NULL);
 
 
 	/* Fill the information */
@@ -69,12 +74,13 @@ void Debug_SicFree(void* ptr) {
 	}
 }
 
+
 void SicHeapDump() {
-#ifdef _WIN32
+#if defined _WIN32
 	DWORD total = 0;
 	double ko;
 	char buf[4096];
-	/* Simply browse the linked list and show the memory block in a (pseudo) fancy format */
+	// Simply browse the linked list and show the memory block in a (pseudo) fancy format
 	plink iterator = NULL;
 	OutputDebugString("-----------\n");
 	for(iterator = s_pointers_list; iterator != NULL; iterator = iterator->next) {
@@ -88,8 +94,9 @@ void SicHeapDump() {
 #endif
 }
 
+
 void SicHeapClean() {
-	/* Free the linked list if required */
+	// Free the linked list if required
 	if(s_pointers_list != NULL) {
 		plink iterator    = s_pointers_list;
 		plink link_next   = iterator->next;
@@ -106,7 +113,7 @@ char* SicStrdup(const char* str) {
 	size_t len = strlen(str);
 
 	ptr = (char*)SicAlloc(len + 1); /* +1 for the '\0' */
-	assert(ptr != NULL);
+	//assert(ptr != NULL);
 	strcpy(ptr, str);
 
 	return ptr;

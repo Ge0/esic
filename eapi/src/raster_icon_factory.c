@@ -1,7 +1,7 @@
 /**
  * \file raster_icon_factory.c
  */
-#include <assert.h>
+//#include <assert.h>
 #include <esic/eapi/heap.h>
 #include <esic/eapi/raster_icon_factory.h>
 #include <esic/etools/hashtable.h>
@@ -55,7 +55,7 @@ PRasterIcon _build_raster_icon(const char* name) {
 	DWORD size_data;
 
 	tmp_path = (char*)SicAlloc((strlen(PATH_RASTER_ICONS) + strlen(name) + 1) * sizeof(char));
-	assert(tmp_path != NULL);
+	//assert(tmp_path != NULL);
 
 	strcpy(tmp_path, PATH_RASTER_ICONS);
 	strcat(tmp_path, name);
@@ -85,7 +85,7 @@ PRasterIcon _build_raster_icon(const char* name) {
 	return_icon->data = (BYTE*)SicAlloc(size_data);
 
 	/* Ensure allocation succeeded */
-	assert(return_icon->data != NULL);
+	//assert(return_icon->data != NULL);
 
 	/* Read the content */
 	f_read(

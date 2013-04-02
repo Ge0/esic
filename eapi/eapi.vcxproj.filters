@@ -42,9 +42,6 @@
     <ClCompile Include="src\raster_icon.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\emulator\src\emulator_system.c">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\eapi\heap.h">

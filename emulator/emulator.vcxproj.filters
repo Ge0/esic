@@ -18,21 +18,12 @@
     <ClCompile Include="src\main.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\emulator_system.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\emulator_system.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\diskio.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\ff.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\ffconf.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\integer.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

@@ -78,7 +78,6 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\emulator\src\emulator_system.c" />
     <ClCompile Include="src\event.c" />
     <ClCompile Include="src\heap.c" />
     <ClCompile Include="src\raster_font.c" />

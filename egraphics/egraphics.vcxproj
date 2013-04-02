@@ -77,10 +77,12 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ellipse.c" />
     <ClCompile Include="src\triangle.c" />
     <ClCompile Include="src\vertice.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\includes\esic\egraphics\ellipse.h" />
     <ClInclude Include="..\includes\esic\egraphics\shape.h" />
     <ClInclude Include="..\includes\esic\egraphics\triangle.h" />
     <ClInclude Include="..\includes\esic\egraphics\vertice.h" />

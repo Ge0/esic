@@ -3,7 +3,7 @@
  */
 #include <esic/etools/hashnode.h>
 
-#include <assert.h>
+//#include <assert.h>
 #include <stdlib.h>
 
 PHashnode Hashnode_constructor(PHashnode self) {
@@ -31,7 +31,7 @@ void Hashnode_setKey(PHashnode self, PObject key) {
 	void* cloned_key = SicAlloc(key->size);
 
 	/* Ensure malloc() succeeded */
-	assert(cloned_key != NULL);
+	//assert(cloned_key != NULL);
 
 	/* Clone the key */
 	key->vtable->clone(key, (PObject)cloned_key);
@@ -54,7 +54,7 @@ void Hashnode_setValue(PHashnode self, PObject value) {
 	void* cloned_value = SicAlloc(value->size);
 
 	/* Ensure malloc() succeeded */
-	assert(cloned_value != NULL);
+	//assert(cloned_value != NULL);
 
 	/* Clone the key */
 	value->vtable->clone(value, (PObject)cloned_value);
@@ -112,7 +112,7 @@ PObject Hashnode_clone(PObject self, PObject dst) {
 	real_dst->value = (PObject)SicAlloc(real_self->value->size);
 
 	/* Ensure allocations succeeded */
-	assert(real_dst->key != NULL && real_dst->value != NULL);
+	//assert(real_dst->key != NULL && real_dst->value != NULL);
 
 
 	/* Cloning */

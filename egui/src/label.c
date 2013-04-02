@@ -1,6 +1,7 @@
 /**
  * \file label.c
  */
+
 #include <esic/eapi/event.h>
 #include <esic/egui/label.h>
 #include <esic/egui/default_widget_renderer.h> /* Only for testing */

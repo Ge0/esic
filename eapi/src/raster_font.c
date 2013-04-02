@@ -103,7 +103,7 @@ char* RasterFont_getCharacterData(PRasterFont self, DWORD utf8_code, DWORD* size
 		character_data = (char*) SicAlloc( bytes_per_character * sizeof(char));
 
 		/* Ensure the allocation succeeded */
-		assert(character_data != NULL);
+		//assert(character_data != NULL);
 
 		/* Calculate the character's index */
 		character_index = utf8_code - current_table->header.utf8_base_code_point;

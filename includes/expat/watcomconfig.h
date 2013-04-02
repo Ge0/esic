@@ -5,7 +5,7 @@
 
 #ifdef __NT__
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+//#include <windows.h>
 #undef WIN32_LEAN_AND_MEAN
 #endif
 

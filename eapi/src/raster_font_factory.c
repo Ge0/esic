@@ -68,7 +68,7 @@ PRasterFont _build_font(const char* name) {
 	if(strlen(name) < RASTER_FONT_FILENAME_LENGTH) {
 		tmp_file_name = (char*)SicAlloc((strlen(PATH_RASTER_FONTS) + strlen(name) + 1) * sizeof(char));
 
-		assert(tmp_file_name != NULL);
+		//assert(tmp_file_name != NULL);
 
 		strcpy(tmp_file_name, PATH_RASTER_FONTS);
 		strcat(tmp_file_name, name);
@@ -87,7 +87,7 @@ PRasterFont _build_font(const char* name) {
 		new_font = (PRasterFont)SicAlloc(sizeof(RasterFont));
 
 		/* Ensure the allocation succeeded */
-		assert(new_font != NULL);
+		//assert(new_font != NULL);
 
 		/* Call the constructor */
 		RasterFont_constructor(new_font);
@@ -188,7 +188,7 @@ void _raster_font_hydrate_tables(PRasterFont self, FIL* font_file) {
 		current_table->data = SicAlloc(size_to_alloc * sizeof(BYTE));
 
 		/* Ensure the allocation succeeded */
-		assert(current_table->data != NULL);
+		//assert(current_table->data != NULL);
 
 /*		
 		fseek(fp, current_table->header.offset, SEEK_SET);

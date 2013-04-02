@@ -4,7 +4,7 @@
 
 #include <stddef.h>
 #include <string.h>                     /* memset(), memcpy() */
-#include <assert.h>
+//#include <assert.h>
 #include <limits.h>                     /* UINT_MAX */
 #include <time.h>                       /* time() */
 
@@ -1827,7 +1827,7 @@ XML_ResumeParser(XML_Parser parser)
 void XMLCALL
 XML_GetParsingStatus(XML_Parser parser, XML_ParsingStatus *status)
 {
-  assert(status != NULL);
+  //assert(status != NULL);
   *status = parser->m_parsingStatus;
 }
 

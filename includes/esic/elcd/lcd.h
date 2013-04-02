@@ -5,7 +5,7 @@
 #define _LCD_H_
 
 #include <esic/esic.h>
-#include <esic/eapi/raster_font.h>
+//#include <esic/eapi/raster_font.h>
 
 /* Flags? */
 #define	LCD_DOUBLEBUF	0x01
@@ -95,7 +95,7 @@ void LcdDrawRectangle(DWORD x, DWORD y, DWORD width, DWORD height, DWORD filling
 
 void LcdDrawTriangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD filling_color, DWORD border_color);
 
-void LcdDrawBuffer(DWORD x, DWORD y, DWORD width, DWORD height, DWORD* raw_buffer);
+void LcdDrawBuffer(DWORD x, DWORD y, DWORD width, DWORD height, void* raw_buffer);
 
 
 /* GR Update */

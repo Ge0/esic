@@ -4,7 +4,7 @@
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
-#include <assert.h>
+//#include <assert.h>
 #include <esic/etools/container.h>
 
 #define INITIAL_SIZE	5

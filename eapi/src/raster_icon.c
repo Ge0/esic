@@ -1,8 +1,9 @@
 /**
  * \file raster_icon.c
  */
-#include <assert.h>
+//#include <assert.h>
 #include <esic/eapi/raster_icon.h>
+#include <string.h>
 
 static const vtable_Object s_object_vtable = {
 	RasterIcon_destructor,
@@ -41,7 +42,7 @@ PObject RasterIcon_clone(PObject self, PObject dst) {
 	real_dst->data = (BYTE*)SicAlloc( size );
 
 	/* Ensure allocation succeeded */
-	assert(real_dst->data != NULL);
+	//assert(real_dst->data != NULL);
 
 	memcpy(real_dst->data, real_self->data, size);
 

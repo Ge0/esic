@@ -5,8 +5,10 @@
 #define _EMULATOR_SYSTEM_H_
 
 #include <esic/eapi/event.h>
+/*
 #include <fatfs/diskio.h>
 #include <fatfs/ff.h>
+*/
 
 #include <SDL/SDL.h>
 

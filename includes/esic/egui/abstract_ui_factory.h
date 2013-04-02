@@ -6,7 +6,7 @@
 
 #include <esic/egui/widget.h>
 
-#include <assert.h>
+//#include <assert.h>
 
 typedef struct _vtable_AbstractUIFactory {
 	PWidget (*getUI)(const char* ui_name);

@@ -3,7 +3,7 @@
  */
 #include <esic/etools/ZString.h>
 
-#include <assert.h>
+//#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -36,7 +36,7 @@ PZString ZString_constructor(PZString self, const char* data) {
 	self->data        = SicStrdup(data);
 
 	/* Make sure strdup() succeeded */
-	assert(self->data != NULL);
+	//assert(self->data != NULL);
 
 	return self;
 }
@@ -66,7 +66,7 @@ PObject ZString_clone(PObject self, PObject dst) {
 	real_dst->size = real_self->size;
 
 	/* Make sure strdup() succeeded */
-	assert(real_dst->data != NULL);
+	//assert(real_dst->data != NULL);
 
 	return dst;
 }
@@ -103,7 +103,7 @@ void ZString_setData(PZString self, const char* data) {
 
 void ZString_append(PZString self, char ch) {
 	char* buf = (char*)SicAlloc(self->size + 2); /* +2 for the new ch & the \0 */
-	assert(buf != NULL);
+	//assert(buf != NULL);
 	strcpy(buf, self->data);
 	buf[self->size] = ch;
 	buf[self->size+1] = '\0';
@@ -115,7 +115,7 @@ void ZString_append(PZString self, char ch) {
 void ZString_removeLastChar(PZString self) {
 	if(self->size > 0) {
 		char* buf = (char*)SicAlloc(strlen(self->data));
-		assert(buf != NULL);
+		//assert(buf != NULL);
 		--self->size;
 		self->data[self->size] = '\0';
 		strcpy(buf, self->data);
@@ -142,7 +142,7 @@ void ZString_subString(PZString self, DWORD start, DWORD n, PZString out) {
 void ZString_insertCharAt(PZString self, DWORD pos, char ch) {
 	if(pos >= 0 && pos <= self->size) {
 		char* buf = (char*)SicAlloc(self->size + 2); /* +2 for both ch & \0 */
-		assert(buf != NULL);
+		//assert(buf != NULL);
 		memcpy(buf, self->data, pos);
 		buf[pos] = ch;
 		strcpy(buf+pos+1, self->data + pos);

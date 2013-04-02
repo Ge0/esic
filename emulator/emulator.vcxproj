@@ -77,14 +77,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\emulator_system.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes\diskio.h" />
     <ClInclude Include="includes\emulator_system.h" />
-    <ClInclude Include="includes\ff.h" />
-    <ClInclude Include="includes\ffconf.h" />
-    <ClInclude Include="includes\integer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

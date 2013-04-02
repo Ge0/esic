@@ -15,7 +15,7 @@
 	typedef uint32_t DWORD;
 	typedef uint64_t QWORD;
 	typedef int64_t SQWORD;
-	typedef void VOID;
+
 	typedef uint8_t UCHAR;
 	typedef signed long int LONG;
 	typedef unsigned long int ULONG;
@@ -28,19 +28,67 @@
 	#define ESIC_MACROS
 	#define HIWORD(value) ((value >> 16) & 0xFFFF)
 	#define LOWORD(value) (value & 0xFFFF)
-
+	/*
 	typedef enum _BOOL {
 	  FALSE = 0,
 	  TRUE
 	} BOOL;
+	*/
 
 #else
-	#include <Windows.h>
-	#include <stdint.h>
+/*
+#define ESIC_TYPES
+#include <stdint.h>
 
-	#define ESIC_TYPES
-	typedef int16_t SWORD;
-	typedef int32_t SDWORD;
+typedef uint8_t BYTE;
+typedef uint8_t BOOL;
+typedef int16_t SWORD;
+typedef uint16_t  WORD;
+typedef int32_t SDWORD;
+typedef uint32_t DWORD;
+typedef uint64_t QWORD;
+typedef int64_t SQWORD;
+
+#ifndef VOID
+#define VOID void
+#endif
+
+//typedef void VOID;
+typedef uint8_t UCHAR;
+typedef signed long int LONG;
+typedef unsigned long int ULONG;
+typedef unsigned short	WCHAR;
+	
+// These types must be 16-bit, 32-bit or larger integer
+typedef int             INT;
+typedef unsigned int	UINT;
+
+#define ESIC_MACROS
+#define HIWORD(value) ((value >> 16) & 0xFFFF)
+#define LOWORD(value) (value & 0xFFFF)
+*/
+/*
+typedef enum _BOOL {
+	FALSE = 0,
+	TRUE
+} BOOL;
+*/
+/*
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+#ifndef TRUE
+#define TRUE 1
+#endif
+*/
+
+
+#include <Windows.h>
+#include <stdint.h>
+	
+typedef int16_t SWORD;
+typedef int32_t SDWORD;
 #endif
 	
 

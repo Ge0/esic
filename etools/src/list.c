@@ -2,7 +2,7 @@
  * list.c
  */
 #include <esic/etools/list.h>
-#include <assert.h>
+//#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -199,7 +199,7 @@ PListNode _create_new_node(PList self, PObject data) {
 	new_node->data = (PObject)SicAlloc(self->container.unit_size);
 
 	/* Ensure the two mallocs succeeded */
-	assert(new_node != NULL && new_node->data != NULL);
+	//assert(new_node != NULL && new_node->data != NULL);
 
 	/* Clone the parameter into the allocated memory space */
 	data->vtable->clone(data, new_node->data);

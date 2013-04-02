@@ -2,7 +2,7 @@
  * hashtable.c
  */
 #include <esic/etools/hashtable.h>
-#include <assert.h>
+//#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -39,7 +39,7 @@ PHashtable Hashtable_constructor(PHashtable self, size_t size, size_t unit_size_
 	self->nodes          = (PPHashnode)SicAlloc(sizeof(PHashnode) * self->allocated_size);
 
 	/* Ensure the allocation succeeded */
-	assert(self->nodes != NULL);
+	//assert(self->nodes != NULL);
 
 	/* fill the allocated memory space to 0 */
 	memset(self->nodes, '\0', self->allocated_size * sizeof(PHashnode));
@@ -129,7 +129,7 @@ BOOL Hashtable_containsKey(PMap self, PObject key) {
 PHashnode _Hashtable_getNode(PHashtable self, PHashnode node, PObject element, DWORD mode) {
 	PHashnode ret = NULL;
 
-	assert(element);
+	//assert(element);
 
 	while(node) {
 		char* ptr = (char*)node + mode;
@@ -223,7 +223,7 @@ void Hashtable_put(PMap self, PObject key, PObject value) {
 			cloned_value = (PObject)SicAlloc(self->unit_size_value);
 
 			/* Ensure the allocation succeeded */
-			assert(node != NULL);
+			//assert(node != NULL);
 
 			/* Construct and hydrate */
 			Hashnode_constructor(node);

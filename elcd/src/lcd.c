@@ -2,9 +2,9 @@
  * \file lcd.c
  */
 #include <esic/elcd/lcd.h>
-#include <esic/eapi/raster_font.h>
+//#include <esic/eapi/raster_font.h>
 #include <esic/etools/vector.h>
-#include <assert.h>
+//#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -26,7 +26,7 @@ static DWORD s_default_background_color = RGB_16B(255,255,255);
 const WORD* g_lcd_frame_buffer = NULL;
 
 /* Pointer to current font */
-PRasterFont s_current_font = NULL;
+//PRasterFont s_current_font = NULL;
 
 /* GR UPDATE */
 static Lcd s_lcd;
@@ -78,7 +78,7 @@ void LcdFill(DWORD color) {
 		break;
 	case 2:
 		//memset(s_lcd.framebuffer, (WORD)color, s_lcd.width * s_lcd.height * s_lcd.bytes_per_pixel);
-		_LcdFill2BytesPerPixel(color);
+		_LcdFill2BytesPerPixel(LOWORD(color));
 		break;
 	case 3:
 		/* TODO. */
@@ -108,8 +108,8 @@ void _lcd_fill_bottom_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWOR
 
 	for (; scanline_y <= y1; scanline_y++) {
 		LcdDrawLine((DWORD)curx1, scanline_y, (DWORD)curx2, scanline_y, color);
-		curx1 += invslope1;
-		curx2 += invslope2;
+		curx1 += (DWORD)invslope1;
+		curx2 += (DWORD)invslope2;
 	}
 }
 
@@ -117,13 +117,13 @@ void _lcd_fill_bottom_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWOR
 void _lcd_fill_top_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
 	double invslope1 = (x2 - x0) / (double)(y2 - y0);
 	double invslope2 = (x2 - x1) / (double)(y2 - y1);
-	double curx1 = x2;
-	double curx2 = x2;
-	int scanline_y = y2;
+	DWORD curx1 = x2;
+	DWORD curx2 = x2;
+	DWORD scanline_y = y2;
 
 	for (; scanline_y > y0; scanline_y--) {
-		curx1 -= invslope1;
-		curx2 -= invslope2;
+		curx1 -= (DWORD)invslope1;
+		curx2 -= (DWORD)invslope2;
 		LcdDrawLine((DWORD)curx1, scanline_y, (DWORD)curx2, scanline_y, color);
 	}
 }

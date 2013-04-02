@@ -138,7 +138,9 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 	case EVENT_BLUR:
 		/* Do not draw the carret anymore */
-		real_self->is_focused  = 0;
+		//real_self->is_focused  = 0;
+		real_self->is_focused = FALSE;
+
 
 		/* Repaint the widget without the carret */
 		custom_event.type = EVENT_PAINT;
@@ -149,7 +151,8 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 	case EVENT_FOCUS:
 		/* Draw the carret */
-		real_self->is_focused  = 1;
+		//real_self->is_focused  = 1;
+		real_self->is_focused = TRUE;
 
 		/* Repaint the widget */
 		custom_event.type = EVENT_PAINT;
@@ -220,7 +223,7 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 	case EVENT_TIMER:
 		/* Test */
 		if(system_event->real_event.timer_event.id == 1) {
-			real_self->draw_carret = !real_self->draw_carret;
+			real_self->draw_carret = (BOOL)!real_self->draw_carret;
 
 			custom_event.type = EVENT_PAINT;
 			custom_event.real_event.widget_event.id = self->id;

@@ -17,10 +17,10 @@
     <ClCompile Include="src\lcd.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\lcd_painter.c">
+    <ClCompile Include="src\lcd_emulator.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\lcd_emulator.c">
+    <ClCompile Include="src\lcd_painter.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -28,10 +28,10 @@
     <ClInclude Include="..\includes\esic\elcd\lcd.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_painter.h">
+    <ClInclude Include="..\includes\esic\elcd\lcd_emulator.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_emulator.h">
+    <ClInclude Include="..\includes\esic\elcd\lcd_painter.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>
