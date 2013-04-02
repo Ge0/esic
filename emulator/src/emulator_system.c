@@ -19,7 +19,8 @@ static void _createEventFromSDL(PEvent systemEvent, const SDL_Event* psdl_event)
 static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event);
 static void _initFileSystem(void);
 
-
+/* Tmp */
+extern void StopTmrThread();
 
 void EmulatorSystemInit(void) {
 	int error;

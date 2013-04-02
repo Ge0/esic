@@ -37,7 +37,7 @@ static Lcd s_lcd;
  * internal function, you don't need to deal with it
  */
 float* _linear_interpolation(WORD t0, float f0, WORD t1, float f1);
-void _LcdFill2BytesPerPixel(DWORD color);
+void _LcdFill2BytesPerPixel(WORD color);
 
 /* Internal functions for triangles */
 void _lcd_fill_bottom_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color);
@@ -89,7 +89,7 @@ void LcdFill(DWORD color) {
 	}
 }
 
-void _LcdFill2BytesPerPixel(DWORD color) {
+void _LcdFill2BytesPerPixel(WORD color) {
 	DWORD i, j;
 	WORD* framebuff = (WORD*)s_lcd.framebuffer;
 	for(j = 0; j < s_lcd.height; ++j) {
