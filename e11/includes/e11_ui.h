@@ -22,7 +22,8 @@ typedef struct _E11UI {
 	Picture icons[E11_NUMBER_OF_ICONS];
 	WORD hot_widget_id; /* Test */
 	PListNode focused_widget;
-} E11UI, *PE11UI;
+	PE11UI child_ui;
+} E11UI;
 
 PE11UI E11UI_constructor(PE11UI self);
 PPicture E11UI_getPicture(PE11UI self, DWORD index);
@@ -38,5 +39,7 @@ PObject E11UI_clone(PObject self, PObject dst);
 /* Widget */
 DWORD E11UI_defaultProc(PWidget self, const PEvent event);
 void E11UI_paint(PWidget self, WORD base_x, WORD base_y);
+
+#define E11UI(x) ((PE11UI)x)
 
 #endif /* _E11_UI_H_ */

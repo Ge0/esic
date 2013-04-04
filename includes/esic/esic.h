@@ -104,7 +104,13 @@ typedef int32_t SDWORD;
 #define GREEN(value)	((value >> 8) & 0xFF)
 #define BLUE(value) 	((value) & 0xFF)
 
+#define CLASS(x) \
+	typedef struct _##x x; \
+	typedef struct _##x *P##x; \
+	typedef struct _##x **PP##x; \
+	typedef struct _##x
 
-
+#define VTABLE(x) \
+	const vtable_##x *vtable
 
 #endif

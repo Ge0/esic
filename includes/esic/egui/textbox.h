@@ -5,7 +5,7 @@
 #define _TEXTBOX_H_
 
 #include <esic/egui/widget.h>
-#include <esic/etools/ZString.h>
+#include <esic/etools/zstring_buffer.h>
 
 /* Default values for background & border? */
 #define TEXTBOX_DEFAULT_BACKGROUND_COLOR			RGB_16B(200, 200, 200)
@@ -23,7 +23,7 @@ typedef struct _TextBox {
 	WORD carret_position;
 	BOOL is_focused;
 	BOOL draw_carret;
-	ZString text;
+	ZStringBuffer text;
 } TextBox, *PTextBox;
 
 PTextBox TextBox_constructor(PTextBox self);
@@ -57,5 +57,8 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event);
 void TextBox_setText(PTextBox self, const char* text);
 void TextBox_removeLastChar(PTextBox self);
 void TextBox_removeCharAt(PTextBox self, DWORD pos);
+
+
+#define TEXTBOX(x) ((PTextBox)x)
 
 #endif /* _LABEL_H_ */

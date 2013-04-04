@@ -126,7 +126,10 @@ static void _createEventFromSDL(PEvent system_event, const SDL_Event* psdl_event
 
 	case SDL_USEREVENT:
 		system_event->type = (EventType)psdl_event->user.code;
-		system_event->real_event.widget_event.id = (WORD)psdl_event->user.data1;
+		if(system_event->type == EVENT_WIDGET) {
+			system_event->real_event.widget_event.type = (WidgetEventType)psdl_event->user.data1;
+			system_event->real_event.widget_event.id   = (WORD)psdl_event->user.data2;
+		}
 		break;
 
 	case SDL_QUIT:
@@ -148,6 +151,13 @@ static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event) {
 
 	case EVENT_QUIT:
 		psdl_event->type = SDL_QUIT;
+		break;
+
+	case EVENT_WIDGET:
+		psdl_event->type = SDL_USEREVENT;
+		psdl_event->user.code = EVENT_WIDGET;
+		psdl_event->user.data1 = (void*)system_event->real_event.widget_event.type;
+		psdl_event->user.data2 = (void*)system_event->real_event.widget_event.id;
 		break;
 
 	case EVENT_PAINT:

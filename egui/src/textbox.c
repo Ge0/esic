@@ -35,6 +35,7 @@ VTABLE_START(Widget) {
 /* Private functions */
 void _update_carret_position(PTextBox self, Keycode code);
 void _update_offset_text_position(PTextBox self);
+DWORD TextBox_handleWidgetEvent(PWidget self, PWidgetEvent widget_event);
 
 PTextBox TextBox_constructor(PTextBox self) {
 
@@ -50,7 +51,7 @@ PTextBox TextBox_constructor(PTextBox self) {
 	self->widget.object.size = sizeof(TextBox);
 
 	/* Constructing members */
-	ZString_constructor(&self->text, "");
+	ZStringBuffer_constructor(&self->text);
 
 	/* Default properties */
 	self->widget.is_focusable = 1;
@@ -67,7 +68,8 @@ void TextBox_destructor(PObject self) {
 	Widget_destructor(self);
 
 	/* Destructing members */
-	ZString_destructor(&real_self->text.object);
+	//ZString_destructor(&real_self->text.object);
+	ZStringBuffer_destructor(&real_self->text.object);
 }
 
 PObject TextBox_clone(PObject self, PObject dst) {
@@ -78,7 +80,8 @@ PObject TextBox_clone(PObject self, PObject dst) {
 	Widget_clone(self, dst);
 
 	/* Copying members */
-	ZString_clone(&real_self->text.object, &real_dst->text.object);
+	//ZString_clone(&real_self->text.object, &real_dst->text.object);
+	ZStringBuffer_clone(&real_self->text.object, &real_dst->text.object);
 
 	return self;
 }
@@ -101,31 +104,38 @@ void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
 }
 
 void TextBox_appendChar(PTextBox self, char ch) {
-	ZString_insertCharAt(&self->text, self->carret_position, ch);
-	//ZString_append(&self->text, ch);
+	//ZString_insertCharAt(&self->text, self->carret_position, ch);
+	//ZString_append(&self->text, ch); // Old
+	ZStringBuffer_insertCharAt(&self->text, self->carret_position, ch);
 	++self->carret_position;
 	_update_offset_text_position(self);
 }
 
 void TextBox_removeLastChar(PTextBox self) {
-	if(self->text.size > 0) {
-		ZString_removeLastChar(&self->text);
+	//if(self->text.size > 0) {
+		//ZString_removeLastChar(&self->text);
+	if(self->text.logical_size > 0) {
+		ZStringBuffer_removeLastChar(&self->text);
 		--self->carret_position;
 		_update_offset_text_position(self);
 	}
 }
 
 void TextBox_removeCharAt(PTextBox self, DWORD pos) {
-	if(pos >= 0 && pos < self->text.size) {
-		ZString_removeCharAt(&self->text, pos);
+	//if(pos >= 0 && pos < self->text.size) {
+		//ZString_removeCharAt(&self->text, pos);
+	if(pos >= 0 && pos < self->text.logical_size) {
+		ZStringBuffer_removeCharAt(&self->text, pos);
 		--self->carret_position;
 		_update_offset_text_position(self);
 	}
 }
 
 void TextBox_setText(PTextBox self, const char* text) {
-	ZString_setData(&self->text, text);
-	self->carret_position = self->text.size;
+	//ZString_setData(&self->text, text);
+	//self->carret_position = self->text.size;
+	ZStringBuffer_setData(&self->text, text);
+	self->carret_position = self->text.logical_size;
 }
 
 DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
@@ -136,34 +146,30 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 	switch(system_event->type) {
 
-	case EVENT_BLUR:
-		/* Do not draw the carret anymore */
-		//real_self->is_focused  = 0;
-		real_self->is_focused = FALSE;
-
-
-		/* Repaint the widget without the carret */
-		custom_event.type = EVENT_PAINT;
-		custom_event.real_event.widget_event.id = self->id;
-		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-		EsicPushEvent(&custom_event);
-		break;
-
-	case EVENT_FOCUS:
-		/* Draw the carret */
-		//real_self->is_focused  = 1;
-		real_self->is_focused = TRUE;
-
-		/* Repaint the widget */
-		custom_event.type = EVENT_PAINT;
-		custom_event.real_event.widget_event.id = self->id;
-		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-		EsicPushEvent(&custom_event);
+	case EVENT_WIDGET:
+		TextBox_handleWidgetEvent(self, &system_event->real_event.widget_event);
 		break;
 
 	/*
-	case EVENT_PAINT:
-		TextBox_paint(self, self->parent->x, self->parent->y);
+	case EVENT_BLUR:
+
+		//real_self->is_focused  = 0;
+		real_self->is_focused = FALSE;
+		custom_event.type = EVENT_PAINT;
+		custom_event.real_event.widget_event.id = self->id;
+		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+		EsicPushEvent(&custom_event);
+		break;
+	*/
+
+	/*
+	case EVENT_FOCUS:
+		real_self->is_focused = TRUE;
+
+		custom_event.type = EVENT_PAINT;
+		custom_event.real_event.widget_event.id = self->id;
+		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+		EsicPushEvent(&custom_event);
 		break;
 	*/
 
@@ -198,8 +204,10 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 		/* Suppr key (still char removal)) */
 		} else if(system_event->real_event.keyboard_event.code == KEY_DELETE) {
-			if(real_self->carret_position < real_self->text.size) {
-				ZString_removeCharAt(&real_self->text, real_self->carret_position);
+			//if(real_self->carret_position < real_self->text.size) {
+				//ZString_removeCharAt(&real_self->text, real_self->carret_position);
+			if(real_self->carret_position < real_self->text.logical_size) {
+				ZStringBuffer_removeCharAt(&real_self->text, real_self->carret_position);
 				request_paint = 1;
 			}
 
@@ -222,14 +230,20 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 	case EVENT_TIMER:
 		/* Test */
-		if(system_event->real_event.timer_event.id == 1) {
-			real_self->draw_carret = (BOOL)!real_self->draw_carret;
 
-			custom_event.type = EVENT_PAINT;
-			custom_event.real_event.widget_event.id = self->id;
+		/* The only timer message a textbox needs is to know
+		 * whether it needs to blink its carret or not; so don't
+		 * handle the event if the textbox doesn't have the focus */
+		if(TEXTBOX(self)->is_focused) {
+			if(system_event->real_event.timer_event.id == 1) {
+				real_self->draw_carret = (BOOL)!real_self->draw_carret;
 
-			//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-			EsicPushEvent(&custom_event);
+				custom_event.type = EVENT_PAINT;
+				custom_event.real_event.widget_event.id = self->id;
+
+				//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+				EsicPushEvent(&custom_event);
+			}
 		}
 		break;
 
@@ -252,7 +266,8 @@ void _update_carret_position(PTextBox self, Keycode code) {
 		}
 		break;
 	case KEY_RIGHT:
-		if(self->carret_position < self->text.size) {
+		//if(self->carret_position < self->text.size) {
+		if(self->carret_position < self->text.logical_size) {
 			++self->carret_position;
 			/* Offset recomputing */
 			_update_offset_text_position(self);
@@ -265,7 +280,8 @@ void _update_offset_text_position(PTextBox self) {
 	WORD size_in_letters = self->widget.width / 6; /* Remove the '6'... */
 
 	if(self->carret_position - self->text_offset > size_in_letters
-		&& size_in_letters < self->text.size) {
+		//&& size_in_letters < self->text.size) {
+		&& size_in_letters < self->text.logical_size) {
 		self->text_offset = self->carret_position - size_in_letters;
 		return;
 	}
@@ -273,4 +289,33 @@ void _update_offset_text_position(PTextBox self) {
 	if(self->carret_position < self->text_offset) {
 		self->text_offset = self->carret_position;
 	}
+}
+
+DWORD TextBox_handleWidgetEvent(PWidget self, PWidgetEvent widget_event) {
+	Event custom_event;
+	Event_constructor(&custom_event);
+	switch(widget_event->type) {
+
+	case WE_BLUR:
+		/* Do not draw the carret anymore */
+		TEXTBOX(self)->is_focused = FALSE;
+
+		/* Repaint the widget without the carret */
+		custom_event.type = EVENT_PAINT;
+		custom_event.real_event.widget_event.id = self->id;
+		EsicPushEvent(&custom_event);
+		break;
+
+	case WE_FOCUS:
+		/* Draw the carret */
+		TEXTBOX(self)->is_focused = TRUE;
+
+		/* Repaint the widget */
+		custom_event.type = EVENT_PAINT;
+		custom_event.real_event.widget_event.id = self->id;
+		EsicPushEvent(&custom_event);
+		break;
+	}
+
+	Event_destructor(OBJECT(&custom_event));
 }

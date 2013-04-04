@@ -56,5 +56,8 @@
     <ClInclude Include="includes\ui\main_ui.h">
       <Filter>includes\ui</Filter>
     </ClInclude>
+    <ClInclude Include="includes\ui\dotpen_ui.h">
+      <Filter>includes\ui</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

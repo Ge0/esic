@@ -77,7 +77,6 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\diskio.c" />
     <ClCompile Include="src\ff.c" />
     <ClCompile Include="src\option\unicode.c" />
   </ItemGroup>

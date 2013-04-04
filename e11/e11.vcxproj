@@ -93,6 +93,7 @@
     <ClInclude Include="..\includes\e11.h" />
     <ClInclude Include="includes\e11_ui.h" />
     <ClInclude Include="includes\toolbox.h" />
+    <ClInclude Include="includes\ui\dotpen_ui.h" />
     <ClInclude Include="includes\ui\main_ui.h" />
     <ClInclude Include="includes\xml_ui_factory.h" />
   </ItemGroup>

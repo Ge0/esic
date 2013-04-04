@@ -91,10 +91,12 @@ void _e11_mainloop() {
 				if(system_event.real_event.keyboard_event.code == KEY_F12) {
 					looping = !looping;
 				}
-				main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &system_event);
+				//main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &system_event);
+				WIDGET_VTABLE(&main_ui)->defaultProc(WIDGET(&main_ui), &system_event);
 				break;
 			default:
-				main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &system_event);
+				WIDGET_VTABLE(&main_ui)->defaultProc(WIDGET(&main_ui), &system_event);
+				//main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &system_event);
 			}
 		}
 

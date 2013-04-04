@@ -14,14 +14,27 @@ void SicHeapDump();
 void SicHeapClean();
 
 #include <stdlib.h>
-#ifndef _DEBUG
+#if defined EMULATOR
+#if defined (WIN32)
+ULONG
+_cdecl
+DbgPrint(
+    PCH Format,
+    ...
+    );
+#define SicPrintfDebug	DbgPrint
+
+
+#endif /* WIN32 */
+#endif /* EMULATOR */
+
+#ifndef _DEBUG 
 #define SicAlloc(x) malloc(x)
 #define SicFree(x)  free(x)
 #else
 #define SicAlloc(x) Debug_SicAlloc(x)
 #define SicFree(x)  Debug_SicFree(x)
-#endif
-
+#endif /* _DEBUG */
 
 
 typedef struct _link {

@@ -135,7 +135,6 @@ void ZString_subString(PZString self, DWORD start, DWORD n, PZString out) {
 				}
 			}
 		}
-
 	}
 }
 

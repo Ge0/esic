@@ -17,6 +17,7 @@ typedef enum _EventType {
 	EVENT_TIMER,
 
 	/* Widget events */
+	EVENT_WIDGET,
 	EVENT_PAINT,
 	EVENT_BLUR,
 	EVENT_FOCUS

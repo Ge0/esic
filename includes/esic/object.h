@@ -5,7 +5,7 @@
 #include <esic/esic.h>
 #include <stdio.h>
 
-typedef struct _Object* PObject;
+typedef struct _Object *PObject, **PPObject;
 
 typedef struct _vtable_Object {
 	void	(*destructor)(PObject self);
@@ -14,10 +14,17 @@ typedef struct _vtable_Object {
 	DWORD	(*hash)(PObject self);
 } vtable_Object;
 
+/*
 typedef struct _Object {
 	const vtable_Object*	vtable;
 	size_t					size;
 } Object, **PPObject;
+*/
+
+CLASS(Object) {
+	VTABLE(Object);
+	size_t size;
+};
 
 //Object Object_clone(PObject self);
 

@@ -8,10 +8,6 @@
 #include <math.h>
 #include <string.h>
 
-#if defined (WIN32)
-//#include <Windows.h>
-#endif
-
 static plink s_pointers_list = NULL;
 
 void* Debug_SicAlloc(size_t size) {
@@ -76,22 +72,23 @@ void Debug_SicFree(void* ptr) {
 
 
 void SicHeapDump() {
-#if defined _WIN32
 	DWORD total = 0;
-	double ko;
-	char buf[4096];
-	// Simply browse the linked list and show the memory block in a (pseudo) fancy format
+	DWORD ko;
+
 	plink iterator = NULL;
-	OutputDebugString("-----------\n");
+
+	SicPrintfDebug("-----------\n");
+
 	for(iterator = s_pointers_list; iterator != NULL; iterator = iterator->next) {
 		total += iterator->memory_space,
-		sprintf(buf, "Block at %p: %5d byte(s).\n", iterator->ptr, iterator->memory_space);
-		OutputDebugString(buf);
+
+		SicPrintfDebug("Block at %p: %5d byte(s).\n", iterator->ptr, iterator->memory_space);
 	}
-	ko = (double)total/1024.0;
-	sprintf(buf,"TOTAL: %d bytes (%.0f Ko.)\n-----------\n", total, ceil(ko));
-	OutputDebugString(buf);
-#endif
+
+	ko = total/1024;
+
+	SicPrintfDebug("TOTAL: %d bytes (%d Ko.)\n-----------\n", total, ko);
+
 }
 
 

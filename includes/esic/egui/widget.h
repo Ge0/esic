@@ -17,6 +17,8 @@ typedef struct _vtable_Widget {
 	void (*paint)(PWidget, WORD, WORD);
 } vtable_Widget;
 
+
+/*
 typedef struct _Widget {
 	Object object;
 	const vtable_Widget* vtable;
@@ -31,6 +33,25 @@ typedef struct _Widget {
 	BOOL is_focusable;
 	BOOL is_hot;
 } Widget, **PPWidget;
+*/
+
+
+
+CLASS(Widget) {
+	Object object;
+	VTABLE(Widget);
+	WORD id;
+	WORD x;
+	WORD y;
+	WORD width;
+	WORD height;
+	WORD color;
+	PWidget parent;
+	List childs;
+	BOOL is_focusable;
+	BOOL is_hot;
+};
+
 
 PWidget Widget_constructor(PWidget self);
 

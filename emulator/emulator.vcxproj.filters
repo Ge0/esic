@@ -13,6 +13,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="src\fatfs">
+      <UniqueIdentifier>{e326d9cc-76b2-4b0c-9ab2-99a21d1eedf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.c">
@@ -20,6 +23,9 @@
     </ClCompile>
     <ClCompile Include="src\emulator_system.c">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fatfs\diskio.c">
+      <Filter>src\fatfs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
