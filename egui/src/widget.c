@@ -26,13 +26,7 @@ VTABLE_START(Widget) {
 #undef WIDGET_VFUNCTION
 };
 
-/*
-static const vtable_Widget s_vtable_widget = {
-	Widget_defaultProc,
-	Widget_paint
-	
-};
-*/
+static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event);
 
 PWidget Widget_constructor(PWidget self) {
 
@@ -118,10 +112,18 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 	PWidget current_child;
 	switch(system_event->type) {
 
+	/*
+	case EVENT_WIDGET:
+		_handle_widget_event(self, &system_event->real_event.widget_event);
+		break;
+	*/
 
 	/* These two events have to be transmitted to childs only when requested */
+	/*
 	case EVENT_BLUR:
 	case EVENT_FOCUS:
+	*/
+	case EVENT_WIDGET:
 
 		it = self->childs.head;
 
@@ -192,4 +194,8 @@ BOOL Widget_equalsTo(PObject self, PObject dst) {
 
 DWORD Widget_hash(PObject self) {
 	return 0;
+}
+
+static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
+
 }

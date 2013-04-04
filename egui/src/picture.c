@@ -97,7 +97,7 @@ DWORD Picture_defaultProc(PWidget self, const PEvent system_event) {
 	return 0;
 }
 
-DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
+static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 	Event custom_event;
 	Event_constructor(&custom_event);
 	switch(widget_event->type) {
