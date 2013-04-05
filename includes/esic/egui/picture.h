@@ -11,6 +11,7 @@ typedef struct _Picture {
 	Widget widget;
 	WORD border_color;
 	WORD border_thickness;
+	WORD border_color_hot;
 	BOOL is_focused;
 	PRasterIcon icon;
 } Picture, *PPicture;

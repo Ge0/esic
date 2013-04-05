@@ -129,6 +129,10 @@ static void _createEventFromSDL(PEvent system_event, const SDL_Event* psdl_event
 		if(system_event->type == EVENT_WIDGET) {
 			system_event->real_event.widget_event.type = (WidgetEventType)psdl_event->user.data1;
 			system_event->real_event.widget_event.id   = (WORD)psdl_event->user.data2;
+		} else if(system_event->type == EVENT_PAINT) {
+			system_event->real_event.widget_event.id   = (WORD)psdl_event->user.data1;
+		} else if(system_event->type = EVENT_TIMER) {
+			system_event->real_event.timer_event.id   = (WORD)psdl_event->user.data1;
 		}
 		break;
 

@@ -35,7 +35,7 @@ VTABLE_START(Widget) {
 /* Private functions */
 static void _update_carret_position(PTextBox self, Keycode code);
 static void _update_offset_text_position(PTextBox self);
-static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event);
+static void _handle_widget_event(PWidget self, PWidgetEvent widget_event);
 
 PTextBox TextBox_constructor(PTextBox self) {
 
@@ -57,6 +57,7 @@ PTextBox TextBox_constructor(PTextBox self) {
 	self->widget.is_focusable = 1;
 	self->is_focused          = 0;
 	self->text_offset         = 0;
+	self->draw_carret		  = FALSE;
 
 	return self;
 }
@@ -291,7 +292,7 @@ void _update_offset_text_position(PTextBox self) {
 	}
 }
 
-static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
+static void _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 	Event custom_event;
 	Event_constructor(&custom_event);
 	switch(widget_event->type) {
@@ -318,4 +319,6 @@ static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 	}
 
 	Event_destructor(OBJECT(&custom_event));
+
+
 }

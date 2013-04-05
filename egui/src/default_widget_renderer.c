@@ -102,7 +102,7 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 	//ZString_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text);
 	ZStringBuffer_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text); 
 
-	/* Draw the string & the carret at its physical position */
+	/* Draw the string */
 	ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawString(
 		//real_self->painter->abstract_painter.vtable->drawString(
 		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
@@ -114,6 +114,7 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 	);
 
 		if(textbox->draw_carret && textbox->is_focused) {
+			/* Draw the carret */
 			ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
 				ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
 				//real_self->painter->abstract_painter.vtable->drawRectangle(
@@ -162,7 +163,14 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 }
 
 void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture picture, WORD base_x, WORD base_y) {
-	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
+	WORD border_color = picture->border_color;
+	if(picture->is_focused) {
+		border_color ^= 0xFFFF;
+	}
+	
+	if(WIDGET(picture)->is_hot) {
+		border_color = picture->border_color_hot;
+	}
 
 	if(picture->icon != NULL) {
 		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawBuffer(
@@ -188,8 +196,8 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			picture->widget.y - picture->border_thickness,
 			picture->icon->header.width + picture->border_thickness,
 			picture->border_thickness,
-			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color,
-			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color
+			border_color,
+			border_color
 		);
 
 		
@@ -203,8 +211,8 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			/*base_y*/0 + picture->widget.y - picture->border_thickness,
 			picture->border_thickness,
 			picture->icon->header.height + picture->border_thickness,
-			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color,
-			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color
+			border_color,
+			border_color
 		);
 
 		
@@ -218,8 +226,8 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			/*base_y*/0 + picture->widget.y + picture->icon->header.height,
 			picture->icon->header.width + picture->border_thickness,
 			picture->border_thickness,
-			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color,
-			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color
+			border_color,
+			border_color
 		);
 
 
@@ -233,8 +241,8 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			/*base_y*/ 0 + picture->widget.y,
 			picture->border_thickness,
 			picture->icon->header.height + picture->border_thickness,
-			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color,
-			picture->is_focused ? picture->border_color ^ 0xFFFF : picture->border_color
+			border_color,
+			border_color
 		);
 
 

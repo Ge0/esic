@@ -5,6 +5,7 @@
 #include <esic/egui/picture.h>
 #include <esic/egui/default_widget_renderer.h>
 
+
 static const vtable_Object s_vtable_object = {
 	Picture_destructor,
 	Picture_clone,
@@ -17,8 +18,24 @@ static const vtable_Widget s_vtable_widget = {
 	Picture_paint
 };
 
+
+/*
+VTABLE_START(Object) {
+#define OBJECT_VFUNCTION(return_type, function_name, arguments) Picture_##function_name,
+	OBJECT_VIRTUAL_FUNCTIONS
+#undef OBJECT_VFUNCTION
+};
+
+VTABLE_START(Widget) {
+#define WIDGET_VFUNCTION(return_type, function_name, arguments) Picture_##function_name,
+	WIDGET_VIRTUAL_FUNCTIONS
+#undef WIDGET_VFUNCTION
+};
+*/
+
+
 /* Private */
-static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event);
+static void _handle_widget_event(PWidget self, PWidgetEvent widget_event);
 
 PPicture Picture_constructor(PPicture self) {
 	/* Calling parent constructor */
@@ -73,8 +90,14 @@ DWORD Picture_defaultProc(PWidget self, const PEvent system_event) {
 	*/
 
 	case EVENT_KEYBOARD_KDOWN:
-		/* Test: Enligh the surrounding rect? */
-		PICTURE(self)->border_color = RGB_16B(0, 128, 255);
+		/* Test: Enlight the surrounding rect? */
+		//PICTURE(self)->border_color = RGB_16B(0, 128, 255);
+		if(system_event->real_event.keyboard_event.code == KEY_RETURN) {
+			custom_event.type = EVENT_WIDGET;
+			custom_event.real_event.widget_event.id = self->id;
+			custom_event.real_event.widget_event.type = WE_COMMAND;
+			EsicPushEvent(&custom_event);
+		}
 		break;
 
 	/*
@@ -97,7 +120,7 @@ DWORD Picture_defaultProc(PWidget self, const PEvent system_event) {
 	return 0;
 }
 
-static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
+static void _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 	Event custom_event;
 	Event_constructor(&custom_event);
 	switch(widget_event->type) {
@@ -105,6 +128,7 @@ static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 	case WE_BLUR:
 		/* Do not draw the carret anymore */
 		PICTURE(self)->is_focused  = FALSE;
+		self->is_hot = FALSE; /*To remove later maybe */
 
 		/* Repaint the widget without the carret */
 		custom_event.type = EVENT_PAINT;
@@ -114,12 +138,22 @@ static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 
 	case WE_FOCUS:
 		/* Draw the carret */
-		PICTURE(self)->is_focused  = 1;
+		PICTURE(self)->is_focused  = TRUE;
 
 		/* Repaint the widget */
 		custom_event.type = EVENT_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
 		EsicPushEvent(&custom_event);
+		break;
+
+	case WE_COMMAND:
+		self->is_hot = TRUE;
+
+		/* Repaint the widget */
+		custom_event.type = EVENT_PAINT;
+		custom_event.real_event.widget_event.id = self->id;
+		EsicPushEvent(&custom_event);
+
 		break;
 	}
 

@@ -38,6 +38,7 @@ PWidget Widget_constructor(PWidget self) {
 
 	/* Initialize properties so they don't get dummy random values */
 	self->x = self->y = self->width = self->height = self->color = 0;
+	self->is_hot = FALSE;
 	self->parent = NULL;
 
 	/* Construct the list of childs */
@@ -140,11 +141,22 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 		break;
 
 	case EVENT_TIMER:
+		/* Forward to every childs */
+		it = self->childs.head;
+
+		while(it != NULL) {
+			current_child = WIDGETPTR(hot_widget->data)->widget;
+			WIDGET_VTABLE(current_child)->defaultProc(WIDGET(current_child), system_event);
+			it = it->next;
+		}
+
+		/*
 		if(hot_widget != NULL) {
 			current_child = WIDGETPTR(hot_widget->data)->widget;
 			WIDGET_VTABLE(current_child)->defaultProc(WIDGET(current_child), system_event);
 			//current_child->vtable->defaultProc(current_child, system_event);
 		}
+		*/
 		break;
 
 	

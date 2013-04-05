@@ -45,6 +45,7 @@ PE11UI E11UI_constructor(PE11UI self) {
 		self->icons[i].widget.x = ICONS_BASE_X + (54*(i%ICONS_PER_LINE));
 		self->icons[i].widget.y = ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(i/6));
 		self->icons[i].border_thickness = BORDER_THICKNESS;
+		self->icons[i].border_color_hot = PICTURE_BORDER_COLOR_HOT;
 		if(i < (E11_NUMBER_OF_ICONS / 2)) {
 			self->icons[i].border_color = BACKGROUND_FIRST_ROW;
 		} else {
@@ -148,6 +149,7 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 				/* If the event is to the current child, forward it. */
 				if(system_event->real_event.widget_event.id == chld->id) {
 					chld->vtable->defaultProc(chld, system_event);
+					break;
 				}
 				it = it->next;
 			}
@@ -167,9 +169,9 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 		while(it != NULL) {
 			PWidget chld = ((PWidgetPtr)it->data)->widget;
 
-				chld->vtable->defaultProc(chld, system_event);
+			chld->vtable->defaultProc(chld, system_event);
 
-				it = it->next;
+			it = it->next;
 		}
 
 		break;
@@ -182,7 +184,7 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 
 void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 	PE11UI real_self = (PE11UI)self;
-	WORD i;
+	//WORD i;
 	/* Call parent paint */
 	Widget_paint(self, base_x, base_y);
 
@@ -272,19 +274,19 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 						break;
 					}
 				}
+				/* Inform the new widget that it as gained the focus */
+				Event_constructor(&custom_event);
+				custom_event.real_event.widget_event.id = current_child->id;
+				//custom_event.type = EVENT_FOCUS;
+				custom_event.real_event.widget_event.type = WE_FOCUS;
+				custom_event.type = EVENT_WIDGET;
+				EsicPushEvent(&custom_event);
+				Event_destructor(&custom_event.object);
+
+				
 			}
 
-			/* Inform the new widget that it as gained the focus */
-			Event_constructor(&custom_event);
-			custom_event.real_event.widget_event.id = current_child->id;
-			//custom_event.type = EVENT_FOCUS;
-			custom_event.real_event.widget_event.type = WE_FOCUS;
-			custom_event.type = EVENT_WIDGET;
-			EsicPushEvent(&custom_event);
-			Event_destructor(&custom_event.object);
-
-
-			/* Forward the event to the focused widget */
+			/* In every cases, forward the event to the focused widget */
 			current_child->vtable->defaultProc(current_child, system_event);
 		}
 	}

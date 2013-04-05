@@ -180,7 +180,7 @@ void ZStringBuffer_removeCharAt(PZStringBuffer self, DWORD pos) {
 
 /* Private function */
 void _update_buffer(PZStringBuffer self, size_t desired_size) {
-	static const float log_2 = 0.693;
+	static const float log_2 = (float)0.693;
 	char* buf = NULL;
 	size_t new_size = 0;
 	/* Take the power of two next to the desired size */
