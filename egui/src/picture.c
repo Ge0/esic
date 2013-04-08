@@ -93,9 +93,15 @@ DWORD Picture_defaultProc(PWidget self, const PEvent system_event) {
 		/* Test: Enlight the surrounding rect? */
 		//PICTURE(self)->border_color = RGB_16B(0, 128, 255);
 		if(system_event->real_event.keyboard_event.code == KEY_RETURN) {
+			self->is_hot = TRUE;
 			custom_event.type = EVENT_WIDGET;
 			custom_event.real_event.widget_event.id = self->id;
 			custom_event.real_event.widget_event.type = WE_COMMAND;
+			EsicPushEvent(&custom_event);
+
+			// Repaint the widget
+			custom_event.type = EVENT_PAINT;
+			custom_event.real_event.widget_event.id = self->id;
 			EsicPushEvent(&custom_event);
 		}
 		break;
@@ -146,15 +152,17 @@ static void _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 		EsicPushEvent(&custom_event);
 		break;
 
+	/*
 	case WE_COMMAND:
 		self->is_hot = TRUE;
 
-		/* Repaint the widget */
+		// Repaint the widget
 		custom_event.type = EVENT_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
 		EsicPushEvent(&custom_event);
 
 		break;
+	*/
 	}
 
 	Event_destructor(OBJECT(&custom_event));

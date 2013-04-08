@@ -10,11 +10,13 @@
 #include <esic/elcd/lcd.h>
 #include <esic/eapi/emulator_system.h>
 //#include <Winbase.h>
+
 #include <esic/eapi/event.h>
 
 
 #include <fatfs/ff.h>
 #include <fatfs/diskio.h>
+#include <esic/esic.h>
 
 /* Private variables, instances, etc. */
 static FATFS s_fat;
@@ -99,6 +101,9 @@ void EmulatorSystemDelay(DWORD milliseconds) {
 void EmulatorSystemPushEvent(PEvent esic_event) {
 	SDL_Event sdl_event;
 	_createEventToSDL(esic_event, &sdl_event);
+#if defined(_DEBUG)
+	SicPrintfDebug("Pushed %s\n", Event_enumToString(esic_event->type));
+#endif
 	SDL_PushEvent(&sdl_event);
 }
 
@@ -178,6 +183,7 @@ static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event) {
 		psdl_event->user.data2 = 0;
 		break;
 
+	/*
 	case EVENT_BLUR:
 		psdl_event->type = SDL_USEREVENT;
 		psdl_event->user.code = EVENT_BLUR;
@@ -191,6 +197,7 @@ static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event) {
 		psdl_event->user.data1 = (void*)system_event->real_event.widget_event.id;
 		psdl_event->user.data2 = 0;
 		break;
+	*/
 
 	}
 }

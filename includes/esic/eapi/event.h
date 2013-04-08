@@ -9,18 +9,22 @@
 #include <esic/eapi/timer_event.h>
 #include <esic/eapi/widget_event.h>
 
-typedef enum _EventType {
-	EVENT_NONE = 0,
-	EVENT_QUIT,
-	EVENT_KEYBOARD_KDOWN,
-	EVENT_KEYBOARD_KUP,
-	EVENT_TIMER,
 
-	/* Widget events */
-	EVENT_WIDGET,
-	EVENT_PAINT,
-	EVENT_BLUR,
-	EVENT_FOCUS
+#define SYSTEM_EVENT_LIST \
+	SYSTEM_EVENT(EVENT_NONE, "NONE") \
+	SYSTEM_EVENT(EVENT_QUIT, "QUIT") \
+	SYSTEM_EVENT(EVENT_KEYBOARD_KDOWN, "KEYBOARD_KDOWN") \
+	SYSTEM_EVENT(EVENT_KEYBOARD_KUP, "KEYBOARD_KUP") \
+	SYSTEM_EVENT(EVENT_TIMER, "TIMER") \
+	SYSTEM_EVENT(EVENT_WIDGET, "WIDGET") \
+	SYSTEM_EVENT(EVENT_PAINT, "PAINT")
+
+
+
+typedef enum _EventType {
+#define SYSTEM_EVENT(enum_value, string_value) enum_value,
+	SYSTEM_EVENT_LIST
+#undef SYSTEM_EVENT
 } EventType, *PEventType;
 
 typedef struct _Event* PEvent;
@@ -41,6 +45,7 @@ PEvent Event_constructor(PEvent self);
 /* Object */
 void Event_destructor(PObject self);
 PObject Event_clone(PObject self, PObject dst);
+const char* Event_enumToString(EventType event_type);
 
 
 #endif /* _EVENT_H_ */

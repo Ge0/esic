@@ -69,13 +69,15 @@ PObject Widget_clone(PObject self, PObject dst) {
 	dst->size   = self->size;
 	dst->vtable = self->vtable;
 
-	WIDGET(dst)->vtable = WIDGET(self)->vtable;
-	WIDGET(dst)->x      = WIDGET(self)->x;
-	WIDGET(dst)->y      = WIDGET(self)->y;
-	WIDGET(dst)->width  = WIDGET(self)->width;
-	WIDGET(dst)->height = WIDGET(self)->height;
-	WIDGET(dst)->parent = WIDGET(self)->parent;
-	WIDGET(dst)->color  = WIDGET(self)->color;
+	WIDGET(dst)->vtable       = WIDGET(self)->vtable;
+	WIDGET(dst)->x            = WIDGET(self)->x;
+	WIDGET(dst)->y            = WIDGET(self)->y;
+	WIDGET(dst)->width        = WIDGET(self)->width;
+	WIDGET(dst)->height       = WIDGET(self)->height;
+	WIDGET(dst)->parent       = WIDGET(self)->parent;
+	WIDGET(dst)->color        = WIDGET(self)->color;
+	WIDGET(dst)->is_focusable = WIDGET(self)->is_focusable;
+	WIDGET(dst)->is_hot       = WIDGET(self)->is_hot;
 
 
 	/* clone the list of childs */
@@ -208,6 +210,15 @@ DWORD Widget_hash(PObject self) {
 	return 0;
 }
 
-static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
+PWidget Widget_findChildById(PWidget self, WORD id) {
+	PListNode iterator = self->childs.head;
+	while(iterator != NULL && WIDGETPTR(iterator->data)->widget->id != id) {
+		iterator = iterator->next;
+	}
 
+	if(iterator) {
+		return WIDGETPTR(self->childs.head)->widget;
+	} else{
+		return NULL;
+	}
 }

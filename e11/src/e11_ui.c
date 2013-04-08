@@ -39,7 +39,7 @@ PE11UI E11UI_constructor(PE11UI self) {
 		Picture_constructor(&self->icons[i]);
 
 		/* Id : 0x8000 + i + 1 */
-		self->icons[i].widget.id = (WORD)(0x8000 + i + 1);
+		self->icons[i].widget.id = (WORD)(E11_BASE_ID_SYSTEM_ICONS + i + 1);
 
 		/* Filling coordinates information */
 		self->icons[i].widget.x = ICONS_BASE_X + (54*(i%ICONS_PER_LINE));
@@ -98,6 +98,7 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 	PWidget current_child;
 	Event custom_event;
 	BYTE* keyboard_state = NULL;
+	PWidgetEvent widget_event;
 
 	Event_constructor(&custom_event);
 
@@ -112,13 +113,14 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 		while(real_self->focused_widget != NULL) {
 			current_child = ((PWidgetPtr)real_self->focused_widget->data)->widget;
 			if(current_child->is_focusable) {
+
 				/* if the current widget is focusable, inform it's been focused, & break the loop */
 				Event_constructor(&custom_event);
 				custom_event.real_event.widget_event.id = current_child->id;
-				//custom_event.type = EVENT_FOCUS;
+
 				custom_event.type = EVENT_WIDGET;
 				custom_event.real_event.widget_event.type = WE_FOCUS;
-				//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+
 				EsicPushEvent(&custom_event);
 				Event_destructor(&custom_event.object);
 				break;
@@ -130,28 +132,39 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 
 	switch(system_event->type) {
 	case EVENT_KEYBOARD_KDOWN:
-
 		_handle_keyboard_keydown_event(self, system_event);	
-
 		break;
 
 	case EVENT_WIDGET:
 	//case EVENT_PAINT:
-		if(system_event->real_event.widget_event.id == 0) {
-			return Widget_defaultProc(self, system_event);
-		} else {
-			/* If the id equals 0, paint every childs, otherwise find the good one & paint it */
-			it = self->childs.head;
+		widget_event = &system_event->real_event.widget_event;
 
-			/* No id? dispatch the event to every child */
-			while(it != NULL) {
-				PWidget chld = ((PWidgetPtr)it->data)->widget;
-				/* If the event is to the current child, forward it. */
-				if(system_event->real_event.widget_event.id == chld->id) {
-					chld->vtable->defaultProc(chld, system_event);
-					break;
+		// Particular case: WE_COMMAND
+		if(widget_event->type == WE_COMMAND) {
+			if(E11UI(self)->onFunction[widget_event->id - E11_BASE_ID_SYSTEM_ICONS - 1] != NULL) {
+				E11UI(self)->onFunction[widget_event->id - E11_BASE_ID_SYSTEM_ICONS - 1]
+					(E11UI(self), (void*)widget_event->param);
+			}
+		} else {
+
+			/* Other cases */
+
+			if(system_event->real_event.widget_event.id == 0) {
+				return Widget_defaultProc(self, system_event);
+			} else {
+				/* If the id equals 0, paint every childs, otherwise find the good one & paint it */
+				it = self->childs.head;
+
+				/* No id? dispatch the event to every child */
+				while(it != NULL) {
+					PWidget chld = ((PWidgetPtr)it->data)->widget;
+					/* If the event is to the current child, forward it. */
+					if(system_event->real_event.widget_event.id == chld->id) {
+						chld->vtable->defaultProc(chld, system_event);
+						break;
+					}
+					it = it->next;
 				}
-				it = it->next;
 			}
 		}
 		
@@ -223,13 +236,43 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 	const BYTE* keyboard_state = NULL;
 	Event custom_event;
 
+
+	Event_constructor(&custom_event);
+
 	/* According to the key pressed */
 	if(system_event->real_event.keyboard_event.code >= KEY_F1 &&
 		system_event->real_event.keyboard_event.code <= KEY_F12) {
-		/* Call the appropriate function */
+		WORD widget_id = E11_BASE_ID_SYSTEM_ICONS + (WORD)system_event->real_event.keyboard_event.code - KEY_F1 + 1;
+
+		// Find the picture associated to the function
+		PWidget picture_widget = Widget_findChildById(self, widget_id);
+
+		// update the hot widget
+		E11UI(self)->hot_widget_id = widget_id;
+
+		// If we have found any child, set its state to hot & send a message to repaint it
+		if(picture_widget != NULL) {
+			picture_widget->is_hot = TRUE;
+			custom_event.type = EVENT_PAINT;
+			custom_event.real_event.widget_event.id = widget_id;
+			
+			EsicPushEvent(&custom_event);
+
+			// Send another COMMAND message to inform our UI that a function key has been stroke
+			custom_event.type = EVENT_WIDGET;
+			//custom_event.real_event.widget_event.id   = widget_id; // Normally don't need this line
+			custom_event.real_event.widget_event.type = WE_COMMAND;
+			custom_event.real_event.widget_event.param = (DWORD)NULL; // for the moment?
+
+			EsicPushEvent(&custom_event);
+
+		}
+		/*
+		// Call the appropriate function
 		if(real_self->onFunction[system_event->real_event.keyboard_event.code - KEY_F1] != NULL) {
 			real_self->onFunction[system_event->real_event.keyboard_event.code - KEY_F1](real_self, NULL);
 		}
+		*/
 	} else {
 		/* Need a hot widget to handle the event */
 		if(real_self->focused_widget != NULL) {
@@ -240,7 +283,6 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 				/* Tab pressed: switch to the next hot widget */
 
 				/* Inform the current widget that he's lost the focus */
-				Event_constructor(&custom_event);
 				custom_event.real_event.widget_event.id = current_child->id;
 				custom_event.real_event.widget_event.type = WE_BLUR;
 				//custom_event.type = EVENT_BLUR;

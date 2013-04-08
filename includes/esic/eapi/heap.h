@@ -14,19 +14,7 @@ void SicHeapDump();
 void SicHeapClean();
 
 #include <stdlib.h>
-#if defined EMULATOR
-#if defined (WIN32)
-ULONG
-_cdecl
-DbgPrint(
-    PCH Format,
-    ...
-    );
-#define SicPrintfDebug	DbgPrint
 
-
-#endif /* WIN32 */
-#endif /* EMULATOR */
 
 #ifndef _DEBUG 
 #define SicAlloc(x) malloc(x)

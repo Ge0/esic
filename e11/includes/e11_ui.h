@@ -1,6 +1,7 @@
 #ifndef _E11_UI_H_
 #define _E11_UI_H_
 
+#define E11_BASE_ID_SYSTEM_ICONS	0x8000
 #define E11_NUMBER_OF_FUNCTIONS		12
 #define ICONS_BASE_X				9
 #define ICONS_BASE_Y				164
@@ -17,8 +18,31 @@
 
 typedef struct _E11UI *PE11UI;
 
+#define E11_UI_FUNCTION_LIST \
+	E11_UI_FUNCTION(F1) \
+	E11_UI_FUNCTION(F2) \
+	E11_UI_FUNCTION(F3) \
+	E11_UI_FUNCTION(F4) \
+	E11_UI_FUNCTION(F5) \
+	E11_UI_FUNCTION(F6) \
+	E11_UI_FUNCTION(F7) \
+	E11_UI_FUNCTION(F8) \
+	E11_UI_FUNCTION(F9) \
+	E11_UI_FUNCTION(F10) \
+	E11_UI_FUNCTION(F11) \
+	E11_UI_FUNCTION(F12)
+
+
+typedef struct _vtable_E11UI {
+#define E11_UI_FUNCTION(keycode) void (*on##keycode##)(PE11UI, void*);
+	E11_UI_FUNCTION_LIST
+#undef E11_UI_FUNCTION
+} vtable_E11UI;
+
+
 typedef struct _E11UI {
 	Widget widget;
+	//const vtable_E11UI* vtable;
 	void (*onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI, void*);	/* array of function pointers */
 	Picture icons[E11_NUMBER_OF_ICONS];
 	WORD hot_widget_id; /* Test */
@@ -42,5 +66,9 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent event);
 void E11UI_paint(PWidget self, WORD base_x, WORD base_y);
 
 #define E11UI(x) ((PE11UI)x)
+
+
+
+#define GET_UI_FUNCTION(base_struct, index) base_struct##_onF##index
 
 #endif /* _E11_UI_H_ */

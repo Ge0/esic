@@ -113,4 +113,18 @@ typedef int32_t SDWORD;
 #define VTABLE(x) \
 	const vtable_##x *vtable
 
+#if defined EMULATOR
+#if defined (WIN32)
+ULONG
+_cdecl
+DbgPrint(
+    PCH Format,
+    ...
+    );
+#define SicPrintfDebug	DbgPrint
+
+
+#endif /* WIN32 */
+#endif /* EMULATOR */
+
 #endif

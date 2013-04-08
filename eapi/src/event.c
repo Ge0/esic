@@ -3,6 +3,12 @@
  */
 #include <esic/eapi/event.h>
 
+static const char* event_strings[] = {
+#define SYSTEM_EVENT(enum_value, string_value) string_value,
+	SYSTEM_EVENT_LIST
+#undef SYSTEM_EVENT
+};
+
 static const vtable_Object s_vtable_object = { Event_destructor, Event_clone, NULL, NULL };
 
 PEvent Event_constructor(PEvent self) {
@@ -27,4 +33,8 @@ PObject Event_clone(PObject self, PObject dst) {
 	real_dst->real_event = real_self->real_event;
 
 	return dst;
+}
+
+const char* Event_enumToString(EventType event_type) {
+	return event_strings[(DWORD)event_type];
 }

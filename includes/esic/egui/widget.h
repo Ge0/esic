@@ -73,6 +73,7 @@ DWORD Widget_hash(PObject self);
 /* Widget */
 void Widget_paint(PWidget self, WORD base_x, WORD base_y);
 DWORD Widget_defaultProc(PWidget self, const PEvent system_event);
+PWidget Widget_findChildById(PWidget self, WORD id);
 
 /* End of virtual functions */
 
@@ -85,7 +86,7 @@ void Widget_addChild(PWidget self, PWidget child);
 /* X-Macro */
 #define WIDGET_VIRTUAL_FUNCTIONS \
 	WIDGET_VFUNCTION(DWORD, defaultProc, (PWidget self, const PEvent)) \
-	WIDGET_VFUNCTION(void,	paint,		 (PWidget self, WORD base_x, WORD base_y))
+	WIDGET_VFUNCTION(void,	paint,		 (PWidget self, WORD base_x, WORD base_y)) \
 
 
 #endif /* _WIDGET_H_ */
