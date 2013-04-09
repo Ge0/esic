@@ -86,6 +86,7 @@
     <ClCompile Include="src\e11.c" />
     <ClCompile Include="src\e11_ui.c" />
     <ClCompile Include="src\toolbox.c" />
+    <ClCompile Include="src\ui\dotpen_ui.c" />
     <ClCompile Include="src\ui\main_ui.c" />
     <ClCompile Include="src\xml_ui_factory.c" />
   </ItemGroup>

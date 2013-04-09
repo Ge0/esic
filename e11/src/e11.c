@@ -69,8 +69,7 @@ void _e11_mainloop() {
 
 	MainUI_constructor(&main_ui);
 	
-	/* System Top rectangle */
-	LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
+	
 
 	main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 0);
 
@@ -80,20 +79,18 @@ void _e11_mainloop() {
 
 		Event_constructor(&system_event);
 
+		/* System Top rectangle */
+		LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
+
 		if(EsicPollEvent(&system_event)) {
+
 			switch(system_event.type) {
 			case EVENT_QUIT:
  				looping = !looping;
 				break;
-			case EVENT_KEYBOARD_KDOWN:
 
-				/* To remove later */
-				if(system_event.real_event.keyboard_event.code == KEY_F12) {
-					looping = !looping;
-				}
-				//main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &system_event);
-				WIDGET_VTABLE(&main_ui)->defaultProc(WIDGET(&main_ui), &system_event);
-				break;
+			/* Other events */
+
 			default:
 				WIDGET_VTABLE(&main_ui)->defaultProc(WIDGET(&main_ui), &system_event);
 				//main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &system_event);

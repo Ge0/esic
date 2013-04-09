@@ -95,5 +95,8 @@
     <ClInclude Include="..\includes\esic\eapi\emulator_system.h">
       <Filter>includes</Filter>
     </ClInclude>
+    <ClInclude Include="..\includes\esic\eapi\user_event.h">
+      <Filter>includes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

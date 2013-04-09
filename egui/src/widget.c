@@ -217,7 +217,7 @@ PWidget Widget_findChildById(PWidget self, WORD id) {
 	}
 
 	if(iterator) {
-		return WIDGETPTR(self->childs.head)->widget;
+		return WIDGETPTR(iterator->data)->widget;
 	} else{
 		return NULL;
 	}

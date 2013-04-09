@@ -13,6 +13,11 @@
 #define BACKGROUND_SECOND_ROW		RGB_16B(171,220,24)
 #define PICTURE_BORDER_COLOR_HOT	RGB_16B(255, 128, 0)
 
+
+// Test
+#define E11_EVENT_ACCEPT	0x01
+#define E11_EVENT_CREATE_CHILD	0x02
+
 #include <esic/egui/picture.h>
 #include <esic/egui/widget.h>
 
@@ -43,10 +48,12 @@ typedef struct _vtable_E11UI {
 typedef struct _E11UI {
 	Widget widget;
 	//const vtable_E11UI* vtable;
-	void (*onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI, void*);	/* array of function pointers */
+	//void (*onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI, void*);	/* array of function pointers */
+	void (**onFunction)(PE11UI, void*);
 	Picture icons[E11_NUMBER_OF_ICONS];
 	WORD hot_widget_id; /* Test */
 	PListNode focused_widget;
+	PE11UI parent_ui;
 	PE11UI child_ui;
 } E11UI;
 
@@ -64,6 +71,8 @@ PObject E11UI_clone(PObject self, PObject dst);
 /* Widget */
 DWORD E11UI_defaultProc(PWidget self, const PEvent event);
 void E11UI_paint(PWidget self, WORD base_x, WORD base_y);
+
+void E11UI_accept(PE11UI self);
 
 #define E11UI(x) ((PE11UI)x)
 

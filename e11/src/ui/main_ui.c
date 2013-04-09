@@ -1,7 +1,10 @@
 #include <esic/eapi/abstract_system.h>
 #include <esic/eapi/raster_icon_factory.h>
 #include <ui/main_ui.h>
+#include <ui/dotpen_ui.h>
 #include <xml_ui_factory.h>
+#include <esic/eapi/system.h>
+#include <esic/elcd/lcd.h>
 
 static const vtable_Object s_object_vtable = {
 	MainUI_destructor,
@@ -43,7 +46,7 @@ PMainUI MainUI_constructor(PMainUI self) {
 	//E11UI(self)->vtable              = VTABLE_POINTER(E11UI);
 
 	/* Build the UI */
-	XmlUiFactory_hydrateUI("ui", &self->e11ui.widget);
+	XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget);
 
 	/* Set the 12 icons */
 	self->e11ui.icons[0].icon = RasterIconFactory_getRasterIcon("dotpen.ilcd");
@@ -62,18 +65,24 @@ PMainUI MainUI_constructor(PMainUI self) {
 	for(i = 0; i < E11_NUMBER_OF_ICONS; ++i) {
 		//assert(self->e11ui.icons[i].icon);
 
-		/* Tmp: add icons to the list of childs widgets so they can be browsed with the TAB */
+		/* Add icons to the list of childs widgets so they can be browsed with the TAB */
 		Widget_addChild(&self->e11ui.widget, &self->e11ui.icons[i].widget);
 	}
 
 	
-	*(E11UI(self)->onFunction) = *s_onFunction;
+	(E11UI(self)->onFunction) = s_onFunction;
 
 	return self;
 }
 
 void MainUI_destructor(PObject self) {
 	E11UI_destructor(self);
+
+	/* Test */
+	if(E11UI(self)->child_ui != NULL) {
+		DELETE(E11UI(self)->child_ui);
+		E11UI(self)->child_ui = NULL;
+	}
 }
 
 DWORD MainUI_defaultProc(PWidget self, const PEvent system_event) {
@@ -87,7 +96,32 @@ DWORD MainUI_defaultProc(PWidget self, const PEvent system_event) {
 }
 
 void MainUI_onF1(PE11UI self, void* param) {
+	Event user_event;
+	PDotpenUI dotpen_ui = NULL;
+
 	SicPrintfDebug("F1 STROKE!\n");
+	
+
+	NEW(dotpen_ui, DotpenUI);
+
+	//self->child_ui = E11UI(dotpen_ui);
+
+	/* Clear the LCD */
+	//LcdFill(RGB_16B(240,240,240));
+
+	/* Paint the new UI */
+	//WIDGET_VTABLE(WIDGET(self->child_ui))->paint(WIDGET(self->child_ui), 0, 0);
+
+	
+	// Send an event to the upper layer to inform the creation of the child
+	Event_constructor(&user_event);
+	user_event.type = EVENT_USER;
+	user_event.real_event.user_event.type  = E11_EVENT_CREATE_CHILD;
+	user_event.real_event.user_event.param = (DWORD)dotpen_ui;
+
+	EsicPushEvent(&user_event);
+
+	Event_destructor(OBJECT(&user_event));
 }
 
 void MainUI_onF2(PE11UI self, void* param) {

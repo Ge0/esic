@@ -39,6 +39,9 @@
     <ClCompile Include="src\ui\main_ui.c">
       <Filter>src\ui</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\dotpen_ui.c">
+      <Filter>src\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\e11.h">
@@ -53,10 +56,10 @@
     <ClInclude Include="includes\e11_ui.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="includes\ui\main_ui.h">
+    <ClInclude Include="includes\ui\dotpen_ui.h">
       <Filter>includes\ui</Filter>
     </ClInclude>
-    <ClInclude Include="includes\ui\dotpen_ui.h">
+    <ClInclude Include="includes\ui\main_ui.h">
       <Filter>includes\ui</Filter>
     </ClInclude>
   </ItemGroup>

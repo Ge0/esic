@@ -16,8 +16,10 @@ static const vtable_Widget s_widget_vtable = {
 	E11UI_paint
 };
 
-void _handle_keyboard_keydown_event(PWidget self, PEvent system_event);
-
+static DWORD _handle_keyboard_keydown_event(PWidget self, PEvent system_event);
+static DWORD _handle_user_event(PWidget self, PUserEvent user_event);
+static DWORD _handle_widget_event(PWidget self, PEvent system_event);
+static void _update_hot_widget(PWidget self);
 
 PE11UI E11UI_constructor(PE11UI self) {
 	Event widget_event;
@@ -54,7 +56,7 @@ PE11UI E11UI_constructor(PE11UI self) {
 	}
 
 	/* set every Function function pointers to NULL */
-	memset(self->onFunction, '\0', sizeof(void (*)(PE11UI)) * E11_NUMBER_OF_ICONS);
+	//memset(self->onFunction, '\0', sizeof(void (*)(PE11UI)) * E11_NUMBER_OF_ICONS);
 
 	/* No focused widget for the moment */
 	self->focused_widget = NULL;
@@ -102,72 +104,25 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 
 	Event_constructor(&custom_event);
 
-	// Test: if there is a child user interface, immediately dispatch the events to it
+	if(system_event->type == EVENT_USER) {
+		return _handle_user_event(self, &(system_event->real_event.user_event));
+	}
+	
+
 	if(E11UI(self)->child_ui != NULL) {
 		return WIDGET_VTABLE(E11UI(self)->child_ui)->defaultProc(WIDGET(E11UI(self)->child_ui), system_event);
 	}
 
-	/* if there are no hot widget, pick up the first focusable widget */
-	if(real_self->focused_widget == NULL) {
-		real_self->focused_widget = self->childs.head;
-		while(real_self->focused_widget != NULL) {
-			current_child = ((PWidgetPtr)real_self->focused_widget->data)->widget;
-			if(current_child->is_focusable) {
-
-				/* if the current widget is focusable, inform it's been focused, & break the loop */
-				Event_constructor(&custom_event);
-				custom_event.real_event.widget_event.id = current_child->id;
-
-				custom_event.type = EVENT_WIDGET;
-				custom_event.real_event.widget_event.type = WE_FOCUS;
-
-				EsicPushEvent(&custom_event);
-				Event_destructor(&custom_event.object);
-				break;
-			}
-			real_self->focused_widget = real_self->focused_widget->next;
-		}
-	}
-
+	
+	_update_hot_widget(self);
 
 	switch(system_event->type) {
 	case EVENT_KEYBOARD_KDOWN:
-		_handle_keyboard_keydown_event(self, system_event);	
+		return _handle_keyboard_keydown_event(self, system_event);	
 		break;
 
 	case EVENT_WIDGET:
-	//case EVENT_PAINT:
-		widget_event = &system_event->real_event.widget_event;
-
-		// Particular case: WE_COMMAND
-		if(widget_event->type == WE_COMMAND) {
-			if(E11UI(self)->onFunction[widget_event->id - E11_BASE_ID_SYSTEM_ICONS - 1] != NULL) {
-				E11UI(self)->onFunction[widget_event->id - E11_BASE_ID_SYSTEM_ICONS - 1]
-					(E11UI(self), (void*)widget_event->param);
-			}
-		} else {
-
-			/* Other cases */
-
-			if(system_event->real_event.widget_event.id == 0) {
-				return Widget_defaultProc(self, system_event);
-			} else {
-				/* If the id equals 0, paint every childs, otherwise find the good one & paint it */
-				it = self->childs.head;
-
-				/* No id? dispatch the event to every child */
-				while(it != NULL) {
-					PWidget chld = ((PWidgetPtr)it->data)->widget;
-					/* If the event is to the current child, forward it. */
-					if(system_event->real_event.widget_event.id == chld->id) {
-						chld->vtable->defaultProc(chld, system_event);
-						break;
-					}
-					it = it->next;
-				}
-			}
-		}
-		
+		return _handle_widget_event(self, system_event);
 		break;
 
 	case EVENT_TIMER:
@@ -230,7 +185,7 @@ void E11UI_setIcon(PE11UI self, DWORD index, const PPicture icon) {
 	}
 }
 
-void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
+static DWORD _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 	PE11UI real_self = (PE11UI)self;
 	PWidget current_child = NULL;
 	const BYTE* keyboard_state = NULL;
@@ -267,12 +222,6 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 			EsicPushEvent(&custom_event);
 
 		}
-		/*
-		// Call the appropriate function
-		if(real_self->onFunction[system_event->real_event.keyboard_event.code - KEY_F1] != NULL) {
-			real_self->onFunction[system_event->real_event.keyboard_event.code - KEY_F1](real_self, NULL);
-		}
-		*/
 	} else {
 		/* Need a hot widget to handle the event */
 		if(real_self->focused_widget != NULL) {
@@ -332,4 +281,103 @@ void _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 			current_child->vtable->defaultProc(current_child, system_event);
 		}
 	}
+
+	return 0;
+}
+
+static DWORD _handle_user_event(PWidget self, PUserEvent user_event) {
+	// Particular case: if there is a child which has finished to to his job, destroy it
+	//if(user_event->type == EVENT_USER) {
+
+		switch(user_event->type) {
+		case E11_EVENT_ACCEPT:
+			if(user_event->param == WIDGET(E11UI(self)->child_ui)->id) {
+				if(E11UI(self)->child_ui != NULL) {
+					DELETE(E11UI(self)->child_ui);
+					E11UI(self)->child_ui = NULL;
+
+					// Clear the lcd
+					LcdFill(RGB_16B(240,240,240));
+
+					// Repaint self ui
+					WIDGET_VTABLE(self)->paint(self, 0, 0);
+				}
+			}
+			break;
+
+		case E11_EVENT_CREATE_CHILD:
+			E11UI(self)->child_ui = (PE11UI)user_event->param;
+			// Clear the lcd
+			LcdFill(RGB_16B(240,240,240));
+			// Paint the new UI
+			WIDGET_VTABLE(E11UI(self)->child_ui)->paint(WIDGET(E11UI(self)->child_ui), 0, 0);
+			break;
+		}
+		return 0;
+	//}
+}
+
+static void _update_hot_widget(PWidget self) {
+	PWidget current_child;
+	Event custom_event;
+
+	Event_constructor(&custom_event);
+
+	/* if there are no hot widget, pick up the first focusable widget */
+	if(E11UI(self)->focused_widget == NULL) {
+		E11UI(self)->focused_widget = self->childs.head;
+		while(E11UI(self)->focused_widget != NULL) {
+			current_child = ((PWidgetPtr)E11UI(self)->focused_widget->data)->widget;
+			if(current_child->is_focusable) {
+
+				/* if the current widget is focusable, inform it's been focused, & break the loop */
+				Event_constructor(&custom_event);
+				custom_event.real_event.widget_event.id = current_child->id;
+
+				custom_event.type = EVENT_WIDGET;
+				custom_event.real_event.widget_event.type = WE_FOCUS;
+
+				EsicPushEvent(&custom_event);
+				Event_destructor(&custom_event.object);
+				break;
+			}
+			E11UI(self)->focused_widget = E11UI(self)->focused_widget->next;
+		}
+	}
+
+	Event_destructor(OBJECT(&custom_event));
+}
+
+static DWORD _handle_widget_event(PWidget self, PEvent system_event) {
+	PWidgetEvent widget_event = &system_event->real_event.widget_event;
+	PListNode it = NULL;
+
+	if(widget_event->type == WE_COMMAND) {
+		void (**onFunction)(PE11UI, void*) = E11UI(self)->onFunction;
+
+		if(onFunction[widget_event->id - E11_BASE_ID_SYSTEM_ICONS - 1] != NULL) {
+			onFunction[widget_event->id - E11_BASE_ID_SYSTEM_ICONS - 1]
+				(E11UI(self), (void*)widget_event->param);
+		}
+	} else {
+		if(widget_event->id == 0) {
+			return Widget_defaultProc(self, system_event);
+		} else {
+			/* If the id equals 0, paint every childs, otherwise find the good one & paint it */
+			it = self->childs.head;
+
+			/* No id? dispatch the event to every child */
+			while(it != NULL) {
+				PWidget chld = ((PWidgetPtr)it->data)->widget;
+				/* If the event is to the current child, forward it. */
+				if(widget_event->id == chld->id) {
+					chld->vtable->defaultProc(chld, system_event);
+					break;
+				}
+				it = it->next;
+			}
+		}
+	}
+
+	return 0;
 }

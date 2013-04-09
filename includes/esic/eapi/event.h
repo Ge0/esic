@@ -8,6 +8,7 @@
 #include <esic/eapi/keyboard_event.h>
 #include <esic/eapi/timer_event.h>
 #include <esic/eapi/widget_event.h>
+#include <esic/eapi/user_event.h>
 
 
 #define SYSTEM_EVENT_LIST \
@@ -17,7 +18,8 @@
 	SYSTEM_EVENT(EVENT_KEYBOARD_KUP, "KEYBOARD_KUP") \
 	SYSTEM_EVENT(EVENT_TIMER, "TIMER") \
 	SYSTEM_EVENT(EVENT_WIDGET, "WIDGET") \
-	SYSTEM_EVENT(EVENT_PAINT, "PAINT")
+	SYSTEM_EVENT(EVENT_PAINT, "PAINT") \
+	SYSTEM_EVENT(EVENT_USER, "USER")
 
 
 
@@ -36,6 +38,7 @@ typedef struct _Event {
 		KeyboardEvent keyboard_event;
 		TimerEvent timer_event;
 		WidgetEvent widget_event;
+		UserEvent user_event;
 	} real_event;
 } Event, **PPEvent;
 

@@ -136,8 +136,11 @@ static void _createEventFromSDL(PEvent system_event, const SDL_Event* psdl_event
 			system_event->real_event.widget_event.id   = (WORD)psdl_event->user.data2;
 		} else if(system_event->type == EVENT_PAINT) {
 			system_event->real_event.widget_event.id   = (WORD)psdl_event->user.data1;
-		} else if(system_event->type = EVENT_TIMER) {
+		} else if(system_event->type == EVENT_TIMER) {
 			system_event->real_event.timer_event.id   = (WORD)psdl_event->user.data1;
+		} else if(system_event->type == EVENT_USER) {
+			system_event->real_event.user_event.type  = (DWORD)psdl_event->user.data1;
+			system_event->real_event.user_event.param = (DWORD)psdl_event->user.data2;
 		}
 		break;
 
@@ -183,6 +186,12 @@ static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event) {
 		psdl_event->user.data2 = 0;
 		break;
 
+	case EVENT_USER:
+		psdl_event->type = SDL_USEREVENT;
+		psdl_event->user.code = EVENT_USER;
+		psdl_event->user.data1 = (void*)system_event->real_event.user_event.type;
+		psdl_event->user.data2 = (void*)system_event->real_event.user_event.param;
+		break;
 	/*
 	case EVENT_BLUR:
 		psdl_event->type = SDL_USEREVENT;
