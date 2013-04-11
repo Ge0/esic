@@ -20,6 +20,7 @@ static DWORD _handle_keyboard_keydown_event(PWidget self, PEvent system_event);
 static DWORD _handle_user_event(PWidget self, PUserEvent user_event);
 static DWORD _handle_widget_event(PWidget self, PEvent system_event);
 static void _update_hot_widget(PWidget self);
+static void _unhot_childs(PWidget self);
 
 PE11UI E11UI_constructor(PE11UI self) {
 	Event widget_event;
@@ -126,7 +127,7 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 		break;
 
 	case EVENT_TIMER:
-		
+		_unhot_childs(self);
 		/*
 		current_child = ((PWidgetPtr)real_self->focused_widget->data)->widget;
 		current_child->vtable->defaultProc(current_child, system_event);
@@ -380,4 +381,24 @@ static DWORD _handle_widget_event(PWidget self, PEvent system_event) {
 	}
 
 	return 0;
+}
+
+static void _unhot_childs(PWidget self) {
+	Event paint_event;
+	PListNode iterator = self->childs.head;
+
+	Event_constructor(&paint_event);
+
+	while(iterator != NULL) {
+		if(WIDGETPTR(iterator->data)->widget->is_hot) {
+			WIDGETPTR(iterator->data)->widget->is_hot = FALSE;
+			paint_event.type = EVENT_PAINT;
+			paint_event.real_event.widget_event.id = WIDGETPTR(iterator->data)->widget->id;
+			EsicPushEvent(&paint_event);
+
+		}
+		iterator = iterator->next;
+	}
+
+	Event_destructor(OBJECT(&paint_event));
 }

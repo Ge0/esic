@@ -8,6 +8,7 @@
 #include <fatfs/ff.h>
 
 /* Available widgets */
+#include <esic/egui/checkbox.h>
 #include <esic/egui/label.h>
 #include <esic/egui/textbox.h>
 
@@ -19,6 +20,7 @@ static void _start_element(void *user_data, const char *name, const char **atts)
 static void _end_element(void *user_data, const char *name);
 
 void _hydrate_widget(PWidget widget, const char** atts);
+void _hydrate_checkbox(PCheckBox checkbox, const char** atts);
 void _hydrate_label(PLabel label, const char** atts);
 void _hydrate_textbox(PTextBox textbox, const char** atts);
 
@@ -135,6 +137,11 @@ static void _start_element(void *user_data, const char *name, const char **atts)
 			NEW(new_textbox, TextBox);
 			_hydrate_textbox(new_textbox, atts);
 			new_widget = (PWidget)new_textbox;
+		} else if(strcmp(name, "checkbox") == 0) {
+			PCheckBox new_checkbox;
+			NEW(new_checkbox, CheckBox);
+			_hydrate_checkbox(new_checkbox, atts);
+			new_widget = WIDGET(new_checkbox);
 		}
 
 
@@ -166,7 +173,7 @@ static void _end_element(void *user_data, const char *name) {
 void _hydrate_widget(PWidget widget, const char** atts) {
 	DWORD i;
 
-	for (i = 0; atts[i]; i += 2) {
+	for (i = 0; atts[i] != NULL; i += 2) {
 		if(strcmp(atts[i], "id") == 0) {
 			widget->id = atoi(atts[i+1]);
 		} else if(strcmp(atts[i], "x") == 0) {
@@ -183,10 +190,18 @@ void _hydrate_widget(PWidget widget, const char** atts) {
 	}
 }
 
+void _hydrate_checkbox(PCheckBox checkbox, const char** atts) {
+	DWORD i;
+
+	for(i = 0; atts[i] != NULL; i += 2) {
+		//if(strcmp(
+	}
+}
+
 void _hydrate_label(PLabel label, const char** atts) {
 	DWORD i;
 
-	for(i = 0; atts[i]; i += 2) {
+	for(i = 0; atts[i] != NULL; i += 2) {
 		if(strcmp(atts[i], "caption") == 0) {
 			Label_setCaption(label, atts[i+1]);
 		}

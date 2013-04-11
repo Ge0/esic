@@ -54,7 +54,7 @@ PTextBox TextBox_constructor(PTextBox self) {
 	ZStringBuffer_constructor(&self->text);
 
 	/* Default properties */
-	self->widget.is_focusable = 1;
+	self->widget.is_focusable = TRUE;
 	self->is_focused          = 0;
 	self->text_offset         = 0;
 	self->draw_carret		  = FALSE;

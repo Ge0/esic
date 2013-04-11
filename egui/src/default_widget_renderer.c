@@ -5,6 +5,7 @@
 #include <esic/elcd/lcd.h>
 #include <esic/egui/label.h>
 #include <esic/egui/picture.h>
+#include <esic/egui/checkbox.h>
 #include <esic/egui/image.h>
 #include <esic/elcd/lcd_painter.h>
 #include <esic/eapi/raster_font_factory.h>
@@ -19,7 +20,8 @@ static const vtable_Object s_object_vtable = {
 static const vtable_AbstractWidgetRenderer s_abstract_widget_renderer_vtable = {
 	DefaultWidgetRenderer_paintLabel,
 	DefaultWidgetRenderer_paintTextBox,
-	DefaultWidgetRenderer_paintPicture
+	DefaultWidgetRenderer_paintPicture,
+	DefaultWidgetRenderer_paintCheckBox
 };
 
 static PAbstractWidgetRenderer s_default_renderer;
@@ -67,6 +69,33 @@ void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer self, PLabel label
 		label->widget.color,
 		label->caption.data
 	);
+
+}
+
+void DefaultWidgetRenderer_paintCheckBox(PAbstractWidgetRenderer self, PCheckBox checkbox, WORD base_x, WORD base_y) {
+	/* Draw the rectangle */
+	ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+		base_x + WIDGET(checkbox)->x,
+		base_y + WIDGET(checkbox)->y,
+		10,
+		10,
+		checkbox->is_focused ? RGB_16B(220,220,220) : RGB_16B(180,180,180),	/* Background color */
+		RGB_16B(0,0,0)			/* Border color */
+	);
+
+	/* Draw another inner rectangle if the checkbox is checked */
+	if(checkbox->is_checked) {
+		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+			base_x + WIDGET(checkbox)->x + 2,
+			base_y + WIDGET(checkbox)->y + 2,
+			6,
+			6,
+			RGB_16B(0,255,0),		/* Background color */
+			RGB_16B(0,255,0)			/* Border color */
+		);
+	}
 
 }
 

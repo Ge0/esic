@@ -102,7 +102,7 @@ void EmulatorSystemPushEvent(PEvent esic_event) {
 	SDL_Event sdl_event;
 	_createEventToSDL(esic_event, &sdl_event);
 #if defined(_DEBUG)
-	SicPrintfDebug("Pushed %s\n", Event_enumToString(esic_event->type));
+//	SicPrintfDebug("Pushed %s\n", Event_enumToString(esic_event->type));
 #endif
 	SDL_PushEvent(&sdl_event);
 }

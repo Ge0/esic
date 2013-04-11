@@ -70,6 +70,7 @@
   <ItemGroup>
     <ClInclude Include="..\includes\esic\egui\abstract_ui_factory.h" />
     <ClInclude Include="..\includes\esic\egui\abstract_widget_renderer.h" />
+    <ClInclude Include="..\includes\esic\egui\checkbox.h" />
     <ClInclude Include="..\includes\esic\egui\default_widget_renderer.h" />
     <ClInclude Include="..\includes\esic\egui\image.h" />
     <ClInclude Include="..\includes\esic\egui\label.h" />
@@ -79,6 +80,7 @@
     <ClInclude Include="..\includes\esic\egui\widget_ptr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\checkbox.c" />
     <ClCompile Include="src\default_widget_renderer.c" />
     <ClCompile Include="src\label.c" />
     <ClCompile Include="src\picture.c" />

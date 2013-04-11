@@ -1,6 +1,7 @@
 /**
  * \file widget.c
  */
+#include <esic/eapi/system.h>
 #include <esic/egui/widget.h>
 #include <esic/egui/widget_ptr.h>
 #include <esic/eapi/event.h>
@@ -222,3 +223,4 @@ PWidget Widget_findChildById(PWidget self, WORD id) {
 		return NULL;
 	}
 }
+
