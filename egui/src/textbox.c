@@ -51,7 +51,8 @@ PTextBox TextBox_constructor(PTextBox self) {
 	self->widget.object.size = sizeof(TextBox);
 
 	/* Constructing members */
-	ZStringBuffer_constructor(&self->text);
+	//ZStringBuffer_constructor(&self->text);
+	ZString_constructor(&self->text, "");
 
 	/* Default properties */
 	self->widget.is_focusable = TRUE;
@@ -69,8 +70,8 @@ void TextBox_destructor(PObject self) {
 	Widget_destructor(self);
 
 	/* Destructing members */
-	//ZString_destructor(&real_self->text.object);
-	ZStringBuffer_destructor(&real_self->text.object);
+	ZString_destructor(&real_self->text.object);
+	//ZStringBuffer_destructor(&real_self->text.object);
 }
 
 PObject TextBox_clone(PObject self, PObject dst) {
@@ -81,8 +82,8 @@ PObject TextBox_clone(PObject self, PObject dst) {
 	Widget_clone(self, dst);
 
 	/* Copying members */
-	//ZString_clone(&real_self->text.object, &real_dst->text.object);
-	ZStringBuffer_clone(&real_self->text.object, &real_dst->text.object);
+	ZString_clone(&real_self->text.object, &real_dst->text.object);
+	//ZStringBuffer_clone(&real_self->text.object, &real_dst->text.object);
 
 	return self;
 }
@@ -105,38 +106,37 @@ void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
 }
 
 void TextBox_appendChar(PTextBox self, char ch) {
-	//ZString_insertCharAt(&self->text, self->carret_position, ch);
-	//ZString_append(&self->text, ch); // Old
-	ZStringBuffer_insertCharAt(&self->text, self->carret_position, ch);
+	ZString_insertCharAt(&self->text, self->carret_position, ch);
+	//ZStringBuffer_insertCharAt(&self->text, self->carret_position, ch);
 	++self->carret_position;
 	_update_offset_text_position(self);
 }
 
 void TextBox_removeLastChar(PTextBox self) {
-	//if(self->text.size > 0) {
-		//ZString_removeLastChar(&self->text);
-	if(self->text.logical_size > 0) {
-		ZStringBuffer_removeLastChar(&self->text);
+	if(self->text.size > 0) {
+		ZString_removeLastChar(&self->text);
+	//if(self->text.logical_size > 0) {
+		//ZStringBuffer_removeLastChar(&self->text);
 		--self->carret_position;
 		_update_offset_text_position(self);
 	}
 }
 
 void TextBox_removeCharAt(PTextBox self, DWORD pos) {
-	//if(pos >= 0 && pos < self->text.size) {
-		//ZString_removeCharAt(&self->text, pos);
-	if(pos >= 0 && pos < self->text.logical_size) {
-		ZStringBuffer_removeCharAt(&self->text, pos);
+	if(pos >= 0 && pos < self->text.size) {
+		ZString_removeCharAt(&self->text, pos);
+	//if(pos >= 0 && pos < self->text.logical_size) {
+		//ZStringBuffer_removeCharAt(&self->text, pos);
 		--self->carret_position;
 		_update_offset_text_position(self);
 	}
 }
 
 void TextBox_setText(PTextBox self, const char* text) {
-	//ZString_setData(&self->text, text);
-	//self->carret_position = self->text.size;
-	ZStringBuffer_setData(&self->text, text);
-	self->carret_position = self->text.logical_size;
+	ZString_setData(&self->text, text);
+	self->carret_position = self->text.size;
+	//ZStringBuffer_setData(&self->text, text);
+	//self->carret_position = self->text.logical_size;
 }
 
 DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
@@ -205,10 +205,10 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 		/* Suppr key (still char removal)) */
 		} else if(system_event->real_event.keyboard_event.code == KEY_DELETE) {
-			//if(real_self->carret_position < real_self->text.size) {
-				//ZString_removeCharAt(&real_self->text, real_self->carret_position);
-			if(real_self->carret_position < real_self->text.logical_size) {
-				ZStringBuffer_removeCharAt(&real_self->text, real_self->carret_position);
+			if(real_self->carret_position < real_self->text.size) {
+				ZString_removeCharAt(&real_self->text, real_self->carret_position);
+			//if(real_self->carret_position < real_self->text.logical_size) {
+				//ZStringBuffer_removeCharAt(&real_self->text, real_self->carret_position);
 				request_paint = 1;
 			}
 
@@ -267,8 +267,8 @@ void _update_carret_position(PTextBox self, Keycode code) {
 		}
 		break;
 	case KEY_RIGHT:
-		//if(self->carret_position < self->text.size) {
-		if(self->carret_position < self->text.logical_size) {
+		if(self->carret_position < self->text.size) {
+		//if(self->carret_position < self->text.logical_size) {
 			++self->carret_position;
 			/* Offset recomputing */
 			_update_offset_text_position(self);
@@ -281,8 +281,8 @@ void _update_offset_text_position(PTextBox self) {
 	WORD size_in_letters = self->widget.width / 6; /* Remove the '6'... */
 
 	if(self->carret_position - self->text_offset > size_in_letters
-		//&& size_in_letters < self->text.size) {
-		&& size_in_letters < self->text.logical_size) {
+		&& size_in_letters < self->text.size) {
+		//&& size_in_letters < self->text.logical_size) {
 		self->text_offset = self->carret_position - size_in_letters;
 		return;
 	}

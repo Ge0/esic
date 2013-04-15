@@ -49,7 +49,12 @@ PVector Vector_constructor(PVector self, size_t unit_size) {
 }
 
 
-
+/**
+  * \fn void Vector_destructor(PObject self);
+  * \brief destructs a Vector instance and free its allocated memory
+  * \param self the self instance casted to PObject
+  * \return void
+  */
 void Vector_destructor(PObject self) {
 	PVector real_self = NULL;
 	DWORD i;
@@ -72,6 +77,7 @@ void Vector_destructor(PObject self) {
 	real_self->allocated_size = 0;
 	real_self->elements       = NULL;
 }
+
 
 PObject Vector_clone(PObject self, PObject dst) {
 	DWORD i;

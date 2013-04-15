@@ -1,5 +1,6 @@
 /**
- * container.h
+ * \file container.h
+ * \brief this file handles an abstraction for substructures in order to create containers (collections).
  */
 #ifndef _CONTAINER_H_
 #define _CONTAINER_H_
@@ -18,7 +19,7 @@ typedef struct _vtable_Container {
 } vtable_Container;
 
 
-typedef struct _Container {
+CLASS(Container) {
 	Object object;						/* Base structure */
 	const vtable_Container* vtable;		/* Container's vtable */
 	size_t count;						/* logical number of elements */

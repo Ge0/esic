@@ -1,3 +1,7 @@
+/**
+  * \file object.h
+  * \brief this file handles Object structure definition & Object vtable.
+  */
 #ifndef _OBJECT_H_
 #define _OBJECT_H_
 
@@ -14,19 +18,18 @@ typedef struct _vtable_Object {
 	DWORD	(*hash)(PObject self);
 } vtable_Object;
 
-/*
-typedef struct _Object {
-	const vtable_Object*	vtable;
-	size_t					size;
-} Object, **PPObject;
-*/
-
+/**
+  * \struct Object
+  * \brief describes the structure which almost every substructures inherit from.
+  *
+  * By inheriting this structure, sub-ones may access to advanced features such as being
+  * stored into collections, being properly freeing (memory consumption), comparison, 
+  * hashing, and so on.
+  */
 CLASS(Object) {
 	VTABLE(Object);
-	size_t size;
+	size_t size; 
 };
-
-//Object Object_clone(PObject self);
 
 #ifdef NEW
 #undef NEW

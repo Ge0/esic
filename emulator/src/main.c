@@ -3,7 +3,7 @@
  */
 #include <esic/eapi/system.h>
 #include <e11.h>
-
+#include <crtdbg.h>
 
 
 
@@ -21,6 +21,8 @@ int main(int argc, char** argv) {
 	e11();
 
 	EsicDestroy();
+
+	_CrtDumpMemoryLeaks();
 
 	return EXIT_SUCCESS;
 }

@@ -354,10 +354,9 @@ static DWORD _handle_widget_event(PWidget self, PEvent system_event) {
 	PListNode it = NULL;
 
 	if(widget_event->type == WE_COMMAND) {
-		void (**onFunction)(PE11UI, void*) = E11UI(self)->onFunction;
 
-		if(onFunction[widget_event->id - E11_BASE_ID_SYSTEM_ICONS - 1] != NULL) {
-			onFunction[widget_event->id - E11_BASE_ID_SYSTEM_ICONS - 1]
+		if(E11UI(self)->onFunction[widget_event->id - E11_BASE_ID_SYSTEM_ICONS - 1] != NULL) {
+			E11UI(self)->onFunction[widget_event->id - E11_BASE_ID_SYSTEM_ICONS - 1]
 				(E11UI(self), (void*)widget_event->param);
 		}
 	} else {

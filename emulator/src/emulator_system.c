@@ -73,7 +73,6 @@ void EmulatorSystemDestroy() {
 	LcdDestroy();
 
 	StopTmrThread();
-	//_CrtDumpMemoryLeaks();
 }
 
 void EmulatorSystemWaitEvent(PEvent esic_event) {
