@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*/
 /* Low level disk control module for Win32              (C)ChaN, 2012    */
 /*-----------------------------------------------------------------------*/
-
+#if defined(FOO)
 #include <windows.h>
 #include <winioctl.h>
 #include <tchar.h>
@@ -370,3 +370,4 @@ DRESULT disk_ioctl (
 
 
 
+#endif /* FOO */

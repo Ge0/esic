@@ -9,13 +9,14 @@
 #include <SDL/SDL.h>
 #include <esic/elcd/lcd.h>
 #include <esic/eapi/emulator_system.h>
+#include <time.h>
 //#include <Winbase.h>
 
 #include <esic/eapi/event.h>
 
 
 #include <fatfs/ff.h>
-#include <fatfs/diskio.h>
+#include <diskio_emulator.h>
 #include <esic/esic.h>
 
 /* Private variables, instances, etc. */
@@ -53,14 +54,15 @@ void EmulatorSystemInit(void) {
 /* the system does not support an RTC.                     */
 /* This function is not required in read-only cfg.         */
 
+/*
 DWORD get_fattime (void)
 {
 	SYSTEMTIME tm;
 
-	/* Get local time */
+	// Get local time
 	GetLocalTime(&tm);
 
-	/* Pack date and time into a DWORD variable */
+	// Pack date and time into a DWORD variable 
 	return 	  ((DWORD)(tm.wYear - 1980) << 25)
 			| ((DWORD)tm.wMonth << 21)
 			| ((DWORD)tm.wDay << 16)
@@ -68,11 +70,31 @@ DWORD get_fattime (void)
 			| (WORD)(tm.wMinute << 5)
 			| (WORD)(tm.wSecond >> 1);
 }
+*/
+
+DWORD get_fattime(void) {
+	struct tm* tm;
+	time_t t;
+
+	t = time(NULL);
+
+	tm = localtime(&t);
+
+	return ((DWORD)(tm->tm_year - 10) << 25)		// -10: since 1980?
+		|  ((DWORD)(tm->tm_mon << 21)
+		|  ((DWORD)(tm->tm_mday) << 16)
+		|  (WORD)(tm->tm_hour) << 11)
+		|  (WORD)(tm->tm_min << 5)
+		|  (WORD)(tm->tm_sec >> 1);
+
+}
 
 void EmulatorSystemDestroy() {
 	LcdDestroy();
 
-	StopTmrThread();
+	diskio_destroy_drive();
+
+	//StopTmrThread();
 }
 
 void EmulatorSystemWaitEvent(PEvent esic_event) {
@@ -211,8 +233,13 @@ static void _createEventToSDL(PEvent system_event, SDL_Event* psdl_event) {
 }
 
 static void _initFileSystem(void) {
+
+	
+
 	FRESULT ret = FR_OK;
 	DSTATUS status;
+
+	diskio_assign_drive("fat.bin", SIZE_SECTOR, TOTAL_SIZE/SIZE_SECTOR);
 
 	/* Enforce initialization */
 	status = disk_initialize(VOLUME_NUMBER);

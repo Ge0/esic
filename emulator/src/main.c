@@ -12,10 +12,6 @@ extern VOID StopTmrThread();
 
 int main(int argc, char** argv) {
 
-#if defined (WIN32)
-	assign_drives();
-#endif
-
 	EsicInit();
 
 	e11();

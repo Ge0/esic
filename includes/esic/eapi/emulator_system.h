@@ -13,8 +13,11 @@
 #include <SDL/SDL.h>
 
 
-#define VOLUME_NUMBER	1
+#define VOLUME_NUMBER	0
 #define DEFAULT_BACKGROUND_COLOR RGB_16B(240,240,240)
+
+#define TOTAL_SIZE 128 * (1024*1024) // 128Mo
+#define SIZE_SECTOR	512
 
 void EmulatorSystemInit(void);
 void EmulatorSystemDestroy(void);

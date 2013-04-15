@@ -27,9 +27,15 @@
     <ClCompile Include="src\fatfs\diskio.c">
       <Filter>src\fatfs</Filter>
     </ClCompile>
+    <ClCompile Include="src\fatfs\diskio_emulator.c">
+      <Filter>src\fatfs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\emulator_system.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\diskio_emulator.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

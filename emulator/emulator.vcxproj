@@ -79,9 +79,11 @@
   <ItemGroup>
     <ClCompile Include="src\emulator_system.c" />
     <ClCompile Include="src\fatfs\diskio.c" />
+    <ClCompile Include="src\fatfs\diskio_emulator.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\diskio_emulator.h" />
     <ClInclude Include="includes\emulator_system.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

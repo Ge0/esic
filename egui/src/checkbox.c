@@ -30,6 +30,8 @@ PCheckBox CheckBox_constructor(PCheckBox self) {
 
 	// CheckBox properties
 	self->is_checked = self->is_focused = FALSE;
+
+	return self;
 }
 
 void CheckBox_destructor(PObject self) {
