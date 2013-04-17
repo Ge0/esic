@@ -17,9 +17,6 @@
     <ClCompile Include="src\lcd.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\lcd_emulator.c">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\lcd_painter.c">
       <Filter>src</Filter>
     </ClCompile>

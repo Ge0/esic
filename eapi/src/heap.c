@@ -72,7 +72,7 @@ void Debug_SicFree(void* ptr) {
 
 
 void SicHeapDump() {
-#ifdef _WIN32
+#ifdef FOO
 	DWORD total = 0;
 	DWORD ko;
 

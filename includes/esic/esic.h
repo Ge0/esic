@@ -1,7 +1,7 @@
 #ifndef _ESIC_H_
 #define _ESIC_H_
 
-#ifndef _WIN32
+#ifdef _WIN32
 
 	#define ESIC_TYPES
 	#include <stdint.h>
@@ -80,12 +80,14 @@ typedef enum _BOOL {
 #endif
 */
 
-
+/*
 #include <Windows.h>
 #include <stdint.h>
 	
 typedef int16_t SWORD;
 typedef int32_t SDWORD;
+*/
+
 #endif
 	
 
@@ -111,7 +113,7 @@ typedef int32_t SDWORD;
 	const vtable_##x *vtable
 
 #if defined EMULATOR
-#if defined (WIN32)
+#if defined (FOO)
 ULONG
 _cdecl
 DbgPrint(

@@ -83,7 +83,7 @@ DWORD DotpenUI_hash(PObject self) {
 	return 0;
 }
 
-DWORD DotpenUI_defaultProc(PWidget self, PEvent system_event) {
+DWORD DotpenUI_defaultProc(PWidget self, const PEvent system_event) {
 	switch(system_event->type) {
 	
 	default:

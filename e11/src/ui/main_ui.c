@@ -99,7 +99,7 @@ void MainUI_onF1(PE11UI self, void* param) {
 	Event user_event;
 	PDotpenUI dotpen_ui = NULL;
 
-#ifdef _WIN32
+#ifdef FOO
 	SicPrintfDebug("F1 STROKE!\n");
 #endif
 

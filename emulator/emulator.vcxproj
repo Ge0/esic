@@ -38,11 +38,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)/includes;./includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/includes;./includes;$(SolutionDir)/includes/win32;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/Debug;./lib/x86;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)/includes;./includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/includes;$(SolutionDir)/includes/win32;./includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/Release;./lib/x86;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -54,9 +54,10 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EntryPointSymbol>SDL_main</EntryPointSymbol>
+      <EntryPointSymbol>main</EntryPointSymbol>
       <AdditionalDependencies>egraphics.lib;expat.lib;e11.lib;eapi.lib;egui.lib;etools.lib;elcd.lib;fatfs.lib;SDL.lib;SDLmain.lib;msvcrt.lib;ntdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,12 +72,13 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <EntryPointSymbol>SDL_main</EntryPointSymbol>
+      <EntryPointSymbol>main</EntryPointSymbol>
       <AdditionalDependencies>e11.lib;eapi.lib;egui.lib;etools.lib;elcd.lib;expat.lib;fatfs.lib;SDL.lib;SDLmain.lib;ntdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\elcd\src\lcd_emulator.c" />
     <ClCompile Include="src\emulator_system.c" />
     <ClCompile Include="src\fatfs\diskio.c" />
     <ClCompile Include="src\fatfs\diskio_emulator.c" />

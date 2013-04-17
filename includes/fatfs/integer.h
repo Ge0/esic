@@ -7,7 +7,7 @@
 
 #ifdef _WIN32	// FatFs development platform
 
-#include <windows.h>
+
 #include <esic/esic.h>
 #include <tchar.h>
 

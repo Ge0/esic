@@ -30,6 +30,9 @@
     <ClCompile Include="src\fatfs\diskio_emulator.c">
       <Filter>src\fatfs</Filter>
     </ClCompile>
+    <ClCompile Include="..\elcd\src\lcd_emulator.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\emulator_system.h">
