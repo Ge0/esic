@@ -12,6 +12,8 @@
 #include <esic/egui/label.h>
 #include <esic/egui/textbox.h>
 
+#include <string.h>
+
 static const vtable_AbstractUIFactory s_vtable_abstract_ui_factory = {
 	XmlUiFactory_getUI
 };
@@ -24,7 +26,7 @@ void _hydrate_checkbox(PCheckBox checkbox, const char** atts);
 void _hydrate_label(PLabel label, const char** atts);
 void _hydrate_textbox(PTextBox textbox, const char** atts);
 
-VOID XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget) {
+void XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget) {
 	char* path = NULL;
 	FIL ui_file;
 	XML_Parser parser = NULL;

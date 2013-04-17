@@ -8,12 +8,11 @@
 #include <esic/eapi/heap.h>
 
 /* TEST START */
-#include <esic/etools/ZString.h>
 #include <esic/eapi/raster_font_factory.h>
 #include <esic/eapi/raster_icon_factory.h>
 #include <esic/eapi/raster_icon_header.h>
 #include <esic/egui/default_widget_renderer.h>
-#include <esic/etools/ZString.h>
+#include <esic/etools/zstring.h>
 #include <fatfs/ff.h>
 /* TEST END */
 

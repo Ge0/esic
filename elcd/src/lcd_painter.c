@@ -1,6 +1,7 @@
 /**
  * \file lcd_painter.c
  */
+#include <string.h>
 #include <esic/elcd/lcd_painter.h>
 #include <esic/elcd/lcd.h>
 

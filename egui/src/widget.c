@@ -57,7 +57,8 @@ void Widget_destructor(PObject self) {
 	while(iterator != NULL) {
 		//PWidget current_child_widget = (PWidget)((PWidgetPtr)iterator->data)->widget;
 		//DELETE(current_child_widget);
-		DELETE(WIDGET(WIDGETPTR(iterator->data)->widget));
+		DELETE(WIDGETPTR(iterator->data)->widget);
+		//WIDGETPTR(iterator->data)->widget = NULL;
 		iterator = iterator->next;
 	}
 

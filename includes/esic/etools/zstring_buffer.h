@@ -22,12 +22,20 @@ void ZStringBuffer_removeLastChar(PZStringBuffer self);
 void ZStringBuffer_insertCharAt(PZStringBuffer self, DWORD pos, char ch);
 void ZStringBuffer_removeCharAt(PZStringBuffer self, DWORD pos);
 
+void ZStringBuffer_destructor(PObject self);
+PObject ZStringBuffer_clone(PObject self, PObject dst);
+BOOL ZStringBuffer_equalsTo(PObject self, PObject dst);
+DWORD ZStringBuffer_hash(PObject self);
 
+
+
+/*
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) \
 	return_type ZStringBuffer_##function_name##arguments;
 
 	OBJECT_VIRTUAL_FUNCTIONS
 #undef OBJECT_VFUNCTION
+*/
 
 #define ZSTRINGBUFFER(x) ((PZStringBuffer)x)
 

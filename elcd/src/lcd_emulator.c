@@ -1,4 +1,6 @@
+#include <stdio.h>
 #include <esic/elcd/lcd.h>
+#include <SDL/SDL.h>
 
 static SDL_Surface* s_screen = NULL;
 static void* s_framebuffer   = NULL;

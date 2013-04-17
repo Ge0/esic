@@ -21,12 +21,15 @@ typedef struct _Shape {
 } Shape;
 
 
+
 /* vtable declaration */
+/*
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) \
 	return_type Shape_##function_name##arguments;
 
 	OBJECT_VIRTUAL_FUNCTIONS
 #undef OBJECT_VFUNCTION
+*/
 
 /* X-Macro */
 #define SHAPE_VIRTUAL_FUNCTIONS \

@@ -26,10 +26,10 @@ typedef struct _vtable_Object {
   * stored into collections, being properly freeing (memory consumption), comparison, 
   * hashing, and so on.
   */
-CLASS(Object) {
+typedef struct _Object {
 	VTABLE(Object);
 	size_t size; 
-};
+} Object;
 
 #ifdef NEW
 #undef NEW
@@ -54,10 +54,10 @@ CLASS(Object) {
 
 /* X-Macro */
 #define OBJECT_VIRTUAL_FUNCTIONS \
-	OBJECT_VFUNCTION(void,		destructor, (PObject self)) \
-	OBJECT_VFUNCTION(PObject,	clone,		(PObject self, PObject dst)) \
-	OBJECT_VFUNCTION(BOOL,		equalsTo,	(PObject self, PObject dst)) \
-	OBJECT_VFUNCTION(DWORD,		hash,		(PObject self))
+	OBJECT_VFUNCTION(void,		destructor,	"(PObject self)") \
+	OBJECT_VFUNCTION(PObject,	clone,		"(PObject self, PObject dst)") \
+	OBJECT_VFUNCTION(BOOL,		equalsTo,	"(PObject self, PObject dst)") \
+	OBJECT_VFUNCTION(DWORD,		hash,		"(PObject self)")
 
 
 #define OBJECT(x)			((PObject)x)

@@ -72,6 +72,7 @@ void Debug_SicFree(void* ptr) {
 
 
 void SicHeapDump() {
+#ifdef _WIN32
 	DWORD total = 0;
 	DWORD ko;
 
@@ -88,7 +89,7 @@ void SicHeapDump() {
 	ko = total/1024;
 
 	SicPrintfDebug("TOTAL: %d bytes (%d Ko.)\n-----------\n", total, ko);
-
+#endif /* _WIN32 */
 }
 
 

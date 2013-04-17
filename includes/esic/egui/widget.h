@@ -10,7 +10,7 @@
 #include <esic/etools/list.h>
 #include <esic/eapi/abstract_painter.h>
 
-typedef struct _Widget *PWidget;
+typedef struct _Widget *PWidget, **PPWidget;
 
 typedef struct _vtable_Widget {
 	DWORD (*defaultProc)(PWidget, const PEvent);
@@ -37,7 +37,7 @@ typedef struct _Widget {
 
 
 
-CLASS(Widget) {
+typedef struct _Widget {
 	Object object;
 	VTABLE(Widget);
 	WORD id;
@@ -50,7 +50,7 @@ CLASS(Widget) {
 	List childs;
 	BOOL is_focusable;
 	BOOL is_hot;
-};
+} Widget;
 
 
 PWidget Widget_constructor(PWidget self);
@@ -58,17 +58,19 @@ PWidget Widget_constructor(PWidget self);
 
 /* Virtual functions */
 /* Object */
-/*
+
 void Widget_destructor(PObject self);
 PObject Widget_clone(PObject self, PObject dst);
 BOOL Widget_equalsTo(PObject self, PObject dst);
 DWORD Widget_hash(PObject self);
-*/
+
+/*
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) \
 	return_type Widget_##function_name##arguments;
 
 	OBJECT_VIRTUAL_FUNCTIONS
 #undef OBJECT_VFUNCTION
+*/
 
 /* Widget */
 void Widget_paint(PWidget self, WORD base_x, WORD base_y);

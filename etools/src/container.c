@@ -3,7 +3,6 @@
  */
 #include <esic/etools/container.h>
 
-//static const vtable_Object s_object_vtable = {
 VTABLE_START(Object) {
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) Container_##function_name,
 	OBJECT_VIRTUAL_FUNCTIONS

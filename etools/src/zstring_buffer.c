@@ -1,6 +1,7 @@
 #include <esic/eapi/heap.h>
 #include <esic/etools/zstring_buffer.h>
 #include <math.h>
+#include <string.h>
 
 VTABLE_START(Object) {
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) \

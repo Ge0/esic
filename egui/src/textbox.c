@@ -180,9 +180,10 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 		/* From A to Z */
 		if(system_event->real_event.keyboard_event.code >= KEY_a && 
 			system_event->real_event.keyboard_event.code <= KEY_z) {
+			const BYTE* keyboard = NULL;
 			BYTE key = system_event->real_event.keyboard_event.code;
 			//const BYTE* keyboard = singleton_system()->vtable->getKeyState(singleton_system());
-			const BYTE* keyboard = EsicGetKeyboardState();
+			keyboard = (const BYTE*)EsicGetKeyboardState();
 			if(keyboard[KEY_RSHIFT] || keyboard[KEY_LSHIFT]) {
 				key &= 0xDF; /* Switch to uppercase if shift is pressed */
 			}

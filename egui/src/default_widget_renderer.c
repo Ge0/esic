@@ -6,7 +6,7 @@
 #include <esic/egui/label.h>
 #include <esic/egui/picture.h>
 #include <esic/egui/checkbox.h>
-#include <esic/egui/image.h>
+/*#include <esic/egui/image.h>*/
 #include <esic/elcd/lcd_painter.h>
 #include <esic/eapi/raster_font_factory.h>
 

@@ -7,7 +7,7 @@
 
 #ifdef _WIN32	// FatFs development platform
 
-//#include <windows.h>
+#include <windows.h>
 #include <esic/esic.h>
 #include <tchar.h>
 
@@ -15,6 +15,9 @@
 
 #else			// embedded platform
 
+#include <esic/esic.h>
+
+#ifndef ESIC_TYPES
 // These types must be 16-bit, 32-bit or larger integer
 typedef int				INT;
 typedef unsigned int	UINT;
@@ -35,6 +38,7 @@ typedef long			LONG;
 typedef unsigned long	ULONG;
 typedef unsigned long	DWORD;
 
+#endif /* ESIC_TYPES */
 
 #endif
 

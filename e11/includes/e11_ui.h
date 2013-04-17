@@ -39,7 +39,7 @@ typedef struct _E11UI *PE11UI;
 
 
 typedef struct _vtable_E11UI {
-#define E11_UI_FUNCTION(keycode) void (*on##keycode##)(PE11UI, void*);
+#define E11_UI_FUNCTION(keycode) void (*on##keycode)(PE11UI, void*);
 	E11_UI_FUNCTION_LIST
 #undef E11_UI_FUNCTION
 } vtable_E11UI;

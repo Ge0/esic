@@ -1,7 +1,7 @@
 #ifndef _LCD_EMULATOR_H_
 #define _LCD_EMULATOR_H_
 
-#include <SDL/SDL.h>
+//#include <SDL/SDL.h>
 
 void LcdEmulatorInit(DWORD width, DWORD height, BYTE bpp, DWORD flags);
 void LcdEmulatorDestroy();

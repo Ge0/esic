@@ -1,7 +1,7 @@
 /**
  * ZString.c
  */
-#include <esic/etools/ZString.h>
+#include <esic/etools/zstring.h>
 
 //#include <assert.h>
 #include <stdlib.h>

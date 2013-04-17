@@ -30,7 +30,7 @@ typedef struct {
 	FILE* fp;
 } STAT;
 
-static HANDLE hMutex, hTmrThread;
+//static HANDLE hMutex, hTmrThread;
 static int Drives;
 
 static volatile STAT Stat[MAX_DRIVES];
@@ -121,11 +121,11 @@ DRESULT disk_read (
 )
 {
 	DWORD nc, rnc;
-	LARGE_INTEGER ofs;
+	QWORD ofs;
 	DSTATUS res;
 
 	nc = (DWORD)count * Stat[drv].sz_sector;
-	ofs.QuadPart = (LONGLONG)sector * Stat[drv].sz_sector;
+	ofs = (QWORD)sector * Stat[drv].sz_sector;
 
 	fseek(Stat[0].fp, (DWORD)sector * Stat[0].sz_sector, SEEK_SET);
 	fread(buff, sizeof(BYTE), nc, Stat[0].fp);
@@ -148,11 +148,11 @@ DRESULT disk_write (
 )
 {
 	DWORD nc, rnc;
-	LARGE_INTEGER ofs;
+	QWORD ofs;
 	DSTATUS res;
 
 	nc = (DWORD)count * Stat[drv].sz_sector;
-	ofs.QuadPart = (LONGLONG)sector * Stat[drv].sz_sector;
+	ofs = (QWORD)sector * Stat[drv].sz_sector;
 
 	fseek(Stat[0].fp, (DWORD)sector * Stat[0].sz_sector, SEEK_SET);
 	fwrite(buff, sizeof(BYTE), nc, Stat[0].fp);

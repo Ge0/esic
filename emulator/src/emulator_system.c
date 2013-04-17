@@ -3,7 +3,7 @@
  */
 #if defined(EMULATOR)
 
-#include <windows.h>
+//#include <windows.h>
 //#include <assert.h>
 //#include <crtdbg.h>
 #include <SDL/SDL.h>

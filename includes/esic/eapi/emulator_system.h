@@ -10,7 +10,7 @@
 #include <fatfs/ff.h>
 */
 
-#include <SDL/SDL.h>
+//#include <SDL/SDL.h>
 
 
 #define VOLUME_NUMBER	0

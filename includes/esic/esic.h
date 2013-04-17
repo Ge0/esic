@@ -1,9 +1,6 @@
 #ifndef _ESIC_H_
 #define _ESIC_H_
 
-
-// GR
-//#define _DEBUG 1
 #ifndef _WIN32
 
 	#define ESIC_TYPES
@@ -28,12 +25,12 @@
 	#define ESIC_MACROS
 	#define HIWORD(value) ((value >> 16) & 0xFFFF)
 	#define LOWORD(value) (value & 0xFFFF)
-	/*
+	
 	typedef enum _BOOL {
 	  FALSE = 0,
 	  TRUE
 	} BOOL;
-	*/
+	
 
 #else
 /*
