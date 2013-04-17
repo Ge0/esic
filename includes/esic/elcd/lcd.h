@@ -36,10 +36,10 @@ typedef struct _Lcd {
 
 
 #if defined(EMULATOR)
-#include <esic/elcd/lcd_emulator.h>
-#define LcdInit				LcdEmulatorInit
-#define	LcdDestroy			LcdEmulatorDestroy
-#define LcdUpdate			LcdEmulatorUpdate
+#include <esic/elcd/emulator_lcd.h>
+#define LcdInit				EmulatorLcdInit
+#define	LcdDestroy			EmulatorLcdDestroy
+#define LcdUpdate			EmulatorLcdUpdate
 #endif
 
 

@@ -25,9 +25,6 @@
     <ClInclude Include="..\includes\esic\elcd\lcd.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\esic\elcd\lcd_emulator.h">
-      <Filter>includes</Filter>
-    </ClInclude>
     <ClInclude Include="..\includes\esic\elcd\lcd_painter.h">
       <Filter>includes</Filter>
     </ClInclude>
