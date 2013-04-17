@@ -11,9 +11,10 @@
 typedef struct _WidgetPtr {
 	Object object;
 	PWidget widget;
+	BOOL dynamic; /* malloc or not? */
 } WidgetPtr, *PWidgetPtr;
 
-PWidgetPtr WidgetPtr_constructor(PWidgetPtr self, PWidget widget);
+PWidgetPtr WidgetPtr_constructor(PWidgetPtr self, PWidget widget, BOOL dynamic);
 
 /* Virtual functions */
 /* Object */

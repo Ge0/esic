@@ -66,7 +66,7 @@ PMainUI MainUI_constructor(PMainUI self) {
 		//assert(self->e11ui.icons[i].icon);
 
 		/* Add icons to the list of childs widgets so they can be browsed with the TAB */
-		Widget_addChild(&self->e11ui.widget, &self->e11ui.icons[i].widget);
+		Widget_addChild(&self->e11ui.widget, &self->e11ui.icons[i].widget, FALSE);
 	}
 
 	

@@ -55,9 +55,11 @@ void Widget_destructor(PObject self) {
 	PListNode iterator = WIDGET(self)->childs.head;
 	
 	while(iterator != NULL) {
-		//PWidget current_child_widget = (PWidget)((PWidgetPtr)iterator->data)->widget;
-		//DELETE(current_child_widget);
-		DELETE(WIDGETPTR(iterator->data)->widget);
+		PWidget current_child_widget = (PWidget)((PWidgetPtr)iterator->data)->widget;
+		if(((PWidgetPtr)iterator->data)->dynamic) {
+			DELETE(current_child_widget);
+		}
+		//DELETE(WIDGETPTR(iterator->data)->widget);
 		//WIDGETPTR(iterator->data)->widget = NULL;
 		iterator = iterator->next;
 	}
@@ -98,12 +100,13 @@ PObject Widget_clone(PObject self, PObject dst) {
 	return dst;
 }
 
-void Widget_addChild(PWidget self, PWidget child) {
+void Widget_addChild(PWidget self, PWidget child, BOOL dynamic) {
 
 	/* Instantiate a temp WidgetPtr instance...
 	Since we store pointers, we still need to handle Object sub-classes! */
 	WidgetPtr widgetptr;
-	WidgetPtr_constructor(&widgetptr, child);
+
+	WidgetPtr_constructor(&widgetptr, child, dynamic);
 	/* Set the parent, then add to the list */
 	child->parent = self;
 	//List_pushBack(&self->childs.container, (PObject)&widgetptr);

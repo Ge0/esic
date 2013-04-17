@@ -10,11 +10,12 @@ static const vtable_Object s_vtable_object = {
 	NULL
 };
 
-PWidgetPtr WidgetPtr_constructor(PWidgetPtr self, PWidget widget) {
+PWidgetPtr WidgetPtr_constructor(PWidgetPtr self, PWidget widget, BOOL dynamic) {
 
 	/* Filling members */
 	self->object.size = sizeof(WidgetPtr);
 	self->widget = widget;
+	self->dynamic = dynamic;
 
 	/* Filling vtable */
 	self->object.vtable = &s_vtable_object;
@@ -34,6 +35,8 @@ PObject WidgetPtr_clone(PObject self, PObject dst) {
 	/* Copying members */
 	dst->size        = self->size;
 	dst->vtable      = self->vtable;
+	
+	real_dst->dynamic = real_self->dynamic;
 	real_dst->widget = real_self->widget;
 
 	return dst;

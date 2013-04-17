@@ -156,7 +156,7 @@ static void _start_element(void *user_data, const char *name, const char **atts)
 			new_widget->parent = *p_widget;
 
 			/* Append to the list of childs of the current widget */
-			Widget_addChild(*p_widget, new_widget);
+			Widget_addChild(*p_widget, new_widget, TRUE);
 
 			/* Updates the current parent widget as the one that has just been pushed back */
 			*p_widget = ((PWidgetPtr)List_tail(&(*p_widget)->childs))->widget;

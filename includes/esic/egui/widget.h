@@ -79,7 +79,7 @@ PWidget Widget_findChildById(PWidget self, WORD id);
 
 /* End of virtual functions */
 
-void Widget_addChild(PWidget self, PWidget child);
+void Widget_addChild(PWidget self, PWidget child, BOOL dynamic);
 
 /* Useful Macro */
 #define WIDGET(x)			((PWidget)x)

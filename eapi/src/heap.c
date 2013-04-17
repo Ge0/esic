@@ -10,6 +10,7 @@
 
 static plink s_pointers_list = NULL;
 
+#if defined(_DEBUG)
 void* Debug_SicAlloc(size_t size) {
 
 	/* This pointer will point to the new allocated space */
@@ -67,8 +68,11 @@ void Debug_SicFree(void* ptr) {
 		free(iterator);
 		iterator = NULL;
 
+	} else {
+		free(ptr);
 	}
 }
+#endif /* _DEBUG */
 
 
 void SicHeapDump() {

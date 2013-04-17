@@ -120,9 +120,8 @@ DRESULT disk_read (
 	BYTE count			/* Sector count (1..255) */
 )
 {
-	DWORD nc, rnc;
+	DWORD nc;
 	QWORD ofs;
-	DSTATUS res;
 
 	nc = (DWORD)count * Stat[drv].sz_sector;
 	ofs = (QWORD)sector * Stat[drv].sz_sector;
@@ -147,9 +146,8 @@ DRESULT disk_write (
 	BYTE count			/* Sector count (1..255) */
 )
 {
-	DWORD nc, rnc;
+	DWORD nc;
 	QWORD ofs;
-	DSTATUS res;
 
 	nc = (DWORD)count * Stat[drv].sz_sector;
 	ofs = (QWORD)sector * Stat[drv].sz_sector;
