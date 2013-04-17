@@ -54,41 +54,49 @@ E11_O =		e11/src/e11.o \
 		e11/src/ui/main_ui.o \
 		e11/src/ui/dotpen_ui.o
 
-all: e11 eapi egraphics elcd egui etools expat fatfs
-	$(CC) -o e11emu $(E11_O) $(EAPI_O) $(EGRAPHICS_O) $(ELCD_O) \
-	 $(EGUI_O) $(ETOOLS_O) $(EXPAT_O) $(FATFS_O) $(EMULATOR_O) -lSDL
+all: e11emu
 
-e11:
-	make -C ./e11
 
 egraphics:
-	make -C ./egraphics
+	make -C egraphics
 
 egui:
-	make -C ./egui
+	make -C egui
 
 etools:
-	make -C ./etools
+	make -C etools
 
 elcd:
-	make -C ./elcd
+	make -C elcd
 
 eapi:
-	make -C ./eapi
+	make -C eapi
 
 expat:
-	make -C ./expat
+	make -C expat
 
 fatfs:
-	make -C ./fatfs
+	make -C fatfs
+
+emulator:
+	make -C emulator
+
+e11:
+	make -C e11
+
+e11emu: e11 emulator fatfs expat eapi etools elcd egraphics egui
+	$(CC) -o e11emu $(E11_O) $(EAPI_O) $(EGRAPHICS_O) $(ELCD_O) $(EGUI_O) $(ETOOLS_O) $(EXPAT_O) $(FATFS_O) $(EMULATOR_O) -lSDL
 
 clean:
-	make -C ./eapi clean
-	make -C ./e11 clean
-	make -C ./egraphics clean
-	make -C ./elcd clean
-	make -C ./expat clean
-	make -C ./fatfs clean
-	make -C ./egui clean
-	make -C ./etools clean
-	make -C ./emulator clean
+	make -C eapi clean
+	make -C e11 clean
+	make -C egraphics clean
+	make -C elcd clean
+	make -C expat clean
+	make -C fatfs clean
+	make -C egui clean
+	make -C etools clean
+	make -C emulator clean
+
+.PHONY: all egraphics egui etools elcd eapi expat fatfs emulator e11 e11emu clean
+
