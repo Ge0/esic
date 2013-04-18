@@ -1,5 +1,5 @@
 # test
-CC       = gcc
+CC       = gcc -m32
 
 EAPI_O   =	eapi/src/event.o \
         	eapi/src/raster_font.o \

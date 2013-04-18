@@ -5,6 +5,7 @@
 #define _HEAP_H_
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <esic/esic.h>
 
 void* Debug_SicAlloc(size_t size);
@@ -13,7 +14,9 @@ char* SicStrdup(const char* str);
 void SicHeapDump();
 void SicHeapClean();
 
-#include <stdlib.h>
+#if defined (linux)
+ULONG LinuxSicPrintfDebug(const char* format, ...);
+#endif
 
 
 #ifndef _DEBUG 

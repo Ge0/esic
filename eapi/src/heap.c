@@ -2,11 +2,11 @@
  * \file heap.c
  */
 #include <esic/eapi/heap.h>
-//#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <stdarg.h>
 
 static plink s_pointers_list = NULL;
 
