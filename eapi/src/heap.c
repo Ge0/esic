@@ -76,7 +76,6 @@ void Debug_SicFree(void* ptr) {
 
 
 void SicHeapDump() {
-#ifdef FOO
 	DWORD total = 0;
 	DWORD ko;
 
@@ -93,7 +92,6 @@ void SicHeapDump() {
 	ko = total/1024;
 
 	SicPrintfDebug("TOTAL: %d bytes (%d Ko.)\n-----------\n", total, ko);
-#endif /* _WIN32 */
 }
 
 
@@ -120,3 +118,15 @@ char* SicStrdup(const char* str) {
 
 	return ptr;
 }
+
+#if defined(linux)
+
+ULONG LinuxSicPrintfDebug(const char* format, ...) {
+	va_list args;
+	va_start(args, format);
+	fprintf(stderr, format, args);
+	fflush(stdin);
+	va_end(args);
+}
+
+#endif

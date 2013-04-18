@@ -38,3 +38,4 @@ PObject Event_clone(PObject self, PObject dst) {
 const char* Event_enumToString(EventType event_type) {
 	return event_strings[(DWORD)event_type];
 }
+
