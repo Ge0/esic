@@ -15,7 +15,6 @@ EGRAPHICS_O =	egraphics/src/ellipse.o \
 		egraphics/src/vertice.o
 
 ELCD_O =	elcd/src/lcd.o \
-		elcd/src/lcd_emulator.o \
 		elcd/src/lcd_painter.o
 
 EGUI_O =	egui/src/checkbox.o \
@@ -46,6 +45,7 @@ FATFS_O =	fatfs/src/ff.o \
 
 EMULATOR_O =	emulator/src/main.o \
 		emulator/src/emulator_system.o \
+		emulator/src/emulator_lcd.o \
 		emulator/src/fatfs/diskio_emulator.o
 
 E11_O =		e11/src/e11.o \

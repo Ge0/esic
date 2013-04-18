@@ -7,7 +7,6 @@ CC = gcc -m32 -I$(PATH_INCLUDES) -DEMULATOR
 
 # lcd.c  lcd_emulator.c  lcd_painter.c
 OBJ =	$(PATH_SRC)/lcd.o \
-	$(PATH_SRC)/lcd_emulator.o \
 	$(PATH_SRC)/lcd_painter.o \
 
 all: $(OBJ)
