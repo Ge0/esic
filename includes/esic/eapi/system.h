@@ -15,17 +15,17 @@
 #define EsicGetTicks			EmulatorSystemGetTicks
 #define EsicGetKeyboardState	EmulatorSystemGetKeyboardState
 #define EsicUpdate				EmulatorSystemUpdate
-#elif defined(__LPC177X_8X__)
-#include <esic/eapi/lpc1788_system.h>
-#define EsicInit				Lpc1788SystemInit
-#define EsicDestroy				Lpc1788SystemDestroy
-#define EsicWaitEvent			Lpc1788WaitEvent
-#define EsicPollEvent			Lpc1788PollEvent
-#define EsicDelay				Lpc1788Delay
-#define EsicPushEvent			Lpc1788PushEvent
-#define EsicGetTicks			Lpc1788GetTicks
-#define EsicGetKeyboardState	Lpc1788GetKeyboardState
-#define EsicUpdate				Lpc1788Update
+#elif defined(OPEN1788)
+#include <esic/eapi/open1788_system.h>
+#define EsicInit				Open1788SystemInit
+#define EsicDestroy				Open1788SystemDestroy
+#define EsicWaitEvent			Open1788WaitEvent
+#define EsicPollEvent			Open1788PollEvent
+#define EsicDelay				Open1788Delay
+#define EsicPushEvent			Open1788PushEvent
+#define EsicGetTicks			Open1788GetTicks
+#define EsicGetKeyboardState	Open1788GetKeyboardState
+#define EsicUpdate				Open1788Update
 #endif
 
 
