@@ -1,8 +1,8 @@
 /**
- * \file emulator_system.h
+ * \file open1788_system.h
  */
-#ifndef _LPC1788_SYSTEM_H_
-#define _LPC1788_SYSTEM_H_
+#ifndef _OPEN1788_SYSTEM_H_
+#define _OPEN1788_SYSTEM_H_
 
 #include <esic/eapi/event.h>
 
@@ -23,10 +23,4 @@ void Open1788ystemPushEvent(PEvent esic_event);
 DWORD Open1788SystemGetTicks(void);
 const BYTE* Open1788SystemGetKeyboardState();
 
-
-
-/* Vtables definition */
-
-
-
-#endif /* _EMULATOR_SYSTEM_ */
+#endif /* _OPEN1788_SYSTEM_ */
