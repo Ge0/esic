@@ -13,13 +13,13 @@
 #define TOTAL_SIZE 128 * (1024*1024) // 128Mo
 #define SIZE_SECTOR	512
 
-void Open1788SystemInit(void);
-void Open1788SystemDestroy(void);
-void Open1788SystemUpdate(void);
-void Open1788SystemWaitEvent(PEvent esic_event);
-BOOL Open1788SystemPollEvent(PEvent esic_event);
-void Open1788SystemDelay(DWORD milliseconds);
-void Open1788ystemPushEvent(PEvent esic_event);
+void  Open1788SystemInit(void);
+void  Open1788SystemDestroy(void);
+void  Open1788SystemUpdate(void);
+void  Open1788SystemWaitEvent(PEvent esic_event);
+BOOL  Open1788SystemPollEvent(PEvent esic_event);
+void  Open1788SystemDelay(DWORD milliseconds);
+void  Open1788SystemPushEvent(PEvent esic_event);
 DWORD Open1788SystemGetTicks(void);
 const BYTE* Open1788SystemGetKeyboardState();
 
