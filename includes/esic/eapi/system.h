@@ -16,6 +16,7 @@
 #define EsicGetKeyboardState	EmulatorSystemGetKeyboardState
 #define EsicUpdate				EmulatorSystemUpdate
 #elif defined(__LPC177X_8X__)
+#include <esic/eapi/lpc1788_system.h>
 #define EsicInit				Lpc1788SystemInit
 #define EsicDestroy				Lpc1788SystemDestroy
 #define EsicWaitEvent			Lpc1788WaitEvent
