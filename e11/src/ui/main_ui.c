@@ -49,18 +49,18 @@ PMainUI MainUI_constructor(PMainUI self) {
 	XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget);
 
 	/* Set the 12 icons */
-	self->e11ui.icons[0].icon = RasterIconFactory_getRasterIcon("dotpen.ilcd");
-	self->e11ui.icons[1].icon = RasterIconFactory_getRasterIcon("edition.ilcd");
-	self->e11ui.icons[2].icon = RasterIconFactory_getRasterIcon("preview.ilcd");
-	self->e11ui.icons[3].icon = RasterIconFactory_getRasterIcon("list.ilcd");
-	self->e11ui.icons[4].icon = RasterIconFactory_getRasterIcon("settings.ilcd");
-	self->e11ui.icons[5].icon = RasterIconFactory_getRasterIcon("ask.ilcd");
-	self->e11ui.icons[6].icon = RasterIconFactory_getRasterIcon("dotpen.ilcd");
-	self->e11ui.icons[7].icon = RasterIconFactory_getRasterIcon("edition.ilcd");
-	self->e11ui.icons[8].icon = RasterIconFactory_getRasterIcon("preview.ilcd");
-	self->e11ui.icons[9].icon = RasterIconFactory_getRasterIcon("list.ilcd");
-	self->e11ui.icons[10].icon = RasterIconFactory_getRasterIcon("settings.ilcd");
-	self->e11ui.icons[11].icon = RasterIconFactory_getRasterIcon("ask.ilcd");
+	self->e11ui.icons[0].icon = RasterIconFactory_getRasterIcon("dotpen_black.ilcd");
+	self->e11ui.icons[1].icon = RasterIconFactory_getRasterIcon("edition_black.ilcd");
+	self->e11ui.icons[2].icon = RasterIconFactory_getRasterIcon("preview_black.ilcd");
+	self->e11ui.icons[3].icon = RasterIconFactory_getRasterIcon("list_black.ilcd");
+	self->e11ui.icons[4].icon = RasterIconFactory_getRasterIcon("settings_black.ilcd");
+	self->e11ui.icons[5].icon = RasterIconFactory_getRasterIcon("ask_black.ilcd");
+	self->e11ui.icons[6].icon = RasterIconFactory_getRasterIcon("dotpen_black.ilcd");
+	self->e11ui.icons[7].icon = RasterIconFactory_getRasterIcon("edition_black.ilcd");
+	self->e11ui.icons[8].icon = RasterIconFactory_getRasterIcon("preview_black.ilcd");
+	self->e11ui.icons[9].icon = RasterIconFactory_getRasterIcon("list_black.ilcd");
+	self->e11ui.icons[10].icon = RasterIconFactory_getRasterIcon("settings_black.ilcd");
+	self->e11ui.icons[11].icon = RasterIconFactory_getRasterIcon("ask_black.ilcd");
 
 	for(i = 0; i < E11_NUMBER_OF_ICONS; ++i) {
 		//assert(self->e11ui.icons[i].icon);
