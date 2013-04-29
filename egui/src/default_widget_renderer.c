@@ -229,7 +229,6 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			border_color
 		);
 
-		
 		/* Right border */
 		//LcdDrawRectangle(
 		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
@@ -244,7 +243,6 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			border_color
 		);
 
-		
 		/* Bottom border */
 		//LcdDrawRectangle(
 		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
@@ -259,7 +257,6 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			border_color
 		);
 
-
 		/* Left border */
 		//LcdDrawRectangle(
 		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
@@ -273,7 +270,6 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			border_color,
 			border_color
 		);
-
 
 
 

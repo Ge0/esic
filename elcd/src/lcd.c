@@ -60,7 +60,7 @@ void LcdDrawRectangle(DWORD x, DWORD y, DWORD width, DWORD height, DWORD filling
 	/* Firstly: draw the rectangle */
 	/* TODO. */
 	DWORD i;
-	for(i = 0; i <= height; i++) {
+	for(i = 0; i < height; i++) {
 		LcdDrawLine(x, y + i, x + width, y + i, filling_color);
 	}
 

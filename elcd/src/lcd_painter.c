@@ -43,15 +43,18 @@ void LcdPainter_drawLine(PAbstractPainter abstract_painter, WORD x1, WORD y1, WO
 void LcdPainter_drawRectangle(PAbstractPainter abstract_painter, WORD x, WORD y, WORD width, WORD height, WORD background_color, WORD border_color) {
 	/* Firstly: draw the rectangle */
 	int i;
-	for(i = 0; i <= height; i++) {
-		LcdDrawLine(x, y + i, x + width, y + i, background_color);
+	for(i = 0; i < height; i++) {
+		LcdDrawLine(x, y + i, x + width-1, y + i, background_color);
 	}
 
-	/* Secondly, draw the border */
-	LcdDrawLine(x, y, x + width, y, border_color);						/* top one */
-	LcdDrawLine(x + width, y, x + width, y + height, border_color);	/* right one */
-	LcdDrawLine(x + width, y + height, x, y + height, border_color);	/* bottom one */
-	LcdDrawLine(x, y + height, x, y, border_color);					/* left one */
+		/* Secondly, draw the border */
+
+	LcdDrawLine(x, y, x + width-1, y, border_color);						/* top one */
+	LcdDrawLine(x + width-1, y, x + width-1, y + (height-1), border_color);	/* right one */
+	LcdDrawLine(x + width-1, y + (height-1), x, y + (height-1), border_color);	/* bottom one */
+	LcdDrawLine(x, y + (height-1), x, y, border_color);					/* left one */
+
+
 }
 
 void LcdPainter_drawString(PAbstractPainter self, WORD x, WORD y , WORD color, const char* string) {
