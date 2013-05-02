@@ -3,7 +3,7 @@
  */
 //#include <assert.h>
 #include <esic/eapi/heap.h>
-#include <esic/eapi/raster_icon_factory.h>
+#include <esic/eresources/raster_icon_factory.h>
 #include <esic/etools/hashtable.h>
 #include <esic/etools/zstring.h>
 #include <fatfs/ff.h>

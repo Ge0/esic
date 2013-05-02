@@ -3,7 +3,7 @@
  */
 #include <esic/etools/zstring.h>
 #include <esic/etools/hashtable.h>
-#include <esic/eapi/raster_font_factory.h>
+#include <esic/eresources/raster_font_factory.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

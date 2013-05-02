@@ -2,7 +2,7 @@
  * \file raster_icon.c
  */
 //#include <assert.h>
-#include <esic/eapi/raster_icon.h>
+#include <esic/eresources/raster_icon.h>
 #include <string.h>
 
 static const vtable_Object s_object_vtable = {
