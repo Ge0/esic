@@ -8,9 +8,9 @@
 #include <esic/eapi/heap.h>
 
 /* TEST START */
-#include <esic/eapi/raster_font_factory.h>
-#include <esic/eapi/raster_icon_factory.h>
-#include <esic/eapi/raster_icon_header.h>
+#include <esic/eresources/raster_font_factory.h>
+#include <esic/eresources/raster_icon_factory.h>
+#include <esic/eresources/raster_icon_header.h>
 #include <esic/egui/default_widget_renderer.h>
 #include <esic/etools/zstring.h>
 #include <fatfs/ff.h>
@@ -26,7 +26,7 @@ void e11() {
 
 	
 	/* LCD INIT */
-	LcdInit(320, 240, 16, LCD_DOUBLEBUF);
+	LcdInit(480, 272, 16, LCD_DOUBLEBUF);
 	LcdFill(RGB_16B(240,240,240));
 
 	/* FACTORY INIT */
@@ -61,7 +61,7 @@ void _e11_splashscreen() {
 }
 
 void _e11_mainloop() {
-	BOOL looping = 1;
+	BOOL looping = TRUE;
 	DWORD ticks1, ticks2;
 
 	MainUI main_ui;
@@ -79,13 +79,13 @@ void _e11_mainloop() {
 		Event_constructor(&system_event);
 
 		/* System Top rectangle */
-		LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
+		//LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
 
 		if(EsicPollEvent(&system_event)) {
 
 			switch(system_event.type) {
 			case EVENT_QUIT:
- 				looping = !looping;
+ 				looping = (BOOL)!looping;
 				break;
 
 			/* Other events */

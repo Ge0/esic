@@ -8,7 +8,7 @@
 #include <esic/egui/checkbox.h>
 /*#include <esic/egui/image.h>*/
 #include <esic/elcd/lcd_painter.h>
-#include <esic/eapi/raster_font_factory.h>
+#include <esic/eresources/raster_font_factory.h>
 
 static const vtable_Object s_object_vtable = {
 	DefaultWidgetRenderer_destructor,

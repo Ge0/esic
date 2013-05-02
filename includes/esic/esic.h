@@ -29,14 +29,32 @@ typedef enum _BOOL {
 	TRUE
 } BOOL;
 
+
+/* Given the target, color order may change (until we can figure this out) */
+#if defined(EMULATOR)
+
 #define RGB_16B( r, g, b ) \
    ( ( ( ( (DWORD)(r) >> 3u ) & 0x1fu ) << 11u ) | \
      ( ( ( (DWORD)(g) >> 2u ) & 0x3fu ) <<  5u ) | \
      ( ( ( (DWORD)(b) >> 3u ) & 0x1fu ) <<  0u ) )
+	  
+
 
 #define RED(value)		((value >> 16) & 0xFF)
 #define GREEN(value)	((value >> 8) & 0xFF)
 #define BLUE(value) 	((value) & 0xFF)
+	   
+#elif defined (OPEN1788)
+
+#define RGB_16B( r, g, b ) \
+   ( ( ( ( (DWORD)(b) >> 3u ) & 0x1fu ) << 11u ) | \
+     ( ( ( (DWORD)(g) >> 2u ) & 0x3fu ) <<  5u ) | \
+     ( ( ( (DWORD)(r) >> 3u ) & 0x1fu ) <<  0u ) )
+	  	   
+#define BLUE(value)		((value >> 16) & 0xFF)
+#define GREEN(value)	((value >> 8) & 0xFF)
+#define RED(value) 	((value) & 0xFF)	   
+#endif
 
 #define CLASS(x) \
 	typedef struct _##x x; \
@@ -47,21 +65,6 @@ typedef enum _BOOL {
 #define VTABLE(x) \
 	const vtable_##x *vtable
 
-#if defined EMULATOR
-#if defined (WIN32)
-extern ULONG
-_cdecl
-DbgPrint(
-    char* format,
-    ...
-    );
-#define SicPrintfDebug	DbgPrint
 
-#elif defined (linux)
-
-#define SicPrintfDebug LinuxSicPrintfDebug
-
-#endif /* WIN32/linux */
-#endif /* EMULATOR */
 
 #endif

@@ -18,6 +18,30 @@ void SicHeapClean();
 ULONG LinuxSicPrintfDebug(const char* format, ...);
 #endif
 
+#if defined EMULATOR
+#if defined (WIN32)
+extern ULONG
+_cdecl
+DbgPrint(
+    char* format,
+    ...
+    );
+#define SicPrintfDebug	DbgPrint
+
+#elif defined (linux)
+
+#define SicPrintfDebug LinuxSicPrintfDebug
+
+#endif /* WIN32/linux */
+
+#elif defined(OPEN1788)
+extern void xprintf (const char* fmt, ...);
+#define SicPrintfDebug xprintf
+
+#endif /* EMULATOR */
+
+
+
 
 #ifndef _DEBUG 
 #define SicAlloc(x) malloc(x)
@@ -35,6 +59,12 @@ typedef struct _link {
 } link, *plink;
 
 
+#define SicAssert(expr) \
+if(!(expr))  {\
+	SicPrintfDebug("Assertion failed at %s:%d\r\n", \
+		__FILE__, __LINE__); \
+	while(1); \
+	}
 
 
 #endif /* _HEAP_H_ */

@@ -76,7 +76,7 @@ DWORD CheckBox_defaultProc(PWidget self, const PEvent system_event) {
 
 		// If the user hit return or space, toggle the checkbox
 		if(key_code == KEY_RETURN || key_code == KEY_SPACE) {
-			CHECKBOX(self)->is_checked = !(CHECKBOX(self)->is_checked);
+			CHECKBOX(self)->is_checked = (BOOL)!(CHECKBOX(self)->is_checked);
 
 			custom_event.type = EVENT_PAINT;
 			custom_event.real_event.widget_event.id = self->id;

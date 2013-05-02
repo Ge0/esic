@@ -11,9 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{689CF97F-932A-42BF-A6DB-3FEF8A7EAEA9}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
-    <RootNamespace>eapi</RootNamespace>
+    <ProjectGuid>{3F93ED63-AC69-495C-A4A3-1A783FEBA017}</ProjectGuid>
+    <RootNamespace>eresources</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -38,60 +37,52 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)/includes;./includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)/includes;./includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>EMULATOR;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalOptions>/w44996 %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>EMULATOR;_WIN32;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>EMULATOR;_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EMULATOR;_WIN32;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
+    <ClCompile Include="src\raster_font.c" />
+    <ClCompile Include="src\raster_font_factory.c" />
+    <ClCompile Include="src\raster_font_table.c" />
+    <ClCompile Include="src\raster_icon.c" />
+    <ClCompile Include="src\raster_icon_factory.c" />
+    <ClCompile Include="src\raster_icon_header.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\event.c" />
-    <ClCompile Include="src\heap.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\includes\esic\eapi\abstract_painter.h" />
-    <ClInclude Include="..\includes\esic\eapi\abstract_system.h" />
-    <ClInclude Include="..\includes\esic\eapi\emulator_system.h" />
-    <ClInclude Include="..\includes\esic\eapi\event.h" />
-    <ClInclude Include="..\includes\esic\eapi\heap.h" />
-    <ClInclude Include="..\includes\esic\eapi\keyboard_event.h" />
-    <ClInclude Include="..\includes\esic\eapi\system.h" />
-    <ClInclude Include="..\includes\esic\eapi\timer_event.h" />
-    <ClInclude Include="..\includes\esic\eapi\user_event.h" />
-    <ClInclude Include="..\includes\esic\eapi\widget_event.h" />
+    <ClInclude Include="..\includes\esic\eresources\raster_font.h" />
+    <ClInclude Include="..\includes\esic\eresources\raster_font_factory.h" />
+    <ClInclude Include="..\includes\esic\eresources\raster_font_header.h" />
+    <ClInclude Include="..\includes\esic\eresources\raster_font_table.h" />
+    <ClInclude Include="..\includes\esic\eresources\raster_font_table_header.h" />
+    <ClInclude Include="..\includes\esic\eresources\raster_icon.h" />
+    <ClInclude Include="..\includes\esic\eresources\raster_icon_factory.h" />
+    <ClInclude Include="..\includes\esic\eresources\raster_icon_header.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

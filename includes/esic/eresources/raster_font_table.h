@@ -5,8 +5,8 @@
 #define _RASTER_FONT_TABLE_H_
 
 #include <esic/object.h>
-#include <esic/eapi/raster_font_header.h>
-#include <esic/eapi/raster_font_table_header.h>
+#include <esic/eresources/raster_font_header.h>
+#include <esic/eresources/raster_font_table_header.h>
 
 
 //#ifdef _DEBUG

@@ -1,4 +1,4 @@
-#include <esic/eapi/raster_icon_factory.h>
+#include <esic/eresources/raster_icon_factory.h>
 #include <ui/dotpen_ui.h>
 #include <xml_ui_factory.h>
 #include <esic/eapi/system.h>
@@ -89,7 +89,6 @@ DWORD DotpenUI_defaultProc(PWidget self, const PEvent system_event) {
 	default:
 		return E11UI_defaultProc(self, system_event);
 	}
-	return 0;
 }
 
 void DotpenUI_paint(PWidget self, WORD base_x, WORD base_y) {

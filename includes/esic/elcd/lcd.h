@@ -5,7 +5,6 @@
 #define _LCD_H_
 
 #include <esic/esic.h>
-//#include <esic/eapi/raster_font.h>
 
 /* Flags? */
 #define	LCD_DOUBLEBUF	0x01
@@ -40,6 +39,11 @@ typedef struct _Lcd {
 #define LcdInit				EmulatorLcdInit
 #define	LcdDestroy			EmulatorLcdDestroy
 #define LcdUpdate			EmulatorLcdUpdate
+#elif defined(OPEN1788)
+#include <esic/elcd/open1788_lcd.h>
+#define LcdInit				Open1788LcdInit
+#define LcdDestroy			Open1788LcdDestroy
+#define LcdUpdate			Open1788LcdUpdate
 #endif
 
 

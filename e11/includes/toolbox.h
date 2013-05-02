@@ -2,7 +2,7 @@
 #define _TOOLBOX_H_
 
 #include <esic/egui/widget.h>
-#include <esic/eapi/raster_icon.h>
+#include <esic/eresources/raster_icon.h>
 
 #define NUMBER_OF_ICONS 12
 

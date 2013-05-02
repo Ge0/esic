@@ -27,7 +27,9 @@ VTABLE_START(Widget) {
 #undef WIDGET_VFUNCTION
 };
 
+/*
 static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event);
+*/
 
 PWidget Widget_constructor(PWidget self) {
 

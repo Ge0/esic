@@ -12,8 +12,8 @@
 #include <esic/etools/vector.h>
 
 #include <esic/etools/container.h>
-#include <esic/eapi/raster_font_header.h>
-#include <esic/eapi/raster_font_table.h>
+#include <esic/eresources/raster_font_header.h>
+#include <esic/eresources/raster_font_table.h>
 
 /*
 #ifdef _DEBUG

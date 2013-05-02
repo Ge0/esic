@@ -56,7 +56,7 @@ PTextBox TextBox_constructor(PTextBox self) {
 
 	/* Default properties */
 	self->widget.is_focusable = TRUE;
-	self->is_focused          = 0;
+	self->is_focused          = FALSE;
 	self->text_offset         = 0;
 	self->draw_carret		  = FALSE;
 
@@ -123,7 +123,7 @@ void TextBox_removeLastChar(PTextBox self) {
 }
 
 void TextBox_removeCharAt(PTextBox self, DWORD pos) {
-	if(pos >= 0 && pos < self->text.size) {
+	if(/*pos >= 0 && */pos < self->text.size) {
 		ZString_removeCharAt(&self->text, pos);
 	//if(pos >= 0 && pos < self->text.logical_size) {
 		//ZStringBuffer_removeCharAt(&self->text, pos);

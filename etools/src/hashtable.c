@@ -84,8 +84,10 @@ void Hashtable_destructor(PObject self) {
 }
 
 PObject Hashtable_clone(PObject self, PObject dst) {
+	/*
 	PHashtable real_self = (PHashtable)self;
 	PHashtable real_dst  = (PHashtable)dst;
+	*/
 
 	/* TODO. */
 
@@ -118,7 +120,7 @@ BOOL Hashtable_containsKey(PMap self, PObject key) {
 		node = node->next;
 	}*/
 	if(node != NULL) {
-		ret = _Hashtable_getNode(real_self, node, key, HASHNODE_BY_KEY) != NULL;
+		ret = (BOOL)(_Hashtable_getNode(real_self, node, key, HASHNODE_BY_KEY) != NULL);
 	} else {
 		ret = FALSE;
 	}
@@ -154,8 +156,8 @@ BOOL Hashtable_containsValue(PMap self, PObject value) {
 	BOOL ret = FALSE;
 	DWORD i;
 
-	for(i = 0; i < real_self->allocated_size, ret == FALSE; ++i) {
-		ret = (_Hashtable_getNode(real_self, real_self->nodes[i], value, HASHNODE_BY_VALUE) != NULL);
+	for(i = 0; i < real_self->allocated_size && ret == FALSE; ++i) {
+		ret = (BOOL)(_Hashtable_getNode(real_self, real_self->nodes[i], value, HASHNODE_BY_VALUE) != NULL);
 	}
 	return ret;
 }

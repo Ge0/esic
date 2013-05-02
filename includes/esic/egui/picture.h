@@ -5,7 +5,7 @@
 #define _PICTURE_H_
 
 #include <esic/egui/widget.h>
-#include <esic/eapi/raster_icon.h>
+#include <esic/eresources/raster_icon.h>
 
 typedef struct _Picture {
 	Widget widget;

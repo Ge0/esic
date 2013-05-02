@@ -129,9 +129,9 @@ BOOL Hashnode_equalsTo(PObject self, PObject dst) {
 	PHashnode real_self = (PHashnode)self;
 	PHashnode real_dst  = (PHashnode)dst;
 
-	return real_self->key->vtable->equalsTo(real_self->key, real_dst->key)
+	return (BOOL)(real_self->key->vtable->equalsTo(real_self->key, real_dst->key)
 		&&
-	real_self->value->vtable->equalsTo(real_self->value, real_dst->value);
+	real_self->value->vtable->equalsTo(real_self->value, real_dst->value));
 }
 
 DWORD Hashnode_hash(PObject self) {

@@ -69,7 +69,7 @@ void Picture_paint(PWidget self, WORD base_x, WORD base_y) {
 }
 
 DWORD Picture_defaultProc(PWidget self, const PEvent system_event) {
-	PPicture real_self = (PPicture)self;
+	/*PPicture real_self = (PPicture)self;*/
 	Event custom_event;
 	Event_constructor(&custom_event);
 
