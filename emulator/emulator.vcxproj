@@ -55,7 +55,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>main</EntryPointSymbol>
-      <AdditionalDependencies>egraphics.lib;expat.lib;e11.lib;eapi.lib;egui.lib;etools.lib;elcd.lib;fatfs.lib;SDL.lib;SDLmain.lib;msvcrt.lib;ntdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>egraphics.lib;expat.lib;e11.lib;eapi.lib;egui.lib;etools.lib;eresources.lib;elcd.lib;fatfs.lib;SDL.lib;SDLmain.lib;msvcrt.lib;ntdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
     </Link>
@@ -73,7 +73,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <EntryPointSymbol>main</EntryPointSymbol>
-      <AdditionalDependencies>e11.lib;eapi.lib;egui.lib;etools.lib;elcd.lib;expat.lib;fatfs.lib;SDL.lib;SDLmain.lib;ntdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>e11.lib;eapi.lib;egui.lib;etools.lib;eresources.lib;elcd.lib;expat.lib;fatfs.lib;SDL.lib;SDLmain.lib;ntdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>

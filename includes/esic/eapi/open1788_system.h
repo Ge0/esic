@@ -15,7 +15,6 @@
 
 void  Open1788SystemInit(void);
 void  Open1788SystemDestroy(void);
-void  Open1788SystemUpdate(void);
 void  Open1788SystemWaitEvent(PEvent esic_event);
 BOOL  Open1788SystemPollEvent(PEvent esic_event);
 void  Open1788SystemDelay(DWORD milliseconds);

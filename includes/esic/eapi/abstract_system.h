@@ -25,7 +25,7 @@ typedef struct _AbstractSystem {
 	Object object;
 	const vtable_AbstractSystem* vtable;
 	PAbstractPainter painter;
-} AbstractSystem, *PAbstractSystem;
+} AbstractSystem;
 
 /* Virtual functions */
 void AbstractSystem_destructor(PObject self);

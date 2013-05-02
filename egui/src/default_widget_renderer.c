@@ -8,7 +8,7 @@
 #include <esic/egui/checkbox.h>
 /*#include <esic/egui/image.h>*/
 #include <esic/elcd/lcd_painter.h>
-#include <esic/eapi/raster_font_factory.h>
+#include <esic/eresources/raster_font_factory.h>
 
 static const vtable_Object s_object_vtable = {
 	DefaultWidgetRenderer_destructor,
@@ -30,7 +30,7 @@ PDefaultWidgetRenderer DefaultWidgetRenderer_constructor(PDefaultWidgetRenderer 
 	self->abstract_widget_renderer.object.size = sizeof(DefaultWidgetRenderer);
 	self->abstract_widget_renderer.object.vtable = &s_object_vtable;
 	self->abstract_widget_renderer.vtable = &s_abstract_widget_renderer_vtable;
-	self->painter = NEW(self->painter, LcdPainter);
+	NEW(self->painter, LcdPainter);
 	self->painter->abstract_painter.raster_font = RasterFontFactory_getRasterFont("6x8.flcd");
 
 	return self;
@@ -57,7 +57,9 @@ PAbstractWidgetRenderer GetDefaultWidgetRenderer() {
 }
 
 void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer self, PLabel label, WORD base_x, WORD base_y) {
+	/*
 	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
+	*/
 
 	/* Simply draw the caption */
 	ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawString(
@@ -100,7 +102,10 @@ void DefaultWidgetRenderer_paintCheckBox(PAbstractWidgetRenderer self, PCheckBox
 }
 
 void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox textbox, WORD base_x, WORD base_y) {
+	/*
 	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
+	*/
+	
 	ZString visible_text;
 	//ZStringBuffer visible_text;
 	WORD character_width = TEXTBOX_DEFAULT_WIDTH_CHARACTER;
@@ -229,6 +234,7 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			border_color
 		);
 
+		
 		/* Right border */
 		//LcdDrawRectangle(
 		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
@@ -243,6 +249,7 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			border_color
 		);
 
+		
 		/* Bottom border */
 		//LcdDrawRectangle(
 		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
@@ -257,6 +264,7 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			border_color
 		);
 
+
 		/* Left border */
 		//LcdDrawRectangle(
 		ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
@@ -270,6 +278,7 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 			border_color,
 			border_color
 		);
+
 
 
 

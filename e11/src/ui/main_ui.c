@@ -1,5 +1,5 @@
 #include <esic/eapi/abstract_system.h>
-#include <esic/eapi/raster_icon_factory.h>
+#include <esic/eresources/raster_icon_factory.h>
 #include <ui/main_ui.h>
 #include <ui/dotpen_ui.h>
 #include <xml_ui_factory.h>

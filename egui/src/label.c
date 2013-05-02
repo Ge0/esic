@@ -85,7 +85,7 @@ DWORD Label_defaultProc(PWidget self, const PEvent system_event) {
 	default:
 		return Widget_defaultProc(self, system_event);
 	}
-	return 0;
+
 }
 
 void Label_setCaption(PLabel self, const char* text) {

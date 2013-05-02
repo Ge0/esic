@@ -122,11 +122,15 @@ char* SicStrdup(const char* str) {
 #if defined(linux)
 
 ULONG LinuxSicPrintfDebug(const char* format, ...) {
+	ULONG n;
 	va_list args;
 	va_start(args, format);
-	fprintf(stderr, format, args);
+	n = fprintf(stderr, format, args);
 	fflush(stdin);
 	va_end(args);
+	
+	return n;
 }
 
 #endif
+

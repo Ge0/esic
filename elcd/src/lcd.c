@@ -16,11 +16,15 @@
 
 
 /* Buffers */
+/*
 static WORD *s_frame_buffer = NULL;
 static WORD *s_double_buf = NULL;
+*/
 
 /* Default background color */
+/*
 static DWORD s_default_background_color = RGB_16B(255,255,255);
+*/
 
 /* Pointer to the accessible frame buffer, in read-only mode */
 const WORD* g_lcd_frame_buffer = NULL;
@@ -60,7 +64,7 @@ void LcdDrawRectangle(DWORD x, DWORD y, DWORD width, DWORD height, DWORD filling
 	/* Firstly: draw the rectangle */
 	/* TODO. */
 	DWORD i;
-	for(i = 0; i < height; i++) {
+	for(i = 0; i <= height; i++) {
 		LcdDrawLine(x, y + i, x + width, y + i, filling_color);
 	}
 
@@ -204,7 +208,8 @@ void LcdDrawBuffer(DWORD x, DWORD y, DWORD width, DWORD height, void* raw_buffer
 
 	for(j = 0; j < height; ++j) {
 		for(i = 0; i < width; ++i) {
-			LcdSetPixel(x+i, y+j, (DWORD)*((BYTE*)raw_buffer + ((j * width + i) * s_lcd.bytes_per_pixel)));
+			DWORD color = (DWORD)*((BYTE*)raw_buffer + ((j * width + i) * s_lcd.bytes_per_pixel));
+			LcdSetPixel(x+i, y+j, color);
 		}
 	}
 }

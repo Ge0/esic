@@ -8,7 +8,7 @@
 #define RASTER_ICON_FILENAME_LENGTH 32
 
 #include <esic/object.h>
-#include <esic/eapi/raster_icon_header.h>
+#include <esic/eresources/raster_icon_header.h>
 
 typedef struct _RasterIcon {
 	Object object;

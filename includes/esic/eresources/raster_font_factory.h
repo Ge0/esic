@@ -3,7 +3,7 @@
  */
 #ifndef _RASTER_FONT_FACTORY_H_
 #define _RASTER_FONT_FACTORY_H_
-#include <esic/eapi/raster_font.h>
+#include <esic/eresources/raster_font.h>
 
 #define PATH_RASTER_FONTS "system/raster_fonts/"
 

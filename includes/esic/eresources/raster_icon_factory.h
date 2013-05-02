@@ -4,7 +4,7 @@
 #ifndef _RASTER_ICON_FACTORY_
 #define _RASTER_ICON_FACTORY_
 
-#include <esic/eapi/raster_icon.h>
+#include <esic/eresources/raster_icon.h>
 
 #define PATH_RASTER_ICONS "system/raster_icons/"
 

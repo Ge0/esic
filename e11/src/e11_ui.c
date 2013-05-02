@@ -97,11 +97,18 @@ PObject E11UI_clone(PObject self, PObject dst) {
 DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 	/* TODO. */
 	PListNode it = NULL;
+	
+	/*
 	PE11UI real_self = (PE11UI)self;
 	PWidget current_child;
-	Event custom_event;
 	BYTE* keyboard_state = NULL;
+	*/
+	
+	Event custom_event;
+	
+	/*
 	PWidgetEvent widget_event;
+	*/
 
 	Event_constructor(&custom_event);
 
@@ -152,8 +159,13 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 }
 
 void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
-	PE11UI real_self = (PE11UI)self;
+	
+	/* System Top rectangle */
+	LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
+	
+	/*PE11UI real_self = (PE11UI)self;
 	//WORD i;
+	*/
 	/* Call parent paint */
 	Widget_paint(self, base_x, base_y);
 
@@ -173,7 +185,7 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 }
 
 PPicture E11UI_getPicture(PE11UI self, DWORD index) {
-	if(index >= 0 && index < E11_NUMBER_OF_ICONS) {
+	if(/*index >= 0 &&*/ index < E11_NUMBER_OF_ICONS) {
 		return &self->icons[index];
 	} else {
 		return NULL;
@@ -181,7 +193,7 @@ PPicture E11UI_getPicture(PE11UI self, DWORD index) {
 }
 
 void E11UI_setIcon(PE11UI self, DWORD index, const PPicture icon) {
-	if(index >= 0 && index < E11_NUMBER_OF_ICONS) {
+	if(/*index >= 0 &&*/ index < E11_NUMBER_OF_ICONS) {
 		self->icons[index] = *icon;
 	}
 }

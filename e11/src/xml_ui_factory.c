@@ -45,7 +45,9 @@ void XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget) {
 	//if((fp = fopen(path, "r")) == NULL) {
 	if(f_open(&ui_file, path, FA_READ) != FR_OK) {
 		/* Error... */
+		SicPrintfDebug("Cannot open %s! Abort...\r\n", path);
 		SicFree(path);
+		return;
 	}
 
 	parser = XML_ParserCreate(NULL);
@@ -60,7 +62,8 @@ void XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget) {
 		f_read(&ui_file, buf, sizeof(buf) * sizeof(char), &br);
 		done = br < sizeof(buf);
 		if(XML_Parse(parser, buf, br, done) == XML_STATUS_ERROR) {
-			/* Error... */
+			SicPrintfDebug("XML_Parse error.\r\n");
+			return;
 		}
 	} while(!done);
 	XML_ParserFree(parser);

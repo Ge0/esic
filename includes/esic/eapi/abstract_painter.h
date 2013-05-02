@@ -6,7 +6,7 @@
 
 #include <esic/object.h>
 #include <esic/eapi/event.h>
-#include <esic/eapi/raster_font.h>
+#include <esic/eresources/raster_font.h>
 
 typedef struct _AbstractPainter* PAbstractPainter;
 
