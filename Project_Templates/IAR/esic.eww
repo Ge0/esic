@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\e11\e11.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\eapi\eapi.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\egui\egui.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\elcd\elcd.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\eresources\eresources.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\etools\etools.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\expat\expat.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\open1788system\open1788system.ewp</path>
+  </project>
+  <batchBuild/>
+</workspace>
+
+

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>274611229</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\ascii.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\time.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\expat.a</file>
+      <file>$PROJ_DIR$\Debug\Obj\xmlparse.o</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\asciitab.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\expat.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\internal.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\expat_external.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\iasciitab.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\nametab.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\latin1tab.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\utf8tab.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\xmlrole.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\xmltok.h</file>
+      <file>$PROJ_DIR$\..\..\..\expat\xmlparse.c</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\xmltok_impl.h</file>
+      <file>$PROJ_DIR$\..\..\..\expat\xmlrole.c</file>
+      <file>$PROJ_DIR$\..\..\..\expat\xmltok.c</file>
+      <file>$PROJ_DIR$\..\..\..\expat\xmltok_impl.c</file>
+      <file>$PROJ_DIR$\..\..\..\expat\xmltok_ns.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\xmltok.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\xmlrole.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\xmltok_ns.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\xmlrole.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\xmltok_ns.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\xmlparse.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\xmltok.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\xmltok_impl.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\xmltok_impl.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\limits.h</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\expat\xmlparse.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 28</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 3</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 36 26 22 39 24 31 32 33 37 34 40 41 1 0 5 30 7 6 13 12</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 36 26 22 39 24 31 32 33 37 34 40 41 1 0 5 30 7 6 13 12</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\expat\xmlrole.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 21</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 25</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 36 26 22 39 24 31 32 33 37 7 6 12 13 0</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 36 26 22 39 24 31 32 33 37 7 6 12 13 0</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\expat\xmltok.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 20</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 29</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 36 26 22 39 24 31 32 33 37 7 6 13 9 15 0 18 4 11 8 10 19</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 36 26 22 39 24 31 32 33 37 7 6 13 9 15 0 18 4 11 8 10 19</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\expat\xmltok_impl.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 38</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 35</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\expat\xmltok_ns.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 27</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 23</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>IARCHIVE</name>
+          <file> 2</file>
+        </tool>
+      </outputs>
+    </file>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+

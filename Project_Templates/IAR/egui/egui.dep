@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>3813002212</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\lcd_painter.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\image.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\assert.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\label.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\widget_ptr.pbi</file>
+      <file>$PROJ_DIR$\Debug\Exe\egui.a</file>
+      <file>$PROJ_DIR$\Debug\Obj\widget.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\image.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\timer_event.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\container.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\label.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\widget_ptr.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\widget.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\textbox.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\checkbox.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\checkbox.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\image.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\picture.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\default_widget_renderer.o</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\open1788_lcd.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\vector.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_font_table.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\picture.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\user_event.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_font_table_header.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\widget_event.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_font_header.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\default_widget_renderer.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\esic.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\zstring.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+      <file>$PROJ_DIR$\..\..\..\egui\src\image.c</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\list.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\open1788_system.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_icon.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\abstract_painter.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_table.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_factory.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon_header.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_table_header.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_header.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\heap.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_font.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\event.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\textbox.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\object.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\system.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\keyboard_event.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_icon_header.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\picture.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\..\..\..\egui\src\picture.c</file>
+      <file>$PROJ_DIR$\..\..\..\egui\src\widget.c</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+      <file>$PROJ_DIR$\..\..\..\egui\src\widget_ptr.c</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\label.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\widget.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\widget_ptr.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\textbox.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\lcd.h</file>
+      <file>$PROJ_DIR$\..\..\..\egui\src\label.c</file>
+      <file>$PROJ_DIR$\..\..\..\egui\src\textbox.c</file>
+      <file>$PROJ_DIR$\..\..\..\egui\src\default_widget_renderer.c</file>
+      <file>$PROJ_DIR$\..\..\..\egui\src\checkbox.c</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\checkbox.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\default_widget_renderer.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\abstract_widget_renderer.h</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\egui\src\image.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 17</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 25 23 65 62 46 71 21 43 34 35 36 0 3 72 32 48 2 68 57 53 52 55 59 9 29 27 38 10 41 54 22 30 24 28 33 78 79 67 70 61 40 60 77 1</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 25 23 65 62 46 71 21 43 34 35 36 0 3 72 32 48 2 68 57 53 52 55 59 9 29 27 38 10 41 54 22 30 24 28 33 78 79 67 70 61 40 60 77 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\egui\src\picture.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 26</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 18</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 58 32 48 23 65 62 46 71 21 43 55 57 53 25 34 35 52 59 9 29 27 39 61 68 38 10 41 51 22 50 42 47 49 45 78 79 67 33 70 77 1</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 58 32 48 23 65 62 46 71 21 43 55 57 53 25 34 35 52 59 9 29 27 39 61 68 38 10 41 51 22 50 42 47 49 45 78 79 67 33 70 77 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\egui\src\widget.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 7</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 13</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 58 32 48 23 65 62 46 71 21 43 55 57 53 25 34 35 52 59 9 29 27 39 68 38 10 41 51 22 50 42 47 69</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 58 32 48 23 65 62 46 71 21 43 55 57 53 25 34 35 52 59 9 29 27 39 68 38 10 41 51 22 50 42 47 69</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\egui\src\widget_ptr.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 12</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 69 68 57 53 25 23 65 62 46 71 21 43 34 35 52 32 48 55 59 9 29 27 38 10 41 51 22 50 42 47</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 69 68 57 53 25 23 65 62 46 71 21 43 34 35 52 32 48 55 59 9 29 27 38 10 41 51 22 50 42 47</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\egui\src\label.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 4</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 11</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 55 57 53 25 23 65 62 46 71 21 43 34 35 52 32 48 59 9 29 27 67 68 38 10 41 51 22 50 42 47 33 78 79 70 61 49 45 77 1</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 55 57 53 25 23 65 62 46 71 21 43 34 35 52 32 48 59 9 29 27 67 68 38 10 41 51 22 50 42 47 33 78 79 70 61 49 45 77 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\egui\src\textbox.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 56</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 14</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 58 32 48 23 65 62 46 71 21 43 55 57 53 25 34 35 52 59 9 29 27 39 70 68 38 10 41 51 22 50 42 47 33 78 79 67 61 49 45 77 1</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 58 32 48 23 65 62 46 71 21 43 55 57 53 25 34 35 52 59 9 29 27 39 70 68 38 10 41 51 22 50 42 47 33 78 79 67 61 49 45 77 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\egui\src\default_widget_renderer.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 31</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 19</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 78 79 57 53 25 23 65 62 46 71 21 43 34 35 52 32 48 67 68 55 59 9 29 27 38 10 41 51 22 50 42 47 33 70 61 49 45 77 1 72 20 44</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 78 79 57 53 25 23 65 62 46 71 21 43 34 35 52 32 48 67 68 55 59 9 29 27 38 10 41 51 22 50 42 47 33 70 61 49 45 77 1 72 20 44</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\egui\src\checkbox.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 15</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 58 32 48 23 65 62 46 71 21 43 55 57 53 25 34 35 52 59 9 29 27 39 77 68 38 10 41 51 22 50 42 47 78 79 67 33 70 61 49 45 1</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 58 32 48 23 65 62 46 71 21 43 55 57 53 25 34 35 52 59 9 29 27 39 77 68 38 10 41 51 22 50 42 47 78 79 67 33 70 61 49 45 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>IARCHIVE</name>
+          <file> 6</file>
+        </tool>
+      </outputs>
+    </file>
+    <forcedrebuild>
+      <name>$PROJ_DIR$\..\..\..\egui\src\image.c</name>
+      <tool>ICCARM</tool>
+    </forcedrebuild>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>ILINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+

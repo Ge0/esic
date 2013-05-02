@@ -36,6 +36,10 @@ void EmulatorSystemInit(void) {
 
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	//LcdInit(320, 240, s_screen->pixels, 0, DEFAULT_BACKGROUND_COLOR);
+
+	LcdInit(320, 240, 16, LCD_DOUBLEBUF);
+	LcdFill(RGB_16B(240,240,240));
+
 	SDL_ShowCursor(0);
 
 	/* Init the file system */

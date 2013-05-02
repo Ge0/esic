@@ -111,7 +111,9 @@ void LcdPainter_drawBuffer(PAbstractPainter abstract_painter, WORD x, WORD y, WO
 
 	for(j = 0; j < height; ++j) {
 		for(i = 0; i < width; ++i) {
-			LcdSetPixel(x+i, y+j, raw_buffer[j * width + i]);
+			if(raw_buffer[j * width + i] != 0xffff) {
+				LcdSetPixel(x+i, y+j, raw_buffer[j * width + i]);
+			}
 		}
 	}
 }
