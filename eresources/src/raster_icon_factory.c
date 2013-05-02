@@ -64,7 +64,8 @@ PRasterIcon _build_raster_icon(const char* name) {
 
 	if(f_open(&icon_file, (const TCHAR*)tmp_path, FA_READ) != FR_OK) {
 		/* Error... */
-		fprintf(stderr, "Can't open %s!\n", name);
+		/*fprintf(stderr, "Can't open %s!\n", name);*/
+		SicPrintfDebug("Can't open %s!\n", name);
 		SicFree(tmp_path);
 		return NULL;
 	}

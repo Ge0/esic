@@ -909,7 +909,7 @@
         </option>
         <option>
           <name>IarchiveOutput</name>
-          <state>M:\dev-e11\LPC1788\esic\Project_Templates\IAR\expat\Debug\Exe\expat.a</state>
+          <state>C:\Users\sic49\Documents\esic\Project_Templates\IAR\expat\Debug\Exe\expat.a</state>
         </option>
       </data>
     </settings>
@@ -1889,19 +1889,19 @@
   <group>
     <name>src</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\expat\xmlparse.c</name>
+      <name>$PROJ_DIR$\..\..\..\expat\src\xmlparse.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\expat\xmlrole.c</name>
+      <name>$PROJ_DIR$\..\..\..\expat\src\xmlrole.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\expat\xmltok.c</name>
+      <name>$PROJ_DIR$\..\..\..\expat\src\xmltok.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\expat\xmltok_impl.c</name>
+      <name>$PROJ_DIR$\..\..\..\expat\src\xmltok_impl.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\expat\xmltok_ns.c</name>
+      <name>$PROJ_DIR$\..\..\..\expat\src\xmltok_ns.c</name>
     </file>
   </group>
 </project>

@@ -2,173 +2,127 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>3397011461</fileChecksum>
+  <fileChecksum>2065826993</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\..\..\..\open1788\Core\CM3\DeviceSupport\NXP\LPC177x_8x\startup\iar\startup_LPC177x_8x.s</file>
-      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-      <file>$PROJ_DIR$\Debug\Exe\e11.a</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\label.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\lcd.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\fatfs\ff.h</file>
-      <file>$PROJ_DIR$\..\..\..\open1788\User\src\main.c</file>
-      <file>$PROJ_DIR$\..\..\..\includes\fatfs\ffconf.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\e11.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\expat\expat.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\textbox.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\e11_ui.o</file>
-      <file>$PROJ_DIR$\Debug\Exe\e11.out</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\zstring.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\open1788_system.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\abstract_widget_renderer.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\abstract_system.h</file>
-      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
-      <file>$PROJ_DIR$\Debug\Obj\main_ui.o</file>
-      <file>$PROJ_DIR$\..\config\LPC1788_Flash.icf</file>
-      <file>$PROJ_DIR$\Debug\Obj\dotpen_ui.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\widget.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\container.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\user_event.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\event.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\picture.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\checkbox.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\open1788_lcd.h</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\ui\dotpen_ui.c</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\..\open1788system\Debug\Exe\open1788system.a</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\ui\main_ui.c</file>
+      <file>$PROJ_DIR$\..\..\..\e11\includes\xml_ui_factory.h</file>
+      <file>$PROJ_DIR$\..\..\..\e11\includes\e11_ui.h</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\xml_ui_factory.c</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\main.c</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon.h</file>
       <file>$PROJ_DIR$\Debug\Obj\e11.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\lcd_painter.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\expat\expat_external.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\dotpen_ui.o</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\keyboard_event.h</file>
+      <file>$PROJ_DIR$\..\etools\Debug\Exe\etools.a</file>
+      <file>$PROJ_DIR$\..\eresources\Debug\Exe\eresources.a</file>
+      <file>$PROJ_DIR$\..\elcd\Debug\Exe\elcd.a</file>
+      <file>$PROJ_DIR$\..\egui\Debug\Exe\egui.a</file>
+      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\open1788_lcd.h</file>
       <file>$PROJ_DIR$\Debug\Obj\xml_ui_factory.o</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\e11.c</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\e11_ui.c</file>
+      <file>$PROJ_DIR$\..\expat\Debug\Exe\expat.a</file>
+      <file>$PROJ_DIR$\Debug\Obj\dotpen_ui.o</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\heap.h</file>
+      <file>$PROJ_DIR$\..\eapi\Debug\Exe\eapi.a</file>
       <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\esic.h</file>
       <file>$PROJ_DIR$\Debug\Obj\xml_ui_factory.pbi</file>
       <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_header.h</file>
       <file>$PROJ_DIR$\Debug\Obj\e11_ui.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon_factory.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_table.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon_factory.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\checkbox.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\expat_external.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\lcd_painter.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\keyboard_event.h</file>
+      <file>$PROJ_DIR$\..\..\..\e11\includes\ui\main_ui.h</file>
+      <file>$PROJ_DIR$\..\..\..\e11\includes\ui\dotpen_ui.h</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_table_header.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon.h</file>
-      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon_header.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\timer_event.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\system.h</file>
       <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_factory.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\system.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\timer_event.h</file>
       <file>$PROJ_DIR$\Debug\Obj\e11.pbd</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon_header.h</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\etools\vector.h</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\abstract_painter.h</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\etools\list.h</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\egui\widget_ptr.h</file>
-      <file>$PROJ_DIR$\..\..\..\open1788\User\src\system_queue.c</file>
-      <file>$PROJ_DIR$\..\..\..\open1788\User\src\open1788_system.c</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\e11_ui.c</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_factory.h</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\object.h</file>
-      <file>$PROJ_DIR$\..\open1788system\Debug\Exe\open1788system.a</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\main.c</file>
-      <file>$PROJ_DIR$\..\elcd\Debug\Exe\elcd.a</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\egui\default_widget_renderer.h</file>
-      <file>$PROJ_DIR$\..\..\..\e11\includes\ui\main_ui.h</file>
       <file>$PROJ_DIR$\Debug\Obj\main_ui.pbi</file>
-      <file>$PROJ_DIR$\..\etools\Debug\Exe\etools.a</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\ui\main_ui.c</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\xml_ui_factory.c</file>
-      <file>$PROJ_DIR$\..\..\..\e11\includes\ui\dotpen_ui.h</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\e11.c</file>
-      <file>$PROJ_DIR$\..\eapi\Debug\Exe\eapi.a</file>
       <file>$PROJ_DIR$\Debug\Obj\e11.o</file>
       <file>$TOOLKIT_DIR$\inc\c\string.h</file>
-      <file>$PROJ_DIR$\..\..\..\e11\includes\xml_ui_factory.h</file>
-      <file>$PROJ_DIR$\..\egui\Debug\Exe\egui.a</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\e11.a</file>
+      <file>$PROJ_DIR$\..\..\..\includes\fatfs\ffconf.h</file>
+      <file>$PROJ_DIR$\..\..\..\open1788\User\src\main.c</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\expat.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\e11.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\fatfs\ff.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\lcd.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\label.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\e11_ui.o</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\textbox.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\e11.out</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\abstract_widget_renderer.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\zstring.h</file>
+      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\open1788_system.h</file>
+      <file>$PROJ_DIR$\..\..\..\egui\src\textbox.c</file>
       <file>$PROJ_DIR$\..\..\..\includes\fatfs\integer.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\abstract_system.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\dotpen_ui.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
       <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
       <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\ui\dotpen_ui.c</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\widget_event.h</file>
       <file>$PROJ_DIR$\..\..\..\includes\esic\egui\abstract_ui_factory.h</file>
-      <file>$PROJ_DIR$\..\expat\Debug\Exe\expat.a</file>
-      <file>$PROJ_DIR$\..\..\..\e11\includes\e11_ui.h</file>
-      <file>$PROJ_DIR$\..\eresources\Debug\Exe\eresources.a</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\widget.h</file>
+      <file>$PROJ_DIR$\..\config\LPC1788_Flash.icf</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\e11.hex</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\main_ui.o</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\picture.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\widget_event.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\user_event.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\event.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\container.h</file>
     </outputs>
     <file>
-      <name>$PROJ_DIR$\..\..\..\open1788\User\src\main.c</name>
+      <name>$PROJ_DIR$\..\..\..\e11\src\ui\dotpen_ui.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 87</file>
+          <file> 75</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 11</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Debug\Exe\e11.out</name>
-      <inputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 21 40 83 12 11 20 42 82 86 73 96 77 94 71 89 19 90 55</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\e11\src\e11_ui.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 49</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 12</file>
+          <file> 21</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 59 45 60 27 1 34 33 15 44 51 31 70 43 25 28 47 30 41 58 92 29 16 74 17 3 24 64 26 63 23 62 48 52 53 14 10 32 54 57 35 38 4 36 65 95</file>
+          <file> 31 8 49 22 90 92 54 84 77 67 24 1 87 27 76 25 39 44 37 5 89 81 94 35 42 91 93 47 95 46 85 45 28 30 38 4 80 41 71</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 59 45 60 27 1 34 33 15 44 51 31 70 43 25 28 47 30 41 58 92 29 16 74 17 3 24 64 26 63 23 62 48 52 53 14 10 32 54 57 35 38 4 36 65 95</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\e11\src\main.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 87</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 11</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 59 45 60 27 1 34 33 15 44 51 31 70 43 25 28 47 30 41 58 92 29 16 8 18 63 23 62 26 48 52 53</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 59 45 60 27 1 34 33 15 44 51 31 70 43 25 28 47 30 41 58 92 29 16 8 18 63 23 62 26 48 52 53</file>
+          <file> 31 8 49 22 90 92 54 84 77 67 24 1 87 27 76 25 39 44 37 5 89 81 94 35 42 91 93 47 95 46 85 45 28 30 38 4 80 41 71</file>
         </tool>
       </inputs>
     </file>
@@ -177,21 +131,21 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 76</file>
+          <file> 51</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 20</file>
+          <file> 88</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 18 70 43 25 27 1 34 33 15 44 51 28 47 30 45 60 31 41 58 92 29 63 23 62 26 48 52 53 50 54 57 75 95 32 24 64 80 85 93 59 16 4 36</file>
+          <file> 74 49 22 90 92 54 84 77 67 24 1 87 27 76 25 39 94 35 42 91 93 46 85 45 95 28 30 38 31 8 44 36 5 89 81 47 37 4 80 41 71 61 16</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 18 70 43 25 27 1 34 33 15 44 51 28 47 30 45 60 31 41 58 92 29 63 23 62 26 48 52 53 50 54 57 75 95 32 24 64 80 85 93 59 16 4 36</file>
+          <file> 74 49 22 90 92 54 84 77 67 24 1 87 27 76 25 39 94 35 42 91 93 46 85 45 95 28 30 38 31 8 44 36 5 89 81 47 37 4 80 41 71 61 16</file>
         </tool>
       </inputs>
     </file>
@@ -200,169 +154,30 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 46</file>
+          <file> 26</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 42</file>
+          <file> 17</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 85 45 60 27 1 34 33 15 44 51 93 24 70 43 25 28 47 30 31 41 58 92 29 64 26 63 23 62 48 52 53 95 32 54 57 9 39 65 5 88 7 35 3 14 10 84 56</file>
+          <file> 4 25 39 92 54 84 77 67 24 1 80 81 49 22 90 87 27 76 94 35 42 91 93 47 95 46 85 45 28 30 38 5 89 8 44 58 33 48 60 73 56 32 62 69 65 53 15</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 85 45 60 27 1 34 33 15 44 51 93 24 70 43 25 28 47 30 31 41 58 92 29 64 26 63 23 62 48 52 53 95 32 54 57 9 39 65 5 88 7 35 3 14 10 84 56</file>
+          <file> 4 25 39 92 54 84 77 67 24 1 80 81 49 22 90 87 27 76 94 35 42 91 93 47 95 46 85 45 28 30 38 5 89 8 44 58 33 48 60 73 56 32 62 69 65 53 15</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\e11\src\e11.c</name>
+      <name>$PROJ_DIR$\..\..\..\e11\src\main.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 37</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
           <file> 83</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 8 18 70 43 25 27 1 34 33 15 44 51 28 47 30 45 60 31 41 58 92 29 63 23 62 26 48 52 53 4 36 59 16 69 50 54 57 74 17 3 24 64 14 10 32 35 38 5 88 7 75 95 85 93</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 8 18 70 43 25 27 1 34 33 15 44 51 28 47 30 45 60 31 41 58 92 29 63 23 62 26 48 52 53 4 36 59 16 69 50 54 57 74 17 3 24 64 14 10 32 35 38 5 88 7 75 95 85 93</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\e11\src\ui\dotpen_ui.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 22</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 40</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 50 54 70 43 25 27 1 34 33 15 44 51 28 47 30 45 60 57 80 95 32 24 31 41 58 92 29 64 26 63 23 62 48 52 53 85 93 59 16</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 50 54 70 43 25 27 1 34 33 15 44 51 28 47 30 45 60 57 80 95 32 24 31 41 58 92 29 64 26 63 23 62 48 52 53 85 93 59 16</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>[ROOT_NODE]</name>
-      <outputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 13</file>
-        </tool>
-        <tool>
-          <name>IARCHIVE</name>
-          <file> 2</file>
-        </tool>
-      </outputs>
-    </file>
-  </configuration>
-  <configuration>
-    <name>Release</name>
-    <outputs>
-      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\label.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\lcd.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\fatfs\ff.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\fatfs\ffconf.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\e11.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\expat\expat.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\textbox.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\zstring.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\open1788_system.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\abstract_widget_renderer.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\abstract_system.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_font_table_header.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\widget.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\container.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\user_event.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\event.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\picture.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_font.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\checkbox.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\lcd_painter.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\expat\expat_external.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\keyboard_event.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\heap.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\esic.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_icon.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_font_factory.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\timer_event.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\system.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\vector.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\abstract_painter.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\list.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\widget_ptr.h</file>
-      <file>$PROJ_DIR$\Release\Obj\xml_ui_factory.pbi</file>
-      <file>$PROJ_DIR$\Release\Exe\e11.a</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\e11_ui.c</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\object.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\default_widget_renderer.h</file>
-      <file>$PROJ_DIR$\..\..\..\e11\includes\ui\main_ui.h</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\ui\main_ui.c</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\xml_ui_factory.c</file>
-      <file>$PROJ_DIR$\..\..\..\e11\includes\ui\dotpen_ui.h</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\e11.c</file>
-      <file>$TOOLKIT_DIR$\inc\c\string.h</file>
-      <file>$PROJ_DIR$\..\..\..\e11\includes\xml_ui_factory.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\fatfs\integer.h</file>
-      <file>$PROJ_DIR$\..\..\..\e11\src\ui\dotpen_ui.c</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\widget_event.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\abstract_ui_factory.h</file>
-      <file>$PROJ_DIR$\..\..\..\e11\includes\e11_ui.h</file>
-      <file>$PROJ_DIR$\Release\Obj\e11.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\e11_ui.o</file>
-      <file>$PROJ_DIR$\Release\Obj\e11_ui.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\e11.o</file>
-      <file>$PROJ_DIR$\Release\Obj\dotpen_ui.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\dotpen_ui.o</file>
-      <file>$PROJ_DIR$\Release\Obj\main_ui.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_font_table.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_font_header.h</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_icon_header.h</file>
-      <file>$PROJ_DIR$\Release\Obj\main_ui.o</file>
-      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\raster_icon_factory.h</file>
-      <file>$PROJ_DIR$\Release\Obj\xml_ui_factory.o</file>
-    </outputs>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\e11\src\e11_ui.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 64</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -372,57 +187,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 39 32 40 17 0 24 23 9 31 34 21 48 30 15 18 33 20 29 38 59 19 10 49 11 1 14 43 16 42 25 41 70 69 13 8 7 22 36 71 26 27 2 44 61</file>
+          <file> 41 25 39 92 54 84 77 67 24 1 94 49 22 90 87 27 76 35 42 91 93 71 59 74 46 85 45 95 28 30 38</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 39 32 40 17 0 24 23 9 31 34 21 48 30 15 18 33 20 29 38 59 19 10 49 11 1 14 43 16 42 25 41 70 69 13 8 7 22 36 71 26 27 2 44 61</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\e11\src\ui\main_ui.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 68</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 72</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 12 48 30 15 17 0 24 23 9 31 34 18 33 20 32 40 21 29 38 59 19 42 25 41 16 70 69 13 73 36 71 50 61 22 14 43 53 56 60 39 10 2</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 12 48 30 15 17 0 24 23 9 31 34 18 33 20 32 40 21 29 38 59 19 42 25 41 16 70 69 13 73 36 71 50 61 22 14 43 53 56 60 39 10 2</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\e11\src\xml_ui_factory.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 45</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 74</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 56 32 40 17 0 24 23 9 31 34 60 14 48 30 15 18 33 20 21 29 38 59 19 43 16 42 25 41 70 69 13 61 22 36 71 6 28 44 3 57 4 26 1 8 7 55 35</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 56 32 40 17 0 24 23 9 31 34 60 14 48 30 15 18 33 20 21 29 38 59 19 43 16 42 25 41 70 69 13 61 22 36 71 6 28 44 3 57 4 26 1 8 7 55 35</file>
+          <file> 41 25 39 92 54 84 77 67 24 1 94 49 22 90 87 27 76 35 42 91 93 71 59 74 46 85 45 95 28 30 38</file>
         </tool>
       </inputs>
     </file>
@@ -431,44 +200,72 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 62</file>
+          <file> 9</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 65</file>
+          <file> 52</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 5 12 48 30 15 17 0 24 23 9 31 34 18 33 20 32 40 21 29 38 59 19 42 25 41 16 70 69 13 2 39 10 37 73 36 71 49 11 1 14 43 8 7 22 26 27 3 57 4 50 61 56 60</file>
+          <file> 59 74 49 22 90 92 54 84 77 67 24 1 87 27 76 25 39 94 35 42 91 93 46 85 45 95 28 30 38 61 16 41 71 40 31 8 44 50 68 62 81 47 69 65 89 32 34 60 73 56 36 5 4 80</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 5 12 48 30 15 17 0 24 23 9 31 34 18 33 20 32 40 21 29 38 59 19 42 25 41 16 70 69 13 2 39 10 37 73 36 71 49 11 1 14 43 8 7 22 26 27 3 57 4 50 61 56 60</file>
+          <file> 59 74 49 22 90 92 54 84 77 67 24 1 87 27 76 25 39 94 35 42 91 93 46 85 45 95 28 30 38 61 16 41 71 40 31 8 44 50 68 62 81 47 69 65 89 32 34 60 73 56 36 5 4 80</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\e11\src\ui\dotpen_ui.c</name>
+      <name>$PROJ_DIR$\..\..\..\e11\src\e11_ui.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 66</file>
+          <file> 29</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 67</file>
+          <file> 64</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 73 36 48 30 15 17 0 24 23 9 31 34 18 33 20 32 40 71 53 61 22 14 21 29 38 59 19 43 16 42 25 41 70 69 13 56 60 39 10</file>
+          <file> 41 25 39 92 54 84 77 67 24 1 94 49 22 90 87 27 76 35 42 91 93 71 50 68 62 81 47 95 46 85 45 28 30 38 69 65 89 8 44 32 34 61 16 48 5</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 73 36 48 30 15 17 0 24 23 9 31 34 18 33 20 32 40 71 53 61 22 14 21 29 38 59 19 43 16 42 25 41 70 69 13 56 60 39 10</file>
+          <file> 41 25 39 92 54 84 77 67 24 1 94 49 22 90 87 27 76 35 42 91 93 71 50 68 62 81 47 95 46 85 45 28 30 38 69 65 89 8 44 32 34 61 16 48 5</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\open1788\User\src\main.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 83</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 63</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\e11.out</name>
+      <outputs>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 86</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 82 21 52 64 63 88 17 23 13 12 11 10 20 2 78 70 79 14</file>
         </tool>
       </inputs>
     </file>
@@ -476,19 +273,271 @@
       <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
+          <name>ILINK</name>
+          <file> 66</file>
+        </tool>
+        <tool>
           <name>IARCHIVE</name>
-          <file> 46</file>
+          <file> 55</file>
         </tool>
       </outputs>
     </file>
-    <forcedrebuild>
-      <name>[MULTI_TOOL]</name>
-      <tool>ILINK</tool>
-    </forcedrebuild>
-    <forcedrebuild>
-      <name>[MULTI_TOOL]</name>
-      <tool>IARCHIVE</tool>
-    </forcedrebuild>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs>
+      <file>$PROJ_DIR$\..\..\..\e11\src\ui\dotpen_ui.c</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\..\open1788system\Debug\Exe\open1788system.a</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\ui\main_ui.c</file>
+      <file>$PROJ_DIR$\..\..\..\e11\includes\xml_ui_factory.h</file>
+      <file>$PROJ_DIR$\..\..\..\e11\includes\e11_ui.h</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\xml_ui_factory.c</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\main.c</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon.h</file>
+      <file>$PROJ_DIR$\..\etools\Debug\Exe\etools.a</file>
+      <file>$PROJ_DIR$\..\eresources\Debug\Exe\eresources.a</file>
+      <file>$PROJ_DIR$\..\elcd\Debug\Exe\elcd.a</file>
+      <file>$PROJ_DIR$\..\egui\Debug\Exe\egui.a</file>
+      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\open1788_lcd.h</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\e11.c</file>
+      <file>$PROJ_DIR$\..\..\..\e11\src\e11_ui.c</file>
+      <file>$PROJ_DIR$\..\expat\Debug\Exe\expat.a</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\heap.h</file>
+      <file>$PROJ_DIR$\..\eapi\Debug\Exe\eapi.a</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\esic.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_header.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_table.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon_factory.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\checkbox.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\expat_external.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\lcd_painter.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\keyboard_event.h</file>
+      <file>$PROJ_DIR$\..\..\..\e11\includes\ui\main_ui.h</file>
+      <file>$PROJ_DIR$\..\..\..\e11\includes\ui\dotpen_ui.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_table_header.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font_factory.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\system.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\timer_event.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_icon_header.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\vector.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\abstract_painter.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\list.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\widget_ptr.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\object.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\default_widget_renderer.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\fatfs\ffconf.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\expat\expat.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\e11.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\fatfs\ff.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\elcd\lcd.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\label.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\textbox.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\abstract_widget_renderer.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\zstring.h</file>
+      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\open1788_system.h</file>
+      <file>$PROJ_DIR$\Release\Obj\e11_ui.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\dotpen_ui.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\main_ui.o</file>
+      <file>$PROJ_DIR$\Release\Obj\e11_ui.o</file>
+      <file>$PROJ_DIR$\..\..\..\includes\fatfs\integer.h</file>
+      <file>$PROJ_DIR$\Release\Obj\dotpen_ui.o</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\abstract_system.h</file>
+      <file>$PROJ_DIR$\Release\Obj\main.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
+      <file>$PROJ_DIR$\Release\Obj\main.o</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\abstract_ui_factory.h</file>
+      <file>$PROJ_DIR$\Release\Obj\main_ui.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\widget.h</file>
+      <file>$PROJ_DIR$\Release\Exe\e11.out</file>
+      <file>$PROJ_DIR$\..\config\LPC1788_Flash.icf</file>
+      <file>$PROJ_DIR$\Release\Exe\e11.a</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\Release\Obj\xml_ui_factory.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eresources\raster_font.h</file>
+      <file>$PROJ_DIR$\Release\Obj\e11.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\egui\picture.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\widget_event.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\user_event.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\eapi\event.h</file>
+      <file>$PROJ_DIR$\..\..\..\includes\esic\etools\container.h</file>
+      <file>$PROJ_DIR$\Release\Obj\xml_ui_factory.o</file>
+      <file>$PROJ_DIR$\Release\Obj\e11.o</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\e11\src\ui\dotpen_ui.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 60</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 64</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 26 8 43 19 83 85 46 77 68 54 21 1 81 23 67 22 34 38 32 5 82 73 87 30 37 84 86 41 88 40 79 39 24 25 33 4 71 36 58</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 26 8 43 19 83 85 46 77 68 54 21 1 81 23 67 22 34 38 32 5 82 73 87 30 37 84 86 41 88 40 79 39 24 25 33 4 71 36 58</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\e11\src\ui\main_ui.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 72</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 61</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 65 43 19 83 85 46 77 68 54 21 1 81 23 67 22 34 87 30 37 84 86 40 79 39 88 24 25 33 26 8 38 31 5 82 73 41 32 4 71 36 58 51 15</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 65 43 19 83 85 46 77 68 54 21 1 81 23 67 22 34 87 30 37 84 86 40 79 39 88 24 25 33 26 8 38 31 5 82 73 41 32 4 71 36 58 51 15</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\e11\src\xml_ui_factory.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 78</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 89</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 4 22 34 85 46 77 68 54 21 1 71 73 43 19 83 81 23 67 87 30 37 84 86 41 88 40 79 39 24 25 33 5 82 8 38 48 28 42 50 63 47 27 52 56 53 45 14</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 4 22 34 85 46 77 68 54 21 1 71 73 43 19 83 81 23 67 87 30 37 84 86 41 88 40 79 39 24 25 33 5 82 8 38 48 28 42 50 63 47 27 52 56 53 45 14</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\e11\src\main.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 66</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 70</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 36 22 34 85 46 77 68 54 21 1 87 43 19 83 81 23 67 30 37 84 86 58 49 65 40 79 39 88 24 25 33</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 36 22 34 85 46 77 68 54 21 1 87 43 19 83 81 23 67 30 37 84 86 58 49 65 40 79 39 88 24 25 33</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\e11\src\e11.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 80</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 49 65 43 19 83 85 46 77 68 54 21 1 81 23 67 22 34 87 30 37 84 86 40 79 39 88 24 25 33 51 15 36 58 35 26 8 38 44 55 52 73 41 56 53 82 27 29 50 63 47 31 5 4 71</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 49 65 43 19 83 85 46 77 68 54 21 1 81 23 67 22 34 87 30 37 84 86 40 79 39 88 24 25 33 51 15 36 58 35 26 8 38 44 55 52 73 41 56 53 82 27 29 50 63 47 31 5 4 71</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\e11\src\e11_ui.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 59</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 62</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 36 22 34 85 46 77 68 54 21 1 87 43 19 83 81 23 67 30 37 84 86 58 44 55 52 73 41 88 40 79 39 24 25 33 56 53 82 8 38 27 29 51 15 42 5</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 36 22 34 85 46 77 68 54 21 1 87 43 19 83 81 23 67 30 37 84 86 58 44 55 52 73 41 88 40 79 39 24 25 33 56 53 82 8 38 27 29 51 15 42 5</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Release\Exe\e11.out</name>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 75 64 90 62 70 61 89 20 12 11 10 9 18 2 57 69 13</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 74</file>
+        </tool>
+        <tool>
+          <name>IARCHIVE</name>
+          <file> 76</file>
+        </tool>
+      </outputs>
+    </file>
   </configuration>
 </project>
 

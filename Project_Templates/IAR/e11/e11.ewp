@@ -565,7 +565,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>2</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -573,7 +573,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>e11.srec</state>
+          <state>e11.hex</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -581,7 +581,7 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -973,7 +973,7 @@
         </option>
         <option>
           <name>GOutputBinary</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>FPU</name>
@@ -1604,11 +1604,11 @@
         </option>
         <option>
           <name>IlinkIcfOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>lnk0t.icf</state>
+          <state>$WS_DIR$\config\LPC1788_Flash.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1668,7 +1668,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state></state>
+          <state>__iar_program_start</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -1826,7 +1826,7 @@
         </option>
         <option>
           <name>IarchiveOutput</name>
-          <state>M:\dev-e11\LPC1788\esic\Project_Templates\IAR\e11\Release\Exe\e11.a</state>
+          <state>C:\Users\sic49\Documents\esic\Project_Templates\IAR\e11\Release\Exe\e11.a</state>
         </option>
       </data>
     </settings>
