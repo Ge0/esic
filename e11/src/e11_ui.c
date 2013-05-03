@@ -46,7 +46,7 @@ PE11UI E11UI_constructor(PE11UI self) {
 
 		/* Filling coordinates information */
 		self->icons[i].widget.x = ICONS_BASE_X + (54*(i%ICONS_PER_LINE));
-		self->icons[i].widget.y = ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(i/6));
+		self->icons[i].widget.y = ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(1-(i/6)));
 		self->icons[i].border_thickness = BORDER_THICKNESS;
 		self->icons[i].border_color_hot = PICTURE_BORDER_COLOR_HOT;
 		if(i < (E11_NUMBER_OF_ICONS / 2)) {
@@ -162,6 +162,9 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 	
 	/* System Top rectangle */
 	LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
+
+	/* Draw marking window? (canvas) */
+	LcdDrawRectangle(160-274/2, 20, 274, 92, RGB_16B(200,200,200), RGB_16B(0,0,0));
 	
 	/*PE11UI real_self = (PE11UI)self;
 	//WORD i;
