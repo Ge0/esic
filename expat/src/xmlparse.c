@@ -2,11 +2,19 @@
    See the file COPYING for copying permission.
 */
 
+
+
 #include <stddef.h>
 #include <string.h>                     /* memset(), memcpy() */
 //#include <assert.h>
 #include <limits.h>                     /* UINT_MAX */
 #include <time.h>                       /* time() */
+
+// GR
+#include <esic/eapi/heap.h>
+#if defined(OPEN1788)
+extern time_t time_impl(time_t* t);
+#endif
 
 #define XML_BUILDING_EXPAT 1
 
@@ -168,7 +176,7 @@ typedef struct {
 /* TAG represents an open element.
    The name of the element is stored in both the document and API
    encodings.  The memory buffer 'buf' is a separately-allocated
-   memory area which stores the name.  During the XML_Parse()/
+   memory area which stores the name.  During the )/
    XMLParseBuffer() when the element is open, the memory for the 'raw'
    version of the name (in the document encoding) is shared with the
    document buffer.  If the element is open across calls to
@@ -693,14 +701,31 @@ static const XML_Char implicitContext[] = {
 static unsigned long
 generate_hash_secret_salt(void)
 {
-  unsigned int seed = time(NULL) % UINT_MAX;
+	/*
+	SicPrintfDebug("generate_hash_secret_salt() start\r\n");
+  unsigned int seed = time(NULL);
+  SicPrintfDebug("Modulo...\r\n");
+  seed %= UINT_MAX;
+  SicPrintfDebug("srand()...\r\n");
   srand(seed);
+  SicPrintfDebug("generate_hash_secret_salt() end\r\n");
   return rand();
+	*/
+	unsigned int seed;
+#if defined (OPEN1788)
+	seed = time_impl(NULL) % UINT_MAX;
+#elif defined(EMULATOR)
+	seed = time(NULL) % UINT_MAX;
+#endif
+	srand(seed);
+	
+	return rand();
 }
 
 static XML_Bool  /* only valid for root parser */
 startParsing(XML_Parser parser)
 {
+	SicPrintfDebug("startParsing()\r\n");
     /* hash functions must be initialized before setContext() is called */
     if (hash_secret_salt == 0)
       hash_secret_salt = generate_hash_secret_salt();
@@ -708,6 +733,7 @@ startParsing(XML_Parser parser)
       /* implicit context only set for root parser, since child
          parsers (i.e. external entity parsers) will inherit it
       */
+	  SicPrintfDebug("Blah blah.\r\n");
       return setContext(parser, implicitContext);
     }
     return XML_TRUE;
@@ -1499,22 +1525,27 @@ XML_SetHashSalt(XML_Parser parser,
 enum XML_Status XMLCALL
 XML_Parse(XML_Parser parser, const char *s, int len, int isFinal)
 {
+	SicPrintfDebug("XML_Parse()\r\n");
   switch (ps_parsing) {
   case XML_SUSPENDED:
+	  SicPrintfDebug("XML_SUSPENDED\r\n");
     errorCode = XML_ERROR_SUSPENDED;
     return XML_STATUS_ERROR;
   case XML_FINISHED:
+	  SicPrintfDebug("XML_FINISHED\r\n");
     errorCode = XML_ERROR_FINISHED;
     return XML_STATUS_ERROR;
   case XML_INITIALIZED:
+	  SicPrintfDebug("XML_INITIALIZED\r\n");
     if (parentParser == NULL && !startParsing(parser)) {
       errorCode = XML_ERROR_NO_MEMORY;
       return XML_STATUS_ERROR;
     }
   default:
+	 SicPrintfDebug("XML_PARSING\r\n");  
     ps_parsing = XML_PARSING;
   }
-
+  SicPrintfDebug("STUFF\r\n"); 	
   if (len == 0) {
     ps_finalBuffer = (XML_Bool)isFinal;
     if (!isFinal)
@@ -1527,7 +1558,6 @@ XML_Parse(XML_Parser parser, const char *s, int len, int isFinal)
        to detect errors based on that fact.
     */
     errorCode = processor(parser, bufferPtr, parseEndPtr, &bufferPtr);
-
     if (errorCode == XML_ERROR_NONE) {
       switch (ps_parsing) {
       case XML_SUSPENDED:
@@ -1546,6 +1576,7 @@ XML_Parse(XML_Parser parser, const char *s, int len, int isFinal)
     processor = errorProcessor;
     return XML_STATUS_ERROR;
   }
+  
 #ifndef XML_CONTEXT_BYTES
   else if (bufferPtr == bufferEnd) {
     const char *end;
@@ -1578,7 +1609,6 @@ XML_Parse(XML_Parser parser, const char *s, int len, int isFinal)
         result = XML_STATUS_OK;
       }
     }
-
     XmlUpdatePosition(encoding, positionPtr, end, &position);
     nLeftOver = s + len - end;
     if (nLeftOver) {
@@ -1609,6 +1639,7 @@ XML_Parse(XML_Parser parser, const char *s, int len, int isFinal)
   }
 #endif  /* not defined XML_CONTEXT_BYTES */
   else {
+	 
     void *buff = XML_GetBuffer(parser, len);
     if (buff == NULL)
       return XML_STATUS_ERROR;
@@ -2102,6 +2133,7 @@ contentProcessor(XML_Parser parser,
                  const char *end,
                  const char **endPtr)
 {
+	//SicPrintfDebug("contentProcessor()\r\n");
   enum XML_Error result = doContent(parser, 0, encoding, start, end,
                                     endPtr, (XML_Bool)!ps_finalBuffer);
   if (result == XML_ERROR_NONE) {
@@ -2439,6 +2471,7 @@ doContent(XML_Parser parser,
         result = storeAtts(parser, enc, s, &(tag->name), &(tag->bindings));
         if (result)
           return result;
+		//SicPrintfDebug("doContent()\r\n");
         if (startElementHandler)
           startElementHandler(handlerArg, tag->name.str,
                               (const XML_Char **)atts);
@@ -3549,6 +3582,7 @@ prologInitProcessor(XML_Parser parser,
                     const char *end,
                     const char **nextPtr)
 {
+  //SicPrintfDebug("prologInitProcessor()\r\n");
   enum XML_Error result = initializeEncoding(parser);
   if (result != XML_ERROR_NONE)
     return result;
@@ -3734,7 +3768,9 @@ prologProcessor(XML_Parser parser,
                 const char *end,
                 const char **nextPtr)
 {
+	//SicPrintfDebug("prologProcessor()\r\n");
   const char *next = s;
+  
   int tok = XmlPrologTok(encoding, s, end, &next);
   return doProlog(parser, encoding, s, end, tok, next,
                   nextPtr, (XML_Bool)!ps_finalBuffer);
@@ -3750,6 +3786,7 @@ doProlog(XML_Parser parser,
          const char **nextPtr,
          XML_Bool haveMore)
 {
+	//SicPrintfDebug("doProlog()\r\n");
 #ifdef XML_DTD
   static const XML_Char externalSubsetName[] = { ASCII_HASH , '\0' };
 #endif /* XML_DTD */

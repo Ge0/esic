@@ -38,11 +38,15 @@ void XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget) {
 
 	/* Build path */
 	path = (char*)SicAlloc((strlen(PATH_USER_INTERFACES) + strlen(ui_name) + 5) * sizeof(char)); /* +5 = ".xml\0" */
+	
+	SicAssert(path != NULL);
+	
 	strcpy(path, PATH_USER_INTERFACES);
 	strcat(path, ui_name);
 	strcat(path, ".xml");
 
 	//if((fp = fopen(path, "r")) == NULL) {
+
 	if(f_open(&ui_file, path, FA_READ) != FR_OK) {
 		/* Error... */
 		SicPrintfDebug("Cannot open %s! Abort...\r\n", path);
@@ -50,13 +54,13 @@ void XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget) {
 		return;
 	}
 
+
 	parser = XML_ParserCreate(NULL);
 
 	/* Set our widget as the user data so the callback would be able to hydrate it */
 	XML_SetUserData(parser, (void*)&widget);
 
 	XML_SetElementHandler(parser, _start_element, _end_element);
-
 	do {
 		//int len = fread(buf, sizeof(char), sizeof(buf), fp);
 		f_read(&ui_file, buf, sizeof(buf) * sizeof(char), &br);
@@ -96,6 +100,7 @@ PWidget XmlUiFactory_getUI(const char* ui_name) {
 	}
 
 	parser = XML_ParserCreate(NULL);
+	SicAssert(parser != NULL);
 
 	/* Create the widget of the user interface */
 	NEW(built_widget, Widget);
@@ -123,6 +128,7 @@ PWidget XmlUiFactory_getUI(const char* ui_name) {
 
 static void _start_element(void *user_data, const char *name, const char **atts)
 {
+	//SicPrintfDebug("_start_element %s\r\n", name);
 	PPWidget p_widget = (PPWidget)user_data;
 
 	if(strcmp(name, "window") == 0) {

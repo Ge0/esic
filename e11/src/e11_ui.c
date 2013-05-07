@@ -162,9 +162,11 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 	
 	/* System Top rectangle */
 	LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
+	
+
 
 	/* Draw marking window? (canvas) */
-	LcdDrawRectangle(160-274/2, 20, 274, 92, RGB_16B(200,200,200), RGB_16B(0,0,0));
+	//LcdDrawRectangle(160-274/2, 20, 274, 92, RGB_16B(200,200,200), RGB_16B(0,0,0));
 	
 	/*PE11UI real_self = (PE11UI)self;
 	//WORD i;

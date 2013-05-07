@@ -1977,6 +1977,12 @@
     </group>
     <group>
       <name>src</name>
+      <group>
+        <name>IAR</name>
+        <file>
+          <name>$PROJ_DIR$\..\..\..\open1788\User\src\IAR\time_impl.s</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$\..\..\..\open1788\User\src\debug_module.c</name>
       </file>
@@ -2003,6 +2009,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\open1788\User\src\timer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\open1788\User\src\uart_irq.c</name>
       </file>
     </group>
   </group>

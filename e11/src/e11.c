@@ -67,7 +67,7 @@ void _e11_mainloop() {
 	DWORD ticks1, ticks2;
 
 	MainUI main_ui;
-
+	
 	MainUI_constructor(&main_ui);
 	
 	
@@ -84,7 +84,7 @@ void _e11_mainloop() {
 		//LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
 
 		if(EsicPollEvent(&system_event)) {
-
+			
 			switch(system_event.type) {
 			case EVENT_QUIT:
  				looping = (BOOL)!looping;

@@ -6,6 +6,7 @@
 #include "EX_SDRAM.h"
 #include "timer.h"
 #include "system_queue.h"
+#include "uart_irq.h"
 
 /*
 static void FatInit(FATFS* fs);
@@ -29,6 +30,9 @@ void  Open1788SystemInit(void) {
 	
 	enable_timer(0);
 	init_timer(0, (SystemCoreClock / 1000));
+	
+	//enable_uart_irq();
+
 	
 	LcdInit(480, 272, 16, LCD_DOUBLEBUF);
 	LcdFill(RGB_16B(240,240,240));
@@ -131,3 +135,8 @@ void TestEnumDirs(FATFS* fs) {
 	
 }
 */
+
+
+void UART1_IRQHandler (void) {
+	xprintf("fdskofospq");
+}
