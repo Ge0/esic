@@ -165,6 +165,8 @@
         <option>
           <name>CCDefines</name>
           <state>OPEN1788</state>
+          <state>__LPC177X_8X__</state>
+          <state>USB_CAN_BE_DEVICE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -301,6 +303,9 @@
           <state>$PROJ_DIR$\..\..\..\includes</state>
           <state>$PROJ_DIR$\..\..\..\open1788\User\fatfs\includes</state>
           <state>$PROJ_DIR$\..\..\..\open1788\User\includes</state>
+          <state>$PROJ_DIR$\..\..\..\open1788\User\MassStorageDevice</state>
+          <state>$PROJ_DIR$\..\..\..\open1788\User\MassStorageDevice\Lib</state>
+          <state>$PROJ_DIR$\..\..\..\open1788\LPCUSBLib\Drivers\USB</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1973,6 +1978,33 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\open1788\User\includes\timer.h</name>
+      </file>
+    </group>
+    <group>
+      <name>MassStorageDevice</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\open1788\MassStorageDevice\Lib\DataRam.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\open1788\MassStorageDevice\Lib\DataRam.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\open1788\MassStorageDevice\Descriptors.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\open1788\MassStorageDevice\Descriptors.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\open1788\MassStorageDevice\MassStorage.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\open1788\MassStorageDevice\MassStorage.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\open1788\MassStorageDevice\Lib\SCSI.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\open1788\MassStorageDevice\Lib\SCSI.h</name>
       </file>
     </group>
     <group>

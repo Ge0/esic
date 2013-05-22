@@ -23,6 +23,9 @@
 #include "timer.h"
 #include "system_LPC177x_8x.h"
 
+// GR:
+extern void HandleUsbTask(void);
+
 volatile uint32_t timer0_counter = 0;
 volatile uint32_t timer1_counter = 0;
 volatile uint32_t timer2_counter = 0;
@@ -121,6 +124,10 @@ void TIMER1_IRQHandler (void)
 {  
     LPC_TIM1->IR = 0x1<<0;		/* clear interrupt flag */
   timer1_counter++;
+  
+  // GR:
+  HandleUsbTask();
+  
   return;
 }
 

@@ -64,9 +64,8 @@ mode=0
 [Breakpoints2]
 Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\open1788\User\src\main.c}.6.1" 0 0 1 "" 0 "" 0
 Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\open1788\User\src\open1788_lcd.c}.123.1" 0 0 1 "" 0 "" 0
-Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\open1788\User\src\open1788_lcd.c}.14.1" 0 0 1 "" 0 "" 0
-Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\open1788\User\src\timer.c}.107.1" 0 0 1 "" 0 "" 0
-Count=4
+Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\open1788\User\src\timer.c}.129.1" 0 0 1 "" 0 "" 0
+Count=3
 [Aliases]
 Count=0
 SuppressDialog=0

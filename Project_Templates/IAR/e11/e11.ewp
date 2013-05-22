@@ -1875,6 +1875,9 @@
       <name>$PROJ_DIR$\..\expat\Debug\Exe\expat.a</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\lpcusblib_device\LPCUSBlib_LPC177x_8x_Device.a</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\open1788system\Debug\Exe\open1788system.a</name>
     </file>
   </group>

@@ -31,6 +31,10 @@ void  Open1788SystemInit(void) {
 	enable_timer(0);
 	init_timer(0, (SystemCoreClock / 1000));
 	
+	// Timer for USB requests?
+	enable_timer(1);
+	init_timer(1, SystemCoreClock / 1000000);
+	
 	//enable_uart_irq();
 
 	
@@ -135,8 +139,3 @@ void TestEnumDirs(FATFS* fs) {
 	
 }
 */
-
-
-void UART1_IRQHandler (void) {
-	xprintf("fdskofospq");
-}
