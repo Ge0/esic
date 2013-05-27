@@ -46,27 +46,32 @@ PMainUI MainUI_constructor(PMainUI self) {
 	//E11UI(self)->vtable              = VTABLE_POINTER(E11UI);
 
 	/* Build the UI */
-	XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget);
+	//XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget);
 
 	/* Set the 12 icons */
-	self->e11ui.icons[0].icon = RasterIconFactory_getRasterIcon("dotpen_black.ilcd");
-	self->e11ui.icons[1].icon = RasterIconFactory_getRasterIcon("edition_black.ilcd");
-	self->e11ui.icons[2].icon = RasterIconFactory_getRasterIcon("preview_black.ilcd");
-	self->e11ui.icons[3].icon = RasterIconFactory_getRasterIcon("list_black.ilcd");
-	self->e11ui.icons[4].icon = RasterIconFactory_getRasterIcon("settings_black.ilcd");
-	self->e11ui.icons[5].icon = RasterIconFactory_getRasterIcon("ask_black.ilcd");
-	self->e11ui.icons[6].icon = RasterIconFactory_getRasterIcon("dotpen_black.ilcd");
-	self->e11ui.icons[7].icon = RasterIconFactory_getRasterIcon("edition_black.ilcd");
-	self->e11ui.icons[8].icon = RasterIconFactory_getRasterIcon("preview_black.ilcd");
-	self->e11ui.icons[9].icon = RasterIconFactory_getRasterIcon("list_black.ilcd");
-	self->e11ui.icons[10].icon = RasterIconFactory_getRasterIcon("settings_black.ilcd");
-	self->e11ui.icons[11].icon = RasterIconFactory_getRasterIcon("ask_black.ilcd");
+	self->e11ui.icons[0]->icon = RasterIconFactory_getRasterIcon("dotpen_black.ilcd");
+	self->e11ui.icons[1]->icon = RasterIconFactory_getRasterIcon("edition_black.ilcd");
+	self->e11ui.icons[2]->icon = RasterIconFactory_getRasterIcon("preview_black.ilcd");
+	self->e11ui.icons[3]->icon = RasterIconFactory_getRasterIcon("list_black.ilcd");
+	self->e11ui.icons[4]->icon = RasterIconFactory_getRasterIcon("settings_black.ilcd");
+	self->e11ui.icons[5]->icon = RasterIconFactory_getRasterIcon("ask_black.ilcd");
+
+	/*
+	self->e11ui.icons[6]->icon = RasterIconFactory_getRasterIcon("dotpen_black.ilcd");
+	self->e11ui.icons[7]->icon = RasterIconFactory_getRasterIcon("edition_black.ilcd");
+	self->e11ui.icons[8]->icon = RasterIconFactory_getRasterIcon("preview_black.ilcd");
+	self->e11ui.icons[9]->icon = RasterIconFactory_getRasterIcon("list_black.ilcd");
+	self->e11ui.icons[10]->icon = RasterIconFactory_getRasterIcon("settings_black.ilcd");
+	self->e11ui.icons[11]->icon = RasterIconFactory_getRasterIcon("ask_black.ilcd");
+	*/
 
 	for(i = 0; i < E11_NUMBER_OF_ICONS; ++i) {
 		//assert(self->e11ui.icons[i].icon);
 
 		/* Add icons to the list of childs widgets so they can be browsed with the TAB */
-		Widget_addChild(&self->e11ui.widget, &self->e11ui.icons[i].widget, FALSE);
+		if(self->e11ui.icons[i]->icon != NULL) {
+			Widget_addChild(&self->e11ui.widget, &self->e11ui.icons[i]->widget, FALSE);
+		}
 	}
 
 	

@@ -3,7 +3,7 @@
  */
 #include <esic/elcd/lcd.h>
 //#include <esic/eapi/raster_font.h>
-#include <esic/etools/vector.h>
+//#include <esic/etools/vector.h>
 //#include <assert.h>
 #include <stdlib.h>
 #include <string.h>

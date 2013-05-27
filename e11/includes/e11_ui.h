@@ -50,7 +50,8 @@ typedef struct _E11UI {
 	//const vtable_E11UI* vtable;
 	//void (*onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI, void*);	/* array of function pointers */
 	void (**onFunction)(PE11UI, void*);
-	Picture icons[E11_NUMBER_OF_ICONS];
+	//Picture icons[E11_NUMBER_OF_ICONS];
+	PPicture icons[E11_NUMBER_OF_ICONS];
 	WORD hot_widget_id; /* Test */
 	PListNode focused_widget;
 	PE11UI parent_ui;

@@ -39,20 +39,21 @@ PE11UI E11UI_constructor(PE11UI self) {
 
 	/* Construct picture widgets */
 	for(i = 0; i < E11_NUMBER_OF_ICONS; i++) {
-		Picture_constructor(&self->icons[i]);
+		//Picture_constructor(&self->icons[i]);
+		NEW(self->icons[i], Picture);
 
 		/* Id : 0x8000 + i + 1 */
-		self->icons[i].widget.id = (WORD)(E11_BASE_ID_SYSTEM_ICONS + i + 1);
+		self->icons[i]->widget.id = (WORD)(E11_BASE_ID_SYSTEM_ICONS + i + 1);
 
 		/* Filling coordinates information */
-		self->icons[i].widget.x = ICONS_BASE_X + (54*(i%ICONS_PER_LINE));
-		self->icons[i].widget.y = ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(1-(i/6)));
-		self->icons[i].border_thickness = BORDER_THICKNESS;
-		self->icons[i].border_color_hot = PICTURE_BORDER_COLOR_HOT;
+		self->icons[i]->widget.x = ICONS_BASE_X + (54*(i%ICONS_PER_LINE));
+		self->icons[i]->widget.y = ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(1-(i/6)));
+		self->icons[i]->border_thickness = BORDER_THICKNESS;
+		self->icons[i]->border_color_hot = PICTURE_BORDER_COLOR_HOT;
 		if(i < (E11_NUMBER_OF_ICONS / 2)) {
-			self->icons[i].border_color = BACKGROUND_FIRST_ROW;
+			self->icons[i]->border_color = BACKGROUND_FIRST_ROW;
 		} else {
-			self->icons[i].border_color = BACKGROUND_SECOND_ROW;
+			self->icons[i]->border_color = BACKGROUND_SECOND_ROW;
 		}
 	}
 
@@ -81,9 +82,12 @@ void E11UI_destructor(PObject self) {
 	Widget_destructor(self);
 
 	/* Destruct picture widgets */
+	/*
 	for(i = 0; i < E11_NUMBER_OF_ICONS; i++) {
-		Picture_destructor(&real_self->icons[i].widget.object);
+		//Picture_destructor(&real_self->icons[i].widget.object);
+		//DELETE(E11UI(self)->icons[i]);
 	}
+	*/
 }
 
 PObject E11UI_clone(PObject self, PObject dst) {
@@ -166,7 +170,7 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 
 
 	/* Draw marking window? (canvas) */
-	//LcdDrawRectangle(160-274/2, 20, 274, 92, RGB_16B(200,200,200), RGB_16B(0,0,0));
+	LcdDrawRectangle(160-274/2, 20, 274, 92, RGB_16B(200,200,200), RGB_16B(0,0,0));
 	
 	/*PE11UI real_self = (PE11UI)self;
 	//WORD i;
@@ -191,7 +195,7 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 
 PPicture E11UI_getPicture(PE11UI self, DWORD index) {
 	if(/*index >= 0 &&*/ index < E11_NUMBER_OF_ICONS) {
-		return &self->icons[index];
+		return self->icons[index];
 	} else {
 		return NULL;
 	}
@@ -199,7 +203,7 @@ PPicture E11UI_getPicture(PE11UI self, DWORD index) {
 
 void E11UI_setIcon(PE11UI self, DWORD index, const PPicture icon) {
 	if(/*index >= 0 &&*/ index < E11_NUMBER_OF_ICONS) {
-		self->icons[index] = *icon;
+		self->icons[index] = icon;
 	}
 }
 
@@ -221,7 +225,7 @@ static DWORD _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 		PWidget picture_widget = Widget_findChildById(self, widget_id);
 
 		// update the hot widget
-		E11UI(self)->hot_widget_id = widget_id;
+		//E11UI(self)->hot_widget_id = widget_id;
 
 		// If we have found any child, set its state to hot & send a message to repaint it
 		if(picture_widget != NULL) {
