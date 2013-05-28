@@ -11,11 +11,12 @@
 typedef struct _AbstractPainter* PAbstractPainter;
 
 typedef struct _vtable_AbstractPainter {
-	void (*drawLine)(PAbstractPainter, WORD, WORD, WORD, WORD, WORD);
-	void (*drawRectangle)(PAbstractPainter, WORD, WORD, WORD, WORD, WORD, WORD);
-	void (*drawString)(PAbstractPainter, WORD, WORD, WORD, const char*);
-	void (*drawPixel)(PAbstractPainter, WORD, WORD, WORD);
-	void (*drawBuffer)(PAbstractPainter, WORD, WORD, WORD, WORD, WORD*);
+	void (*drawLine)(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, DWORD);
+	void (*drawRectangle)(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD);
+	void (*drawString)(PAbstractPainter, DWORD, DWORD, DWORD, const char*);
+	void (*drawPixel)(PAbstractPainter, DWORD, DWORD, DWORD);
+	void (*drawBuffer)(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, WORD*);
+	void (*drawTriangle)(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD);
 } vtable_AbstractPainter;
 
 typedef struct _AbstractPainter {
@@ -35,6 +36,7 @@ typedef struct _AbstractPainter {
 	ABSTRACTPAINTER_VFUNCTION(drawRectangle), \
 	ABSTRACTPAINTER_VFUNCTION(drawString), \
 	ABSTRACTPAINTER_VFUNCTION(drawPixel), \
-	ABSTRACTPAINTER_VFUNCTION(drawBuffer)
+	ABSTRACTPAINTER_VFUNCTION(drawBuffer), \
+	ABSTRACTPAINTER_VFUNCTION(drawRectangle)
 
 #endif /* _ABSTRACT_SYSTEM_H_ */

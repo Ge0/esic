@@ -1,9 +1,16 @@
 /**
  * \file lcd_painter.c
  */
+#include <math.h>
 #include <string.h>
+
+#include <esic/eapi/misc.h>
+
 #include <esic/elcd/lcd_painter.h>
 #include <esic/elcd/lcd.h>
+
+#include <esic/egraphics/triangle.h>
+#include <esic/egraphics/vertice.h>
 
 static const vtable_Object s_object_vtable = {
 	LcdPainter_destructor,
@@ -17,7 +24,8 @@ static const vtable_AbstractPainter s_abstract_painter_vtable = {
 	LcdPainter_drawRectangle,
 	LcdPainter_drawString,
 	LcdPainter_drawPixel,
-	LcdPainter_drawBuffer
+	LcdPainter_drawBuffer,
+	LcdPainter_drawTriangle
 };
 
 PLcdPainter LcdPainter_constructor(PLcdPainter self) {
@@ -37,10 +45,10 @@ void LcdPainter_destructor(PObject self) {
 }
 
 /* AbstractPainter */
-void LcdPainter_drawLine(PAbstractPainter abstract_painter, WORD x1, WORD y1, WORD x2, WORD y2, WORD color) {
+void LcdPainter_drawLine(PAbstractPainter abstract_painter, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
 	LcdDrawLine(x1, y1, x2, y2, color);
 }
-void LcdPainter_drawRectangle(PAbstractPainter abstract_painter, WORD x, WORD y, WORD width, WORD height, WORD background_color, WORD border_color) {
+void LcdPainter_drawRectangle(PAbstractPainter abstract_painter, DWORD x, DWORD y, DWORD width, DWORD height, DWORD background_color, DWORD border_color) {
 	/* Firstly: draw the rectangle */
 	int i;
 	for(i = 0; i < height; i++) {
@@ -57,7 +65,7 @@ void LcdPainter_drawRectangle(PAbstractPainter abstract_painter, WORD x, WORD y,
 
 }
 
-void LcdPainter_drawString(PAbstractPainter self, WORD x, WORD y , WORD color, const char* string) {
+void LcdPainter_drawString(PAbstractPainter self, DWORD x, DWORD y , DWORD color, const char* string) {
 	PLcdPainter real_self = (PLcdPainter)self;
 	if(self->raster_font != NULL) {
 		WORD i, j;
@@ -102,12 +110,12 @@ void LcdPainter_drawString(PAbstractPainter self, WORD x, WORD y , WORD color, c
 	}
 }
 
-void LcdPainter_drawPixel(PAbstractPainter abstract_painter, WORD x , WORD y , WORD color) {
+void LcdPainter_drawPixel(PAbstractPainter abstract_painter, DWORD x , DWORD y , DWORD color) {
 	LcdSetPixel(x, y, color);
 }
 
-void LcdPainter_drawBuffer(PAbstractPainter abstract_painter, WORD x, WORD y, WORD width, WORD height, WORD* raw_buffer) {
-	WORD i, j;
+void LcdPainter_drawBuffer(PAbstractPainter abstract_painter, DWORD x, DWORD y, DWORD width, DWORD height, WORD* raw_buffer) {
+	DWORD i, j;
 
 	for(j = 0; j < height; ++j) {
 		for(i = 0; i < width; ++i) {
@@ -116,4 +124,122 @@ void LcdPainter_drawBuffer(PAbstractPainter abstract_painter, WORD x, WORD y, WO
 			}
 		}
 	}
+}
+
+void LcdPainter_drawTriangle(PAbstractPainter abstract_painter, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2 , DWORD filling_color, DWORD border_color) {
+	//LcdDrawTriangle(x0, y0, x1, y1, x2, y2, filling_color, border_color);
+	Triangle triangle;
+	
+
+	Triangle_constructor(&triangle);
+	
+
+	triangle.v1.x = x0;
+	triangle.v1.y = y0;
+	triangle.v2.x = x1;
+	triangle.v2.y = y1;
+	triangle.v3.x = x2;
+	triangle.v3.y = y2;
+
+}
+
+void _LcdPainter_fillFlatSideTriangleInt(PAbstractPainter abstract_painter, const PVertice v1, const PVertice v2, const PVertice v3, DWORD border_color, DWORD filling_color) {
+	Vertice tmp_vertice_1;
+	Vertice tmp_vertice_2;
+
+	BOOL changed1 = FALSE;
+	BOOL changed2 = FALSE;
+
+	SDWORD e1;
+	SDWORD e2;
+
+	int i;
+
+	SDWORD dx1 = abs((long long)v2->x - v1->x);
+	SDWORD dy1 = abs((long long)v2->y - v1->y);
+
+	SDWORD dx2 = abs((long long)v3->x - v1->x);
+	SDWORD dy2 = abs((long long)v3->y - v1->y);
+
+	SWORD signx1 = sign(v2->x - v1->x);
+	SWORD signx2 = sign(v3->x - v1->x);
+
+	SWORD signy1 = sign(v2->y - v1->y);
+	SWORD signy2 = sign(v3->y - v1->y);
+
+	
+	if(dy1 > dx1) {
+		/* Swap values */
+		SWAP(dx1, dy1);
+		changed1 = TRUE;
+	}
+
+	if(dy2 > dx2) {
+		/* Swap values */
+		SWAP(dx2, dy2);
+		changed2 = TRUE;
+	}
+
+	e1 = 2 * dy1 - dx1;
+	e2 = 2 * dy2 - dx2;
+
+
+	Vertice_constructor(&tmp_vertice_1);
+	Vertice_constructor(&tmp_vertice_2);
+
+	tmp_vertice_1.x = tmp_vertice_2.x = v1->x;
+	tmp_vertice_1.y = tmp_vertice_2.y = v1->y;
+
+	for(i = 0; i <= dx1; ++i) {
+		LcdDrawLine(
+			tmp_vertice_1.x,
+			tmp_vertice_1.y,
+			tmp_vertice_2.x,
+			tmp_vertice_2.y,
+			filling_color
+		);
+
+		while(e1 >= 0) {
+			if(changed1) {
+				tmp_vertice_1.x += signx1;
+			} else {
+				tmp_vertice_1.y += signy1;
+			}
+
+			e1 = e1 - 2 * dx1;
+		}
+
+		if(changed1) {
+			tmp_vertice_1.y += signy1;
+		} else {
+			tmp_vertice_1.x += signx1;
+		}
+
+		e1 = e1 + 2 * dy1;
+
+		/* here we rendered the next point on line 1 so follow now line 2
+		* until we are on the same y-value as line 1.
+		*/
+		while(tmp_vertice_2.y != tmp_vertice_1.y) {
+			while(e2 >= 0) {
+				if(changed2) {
+					tmp_vertice_2.x += signx2;
+				} else {
+					tmp_vertice_2.y += signy2;
+				}
+
+				e2 = e2 - 2 * dx2;
+			}
+
+			if(changed2) {
+				tmp_vertice_2.y = signy2;
+			} else {
+				tmp_vertice_2.x = signx2;
+			}
+
+			e2 = e2 + 2 * dy2;
+		}
+	}
+
+
 }

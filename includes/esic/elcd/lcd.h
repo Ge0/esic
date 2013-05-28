@@ -18,10 +18,7 @@
 #define MAX(x,y) ((x) > (y) ? (x) : (y))
 #define MIN(x,y) ((x) < (y) ? (x) : (y))
 #define GET_BIT_STRING_BIGENDIAN(string, i) ((string[i/8] >> (7-(i%8)) & 0x01))
-#define SWAP(x,y) \
-		x ^= y; \
-		y ^= x; \
-		x ^= y;
+
 
 #define TO_INDEX(x,y,width,height) (((y * width) % (width*height)) + (x % width))
 
@@ -107,5 +104,6 @@ void LcdFill(DWORD color);
 void LcdDrawLine(DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color);
 void LcdSetPixel(DWORD x, DWORD y, DWORD color);
 void _LcdInit(DWORD width, DWORD height, BYTE bpp, void* framebuffer);
+void LcdDrawTriangle2(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD filling_color, DWORD border_color);
 
 #endif /* _LCD_H_ */

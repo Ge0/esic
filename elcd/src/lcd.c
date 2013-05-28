@@ -2,6 +2,7 @@
  * \file lcd.c
  */
 #include <esic/elcd/lcd.h>
+
 //#include <esic/eapi/raster_font.h>
 //#include <esic/etools/vector.h>
 //#include <assert.h>
@@ -23,7 +24,7 @@ static WORD *s_double_buf = NULL;
 static DWORD s_default_background_color = RGB_16B(255,255,255);
 
 /* Pointer to the accessible frame buffer, in read-only mode */
-const WORD* g_lcd_frame_buffer = NULL;
+//const WORD* g_lcd_frame_buffer = NULL;
 
 /* Pointer to current font */
 //PRasterFont s_current_font = NULL;
@@ -38,6 +39,8 @@ static Lcd s_lcd;
  */
 float* _linear_interpolation(WORD t0, float f0, WORD t1, float f1);
 void _LcdFill2BytesPerPixel(WORD color);
+
+
 
 /* Internal functions for triangles */
 void _lcd_fill_bottom_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color);
@@ -100,11 +103,25 @@ void _LcdFill2BytesPerPixel(WORD color) {
 }
 
 void _lcd_fill_bottom_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
-	float invslope1 = (x1 - x0) / (float)(y1 - y0);
+	/*
+	float invslope1 = ((SDWORD)x1 - x0) / (float)(y1 - y0);
 	float invslope2 = (x2 - x0) / (float)(y2 - y0);
+	*/
+
+	float invslope1;
+	float invslope2;
+
+	
+
 	DWORD curx1 = x0;
 	DWORD curx2 = x0;
 	DWORD scanline_y = y0;
+
+	invslope1 = (float)x1 - x0;
+	invslope1 /= ((float)y1 - y0);
+
+	invslope2 = (float)x2 - x0;
+	invslope2 /= (float)y2 - y0;
 
 	for (; scanline_y <= y1; scanline_y++) {
 		LcdDrawLine((DWORD)curx1, scanline_y, (DWORD)curx2, scanline_y, color);
@@ -115,11 +132,20 @@ void _lcd_fill_bottom_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWOR
 
 
 void _lcd_fill_top_flat_triangle(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
-	double invslope1 = (x2 - x0) / (double)(y2 - y0);
-	double invslope2 = (x2 - x1) / (double)(y2 - y1);
+
+	float invslope1;
+	float invslope2;
+
+	
 	DWORD curx1 = x2;
 	DWORD curx2 = x2;
 	DWORD scanline_y = y2;
+
+	invslope1 = (float)x2 - x0;
+	invslope1 /= ((float)y2 - y0);
+
+	invslope2 = (float)x2 - x1;
+	invslope2 /= (float)y2 - y1;
 
 	for (; scanline_y > y0; scanline_y--) {
 		curx1 -= (DWORD)invslope1;
@@ -276,4 +302,14 @@ void LcdDrawLine(DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
 		}
 	}
 	
+}
+
+/*
+SDWORD _cross_product(DWORD x1, DWORD y1, DWORD x2, DWORD y2) {
+	return x1 * y2 - y1 * x2;
+}
+*/
+
+void LcdDrawTriangle2(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD filling_color, DWORD border_color) {
+
 }

@@ -4,6 +4,10 @@
 #ifndef _VERTICE_H_
 #define _VERTICE_H_
 
+#define VERTICE_SWAP(v1, v2) \
+	SWAP(v1->x, v2->x); \
+	SWAP(v1->y, v2->y);
+
 #include <esic/object.h>
 
 typedef struct _Vertice {

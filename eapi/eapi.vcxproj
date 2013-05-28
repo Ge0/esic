@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClCompile Include="src\event.c" />
     <ClCompile Include="src\heap.c" />
+    <ClCompile Include="src\misc.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\eapi\abstract_painter.h" />
@@ -88,6 +89,7 @@
     <ClInclude Include="..\includes\esic\eapi\event.h" />
     <ClInclude Include="..\includes\esic\eapi\heap.h" />
     <ClInclude Include="..\includes\esic\eapi\keyboard_event.h" />
+    <ClInclude Include="..\includes\esic\eapi\misc.h" />
     <ClInclude Include="..\includes\esic\eapi\system.h" />
     <ClInclude Include="..\includes\esic\eapi\timer_event.h" />
     <ClInclude Include="..\includes\esic\eapi\user_event.h" />

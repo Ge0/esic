@@ -65,6 +65,9 @@ typedef enum _BOOL {
 #define VTABLE(x) \
 	const vtable_##x *vtable
 
-
+#define SWAP(x,y) \
+		x ^= y; \
+		y ^= x; \
+		x ^= y;
 
 #endif

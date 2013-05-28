@@ -17,10 +17,11 @@ PLcdPainter LcdPainter_constructor(PLcdPainter self);
 void LcdPainter_destructor(PObject self);
 
 /* AbstractPainter */
-void LcdPainter_drawLine(PAbstractPainter, WORD x1, WORD y1, WORD x2, WORD y2, WORD color);
-void LcdPainter_drawRectangle(PAbstractPainter, WORD x1, WORD y1, WORD x2, WORD y2, WORD background_color, WORD border_color);
-void LcdPainter_drawString(PAbstractPainter, WORD, WORD, WORD, const char*);
-void LcdPainter_drawPixel(PAbstractPainter, WORD, WORD, WORD);
-void LcdPainter_drawBuffer(PAbstractPainter, WORD, WORD, WORD, WORD, WORD*);
+void LcdPainter_drawLine(PAbstractPainter, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color);
+void LcdPainter_drawRectangle(PAbstractPainter, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD background_color, DWORD border_color);
+void LcdPainter_drawString(PAbstractPainter, DWORD, DWORD, DWORD, const char*);
+void LcdPainter_drawPixel(PAbstractPainter, DWORD, DWORD, DWORD);
+void LcdPainter_drawBuffer(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, WORD*);
+void LcdPainter_drawTriangle(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD);
 
 #endif /* _LCD_PAINTER_H_ */

@@ -76,7 +76,6 @@ PE11UI E11UI_constructor(PE11UI self) {
 }
 
 void E11UI_destructor(PObject self) {
-	DWORD i;
 	PE11UI real_self = (PE11UI)self;
 	/* Call parent destructor */
 	Widget_destructor(self);
@@ -166,31 +165,16 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 	
 	/* System Top rectangle */
 	LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
-	
-
 
 	/* Draw marking window? (canvas) */
-	LcdDrawRectangle(160-274/2, 20, 274, 92, RGB_16B(200,200,200), RGB_16B(0,0,0));
+	//LcdDrawRectangle(160-274/2, 20, 274, 92, RGB_16B(200,200,200), RGB_16B(0,0,0));
+
+	LcdDrawTriangle(160,2,5,220,300,230, RGB_16B(200,200,200), RGB_16B(0,0,0));
 	
-	/*PE11UI real_self = (PE11UI)self;
-	//WORD i;
-	*/
 	/* Call parent paint */
-	Widget_paint(self, base_x, base_y);
+	//Widget_paint(self, base_x, base_y);
 
 	/* Draw icons */
-	//for(i = 0; i < E11_NUMBER_OF_ICONS; i++) {
-		/* Paint each icon */
-		/*
-		real_self->icons[i].widget.vtable->paint(
-			&real_self->icons[i].widget,
-			ICONS_BASE_X + (54*(i%ICONS_PER_LINE)),
-			ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(i/6))
-		);
-		*/
-
-
-	//	}
 }
 
 PPicture E11UI_getPicture(PE11UI self, DWORD index) {
