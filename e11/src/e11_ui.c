@@ -169,8 +169,11 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* Draw marking window? (canvas) */
 	//LcdDrawRectangle(160-274/2, 20, 274, 92, RGB_16B(200,200,200), RGB_16B(0,0,0));
 
-	LcdDrawTriangle(160,2,5,220,300,230, RGB_16B(200,200,200), RGB_16B(0,0,0));
-	
+	//LcdPainter_drawTriangle(160,2,5,220,300,230, RGB_16B(200,200,200), RGB_16B(0,0,0));
+	DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter->abstract_painter.vtable->drawTriangle(
+		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter),
+		160,2,5,220,300,230, RGB_16B(200,200,200), RGB_16B(0,0,0));
+
 	/* Call parent paint */
 	//Widget_paint(self, base_x, base_y);
 

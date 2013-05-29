@@ -4,8 +4,6 @@
 #include <math.h>
 #include <string.h>
 
-#include <esic/eapi/misc.h>
-
 #include <esic/elcd/lcd_painter.h>
 #include <esic/elcd/lcd.h>
 
@@ -50,7 +48,7 @@ void LcdPainter_drawLine(PAbstractPainter abstract_painter, DWORD x1, DWORD y1, 
 }
 void LcdPainter_drawRectangle(PAbstractPainter abstract_painter, DWORD x, DWORD y, DWORD width, DWORD height, DWORD background_color, DWORD border_color) {
 	/* Firstly: draw the rectangle */
-	int i;
+	DWORD i;
 	for(i = 0; i < height; i++) {
 		LcdDrawLine(x, y + i, x + width-1, y + i, background_color);
 	}
@@ -126,7 +124,7 @@ void LcdPainter_drawBuffer(PAbstractPainter abstract_painter, DWORD x, DWORD y, 
 	}
 }
 
-void LcdPainter_drawTriangle(PAbstractPainter abstract_painter, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2 , DWORD filling_color, DWORD border_color) {
+void LcdPainter_drawTriangle(PAbstractPainter self, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2 , DWORD filling_color, DWORD border_color) {
 	//LcdDrawTriangle(x0, y0, x1, y1, x2, y2, filling_color, border_color);
 	Triangle triangle;
 	
@@ -140,106 +138,10 @@ void LcdPainter_drawTriangle(PAbstractPainter abstract_painter, DWORD x0, DWORD 
 	triangle.v2.y = y1;
 	triangle.v3.x = x2;
 	triangle.v3.y = y2;
-
-}
-
-void _LcdPainter_fillFlatSideTriangleInt(PAbstractPainter abstract_painter, const PVertice v1, const PVertice v2, const PVertice v3, DWORD border_color, DWORD filling_color) {
-	Vertice tmp_vertice_1;
-	Vertice tmp_vertice_2;
-
-	BOOL changed1 = FALSE;
-	BOOL changed2 = FALSE;
-
-	SDWORD e1;
-	SDWORD e2;
-
-	int i;
-
-	SDWORD dx1 = abs((long long)v2->x - v1->x);
-	SDWORD dy1 = abs((long long)v2->y - v1->y);
-
-	SDWORD dx2 = abs((long long)v3->x - v1->x);
-	SDWORD dy2 = abs((long long)v3->y - v1->y);
-
-	SWORD signx1 = sign(v2->x - v1->x);
-	SWORD signx2 = sign(v3->x - v1->x);
-
-	SWORD signy1 = sign(v2->y - v1->y);
-	SWORD signy2 = sign(v3->y - v1->y);
-
 	
-	if(dy1 > dx1) {
-		/* Swap values */
-		SWAP(dx1, dy1);
-		changed1 = TRUE;
-	}
+	triangle.shape.color        = filling_color;
+	triangle.shape.border_color = border_color;
 
-	if(dy2 > dx2) {
-		/* Swap values */
-		SWAP(dx2, dy2);
-		changed2 = TRUE;
-	}
-
-	e1 = 2 * dy1 - dx1;
-	e2 = 2 * dy2 - dx2;
-
-
-	Vertice_constructor(&tmp_vertice_1);
-	Vertice_constructor(&tmp_vertice_2);
-
-	tmp_vertice_1.x = tmp_vertice_2.x = v1->x;
-	tmp_vertice_1.y = tmp_vertice_2.y = v1->y;
-
-	for(i = 0; i <= dx1; ++i) {
-		LcdDrawLine(
-			tmp_vertice_1.x,
-			tmp_vertice_1.y,
-			tmp_vertice_2.x,
-			tmp_vertice_2.y,
-			filling_color
-		);
-
-		while(e1 >= 0) {
-			if(changed1) {
-				tmp_vertice_1.x += signx1;
-			} else {
-				tmp_vertice_1.y += signy1;
-			}
-
-			e1 = e1 - 2 * dx1;
-		}
-
-		if(changed1) {
-			tmp_vertice_1.y += signy1;
-		} else {
-			tmp_vertice_1.x += signx1;
-		}
-
-		e1 = e1 + 2 * dy1;
-
-		/* here we rendered the next point on line 1 so follow now line 2
-		* until we are on the same y-value as line 1.
-		*/
-		while(tmp_vertice_2.y != tmp_vertice_1.y) {
-			while(e2 >= 0) {
-				if(changed2) {
-					tmp_vertice_2.x += signx2;
-				} else {
-					tmp_vertice_2.y += signy2;
-				}
-
-				e2 = e2 - 2 * dx2;
-			}
-
-			if(changed2) {
-				tmp_vertice_2.y = signy2;
-			} else {
-				tmp_vertice_2.x = signx2;
-			}
-
-			e2 = e2 + 2 * dy2;
-		}
-	}
-
-
+	Triangle_paint(&triangle.shape, self);
 }
+

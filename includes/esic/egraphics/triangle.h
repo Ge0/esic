@@ -29,6 +29,7 @@ DWORD Triangle_hash(PObject self);
 void Triangle_paint(PShape self, PAbstractPainter painter);
 
 
+
 /* Object vtable declaration */
 /*
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) \
@@ -46,5 +47,7 @@ void Triangle_paint(PShape self, PAbstractPainter painter);
 	SHAPE_VIRTUAL_FUNCTIONS
 #undef SHAPE_VFUNCTION
 */
+
+#define TRIANGLE(x) ((PTriangle)x)
 
 #endif /* _TRIANGLE_H_ */
