@@ -1,7 +1,10 @@
 #ifndef _TEXT_MARKING_VARIABLE_H_
 #define _TEXT_MARKING_VARIABLE_H_
 
+#include <libsic/marking/marking_variable.h>
+
 typedef struct _TextMarkingVariable {
+	MarkingVariable marking_variable;
 	ZString text;
 } TextMarkingVariable, *PTextMarkingVariable;
 
