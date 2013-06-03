@@ -83,7 +83,6 @@
     <ClCompile Include="src\misc.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\includes\esic\eapi\abstract_painter.h" />
     <ClInclude Include="..\includes\esic\eapi\abstract_system.h" />
     <ClInclude Include="..\includes\esic\eapi\emulator_system.h" />
     <ClInclude Include="..\includes\esic\eapi\event.h" />

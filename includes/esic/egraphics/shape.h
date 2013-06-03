@@ -5,7 +5,7 @@
 #define _SHAPE_H_
 
 #include <esic/object.h>
-#include <esic/eapi/abstract_painter.h>
+#include <esic/egraphics/abstract_painter.h>
 
 typedef struct _Shape *PShape;
 

@@ -41,9 +41,6 @@
     <ClInclude Include="..\includes\esic\eapi\keyboard_event.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\esic\eapi\abstract_painter.h">
-      <Filter>includes</Filter>
-    </ClInclude>
     <ClInclude Include="..\includes\esic\eapi\timer_event.h">
       <Filter>includes</Filter>
     </ClInclude>
