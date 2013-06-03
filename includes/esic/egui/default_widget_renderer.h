@@ -5,7 +5,7 @@
 #define _DEFAULT_WIDGET_RENDERER_
 
 #include <esic/egui/abstract_widget_renderer.h>
-#include <esic/elcd/lcd_painter.h>
+#include <esic/egraphics/lcd_painter.h>
 #include <esic/egui/label.h>
 #include <esic/egui/textbox.h>
 
