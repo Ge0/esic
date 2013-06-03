@@ -5,14 +5,15 @@
 #define _TEXTBOX_H_
 
 #include <esic/egui/widget.h>
-#include <esic/etools/zstring.h>
-//#include <esic/etools/zstring_buffer.h>
+//#include <esic/etools/zstring.h>
+#include <esic/etools/zstring_buffer.h>
 
 /* Default values for background & border? */
 #define TEXTBOX_DEFAULT_BACKGROUND_COLOR			RGB_16B(200, 200, 200)
 #define TEXTBOX_DEFAULT_BORDER_COLOR				RGB_16B(0, 0, 0)
 #define TEXTBOX_DEFAULT_FOCUSED_BACKGROUND_COLOR	RGB_16B(220,220,220)
 #define TEXTBOX_DEFAULT_FOCUSED_BORDER_COLOR		RGB_16B(0,0,0)
+#define TEXTBOX_DEFAULT_MAXLENGTH					256
 
 typedef struct _TextBox {
 	Widget widget;
@@ -22,10 +23,11 @@ typedef struct _TextBox {
 	WORD focused_border_color;
 	WORD text_offset;
 	WORD carret_position;
+	WORD max_length;
 	BOOL is_focused;
 	BOOL draw_carret;
-	//ZStringBuffer text;
-	ZString text;
+	ZStringBuffer text;
+	//ZString text;
 } TextBox, *PTextBox;
 
 PTextBox TextBox_constructor(PTextBox self);
