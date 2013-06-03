@@ -76,11 +76,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\lcd.c" />
-    <ClCompile Include="src\lcd_painter.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\elcd\lcd.h" />
-    <ClInclude Include="..\includes\esic\elcd\lcd_painter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
