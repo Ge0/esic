@@ -46,7 +46,7 @@ PMainUI MainUI_constructor(PMainUI self) {
 	//E11UI(self)->vtable              = VTABLE_POINTER(E11UI);
 
 	/* Build the UI */
-	//XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget);
+	XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget);
 
 	/* Set the 12 icons */
 	self->e11ui.icons[0]->icon = RasterIconFactory_getRasterIcon("dotpen_black.ilcd");
