@@ -6,7 +6,7 @@
 
 #include <esic/object.h>
 #include <esic/eapi/event.h>
-#include <esic/eapi/abstract_painter.h>
+#include <esic/egraphics/abstract_painter.h>
 
 typedef struct _AbstractSystem* PAbstractSystem;
 

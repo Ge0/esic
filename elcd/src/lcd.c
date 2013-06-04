@@ -303,13 +303,3 @@ void LcdDrawLine(DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
 	}
 	
 }
-
-/*
-SDWORD _cross_product(DWORD x1, DWORD y1, DWORD x2, DWORD y2) {
-	return x1 * y2 - y1 * x2;
-}
-*/
-
-void LcdDrawTriangle2(DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD filling_color, DWORD border_color) {
-
-}

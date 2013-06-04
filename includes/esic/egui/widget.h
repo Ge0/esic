@@ -8,7 +8,7 @@
 #include <esic/esic.h>
 #include <esic/eapi/event.h>
 #include <esic/etools/list.h>
-#include <esic/eapi/abstract_painter.h>
+#include <esic/egraphics/abstract_painter.h>
 
 typedef struct _Widget *PWidget, **PPWidget;
 
