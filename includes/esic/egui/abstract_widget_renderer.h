@@ -9,6 +9,7 @@
 #include <esic/egui/textbox.h>
 #include <esic/egui/picture.h>
 #include <esic/egui/checkbox.h>
+#include <esic/egui/canvas.h>
 
 typedef struct _AbstractWidgetRenderer* PAbstractWidgetRenderer;
 
@@ -17,6 +18,7 @@ typedef struct _vtable_AbstractWidgetRenderer {
 	void (*paintTextBox)(PAbstractWidgetRenderer, PTextBox, WORD, WORD);
 	void (*paintPicture)(PAbstractWidgetRenderer, PPicture, WORD, WORD);
 	void (*paintCheckBox)(PAbstractWidgetRenderer, PCheckBox, WORD, WORD);
+	void (*paintCanvas)(PAbstractWidgetRenderer, PCanvas, WORD, WORD);
 } vtable_AbstractWidgetRenderer;
 
 typedef struct _AbstractWidgetRenderer {

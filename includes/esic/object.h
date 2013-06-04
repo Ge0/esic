@@ -6,6 +6,7 @@
 #define _OBJECT_H_
 
 #include <esic/eapi/heap.h>
+#include <esic/eapi/misc.h>
 #include <esic/esic.h>
 #include <stdio.h>
 
@@ -16,6 +17,7 @@ typedef struct _vtable_Object {
 	PObject (*clone)(PObject self, PObject dst);
 	BOOL	(*equalsTo)(PObject self, PObject dst);
 	DWORD	(*hash)(PObject self);
+	DWORD	(*type)(PObject self);
 } vtable_Object;
 
 /**
@@ -57,7 +59,8 @@ typedef struct _Object {
 	OBJECT_VFUNCTION(void,		destructor,	"(PObject self)") \
 	OBJECT_VFUNCTION(PObject,	clone,		"(PObject self, PObject dst)") \
 	OBJECT_VFUNCTION(BOOL,		equalsTo,	"(PObject self, PObject dst)") \
-	OBJECT_VFUNCTION(DWORD,		hash,		"(PObject self)")
+	OBJECT_VFUNCTION(DWORD,		hash,		"(PObject self)") \
+	OBJECT_VFUNCTION(DWORD,		type,		"(PObject self)")
 
 
 #define OBJECT(x)			((PObject)x)

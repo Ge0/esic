@@ -28,6 +28,7 @@ void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer, PLabel, WORD, WOR
 void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer, PTextBox, WORD, WORD);
 void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer, PPicture, WORD, WORD);
 void DefaultWidgetRenderer_paintCheckBox(PAbstractWidgetRenderer self, PCheckBox, WORD, WORD);
+void DefaultWidgetRenderer_paintCanvas(PAbstractWidgetRenderer self, PCanvas, WORD, WORD);
 //void DefaultWidgetRenderer_paintImage(PImage, WORD, WORD);
 
 PAbstractWidgetRenderer GetDefaultWidgetRenderer();

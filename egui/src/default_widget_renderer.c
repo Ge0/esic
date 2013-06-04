@@ -6,6 +6,7 @@
 #include <esic/egui/label.h>
 #include <esic/egui/picture.h>
 #include <esic/egui/checkbox.h>
+#include <esic/egui/canvas.h>
 /*#include <esic/egui/image.h>*/
 #include <esic/egraphics/lcd_painter.h>
 #include <esic/eresources/raster_font_factory.h>
@@ -21,7 +22,8 @@ static const vtable_AbstractWidgetRenderer s_abstract_widget_renderer_vtable = {
 	DefaultWidgetRenderer_paintLabel,
 	DefaultWidgetRenderer_paintTextBox,
 	DefaultWidgetRenderer_paintPicture,
-	DefaultWidgetRenderer_paintCheckBox
+	DefaultWidgetRenderer_paintCheckBox,
+	DefaultWidgetRenderer_paintCanvas,
 };
 
 static PAbstractWidgetRenderer s_default_renderer;
@@ -101,8 +103,8 @@ void DefaultWidgetRenderer_paintCheckBox(PAbstractWidgetRenderer self, PCheckBox
 
 void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox textbox, WORD base_x, WORD base_y) {
 	PDefaultWidgetRenderer real_self = (PDefaultWidgetRenderer)self;
-	ZString visible_text;
-	//ZStringBuffer visible_text;
+	//ZString visible_text;
+	ZStringBuffer visible_text;
 	WORD character_width = TEXTBOX_DEFAULT_WIDTH_CHARACTER;
 	PRasterFont font6x8 = NULL;
 
@@ -125,11 +127,11 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 	);
 	
 	/* Draw the only visible part of text */
-	ZString_constructor(&visible_text, "");
-	//ZStringBuffer_constructor(&visible_text);
+	//ZString_constructor(&visible_text, "");
+	ZStringBuffer_constructor(&visible_text);
 
-	ZString_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text);
-	//ZStringBuffer_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text); 
+	//ZString_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text);
+	ZStringBuffer_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text); 
 
 	/* Draw the string */
 	ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawString(
@@ -172,8 +174,8 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 			);
 		}
 
-		if((WORD)(textbox->text_offset + (textbox->widget.width / character_width)) < textbox->text.size) {
-		//if((WORD)(textbox->text_offset + (textbox->widget.width / character_width)) < textbox->text.logical_size) {
+		//if((WORD)(textbox->text_offset + (textbox->widget.width / character_width)) < textbox->text.size) {
+		if((WORD)(textbox->text_offset + (textbox->widget.width / character_width)) < textbox->text.logical_size) {
 			ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
 				ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
 				//real_self->painter->abstract_painter.vtable->drawRectangle(
@@ -187,8 +189,8 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 			);
 		}
 
-	ZString_destructor(OBJECT(&visible_text));
-	//ZStringBuffer_destructor(OBJECT(&visible_text));
+	//ZString_destructor(OBJECT(&visible_text));
+	ZStringBuffer_destructor(OBJECT(&visible_text));
 }
 
 void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture picture, WORD base_x, WORD base_y) {
@@ -275,6 +277,21 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 
 	}
 
+}
+
+void DefaultWidgetRenderer_paintCanvas(PAbstractWidgetRenderer self, PCanvas canvas, WORD base_x, WORD base_y) {
+	/* Simply draw a rectangle */
+	ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+			//real_self->painter->abstract_painter.vtable->drawRectangle(
+			//&real_self->painter->abstract_painter,
+			base_x + canvas->widget.x,
+			base_y + canvas->widget.y,
+			canvas->widget.width,
+			canvas->widget.height,
+			RGB_16B(200,200,200),
+			0
+		);
 }
 
 /*

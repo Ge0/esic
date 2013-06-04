@@ -64,6 +64,15 @@ DWORD CheckBox_hash(PObject self) {
 	return 0;
 }
 
+DWORD CheckBox_type(PObject self) {
+	static unsigned long s_hash = 0;
+	if(s_hash == 0) {
+		s_hash = Hash("CheckBox");
+	}
+
+	return s_hash;
+}
+
 DWORD CheckBox_defaultProc(PWidget self, const PEvent system_event) {
 	Event custom_event;
 	Keycode key_code = KEY_UNKNOWN;

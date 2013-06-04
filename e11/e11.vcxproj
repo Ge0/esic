@@ -85,18 +85,20 @@
   <ItemGroup>
     <ClCompile Include="src\e11.c" />
     <ClCompile Include="src\e11_ui.c" />
+    <ClCompile Include="src\factories\marking_font_factory.c" />
+    <ClCompile Include="src\factories\xml_ui_factory.c" />
     <ClCompile Include="src\toolbox.c" />
     <ClCompile Include="src\ui\dotpen_ui.c" />
     <ClCompile Include="src\ui\main_ui.c" />
-    <ClCompile Include="src\xml_ui_factory.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\e11.h" />
     <ClInclude Include="includes\e11_ui.h" />
+    <ClInclude Include="includes\factories\marking_font_factory.h" />
+    <ClInclude Include="includes\factories\xml_ui_factory.h" />
     <ClInclude Include="includes\toolbox.h" />
     <ClInclude Include="includes\ui\dotpen_ui.h" />
     <ClInclude Include="includes\ui\main_ui.h" />
-    <ClInclude Include="includes\xml_ui_factory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

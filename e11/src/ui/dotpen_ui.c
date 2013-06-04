@@ -1,6 +1,6 @@
 #include <esic/eresources/raster_icon_factory.h>
 #include <ui/dotpen_ui.h>
-#include <xml_ui_factory.h>
+#include <factories/xml_ui_factory.h>
 #include <esic/eapi/system.h>
 
 VTABLE_START(Object) {
@@ -52,7 +52,7 @@ PDotpenUI DotpenUI_constructor(PDotpenUI self) {
 		//assert(self->e11ui.icons[i].icon);
 
 		/* Add icons to the list of childs widgets so they can be browsed with the TAB */
-		Widget_addChild(&self->e11ui.widget, &self->e11ui.icons[i]->widget, TRUE);
+		Widget_addChild(&self->e11ui.widget, &self->e11ui.icons[i]->widget, FALSE);
 	}
 
 	
@@ -81,6 +81,15 @@ BOOL DotpenUI_equalsTo(PObject self, PObject dst) {
 DWORD DotpenUI_hash(PObject self) {
 	/* TODO. */
 	return 0;
+}
+
+DWORD DotpenUI_type(PObject self) {
+	static unsigned long s_hash = 0;
+	if(s_hash == 0) {
+		s_hash = Hash("DotpenUI");
+	}
+
+	return s_hash;
 }
 
 DWORD DotpenUI_defaultProc(PWidget self, const PEvent system_event) {

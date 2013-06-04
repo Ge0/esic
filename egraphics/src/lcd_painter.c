@@ -4,7 +4,7 @@
 #include <math.h>
 #include <string.h>
 
-#include <esic/elcd/lcd_painter.h>
+#include <esic/egraphics/lcd_painter.h>
 #include <esic/elcd/lcd.h>
 
 #include <esic/egraphics/triangle.h>

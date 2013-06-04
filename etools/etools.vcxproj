@@ -83,6 +83,9 @@
     <ClCompile Include="src\hashtable.c" />
     <ClCompile Include="src\list.c" />
     <ClCompile Include="src\map.c" />
+    <ClCompile Include="src\mvc\abstract_model.c" />
+    <ClCompile Include="src\mvc\observer.c" />
+    <ClCompile Include="src\mvc\observer_ptr.c" />
     <ClCompile Include="src\zstring.c" />
     <ClCompile Include="src\vector.c" />
     <ClCompile Include="src\zstring_buffer.c" />
@@ -93,6 +96,10 @@
     <ClInclude Include="..\includes\esic\etools\hashtable.h" />
     <ClInclude Include="..\includes\esic\etools\list.h" />
     <ClInclude Include="..\includes\esic\etools\map.h" />
+    <ClInclude Include="..\includes\esic\etools\mvc\abstract_model.h" />
+    <ClInclude Include="..\includes\esic\etools\mvc\abstract_view.h" />
+    <ClInclude Include="..\includes\esic\etools\mvc\observer.h" />
+    <ClInclude Include="..\includes\esic\etools\mvc\observer_ptr.h" />
     <ClInclude Include="..\includes\esic\etools\zstring.h" />
     <ClInclude Include="..\includes\esic\etools\vector.h" />
     <ClInclude Include="..\includes\esic\etools\zstring_buffer.h" />

@@ -37,3 +37,13 @@ BOOL Container_equalsTo(PObject self, PObject dst) {
 DWORD Container_hash(PObject self) {
 	return 0;
 }
+
+DWORD Container_type(PObject self) {
+	static unsigned long s_hash = 0;
+
+	if(s_hash == 0) {
+		s_hash = Hash("Container");
+	}
+
+	return s_hash;
+}

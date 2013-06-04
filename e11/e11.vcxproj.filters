@@ -19,15 +19,18 @@
     <Filter Include="src\ui">
       <UniqueIdentifier>{b03bd8dc-3c03-4fd6-b5db-13fdafb209d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="includes\factories">
+      <UniqueIdentifier>{f94c45be-e18c-4ab6-acd5-f89d52b941e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\factories">
+      <UniqueIdentifier>{f9d2e89f-3864-4018-940a-b0e5b66f22de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\e11.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\xml_ui_factory.c">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\toolbox.c">
@@ -42,15 +45,18 @@
     <ClCompile Include="src\ui\dotpen_ui.c">
       <Filter>src\ui</Filter>
     </ClCompile>
+    <ClCompile Include="src\factories\xml_ui_factory.c">
+      <Filter>src\factories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\factories\marking_font_factory.c">
+      <Filter>src\factories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\e11.h">
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="includes\toolbox.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\xml_ui_factory.h">
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="includes\e11_ui.h">
@@ -61,6 +67,12 @@
     </ClInclude>
     <ClInclude Include="includes\ui\main_ui.h">
       <Filter>includes\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\factories\xml_ui_factory.h">
+      <Filter>includes\factories</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\factories\marking_font_factory.h">
+      <Filter>includes\factories</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,6 +13,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="includes\mvc">
+      <UniqueIdentifier>{05e693ea-d1bf-40c2-b020-551bea7f39b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\mvc">
+      <UniqueIdentifier>{08697402-6df1-460c-80fd-42c1b58dbb08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -42,6 +48,15 @@
     <ClCompile Include="src\zstring_buffer.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\mvc\abstract_model.c">
+      <Filter>src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mvc\observer_ptr.c">
+      <Filter>src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mvc\observer.c">
+      <Filter>src\mvc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\etools\container.h">
@@ -67,6 +82,18 @@
     </ClInclude>
     <ClInclude Include="..\includes\esic\etools\zstring_buffer.h">
       <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\mvc\abstract_model.h">
+      <Filter>includes\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\mvc\abstract_view.h">
+      <Filter>includes\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\mvc\observer.h">
+      <Filter>includes\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\mvc\observer_ptr.h">
+      <Filter>includes\mvc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -78,11 +78,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ellipse.c" />
+    <ClCompile Include="src\lcd_painter.c" />
     <ClCompile Include="src\triangle.c" />
     <ClCompile Include="src\vertice.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\includes\esic\egraphics\abstract_painter.h" />
     <ClInclude Include="..\includes\esic\egraphics\ellipse.h" />
+    <ClInclude Include="..\includes\esic\egraphics\lcd_painter.h" />
     <ClInclude Include="..\includes\esic\egraphics\shape.h" />
     <ClInclude Include="..\includes\esic\egraphics\triangle.h" />
     <ClInclude Include="..\includes\esic\egraphics\vertice.h" />

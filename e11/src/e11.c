@@ -18,8 +18,7 @@
 
 /* OTHER TEST START */
 #include <ui/main_ui.h>
-
-#include "xml_ui_factory.h"
+#include <factories/xml_ui_factory.h>
 
 void e11() {
 	PDefaultWidgetRenderer widget_renderer = NULL;

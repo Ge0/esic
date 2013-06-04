@@ -17,6 +17,7 @@ void CheckBox_destructor(PObject self);
 PObject CheckBox_clone(PObject self, PObject dst);
 BOOL CheckBox_equalsTo(PObject self, PObject dst);
 DWORD CheckBox_hash(PObject self);
+DWORD CheckBox_type(PObject self);
 
 /*
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) \

@@ -2,7 +2,7 @@
 #include <esic/eresources/raster_icon_factory.h>
 #include <ui/main_ui.h>
 #include <ui/dotpen_ui.h>
-#include <xml_ui_factory.h>
+#include <factories/xml_ui_factory.h>
 #include <esic/eapi/system.h>
 #include <esic/elcd/lcd.h>
 
@@ -46,7 +46,7 @@ PMainUI MainUI_constructor(PMainUI self) {
 	//E11UI(self)->vtable              = VTABLE_POINTER(E11UI);
 
 	/* Build the UI */
-	//XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget);
+	XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget);
 
 	/* Set the 12 icons */
 	self->e11ui.icons[0]->icon = RasterIconFactory_getRasterIcon("dotpen_black.ilcd");

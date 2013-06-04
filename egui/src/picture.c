@@ -56,6 +56,9 @@ PPicture Picture_constructor(PPicture self) {
 
 void Picture_destructor(PObject self) {
 	/* TODO. */
+
+	/* Calling parent destructor */
+	Widget_destructor(OBJECT(&PICTURE(self)->widget));
 }
 
 PObject Picture_clone(PObject self, PObject dst) {

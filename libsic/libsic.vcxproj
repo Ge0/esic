@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="..\includes\libsic\marking\increment_marking_variable.h" />
     <ClInclude Include="..\includes\libsic\marking\marking_file.h" />
+    <ClInclude Include="..\includes\libsic\marking\marking_font.h" />
     <ClInclude Include="..\includes\libsic\marking\marking_line.h" />
     <ClInclude Include="..\includes\libsic\marking\marking_variable.h" />
     <ClInclude Include="..\includes\libsic\marking\text_marking_line.h" />

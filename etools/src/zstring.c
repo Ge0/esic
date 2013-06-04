@@ -75,7 +75,7 @@ BOOL ZString_equalsTo(PObject self, PObject dst) {
 	PZString real_self = (PZString)self;
 	PZString real_dst  = (PZString)dst;
 
-	return strcmp(real_self->data, real_dst->data) == 0;
+	return (BOOL)(strcmp(real_self->data, real_dst->data) == 0);
 }
 
 DWORD ZString_hash(PObject self) {
@@ -89,6 +89,14 @@ DWORD ZString_hash(PObject self) {
 		string++;
 	}
 	return hash;
+}
+
+DWORD ZString_type(PObject self) {
+	static unsigned long s_hash = 0;
+	if(s_hash == 0) {
+		s_hash = Hash("ZString");
+	}
+	return s_hash;
 }
 
 /* ZString methods */
