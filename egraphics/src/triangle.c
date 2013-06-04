@@ -147,11 +147,11 @@ void _fill_flat_side_triangle_int(PTriangle self, PAbstractPainter abstract_pain
 	SDWORD dx2 = abs((long long)v3->x - v1->x);
 	SDWORD dy2 = abs((long long)v3->y - v1->y);
 
-	SWORD signx1 = sign(v2->x - v1->x);
-	SWORD signx2 = sign(v3->x - v1->x);
+	SWORD signx1 = Sign(v2->x - v1->x);
+	SWORD signx2 = Sign(v3->x - v1->x);
 
-	SWORD signy1 = sign(v2->y - v1->y);
-	SWORD signy2 = sign(v3->y - v1->y);
+	SWORD signy1 = Sign(v2->y - v1->y);
+	SWORD signy2 = Sign(v3->y - v1->y);
 
 	
 	if(dy1 > dx1) {

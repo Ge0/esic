@@ -21,7 +21,7 @@ void	Label_destructor(PObject self);
 PObject Label_clone(PObject self, PObject dst);
 BOOL	Label_equalsTo(PObject self, PObject dst);
 DWORD	Label_hash(PObject self); 
-
+DWORD   Label_type(PObject self);
 
 #define LABEL(x) ((PLabel)x)
 

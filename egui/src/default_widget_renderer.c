@@ -6,6 +6,7 @@
 #include <esic/egui/label.h>
 #include <esic/egui/picture.h>
 #include <esic/egui/checkbox.h>
+#include <esic/egui/canvas.h>
 /*#include <esic/egui/image.h>*/
 #include <esic/egraphics/lcd_painter.h>
 #include <esic/eresources/raster_font_factory.h>
@@ -21,7 +22,8 @@ static const vtable_AbstractWidgetRenderer s_abstract_widget_renderer_vtable = {
 	DefaultWidgetRenderer_paintLabel,
 	DefaultWidgetRenderer_paintTextBox,
 	DefaultWidgetRenderer_paintPicture,
-	DefaultWidgetRenderer_paintCheckBox
+	DefaultWidgetRenderer_paintCheckBox,
+	DefaultWidgetRenderer_paintCanvas,
 };
 
 static PAbstractWidgetRenderer s_default_renderer;
@@ -275,6 +277,21 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 
 	}
 
+}
+
+void DefaultWidgetRenderer_paintCanvas(PAbstractWidgetRenderer self, PCanvas canvas, WORD base_x, WORD base_y) {
+	/* Simply draw a rectangle */
+	ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
+			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
+			//real_self->painter->abstract_painter.vtable->drawRectangle(
+			//&real_self->painter->abstract_painter,
+			base_x + canvas->widget.x,
+			base_y + canvas->widget.y,
+			canvas->widget.width,
+			canvas->widget.height,
+			RGB_16B(200,200,200),
+			0
+		);
 }
 
 /*

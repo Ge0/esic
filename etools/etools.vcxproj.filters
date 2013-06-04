@@ -54,6 +54,9 @@
     <ClCompile Include="src\mvc\observer_ptr.c">
       <Filter>src\mvc</Filter>
     </ClCompile>
+    <ClCompile Include="src\mvc\observer.c">
+      <Filter>src\mvc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\etools\container.h">

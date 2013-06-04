@@ -100,6 +100,15 @@ DWORD TextBox_hash(PObject self) {
 	return 0;
 }
 
+DWORD TextBox_type(PObject self) {
+	static unsigned long s_hash = 0;
+	if(s_hash == 0) {
+		s_hash = Hash("TextBox");
+	}
+
+	return s_hash;
+}
+
 void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* TODO */
 

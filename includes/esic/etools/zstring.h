@@ -24,6 +24,7 @@ void	ZString_destructor(PObject self);
 PObject ZString_clone(PObject self, PObject dst);
 BOOL	ZString_equalsTo(PObject self, PObject dst);
 DWORD	ZString_hash(PObject self);
+DWORD	ZString_type(PObject self);
 
 /*
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) \

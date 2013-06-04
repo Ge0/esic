@@ -16,6 +16,7 @@ void DotpenUI_destructor(PObject self);
 PObject DotpenUI_clone(PObject self, PObject dst);
 BOOL DotpenUI_equalsTo(PObject self, PObject dst);
 DWORD DotpenUI_hash(PObject self);
+DWORD DotpenUI_type(PObject self);
 
 /* Virtual functions Object */
 /*

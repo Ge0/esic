@@ -102,3 +102,12 @@ DWORD Label_hash(PObject self) {
 	/* TODO. */
 	return 0;
 }
+
+DWORD Label_type(PObject self) {
+	static unsigned long s_hash = 0;
+	if(s_hash == 0) {
+		s_hash = Hash("Label");
+	}
+
+	return s_hash;
+}

@@ -78,6 +78,16 @@ DWORD ZStringBuffer_hash(PObject self) {
 	return hash;
 }
 
+DWORD ZStringBuffer_type(PObject self) {
+	static unsigned long s_hash = 0;
+	
+	if(s_hash == 0) {
+		s_hash = Hash("ZStringBuffer");
+	}
+
+	return s_hash;
+}
+
 PZStringBuffer ZStringBuffer_append(PZStringBuffer self, const char* data) {
 	DWORD length = self->logical_size + strlen(data) + 1; /* +1 for the \0 */
 	

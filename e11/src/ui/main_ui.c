@@ -2,7 +2,7 @@
 #include <esic/eresources/raster_icon_factory.h>
 #include <ui/main_ui.h>
 #include <ui/dotpen_ui.h>
-#include <xml_ui_factory.h>
+#include <factories/xml_ui_factory.h>
 #include <esic/eapi/system.h>
 #include <esic/elcd/lcd.h>
 

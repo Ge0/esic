@@ -35,10 +35,11 @@ PTextBox TextBox_constructor(PTextBox self);
 /* Virtual functions */
 /* Object */
 
-void TextBox_destructor(PObject self);
+void    TextBox_destructor(PObject self);
 PObject TextBox_clone(PObject self, PObject dst);
-BOOL TextBox_equalsTo(PObject self, PObject dst);
-DWORD TextBox_hash(PObject self);
+BOOL    TextBox_equalsTo(PObject self, PObject dst);
+DWORD   TextBox_hash(PObject self);
+DWORD   TextBox_type(PObject self);
 
 /*
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) \

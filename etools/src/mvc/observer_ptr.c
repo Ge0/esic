@@ -10,7 +10,7 @@ static const vtable_Object s_vtable_object = {
 	NULL
 };
 
-PObserverPtr ObserverPtr_constructor(PObserverPtr self, PObserver observer, BOOL dynamic) {
+PObserverPtr ObserverPtr_constructor(PObserverPtr self, const PObserver observer, BOOL dynamic) {
 
 	/* Filling members */
 	self->object.size = sizeof(ObserverPtr);

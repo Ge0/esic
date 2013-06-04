@@ -3,6 +3,7 @@
 
 #include <esic/esic.h>
 
-int sign(SDWORD expr);
+int Sign(SDWORD expr);
+unsigned long Hash(const char* string);
 
 #endif /* _MISC_H_ */

@@ -84,6 +84,7 @@
     <ClCompile Include="src\list.c" />
     <ClCompile Include="src\map.c" />
     <ClCompile Include="src\mvc\abstract_model.c" />
+    <ClCompile Include="src\mvc\observer.c" />
     <ClCompile Include="src\mvc\observer_ptr.c" />
     <ClCompile Include="src\zstring.c" />
     <ClCompile Include="src\vector.c" />

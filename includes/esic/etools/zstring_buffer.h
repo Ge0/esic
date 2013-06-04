@@ -26,6 +26,7 @@ void ZStringBuffer_destructor(PObject self);
 PObject ZStringBuffer_clone(PObject self, PObject dst);
 BOOL ZStringBuffer_equalsTo(PObject self, PObject dst);
 DWORD ZStringBuffer_hash(PObject self);
+DWORD ZStringBuffer_type(PObject self);
 
 
 

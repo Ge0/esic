@@ -102,6 +102,15 @@ PObject Widget_clone(PObject self, PObject dst) {
 	return dst;
 }
 
+DWORD Widget_type(PObject self) {
+	static unsigned long s_hash = 0;
+	if(s_hash == 0) {
+		s_hash = Hash("Widget");
+	}
+
+	return s_hash;
+}
+
 void Widget_addChild(PWidget self, PWidget child, BOOL dynamic) {
 
 	/* Instantiate a temp WidgetPtr instance...

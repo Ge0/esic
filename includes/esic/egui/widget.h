@@ -63,6 +63,7 @@ void Widget_destructor(PObject self);
 PObject Widget_clone(PObject self, PObject dst);
 BOOL Widget_equalsTo(PObject self, PObject dst);
 DWORD Widget_hash(PObject self);
+DWORD Widget_type(PObject self);
 
 /*
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) \

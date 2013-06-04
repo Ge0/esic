@@ -11,7 +11,7 @@ typedef struct _MarkingFile {
 	Vector marking_variables;
 } MarkingFile, *PMarkingFile;
 
-PMarkingFike MarkingFile_constructor(PMarkingFile self);
+PMarkingFile MarkingFile_constructor(PMarkingFile self);
 
 /* Object virtual functions */
 void MarkingFile_destructor(PObject self);
