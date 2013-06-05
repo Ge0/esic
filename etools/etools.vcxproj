@@ -78,6 +78,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="observable.c" />
     <ClCompile Include="src\container.c" />
     <ClCompile Include="src\hashnode.c" />
     <ClCompile Include="src\hashtable.c" />
@@ -98,6 +99,7 @@
     <ClInclude Include="..\includes\esic\etools\map.h" />
     <ClInclude Include="..\includes\esic\etools\mvc\abstract_model.h" />
     <ClInclude Include="..\includes\esic\etools\mvc\abstract_view.h" />
+    <ClInclude Include="..\includes\esic\etools\mvc\observable.h" />
     <ClInclude Include="..\includes\esic\etools\mvc\observer.h" />
     <ClInclude Include="..\includes\esic\etools\mvc\observer_ptr.h" />
     <ClInclude Include="..\includes\esic\etools\zstring.h" />

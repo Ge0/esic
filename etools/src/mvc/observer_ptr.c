@@ -41,3 +41,22 @@ PObject ObserverPtr_clone(PObject self, PObject dst) {
 
 	return dst;
 }
+
+BOOL ObserverPtr_equalsTo(PObject self, PObject dst) {
+	return (BOOL)(OBSERVERPTR(self)->observer == OBSERVERPTR(dst)->observer);
+}
+
+DWORD ObserverPtr_hash(PObject self) {
+	/* TODO. */
+
+	return 0;
+}
+
+DWORD ObserverPtr_type(PObject self) {
+	static unsigned long s_hash = 0;
+	if(s_hash == 0) {
+		s_hash = Hash("ObserverPtr");
+	}
+
+	return s_hash;
+}

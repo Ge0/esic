@@ -57,6 +57,9 @@
     <ClCompile Include="src\mvc\observer.c">
       <Filter>src\mvc</Filter>
     </ClCompile>
+    <ClCompile Include="observable.c">
+      <Filter>src\mvc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\etools\container.h">
@@ -93,6 +96,9 @@
       <Filter>includes\mvc</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\esic\etools\mvc\observer_ptr.h">
+      <Filter>includes\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\etools\mvc\observable.h">
       <Filter>includes\mvc</Filter>
     </ClInclude>
   </ItemGroup>

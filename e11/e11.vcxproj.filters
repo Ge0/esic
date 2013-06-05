@@ -48,7 +48,7 @@
     <ClCompile Include="src\factories\xml_ui_factory.c">
       <Filter>src\factories</Filter>
     </ClCompile>
-    <ClCompile Include="src\factories\marking_font_factory.c">
+    <ClCompile Include="src\factories\marking_font_tt_factory.c">
       <Filter>src\factories</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,7 +71,7 @@
     <ClInclude Include="includes\factories\xml_ui_factory.h">
       <Filter>includes\factories</Filter>
     </ClInclude>
-    <ClInclude Include="includes\factories\marking_font_factory.h">
+    <ClInclude Include="includes\factories\marking_font_tt_factory.h">
       <Filter>includes\factories</Filter>
     </ClInclude>
   </ItemGroup>

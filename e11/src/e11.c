@@ -10,7 +10,7 @@
 /* TEST START */
 #include <esic/eresources/raster_font_factory.h>
 #include <esic/eresources/raster_icon_factory.h>
-#include <esic/eresources/raster_icon_header.h>
+#include <factories/marking_font_tt_factory.h>
 #include <esic/egui/default_widget_renderer.h>
 #include <esic/etools/zstring.h>
 #include <fatfs/ff.h>
@@ -33,6 +33,7 @@ void e11() {
 	/* FACTORY INIT */
 	RasterFontFactory_init();
 	RasterIconFactory_init();
+	MarkingFontTTFactory_init();
 
 
 	/* WIDGET RENDERER INIT */
@@ -49,6 +50,7 @@ void e11() {
 	DELETE(widget_renderer);
 
 	/* FACTORY DESTROY */
+	MarkingFontTTFactory_destroy();
 	RasterIconFactory_destroy();
 	RasterFontFactory_destroy();
 

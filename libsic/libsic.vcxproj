@@ -13,11 +13,14 @@
   <ItemGroup>
     <ClInclude Include="..\includes\libsic\marking\increment_marking_variable.h" />
     <ClInclude Include="..\includes\libsic\marking\marking_file.h" />
-    <ClInclude Include="..\includes\libsic\marking\marking_font.h" />
+    <ClInclude Include="..\includes\libsic\marking\marking_font_tt.h" />
     <ClInclude Include="..\includes\libsic\marking\marking_line.h" />
     <ClInclude Include="..\includes\libsic\marking\marking_variable.h" />
     <ClInclude Include="..\includes\libsic\marking\text_marking_line.h" />
     <ClInclude Include="..\includes\libsic\marking\text_marking_variable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="marking_font_tt.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2CD65EAC-60D3-44AE-8996-C3A459537D12}</ProjectGuid>
@@ -30,10 +33,10 @@
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -52,6 +55,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>EMULATOR;_CRT_SECURE_NO_WARNINGS;WIN32</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -63,6 +67,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>EMULATOR;_CRT_SECURE_NO_WARNINGS;WIN32</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
