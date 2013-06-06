@@ -255,8 +255,15 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 			if(system_event->real_event.timer_event.id == 1) {
 				real_self->draw_carret = (BOOL)!real_self->draw_carret;
 
+				/*
 				custom_event.type = EVENT_PAINT;
 				custom_event.real_event.widget_event.id = self->id;
+				*/
+
+				/* GR TEST */
+				custom_event.type = EVENT_WIDGET;
+				custom_event.real_event.widget_event.type = WE_PAINT;
+				custom_event.real_event.widget_event.id   = self->id;
 
 				//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
 				EsicPushEvent(&custom_event);
@@ -331,6 +338,10 @@ static void _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 		custom_event.type = EVENT_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
 		EsicPushEvent(&custom_event);
+		break;
+
+	default:
+		/* TODO: HANNDLE DEFAULT WIDGET EVENT (ex: PAINT) */
 		break;
 	}
 
