@@ -4,6 +4,7 @@
 #define ESIC_TYPES
 #include <stdint.h>
 typedef uint8_t BYTE;
+typedef int8_t SBYTE;
 typedef int16_t SWORD;
 typedef uint16_t  WORD;
 typedef int32_t SDWORD;

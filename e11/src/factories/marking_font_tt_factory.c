@@ -17,7 +17,7 @@ void MarkingFontTTFactory_destroy() {
 	Hashtable_destructor(OBJECT(&s_fonts_tt));
 }
 
-PMarkingFontTT MarkingFontFactory_getMarkingFont(const char* font_name) {
+PMarkingFontTT MarkingFontTTFactory_getMarkingFontTT(const char* font_name) {
 	ZString key;
 	PMarkingFontTT return_font = NULL;
 	/* First: check whether the font has been loaded into memory or not */
@@ -81,7 +81,7 @@ PMarkingFontTT _build_font_tt(const char* name) {
 	FIL font_file;
 	DWORD br; /* Bytes read */
 
-	char sign_file[9]; /* Should be "FONT_TT_", aka the font's magic word */
+	char sign_file[10]; /* Should be "FONT_TT_", aka the font's magic word */
 	DWORD filename_length = strlen(PATH_MARKING_FONTS) + strlen(name) + strlen(MARKING_FONT_TT_EXT) + 1;
 
 
@@ -107,13 +107,8 @@ PMarkingFontTT _build_font_tt(const char* name) {
 			return NULL;
 		}
 
-		
-
-		/* Ensure the allocation succeeded */
-		SicAssert(new_font != NULL);
-
 		/* First step: is the file a font tt one? */
-		f_read(&font_file, sign_file, 9, &br);
+		f_read(&font_file, sign_file, 10, &br);
 
 		if(strcmp(sign_file, MARKING_FONT_TT_SIGN)) {
 			/* Error... */
@@ -123,6 +118,9 @@ PMarkingFontTT _build_font_tt(const char* name) {
 		}
 
 		NEW(new_font, MarkingFontTT);
+
+		/* Ensure the allocation succeeded */
+		SicAssert(new_font != NULL);
 
 		/* Assign the file name */
 		strncpy(new_font->font_name, name, MARKING_FONT_TT_FILENAME_SIZE);
@@ -144,27 +142,40 @@ void _font_tt_hydrate_characters(PMarkingFontTT self, FIL* file) {
 	WORD offsets[MARKING_FONT_TT_CHARACTERS+1];
 	f_read(file, offsets, MARKING_FONT_TT_CHARACTERS+1 * sizeof(WORD), &br);
 
+	/* Reverse offsets */
+	for(i = 0; i < MARKING_FONT_TT_CHARACTERS+1; ++i) {
+		offsets[i] = SWAP_WORD(offsets[i]);
+	}
+
+
 	/* Read the height of every character */
 	f_lseek(file,offsets[0]-1);
 	f_read(file, &self->height, sizeof(BYTE), &br);
 
 	for(i = 1; i < MARKING_FONT_TT_CHARACTERS+1; ++i) {
+
+
 		DWORD size = offsets[i] - offsets[i-1];
-		DWORD number_of_points = (size - 2) / sizeof(MarkingFontTTCoordinate);
+		if(size > 0) {
+			DWORD number_of_points = (size - 2) / sizeof(MarkingFontTTCoordinate);
 
-		/* Go to the offset */
-		f_lseek(file, offsets[i]);
+			/* Go to the offset */
+			f_lseek(file, offsets[i-1]);
 
-		self->characters[i-1].number_of_points = number_of_points;
-		self->characters[i-1].coords = (PMarkingFontTTCoordinate)SicAlloc(number_of_points * sizeof(MarkingFontTTCoordinate));
+			self->characters[i-1].number_of_points = number_of_points;
+			self->characters[i-1].coords = (PMarkingFontTTCoordinate)SicAlloc(number_of_points * sizeof(MarkingFontTTCoordinate));
 
-		SicAssert(self->characters[i-1].coords != NULL);
+			SicAssert(self->characters[i-1].coords != NULL);
 
-		/* Read both the offset and the width that defines every single character in the font */
-		f_read(file, &self->characters[i-1].offset, sizeof(BYTE), &br); 
-		f_read(file, &self->characters[i-1].width, sizeof(BYTE), &br);
+			/* Read both the offset and the width that defines every single character in the font */
+			f_read(file, &self->characters[i-1].offset, sizeof(BYTE), &br); 
+			f_read(file, &self->characters[i-1].width, sizeof(BYTE), &br);
 
-		/* Read coords (x1,y1) & (x2,y2) of every points */
-		f_read(file, self->characters[i-1].coords, sizeof(MarkingFontTTCoordinate) * number_of_points, &br);
+			/* Read coords (x1,y1) & (x2,y2) of every points */
+			f_read(file, self->characters[i-1].coords, sizeof(MarkingFontTTCoordinate) * number_of_points, &br);
+		} else {
+			self->characters[i-1].number_of_points = 0;
+			self->characters[i-1].coords = NULL;
+		}
 	}
 }

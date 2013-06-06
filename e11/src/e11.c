@@ -20,6 +20,9 @@
 #include <ui/main_ui.h>
 #include <factories/xml_ui_factory.h>
 
+void TestDrawString(PMarkingFontTT font, DWORD base_x, DWORD base_y, const char* string);
+void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y);
+
 void e11() {
 	PDefaultWidgetRenderer widget_renderer = NULL;
 
@@ -66,12 +69,15 @@ void _e11_splashscreen() {
 void _e11_mainloop() {
 	BOOL looping = TRUE;
 	DWORD ticks1, ticks2;
+	PMarkingFontTT ocr_font;	/* TEST */
 
 	MainUI main_ui;
 	
 	MainUI_constructor(&main_ui);
 	
-	
+	/* TEST */
+	ocr_font = MarkingFontTTFactory_getMarkingFontTT("OCR");
+
 
 	main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 0);
 
@@ -83,6 +89,11 @@ void _e11_mainloop() {
 
 		/* System Top rectangle */
 		//LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
+
+		//TestDrawChar(ocr_font, 100, 100);
+
+		TestDrawString(ocr_font, 50, 70, "SIC MARKING");
+		TestDrawString(ocr_font, 40, 95, "PauseEnSecondes");
 
 		if(EsicPollEvent(&system_event)) {
 			
@@ -121,4 +132,48 @@ void _e11_mainloop() {
 	
 	MainUI_destructor(&main_ui.e11ui.widget.object);
 
+}
+
+void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y, char ch) {
+	DWORD i;
+
+	ch -= ' ';
+
+	for(i = 0; i < font->characters[ch].number_of_points; ++i) {
+		if(font->characters[ch].coords[i].x1 >= 0) {
+			LcdSetPixel(
+				base_x + (font->characters[ch].coords[i].x1/7.0f),
+				base_y + (((180) - font->characters[ch].coords[i].y1)/7.0f),
+				0
+			);
+		}
+
+		
+		/*
+		if(font->characters[ch].coords[i].x2 >= 0) {
+			LcdSetPixel(
+				base_x + (font->characters[ch].coords[i].x2/7.0),
+				base_y + (((180) - font->characters[ch].coords[i].y2)/7.0),
+				0
+			);
+		}
+		*/
+		
+
+	}
+
+}
+
+void TestDrawString(PMarkingFontTT font, DWORD base_x, DWORD base_y, const char* string) {
+	DWORD i;
+	DWORD len = strlen(string);
+
+	for(i = 0; i < len; ++i) {
+		if(string[i] > ' ') {
+			TestDrawChar(font, base_x, base_y, string[i]);
+			base_x += (font->characters[string[i] - ' '].width/7.0);
+		} else {
+			base_x += 10;
+		}
+	}
 }

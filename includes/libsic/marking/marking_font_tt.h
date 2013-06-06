@@ -6,24 +6,24 @@
 #define MARKING_FONT_TT_FILENAME_SIZE	12
 #define MARKING_FONT_TT_CHARACTERS		224
 
-#define MARKING_FONT_TT_SIGN			"FONT_TT_"
+#define MARKING_FONT_TT_SIGN			"FONT_TT__"
 #define MARKING_FONT_TT_SIGN1			0x544E4F46	/* "FONT" */
 #define MARKING_FONT_TT_SIGN2			0x5F54545F	/* "_TT_" */
 
 typedef struct _MarkingFontTTCoordinate* PMarkingFontTTCoordinate;
 typedef struct _MarkingFontTTCoordinate {
-	BYTE x1;
+	SBYTE x1;
 	BYTE y1;
-	BYTE x2;
+	SBYTE x2;
 	BYTE y2;
 } MarkingFontTTCoordinate;
 
 typedef struct _MarkingFontTTCharacter *PMarkingFontTTCharacter;
 typedef struct _MarkingFontTTCharacter {
-	WORD offset;
-	WORD width;	/* Logical units */
 	DWORD number_of_points;
 	PMarkingFontTTCoordinate coords;
+	BYTE offset;
+	BYTE width;	/* Logical units */
 } MarkingFontTTCharacter;
 
 typedef struct _MarkingFontTT* PMarkingFontTT;
