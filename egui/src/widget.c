@@ -130,18 +130,6 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 	PListNode it = NULL;
 	PWidget current_child;
 	switch(system_event->type) {
-
-	/*
-	case EVENT_WIDGET:
-		_handle_widget_event(self, &system_event->real_event.widget_event);
-		break;
-	*/
-
-	/* These two events have to be transmitted to childs only when requested */
-	/*
-	case EVENT_BLUR:
-	case EVENT_FOCUS:
-	*/
 	case EVENT_WIDGET:
 
 		it = self->childs.head;
@@ -151,7 +139,6 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 			PWidget chld = ((PWidgetPtr)it->data)->widget;
 			/* If the event is to the current child, forward it. */
 			if(system_event->real_event.widget_event.id == chld->id || system_event->real_event.widget_event.id == 0) {
-				//chld->vtable->defaultProc(chld, system_event);
 				WIDGET_VTABLE(chld)->defaultProc(WIDGET(chld), system_event);
 			}
 			it = it->next;
@@ -167,26 +154,8 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 			WIDGET_VTABLE(current_child)->defaultProc(WIDGET(current_child), system_event);
 			it = it->next;
 		}
-
-		/*
-		if(hot_widget != NULL) {
-			current_child = WIDGETPTR(hot_widget->data)->widget;
-			WIDGET_VTABLE(current_child)->defaultProc(WIDGET(current_child), system_event);
-			//current_child->vtable->defaultProc(current_child, system_event);
-		}
-		*/
 		break;
 
-	
-	case EVENT_PAINT:
-		if(self->parent != NULL) {
-			WIDGET_VTABLE(self)->paint(WIDGET(self), self->parent->x, self->parent->y);
-			//self->vtable->paint(self, self->parent->x, self->parent->y);
-		} else {
-			WIDGET_VTABLE(self)->paint(WIDGET(self), 0, 0);
-			//self->vtable->paint(self, 0, 0);
-		}
-		break;
 	}
 
 	return 0;
@@ -205,13 +174,6 @@ void Widget_paint(PWidget self, WORD base_x, WORD base_y) {
 			base_x + self->x,
 			base_y + self->y
 		);
-
-		/*
-		current_child->vtable->paint(
-			current_child,
-			base_x + self->x,
-			base_y + self->y);
-		*/
 
 		iterator = iterator->next;
 	}
@@ -239,3 +201,14 @@ PWidget Widget_findChildById(PWidget self, WORD id) {
 	}
 }
 
+void Widget_handleWidgetEvent(PWidget self, PWidgetEvent widget_event) {
+	switch(widget_event->type) {
+	case WE_PAINT:
+		if(self->parent != NULL) {
+			WIDGET_VTABLE(self)->paint(WIDGET(self), self->parent->x, self->parent->y);
+		} else {
+			WIDGET_VTABLE(self)->paint(WIDGET(self), 0, 0);
+		}
+		break;
+	}
+}

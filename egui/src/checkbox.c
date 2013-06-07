@@ -83,12 +83,14 @@ DWORD CheckBox_defaultProc(PWidget self, const PEvent system_event) {
 	case EVENT_KEYBOARD_KDOWN:
 		key_code = system_event->real_event.keyboard_event.code;
 
-		// If the user hit return or space, toggle the checkbox
+		// If the user hits return or space, toggle the checkbox
 		if(key_code == KEY_RETURN || key_code == KEY_SPACE) {
 			CHECKBOX(self)->is_checked = (BOOL)!(CHECKBOX(self)->is_checked);
 
-			custom_event.type = EVENT_PAINT;
-			custom_event.real_event.widget_event.id = self->id;
+			custom_event.type = EVENT_WIDGET;
+			custom_event.real_event.widget_event.type = WE_PAINT;
+			custom_event.real_event.widget_event.id   = self->id;
+
 			EsicPushEvent(&custom_event);
 
 		}
@@ -120,7 +122,8 @@ static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 		CHECKBOX(self)->is_focused = FALSE;
 
 		/* Repaint the widget */
-		custom_event.type = EVENT_PAINT;
+		custom_event.type = EVENT_WIDGET;
+		custom_event.real_event.widget_event.type = WE_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
 		EsicPushEvent(&custom_event);
 		break;
@@ -128,10 +131,15 @@ static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 	case WE_FOCUS:
 		CHECKBOX(self)->is_focused = TRUE;
 
-		custom_event.type = EVENT_PAINT;
+		custom_event.type = EVENT_WIDGET;
+		custom_event.real_event.widget_event.type = WE_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
+
 		EsicPushEvent(&custom_event);
 		break;
+
+	default:
+		Widget_handleWidgetEvent(self, widget_event);
 	}
 
 	Event_destructor(OBJECT(&custom_event));

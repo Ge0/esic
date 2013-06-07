@@ -149,7 +149,7 @@ void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y, char ch) {
 		}
 
 		
-		
+		/*
 		if(font->characters[ch].coords[i].x2 >= 0) {
 			LcdSetPixel(
 				base_x + (font->characters[ch].coords[i].x2/7.0),
@@ -157,7 +157,7 @@ void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y, char ch) {
 				0
 			);
 		}
-		
+		*/
 		
 
 	}

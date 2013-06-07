@@ -50,5 +50,6 @@ void Event_destructor(PObject self);
 PObject Event_clone(PObject self, PObject dst);
 const char* Event_enumToString(EventType event_type);
 
+#define EVENT(x) ((PEvent)x)
 
 #endif /* _EVENT_H_ */

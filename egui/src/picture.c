@@ -72,7 +72,6 @@ void Picture_paint(PWidget self, WORD base_x, WORD base_y) {
 }
 
 DWORD Picture_defaultProc(PWidget self, const PEvent system_event) {
-	/*PPicture real_self = (PPicture)self;*/
 	Event custom_event;
 	Event_constructor(&custom_event);
 
@@ -81,16 +80,6 @@ DWORD Picture_defaultProc(PWidget self, const PEvent system_event) {
 	case EVENT_WIDGET:
 		_handle_widget_event(self, &system_event->real_event.widget_event);
 		break;
-
-	/*
-	case EVENT_BLUR:
-		real_self->is_focused  = 0;
-		custom_event.type = EVENT_PAINT;
-		custom_event.real_event.widget_event.id = self->id;
-		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-		EsicPushEvent(&custom_event);
-		break;
-	*/
 
 	case EVENT_KEYBOARD_KDOWN:
 		/* Test: Enlight the surrounding rect? */
@@ -103,22 +92,12 @@ DWORD Picture_defaultProc(PWidget self, const PEvent system_event) {
 			EsicPushEvent(&custom_event);
 
 			// Repaint the widget
-			custom_event.type = EVENT_PAINT;
+			custom_event.type = EVENT_WIDGET;
+			custom_event.real_event.widget_event.type = WE_PAINT;
 			custom_event.real_event.widget_event.id = self->id;
 			EsicPushEvent(&custom_event);
 		}
 		break;
-
-	/*
-	case EVENT_FOCUS:
-		real_self->is_focused  = 1;
-
-		custom_event.type = EVENT_PAINT;
-		custom_event.real_event.widget_event.id = self->id;
-		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-		EsicPushEvent(&custom_event);
-		break;
-	*/
 
 	default:
 		return Widget_defaultProc(self, system_event);
@@ -140,7 +119,8 @@ static void _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 		self->is_hot = FALSE; /*To remove later maybe */
 
 		/* Repaint the widget without the carret */
-		custom_event.type = EVENT_PAINT;
+		custom_event.type = EVENT_WIDGET;
+		custom_event.real_event.widget_event.type = WE_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
 		EsicPushEvent(&custom_event);
 		break;
@@ -150,22 +130,14 @@ static void _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 		PICTURE(self)->is_focused  = TRUE;
 
 		/* Repaint the widget */
-		custom_event.type = EVENT_PAINT;
+		custom_event.type = EVENT_WIDGET;
+		custom_event.real_event.widget_event.type = WE_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
 		EsicPushEvent(&custom_event);
 		break;
 
-	/*
-	case WE_COMMAND:
-		self->is_hot = TRUE;
-
-		// Repaint the widget
-		custom_event.type = EVENT_PAINT;
-		custom_event.real_event.widget_event.id = self->id;
-		EsicPushEvent(&custom_event);
-
-		break;
-	*/
+	default:
+		Widget_handleWidgetEvent(self, widget_event);
 	}
 
 	Event_destructor(OBJECT(&custom_event));

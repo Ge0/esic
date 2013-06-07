@@ -66,8 +66,13 @@ PE11UI E11UI_constructor(PE11UI self) {
 	
 	/* Request the widget to be painted */
 	Event_constructor(&widget_event);
+	/*
 	widget_event.type = EVENT_PAINT;
-	widget_event.real_event.widget_event.id = 0; /* Paint everything? */
+	widget_event.real_event.widget_event.id = 0; */ /* Paint everything? */
+	widget_event.type                         = EVENT_WIDGET;
+	widget_event.real_event.widget_event.type = WE_PAINT;
+	widget_event.real_event.widget_event.id   = 0;
+
 	//singleton_system()->vtable->enqueueEvent(singleton_system(), &widget_event);
 	EsicPushEvent(&widget_event);
 	Event_destructor((PObject)&widget_event);
@@ -103,17 +108,8 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 	/* TODO. */
 	PListNode it = NULL;
 	
-	/*
-	PE11UI real_self = (PE11UI)self;
-	PWidget current_child;
-	BYTE* keyboard_state = NULL;
-	*/
-	
 	Event custom_event;
 	
-	/*
-	PWidgetEvent widget_event;
-	*/
 
 	Event_constructor(&custom_event);
 
@@ -140,10 +136,6 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 
 	case EVENT_TIMER:
 		_unhot_childs(self);
-		/*
-		current_child = ((PWidgetPtr)real_self->focused_widget->data)->widget;
-		current_child->vtable->defaultProc(current_child, system_event);
-		*/
 
 		/* Forward the event to every childs */
 		it = self->childs.head;
@@ -223,14 +215,20 @@ static DWORD _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 		// If we have found any child, set its state to hot & send a message to repaint it
 		if(picture_widget != NULL) {
 			picture_widget->is_hot = TRUE;
+
+			/*
 			custom_event.type = EVENT_PAINT;
 			custom_event.real_event.widget_event.id = widget_id;
+			*/
+			custom_event.type = EVENT_WIDGET;
+			custom_event.real_event.widget_event.type = WE_PAINT;
+			custom_event.real_event.widget_event.id = self->id;
 			
 			EsicPushEvent(&custom_event);
 
 			// Send another COMMAND message to inform our UI that a function key has been stroke
 			custom_event.type = EVENT_WIDGET;
-			//custom_event.real_event.widget_event.id   = widget_id; // Normally don't need this line
+			custom_event.real_event.widget_event.id   = widget_id; // Normally don't need this line
 			custom_event.real_event.widget_event.type = WE_COMMAND;
 			custom_event.real_event.widget_event.param = (DWORD)NULL; // for the moment?
 
@@ -249,11 +247,9 @@ static DWORD _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 				/* Inform the current widget that he's lost the focus */
 				custom_event.real_event.widget_event.id = current_child->id;
 				custom_event.real_event.widget_event.type = WE_BLUR;
-				//custom_event.type = EVENT_BLUR;
 				custom_event.type = EVENT_WIDGET;
-				//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
 				EsicPushEvent(&custom_event);
-				//keyboard_state = singleton_system()->vtable->getKeyState(singleton_system());
+
 				keyboard_state = EsicGetKeyboardState();
 				Event_destructor(&custom_event.object);
 
@@ -282,11 +278,12 @@ static DWORD _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 				}
 				/* Inform the new widget that it as gained the focus */
 				Event_constructor(&custom_event);
+
 				custom_event.real_event.widget_event.id = current_child->id;
-				//custom_event.type = EVENT_FOCUS;
 				custom_event.real_event.widget_event.type = WE_FOCUS;
 				custom_event.type = EVENT_WIDGET;
 				EsicPushEvent(&custom_event);
+
 				Event_destructor(&custom_event.object);
 
 				
@@ -375,7 +372,8 @@ static DWORD _handle_widget_event(PWidget self, PEvent system_event) {
 		}
 	} else {
 		if(widget_event->id == 0) {
-			return Widget_defaultProc(self, system_event);
+			//return Widget_defaultProc(self, system_event);
+			Widget_handleWidgetEvent(self, &system_event->real_event.widget_event);
 		} else {
 			/* If the id equals 0, paint every childs, otherwise find the good one & paint it */
 			it = self->childs.head;
@@ -397,21 +395,24 @@ static DWORD _handle_widget_event(PWidget self, PEvent system_event) {
 }
 
 static void _unhot_childs(PWidget self) {
-	Event paint_event;
+	Event widget_event;
 	PListNode iterator = self->childs.head;
 
-	Event_constructor(&paint_event);
+	Event_constructor(&widget_event);
 
 	while(iterator != NULL) {
 		if(WIDGETPTR(iterator->data)->widget->is_hot) {
 			WIDGETPTR(iterator->data)->widget->is_hot = FALSE;
-			paint_event.type = EVENT_PAINT;
-			paint_event.real_event.widget_event.id = WIDGETPTR(iterator->data)->widget->id;
-			EsicPushEvent(&paint_event);
+
+			widget_event.type = EVENT_WIDGET;
+			widget_event.real_event.widget_event.type = WE_PAINT;
+			widget_event.real_event.widget_event.id   = WIDGETPTR(iterator->data)->widget->id;
+
+			EsicPushEvent(&widget_event);
 
 		}
 		iterator = iterator->next;
 	}
 
-	Event_destructor(OBJECT(&paint_event));
+	Event_destructor(OBJECT(&widget_event));
 }

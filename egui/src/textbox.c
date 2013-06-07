@@ -237,10 +237,13 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 		}
 
 		if(request_paint) {
+			/*
 			custom_event.type = EVENT_PAINT;
 			custom_event.real_event.widget_event.id = self->id;
-
-			//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
+			*/
+			custom_event.type = EVENT_WIDGET;
+			custom_event.real_event.widget_event.type = WE_PAINT;
+			custom_event.real_event.widget_event.id = self->id;
 			EsicPushEvent(&custom_event);
 		}
 		break;
@@ -325,7 +328,12 @@ static void _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 		TEXTBOX(self)->is_focused = FALSE;
 
 		/* Repaint the widget without the carret */
+		/*
 		custom_event.type = EVENT_PAINT;
+		custom_event.real_event.widget_event.id = self->id;
+		*/
+		custom_event.type = EVENT_WIDGET;
+		custom_event.real_event.widget_event.type = WE_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
 		EsicPushEvent(&custom_event);
 		break;
@@ -335,13 +343,19 @@ static void _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 		TEXTBOX(self)->is_focused = TRUE;
 
 		/* Repaint the widget */
+		/*
 		custom_event.type = EVENT_PAINT;
+		custom_event.real_event.widget_event.id = self->id;
+		*/
+		custom_event.type = EVENT_WIDGET;
+		custom_event.real_event.widget_event.type = WE_PAINT;
 		custom_event.real_event.widget_event.id = self->id;
 		EsicPushEvent(&custom_event);
 		break;
 
 	default:
 		/* TODO: HANNDLE DEFAULT WIDGET EVENT (ex: PAINT) */
+		Widget_handleWidgetEvent(self, widget_event); 
 		break;
 	}
 

@@ -80,6 +80,7 @@ PWidget Widget_findChildById(PWidget self, WORD id);
 
 /* End of virtual functions */
 
+void Widget_handleWidgetEvent(PWidget self, PWidgetEvent widget_event);
 void Widget_addChild(PWidget self, PWidget child, BOOL dynamic);
 
 /* Useful Macro */
