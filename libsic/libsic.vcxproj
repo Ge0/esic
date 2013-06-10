@@ -51,6 +51,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)/includes;./includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)/includes;./includes;$(VCInstallDir)PlatformSDK\include;$(VCInstallDir)PlatformSDK\common\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

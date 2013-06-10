@@ -34,6 +34,8 @@ void EmulatorSystemInit(void) {
 	int error;
 	error = SDL_Init(SDL_INIT_VIDEO);
 
+	SDL_WM_SetCaption("E11 Emulator", NULL);
+
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	//LcdInit(320, 240, s_screen->pixels, 0, DEFAULT_BACKGROUND_COLOR);
 

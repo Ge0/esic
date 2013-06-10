@@ -2,6 +2,7 @@
 #include <fatfs/ff.h>
 #include <esic/etools/zstring.h>
 #include <factories/marking_font_tt_factory.h>
+#include <esic/eapi/heap.h>
 
 /* Private functions */
 PMarkingFontTT _build_font_tt(const char* name);
@@ -140,7 +141,7 @@ void _font_tt_hydrate_characters(PMarkingFontTT self, FIL* file) {
 	DWORD i;
 	DWORD br;
 	WORD offsets[MARKING_FONT_TT_CHARACTERS+1];
-	f_read(file, offsets, MARKING_FONT_TT_CHARACTERS+1 * sizeof(WORD), &br);
+	f_read(file, offsets, (MARKING_FONT_TT_CHARACTERS+1) * sizeof(WORD), &br);
 
 	/* Reverse offsets */
 	for(i = 0; i < MARKING_FONT_TT_CHARACTERS+1; ++i) {
@@ -165,6 +166,7 @@ void _font_tt_hydrate_characters(PMarkingFontTT self, FIL* file) {
 			self->characters[i-1].number_of_points = number_of_points;
 			self->characters[i-1].coords = (PMarkingFontTTCoordinate)SicAlloc(number_of_points * sizeof(MarkingFontTTCoordinate));
 
+			//SicPrintfDebug("%08X\n", number_of_points);
 			SicAssert(self->characters[i-1].coords != NULL);
 
 			/* Read both the offset and the width that defines every single character in the font */

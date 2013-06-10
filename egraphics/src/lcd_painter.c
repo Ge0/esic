@@ -6,9 +6,10 @@
 
 #include <esic/egraphics/lcd_painter.h>
 #include <esic/elcd/lcd.h>
-
 #include <esic/egraphics/triangle.h>
 #include <esic/egraphics/vertice.h>
+
+#include <esic/eresources/raster_font_factory.h>
 
 static const vtable_Object s_object_vtable = {
 	LcdPainter_destructor,
@@ -63,8 +64,24 @@ void LcdPainter_drawRectangle(PAbstractPainter abstract_painter, DWORD x, DWORD 
 
 }
 
-void LcdPainter_drawString(PAbstractPainter self, DWORD x, DWORD y , DWORD color, const char* string) {
+void LcdPainter_drawString(PAbstractPainter self, DWORD x, DWORD y , DWORD color, const char* string, const char* font_name) {
 	PLcdPainter real_self = (PLcdPainter)self;
+
+	/* If no font provided, load 6x8 by default */
+	if(font_name != NULL) {
+		self->raster_font = RasterFontFactory_getRasterFont(
+			font_name
+		);
+	} else {
+		self->raster_font = RasterFontFactory_getRasterFont(
+			"6x8.flcd"
+		);
+	}
+
+	self->raster_font = RasterFontFactory_getRasterFont(
+		font_name
+	);
+
 	if(self->raster_font != NULL) {
 		WORD i, j;
 		DWORD len;

@@ -1,4 +1,5 @@
 #include <esic/eapi/system.h>
+#include <esic/eresources/raster_icon_factory.h>
 #include <esic/egui/default_widget_renderer.h>
 #include <esic/elcd/lcd.h>
 #include <esic/egui/widget_ptr.h>
@@ -47,7 +48,7 @@ PE11UI E11UI_constructor(PE11UI self) {
 
 		/* Filling coordinates information */
 		self->icons[i]->widget.x = ICONS_BASE_X + (54*(i%ICONS_PER_LINE));
-		self->icons[i]->widget.y = ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(1-(i/6)));
+		self->icons[i]->widget.y = ICONS_BASE_Y + (MARGIN_SECOND_ICON_LINE*(i/6));
 		self->icons[i]->border_thickness = BORDER_THICKNESS;
 		self->icons[i]->border_color_hot = PICTURE_BORDER_COLOR_HOT;
 		if(i < (E11_NUMBER_OF_ICONS / 2)) {
@@ -72,6 +73,8 @@ PE11UI E11UI_constructor(PE11UI self) {
 	widget_event.type                         = EVENT_WIDGET;
 	widget_event.real_event.widget_event.type = WE_PAINT;
 	widget_event.real_event.widget_event.id   = 0;
+
+	self->battery_icon = RasterIconFactory_getRasterIcon("battery.ilcd");
 
 	//singleton_system()->vtable->enqueueEvent(singleton_system(), &widget_event);
 	EsicPushEvent(&widget_event);
@@ -159,6 +162,39 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 	
 	/* System Top rectangle */
 	LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
+
+	/* FOR SCREENSHOT */
+	DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter->abstract_painter.vtable->drawString(
+		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter),
+		5,
+		2,
+		0,
+		"NO_NAME",
+		"8x12.flcd"
+	);
+
+	DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter->abstract_painter.vtable->drawString(
+		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter),
+		180,
+		4,
+		0,
+		"13:37:00 2013-10-06",
+		"6x8.flcd"
+	);
+
+	
+	if(E11UI(self)->battery_icon != NULL) {
+		DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter->abstract_painter.vtable->drawBuffer(
+			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter),
+			300,
+			2,
+			E11UI(self)->battery_icon->header.width,
+			E11UI(self)->battery_icon->header.height,
+			(WORD*) E11UI(self)->battery_icon->data
+		);
+	}
+	
+
 
 	/* Draw marking window? (canvas) */
 	//LcdDrawRectangle(160-274/2, 20, 274, 92, RGB_16B(200,200,200), RGB_16B(0,0,0));

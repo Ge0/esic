@@ -13,7 +13,7 @@ typedef struct _AbstractPainter* PAbstractPainter;
 typedef struct _vtable_AbstractPainter {
 	void (*drawLine)(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, DWORD);
 	void (*drawRectangle)(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD);
-	void (*drawString)(PAbstractPainter, DWORD, DWORD, DWORD, const char*);
+	void (*drawString)(PAbstractPainter, DWORD, DWORD, DWORD, const char*, const char*);
 	void (*drawPixel)(PAbstractPainter, DWORD, DWORD, DWORD);
 	void (*drawBuffer)(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, WORD*);
 	void (*drawTriangle)(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD);

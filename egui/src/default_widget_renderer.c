@@ -69,7 +69,8 @@ void DefaultWidgetRenderer_paintLabel(PAbstractWidgetRenderer self, PLabel label
 		base_x + label->widget.x,
 		base_y + label->widget.y,
 		label->widget.color,
-		label->caption.data
+		label->caption.data,
+		"6x8.flcd"
 	);
 
 }
@@ -141,7 +142,8 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 		base_x + textbox->widget.x + 2,
 		base_y + textbox->widget.y + 2,
 		RGB_16B(0,0,0),
-		visible_text.data
+		visible_text.data,
+		"6x8.flcd"
 	);
 
 		if(textbox->draw_carret && textbox->is_focused) {
@@ -196,7 +198,8 @@ void DefaultWidgetRenderer_paintTextBox(PAbstractWidgetRenderer self, PTextBox t
 void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture picture, WORD base_x, WORD base_y) {
 	WORD border_color = picture->border_color;
 	if(picture->is_focused) {
-		border_color ^= 0xFFFF;
+		//border_color ^= 0xFFFF;
+		border_color = picture->border_color_hot;
 	}
 	
 	if(WIDGET(picture)->is_hot) {

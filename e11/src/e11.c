@@ -21,7 +21,7 @@
 #include <factories/xml_ui_factory.h>
 
 void TestDrawString(PMarkingFontTT font, DWORD base_x, DWORD base_y, const char* string);
-void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y);
+void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y, char ch);
 
 void e11() {
 	PDefaultWidgetRenderer widget_renderer = NULL;
@@ -93,7 +93,7 @@ void _e11_mainloop() {
 		//TestDrawChar(ocr_font, 100, 100);
 
 		TestDrawString(ocr_font, 50, 70, "SIC MARKING");
-		TestDrawString(ocr_font, 40, 95, "PauseEnSecondes");
+		//TestDrawString(ocr_font, 40, 95, "PauseEnSecondes");
 
 		if(EsicPollEvent(&system_event)) {
 			

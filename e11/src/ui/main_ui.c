@@ -49,12 +49,12 @@ PMainUI MainUI_constructor(PMainUI self) {
 	XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget);
 
 	/* Set the 12 icons */
-	self->e11ui.icons[0]->icon = RasterIconFactory_getRasterIcon("dotpen_black.ilcd");
-	self->e11ui.icons[1]->icon = RasterIconFactory_getRasterIcon("edition_black.ilcd");
-	self->e11ui.icons[2]->icon = RasterIconFactory_getRasterIcon("preview_black.ilcd");
-	self->e11ui.icons[3]->icon = RasterIconFactory_getRasterIcon("list_black.ilcd");
-	self->e11ui.icons[4]->icon = RasterIconFactory_getRasterIcon("settings_black.ilcd");
-	self->e11ui.icons[5]->icon = RasterIconFactory_getRasterIcon("ask_black.ilcd");
+	self->e11ui.icons[6]->icon = RasterIconFactory_getRasterIcon("edition_black.ilcd");
+	self->e11ui.icons[7]->icon = RasterIconFactory_getRasterIcon("variables_black.ilcd");
+	self->e11ui.icons[8]->icon = RasterIconFactory_getRasterIcon("preview_black.ilcd");
+	self->e11ui.icons[9]->icon = RasterIconFactory_getRasterIcon("list_black.ilcd");
+	self->e11ui.icons[10]->icon = RasterIconFactory_getRasterIcon("settings_black.ilcd");
+	self->e11ui.icons[11]->icon = RasterIconFactory_getRasterIcon("ask_black.ilcd");
 
 	/*
 	self->e11ui.icons[6]->icon = RasterIconFactory_getRasterIcon("dotpen_black.ilcd");
@@ -101,33 +101,7 @@ DWORD MainUI_defaultProc(PWidget self, const PEvent system_event) {
 }
 
 void MainUI_onF1(PE11UI self, void* param) {
-	Event user_event;
-	PDotpenUI dotpen_ui = NULL;
-
-#ifdef FOO
-	SicPrintfDebug("F1 STROKE!\n");
-#endif
-
-	NEW(dotpen_ui, DotpenUI);
-
-	//self->child_ui = E11UI(dotpen_ui);
-
-	/* Clear the LCD */
-	//LcdFill(RGB_16B(240,240,240));
-
-	/* Paint the new UI */
-	//WIDGET_VTABLE(WIDGET(self->child_ui))->paint(WIDGET(self->child_ui), 0, 0);
-
 	
-	// Send an event to the upper layer to inform the creation of the child
-	Event_constructor(&user_event);
-	user_event.type = EVENT_USER;
-	user_event.real_event.user_event.type  = E11_EVENT_CREATE_CHILD;
-	user_event.real_event.user_event.param = (DWORD)dotpen_ui;
-
-	EsicPushEvent(&user_event);
-
-	Event_destructor(OBJECT(&user_event));
 }
 
 void MainUI_onF2(PE11UI self, void* param) {
@@ -151,7 +125,21 @@ void MainUI_onF6(PE11UI self, void* param) {
 }
 
 void MainUI_onF7(PE11UI self, void* param) {
+	Event user_event;
+	PDotpenUI dotpen_ui = NULL;
 
+
+	NEW(dotpen_ui, DotpenUI);
+	
+	// Send an event to the upper layer to inform the creation of the child
+	Event_constructor(&user_event);
+	user_event.type = EVENT_USER;
+	user_event.real_event.user_event.type  = E11_EVENT_CREATE_CHILD;
+	user_event.real_event.user_event.param = (DWORD)dotpen_ui;
+
+	EsicPushEvent(&user_event);
+
+	Event_destructor(OBJECT(&user_event));
 }
 
 void MainUI_onF8(PE11UI self, void* param) {

@@ -54,6 +54,7 @@ typedef struct _E11UI {
 	PPicture icons[E11_NUMBER_OF_ICONS];
 	WORD hot_widget_id; /* Test */
 	PListNode focused_widget;
+	PRasterIcon battery_icon;
 	PE11UI parent_ui;
 	PE11UI child_ui;
 } E11UI;
