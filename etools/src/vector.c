@@ -18,13 +18,17 @@ static const vtable_Container s_container_vtable = {
 	Vector_popBack,
 	Vector_pushFront,
 	Vector_popFront,
-	Vector_at
+	Vector_at,
+	Vector_remove,
+	Vector_removeAt
+	
 };
 
 /* Private functions */
 static void _reallocate_size(PVector self);
 static void _insert(PVector self, DWORD position, const void* data);
 static void _remove(PVector self, DWORD position, void* data);
+static SDWORD _index_of(PVector self, const PObject object);
 
 PVector Vector_constructor(PVector self, size_t unit_size) {
 	/* Calling parent constructor */
@@ -241,6 +245,43 @@ static void _insert(PVector self, DWORD position, const void* data) {
 
 	/* Updates the count field */
 	++self->container.count;
+}
+
+void Vector_remove(PContainer self, PObject object) {
+	DWORD index = _index_of(VECTOR(self), object);
+	if(index >= 0) {
+		Vector_removeAt(self, index);
+	}
+}
+
+void Vector_removeAt(PContainer self, DWORD index) {
+	PObject instance = OBJECT(VECTOR(self)->elements + (self->unit_size * index));
+
+	/* call the destructor to free the allocated resources */
+	instance->vtable->destructor(instance);
+
+	if(index < (self->count - 1)) {
+		memmove(
+			(BYTE*)VECTOR(self)->elements + (index * self->unit_size),
+			(BYTE*)VECTOR(self)->elements + ((index + 1) * self->unit_size),
+			(self->count - index + 1) * self->unit_size
+		);
+	}
+
+	--self->count;
+}
+
+static SDWORD _index_of(PVector self, const PObject object) {
+	PObject current_instance = OBJECT(VECTOR(self)->elements);
+	
+	DWORD i = 0;
+	/* Find the right object */
+	while(i < CONTAINER(self)->count && current_instance->vtable->equalsTo(current_instance, object) == FALSE) {
+		current_instance += object->size;
+		++i;
+	}
+
+	return i < CONTAINER(self)->count ? i : -1;
 }
 
 static void _remove(PVector self, DWORD position, void* data) {

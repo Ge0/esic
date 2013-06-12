@@ -9,7 +9,7 @@
 #include <esic/egui/textbox.h>
 #include <esic/egui/picture.h>
 #include <esic/egui/checkbox.h>
-#include <esic/egui/canvas.h>
+#include <esic/egui/graphicsview/canvas.h>
 
 typedef struct _AbstractWidgetRenderer* PAbstractWidgetRenderer;
 

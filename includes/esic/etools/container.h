@@ -16,6 +16,8 @@ typedef struct _vtable_Container {
 	void (*pushFront)(PContainer, const PObject);
 	DWORD (*popFront)(PContainer, PObject);
 	PObject (*at)(PContainer, DWORD);
+	void (*remove)(PContainer, PObject);
+	void (*removeAt)(PContainer, DWORD);
 } vtable_Container;
 
 
@@ -42,15 +44,6 @@ DWORD		Container_type(PObject self);
 	OBJECT_VIRTUAL_FUNCTIONS
 #undef OBJECT_VFUNCTION
 */
-
-/* X-Macro */
-#define CONTAINER_VIRTUAL_FUNCTIONS \
-	CONTAINER_VFUNCTION(void,		pushBack,	"(PContainer self, const PObject)") \
-	CONTAINER_VFUNCTION(DWORD,		popBack,	"(PContainer self, PObject popped)") \
-	CONTAINER_VFUNCTION(void,		pushFront,	"(PContainer self, PObject dst)") \
-	CONTAINER_VFUNCTION(DWORD,		popFront,	"(PContainer self, Pobject popped)") \
-	CONTAINER_VFUNCTION(PObject,	at,			"(PContainer self, DWORD index)")
-
 
 #define CONTAINER(x)			((PContainer)x)
 #define CONTAINER_VTABLE(x)		CONTAINER(x)->vtable

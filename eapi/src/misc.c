@@ -1,4 +1,5 @@
 #include <esic/eapi/misc.h>
+#include <stdlib.h>
 
 int Sign(SDWORD expr) {
 	return (expr > 0) - (expr < 0);
@@ -13,4 +14,8 @@ unsigned long Hash(const char* string) {
 		string++;
 	}
 	return hash;
+}
+
+long RandLong(long min, long max) {
+	return rand() % max - min + 1;
 }

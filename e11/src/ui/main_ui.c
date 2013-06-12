@@ -1,10 +1,16 @@
-#include <esic/eapi/abstract_system.h>
-#include <esic/eresources/raster_icon_factory.h>
+
+
 #include <ui/main_ui.h>
 #include <ui/dotpen_ui.h>
+
 #include <factories/xml_ui_factory.h>
+
 #include <esic/eapi/system.h>
+#include <esic/eapi/misc.h>
+#include <esic/egraphics/pixel.h>
 #include <esic/elcd/lcd.h>
+#include <esic/egui/graphicsview/canvas.h>
+#include <esic/eresources/raster_icon_factory.h>
 
 static const vtable_Object s_object_vtable = {
 	MainUI_destructor,
@@ -34,6 +40,7 @@ static void (*s_onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI, void*) = {
 
 PMainUI MainUI_constructor(PMainUI self) {
 	DWORD i;
+	PWidget canvas;
 	/* Calling parent constructor */
 	E11UI_constructor(&self->e11ui);
 
@@ -74,14 +81,25 @@ PMainUI MainUI_constructor(PMainUI self) {
 		}
 	}
 
-	
+	/* Assigning functions */
 	(E11UI(self)->onFunction) = s_onFunction;
+
+	/* Test: create a graphics scene that will contain shapes */
+	GraphicsScene_constructor(&self->marking_file_scene);
+
+	/* Assign it to our canvas */
+	canvas = Widget_findChildById(WIDGET(self), MAIN_UI_ID_CANVAS);
+	if(canvas != NULL) {
+		Canvas_setGraphicsScene(CANVAS(canvas), &self->marking_file_scene);
+	}
 
 	return self;
 }
 
 void MainUI_destructor(PObject self) {
 	E11UI_destructor(self);
+
+	GraphicsScene_destructor(OBJECT(&E11_MAINUI(self)->marking_file_scene));
 
 	/* Test */
 	if(E11UI(self)->child_ui != NULL) {
@@ -144,6 +162,13 @@ void MainUI_onF7(PE11UI self, void* param) {
 
 void MainUI_onF8(PE11UI self, void* param) {
 
+	/* TEST */
+	PPixel shape;
+	NEW(shape, Pixel);
+	shape->color = 0; /* BLACK */
+	shape->coords.x = RandLong(1, 319);
+	shape->coords.y = RandLong(1, 219);
+	GraphicsScene_addShape(&E11_MAINUI(self)->marking_file_scene, SHAPE(shape), TRUE);
 }
 
 void MainUI_onF9(PE11UI self, void* param) {

@@ -66,7 +66,10 @@ DWORD Vector_popBack(PContainer self, PObject popped);
 void Vector_pushFront(PContainer self, const PObject data);
 DWORD Vector_popFront(PContainer self, PObject popped);
 PObject Vector_at(PContainer self, DWORD index);
-
+void Vector_remove(PContainer self, PObject object);
+void Vector_removeAt(PContainer self, DWORD index);
 /* End of virtual functions */
+
+#define VECTOR(x) ((PVector)x)
 
 #endif /* _VECTOR_H_ */

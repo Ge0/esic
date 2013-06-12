@@ -6,7 +6,7 @@
 #include <esic/egui/label.h>
 #include <esic/egui/picture.h>
 #include <esic/egui/checkbox.h>
-#include <esic/egui/canvas.h>
+#include <esic/egui/graphicsview/canvas.h>
 /*#include <esic/egui/image.h>*/
 #include <esic/egraphics/lcd_painter.h>
 #include <esic/eresources/raster_font_factory.h>
@@ -295,6 +295,8 @@ void DefaultWidgetRenderer_paintCanvas(PAbstractWidgetRenderer self, PCanvas can
 			RGB_16B(200,200,200),
 			0
 		);
+
+	/* TODO: get each Shape of the model & paint it */
 }
 
 /*

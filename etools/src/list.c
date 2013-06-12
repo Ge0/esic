@@ -7,8 +7,26 @@
 #include <stdlib.h>
 #include <string.h>
 
+static const vtable_Object s_list_object_vtable       = {
+	List_destructor,
+	NULL,
+	NULL,
+	NULL
+};
+
+static const vtable_Container s_list_container_vtable = {
+	List_pushBack,
+	List_popBack,
+	List_pushFront,
+	List_popFront,
+	List_at,
+	List_remove,
+	List_removeAt
+};
+
 
 PListNode _create_new_node(PList self, PObject data);
+static void _remove_node(PList self, PListNode node);
 
 PList List_constructor(PList self, size_t unit_size) {
 	/* Calling parent constructor */
@@ -209,4 +227,52 @@ PListNode _create_new_node(PList self, PObject data) {
 
 	/* Finally return the created node */
 	return new_node;
+}
+
+void List_remove(PContainer self, PObject object) {
+	PListNode current_node = LIST(self)->head;
+
+	if(current_node != NULL) {
+
+		while(current_node != NULL && current_node->data->vtable->equalsTo(current_node->data, object) == FALSE) {
+			current_node = current_node->next;
+		}
+
+		if(current_node != NULL) {
+			_remove_node(LIST(self), current_node);
+		}
+
+	}
+}
+
+void List_removeAt(PContainer self, DWORD index) {
+	DWORD i;
+	PListNode current_node = LIST(self)->head;
+
+	if(current_node != NULL) {
+
+		for(i = 0; i < index, current_node != NULL; current_node = current_node->next, ++i);
+
+		if(current_node != NULL) {
+			_remove_node(LIST(self), current_node);
+		}
+
+	}
+}
+
+void _remove_node(PList self, PListNode node) {
+	/* Dereference the current node */
+	if(node != LIST(self)->head) {
+		node->prev->next = node->next;
+	}
+
+	if(node != LIST(self)->tail) {
+		node->prev->next = node->next;
+	}
+
+	--CONTAINER(self)->count;
+
+	/* Delete it */
+	DELETE(node);
+
 }

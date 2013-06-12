@@ -30,6 +30,12 @@
     <ClCompile Include="src\lcd_painter.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\pixel.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shape_ptr.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\egraphics\vertice.h">
@@ -48,6 +54,12 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\esic\egraphics\lcd_painter.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\egraphics\pixel.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\egraphics\shape_ptr.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

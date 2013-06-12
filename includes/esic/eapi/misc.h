@@ -7,5 +7,6 @@
 
 int Sign(SDWORD expr);
 unsigned long Hash(const char* string);
+long RandLong(long min, long max);
 
 #endif /* _MISC_H_ */

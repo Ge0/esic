@@ -13,6 +13,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="includes\graphicsview">
+      <UniqueIdentifier>{6b4f7963-7c5c-420c-ae58-b17fb75223bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphicsview">
+      <UniqueIdentifier>{1bbf6062-0caf-40bd-bab5-17a91ccdfc68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\egui\widget.h">
@@ -45,8 +51,11 @@
     <ClInclude Include="..\includes\esic\egui\checkbox.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\esic\egui\canvas.h">
-      <Filter>includes</Filter>
+    <ClInclude Include="..\includes\esic\egui\graphicsview\canvas.h">
+      <Filter>includes\graphicsview</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\egui\graphicsview\graphics_scene.h">
+      <Filter>includes\graphicsview</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -71,8 +80,11 @@
     <ClCompile Include="src\checkbox.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\canvas.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\graphicsview\canvas.c">
+      <Filter>src\graphicsview</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics_scene.c">
+      <Filter>src\graphicsview</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

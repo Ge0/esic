@@ -11,7 +11,7 @@
 #include <esic/egui/checkbox.h>
 #include <esic/egui/label.h>
 #include <esic/egui/textbox.h>
-#include <esic/egui/canvas.h>
+#include <esic/egui/graphicsview/canvas.h>
 
 #include <string.h>
 

@@ -79,6 +79,8 @@
   <ItemGroup>
     <ClCompile Include="src\ellipse.c" />
     <ClCompile Include="src\lcd_painter.c" />
+    <ClCompile Include="src\pixel.c" />
+    <ClCompile Include="src\shape_ptr.c" />
     <ClCompile Include="src\triangle.c" />
     <ClCompile Include="src\vertice.c" />
   </ItemGroup>
@@ -86,7 +88,9 @@
     <ClInclude Include="..\includes\esic\egraphics\abstract_painter.h" />
     <ClInclude Include="..\includes\esic\egraphics\ellipse.h" />
     <ClInclude Include="..\includes\esic\egraphics\lcd_painter.h" />
+    <ClInclude Include="..\includes\esic\egraphics\pixel.h" />
     <ClInclude Include="..\includes\esic\egraphics\shape.h" />
+    <ClInclude Include="..\includes\esic\egraphics\shape_ptr.h" />
     <ClInclude Include="..\includes\esic\egraphics\triangle.h" />
     <ClInclude Include="..\includes\esic\egraphics\vertice.h" />
   </ItemGroup>

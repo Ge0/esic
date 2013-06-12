@@ -1,5 +1,6 @@
 #include "e11.h"
 #include <stdlib.h>
+#include <time.h>
 
 #include <esic/elcd/lcd.h>
 #include <esic/eapi/event.h>
@@ -34,6 +35,7 @@ void e11() {
 	*/
 
 	/* FACTORY INIT */
+	srand(time(NULL));
 	RasterFontFactory_init();
 	RasterIconFactory_init();
 	MarkingFontTTFactory_init();

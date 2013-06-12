@@ -32,14 +32,15 @@ DWORD	List_popBack(PContainer self, PObject popped);
 void	List_pushFront(PContainer self, const PObject data);
 DWORD	List_popFront(PContainer self, PObject popped);
 PObject	List_at(PContainer self, DWORD index);
+void List_remove(PContainer self, PObject object);
+void List_removeAt(PContainer self, DWORD index);
 
 /* End of virtual functions */
 
 PObject List_tail(PList self);
 
 /* Vtables definition */
-static const vtable_Object s_list_object_vtable       = { List_destructor, NULL, NULL, NULL };
-static const vtable_Container s_list_container_vtable = { List_pushBack, List_popBack, List_pushFront, List_popFront, List_at };
 
+#define LIST(x) ((PList)x)
 
 #endif /* _LIST_H_ */

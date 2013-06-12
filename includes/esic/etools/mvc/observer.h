@@ -11,18 +11,20 @@ typedef struct _vtable_Observer {
 } vtable_Observer;
 
 typedef struct _Observer {
-	Object object;
+	PObject object;
 	VTABLE(Observer);
-	PAbstractModel model;
+	//PAbstractModel model;
 } Observer;
 
 /* Test virtual inheritance */
 typedef struct _VObserver {
 	PObject object;			/* Becomes a pointer */
 	VTABLE(Observer);
-	PAbstractModel model;
+	//PAbstractModel model;
 } VObserver, *PVObserver;
 
 PObserver Observer_constructor(PObserver self);
+
+#define OBSERVER(x) ((PObserver)x)
 
 #endif /* _OBSERVER_H_ */

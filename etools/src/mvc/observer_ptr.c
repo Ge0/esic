@@ -6,16 +6,17 @@
 static const vtable_Object s_vtable_object = {
 	ObserverPtr_destructor,
 	ObserverPtr_clone,
+	ObserverPtr_equalsTo,
 	NULL,
 	NULL
 };
 
-PObserverPtr ObserverPtr_constructor(PObserverPtr self, const PObserver observer, BOOL dynamic) {
+PObserverPtr ObserverPtr_constructor(PObserverPtr self, const PObserver observer) {
 
 	/* Filling members */
 	self->object.size = sizeof(ObserverPtr);
 	self->observer = observer;
-	self->dynamic = dynamic;
+	//self->dynamic = dynamic;
 
 	/* Filling vtable */
 	self->object.vtable = &s_vtable_object;
@@ -36,7 +37,7 @@ PObject ObserverPtr_clone(PObject self, PObject dst) {
 	dst->size        = self->size;
 	dst->vtable      = self->vtable;
 	
-	real_dst->dynamic  = real_self->dynamic;
+	//real_dst->dynamic  = real_self->dynamic;
 	real_dst->observer = real_self->observer;
 
 	return dst;
