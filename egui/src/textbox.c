@@ -28,16 +28,20 @@ VTABLE_START(Object) {
 };
 
 VTABLE_START(Widget) {
+/*
 #define WIDGET_VFUNCTION(return_type, function_name, arguments) TextBox_##function_name,
 	WIDGET_VIRTUAL_FUNCTIONS
 #undef WIDGET_VFUNCTION
+*/
+	TextBox_defaultProc,
+	TextBox_paint,
+	TextBox_handleWidgetEvent
 };
 
 
 /* Private functions */
 static void _update_carret_position(PTextBox self, Keycode code);
 static void _update_offset_text_position(PTextBox self);
-static void _handle_widget_event(PWidget self, PWidgetEvent widget_event);
 
 PTextBox TextBox_constructor(PTextBox self) {
 
@@ -162,9 +166,12 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 
 	switch(system_event->type) {
 
+	/*
 	case EVENT_WIDGET:
 		_handle_widget_event(self, &system_event->real_event.widget_event);
 		break;
+
+	*/
 
 	/*
 	case EVENT_BLUR:
@@ -318,7 +325,7 @@ void _update_offset_text_position(PTextBox self) {
 	}
 }
 
-static void _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
+void TextBox_handleWidgetEvent(PWidget self, PWidgetEvent widget_event) {
 	Event custom_event;
 	Event_constructor(&custom_event);
 	switch(widget_event->type) {

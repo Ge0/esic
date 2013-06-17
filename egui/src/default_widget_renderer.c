@@ -9,6 +9,7 @@
 #include <esic/egui/graphicsview/canvas.h>
 /*#include <esic/egui/image.h>*/
 #include <esic/egraphics/lcd_painter.h>
+#include <esic/egraphics/shape_ptr.h>
 #include <esic/eresources/raster_font_factory.h>
 
 static const vtable_Object s_object_vtable = {
@@ -283,6 +284,9 @@ void DefaultWidgetRenderer_paintPicture(PAbstractWidgetRenderer self, PPicture p
 }
 
 void DefaultWidgetRenderer_paintCanvas(PAbstractWidgetRenderer self, PCanvas canvas, WORD base_x, WORD base_y) {
+	ClippingRegion saved_region = ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter)->clipping_region;
+	PListNode current_shape = NULL;
+
 	/* Simply draw a rectangle */
 	ABSTRACTPAINTER_VTABLE(DEFAULTWIDGETRENDERER(self)->painter)->drawRectangle(
 			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter),
@@ -296,7 +300,28 @@ void DefaultWidgetRenderer_paintCanvas(PAbstractWidgetRenderer self, PCanvas can
 			0
 		);
 
+
+	/* Test: define a clipping region for the painter */
+	ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter)->clipping_region.x1 = base_x + canvas->widget.x;
+	ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter)->clipping_region.y1 = base_y + canvas->widget.y;
+	ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter)->clipping_region.x2 = base_x + canvas->widget.x + canvas->widget.width;
+	ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter)->clipping_region.y2 = base_y + canvas->widget.y + canvas->widget.height;
+
 	/* TODO: get each Shape of the model & paint it */
+	if(canvas->scene != NULL) {
+		current_shape = canvas->scene->shapes.head;
+		
+		while(current_shape != NULL) {
+			PShape shape = SHAPEPTR(current_shape->data)->shape;
+
+			shape->vtable->paint(shape, ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter));
+
+			current_shape = current_shape->next;
+		}
+
+	}
+
+	ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter)->clipping_region = saved_region;
 }
 
 /*

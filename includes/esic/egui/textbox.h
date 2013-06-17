@@ -53,6 +53,7 @@ DWORD   TextBox_type(PObject self);
 
 void TextBox_paint(PWidget self, WORD base_x, WORD base_y);
 DWORD TextBox_defaultProc(PWidget self, const PEvent system_event);
+void TextBox_handleWidgetEvent(PWidget self, PWidgetEvent widget_event);
 
 /*
 #define WIDGET_VFUNCTION(return_type, function_name, arguments) \

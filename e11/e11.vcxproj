@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClCompile Include="src\e11.c" />
     <ClCompile Include="src\e11_ui.c" />
+    <ClCompile Include="src\factories\marking_file_v5_factory.c" />
     <ClCompile Include="src\factories\marking_font_tt_factory.c" />
     <ClCompile Include="src\factories\xml_ui_factory.c" />
     <ClCompile Include="src\toolbox.c" />

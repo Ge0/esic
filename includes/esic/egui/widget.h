@@ -15,6 +15,7 @@ typedef struct _Widget *PWidget, **PPWidget;
 typedef struct _vtable_Widget {
 	DWORD (*defaultProc)(PWidget, const PEvent);
 	void (*paint)(PWidget, WORD, WORD);
+	void (*handleWidgetEvent)(PWidget self, PWidgetEvent widget_event);
 } vtable_Widget;
 
 
@@ -76,11 +77,11 @@ DWORD Widget_type(PObject self);
 /* Widget */
 void Widget_paint(PWidget self, WORD base_x, WORD base_y);
 DWORD Widget_defaultProc(PWidget self, const PEvent system_event);
-PWidget Widget_findChildById(PWidget self, WORD id);
+void Widget_handleWidgetEvent(PWidget self, PWidgetEvent widget_event);
 
 /* End of virtual functions */
+PWidget Widget_findChildById(PWidget self, WORD id);
 
-void Widget_handleWidgetEvent(PWidget self, PWidgetEvent widget_event);
 void Widget_addChild(PWidget self, PWidget child, BOOL dynamic);
 
 /* Useful Macro */

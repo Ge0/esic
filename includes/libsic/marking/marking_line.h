@@ -9,6 +9,7 @@ typedef struct _MarkingLine {
 	float x;
 	float y;
 	float z;
+	float d;
 	float width;
 	float height;
 	int   speed;

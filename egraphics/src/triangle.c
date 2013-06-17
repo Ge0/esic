@@ -229,5 +229,5 @@ void _fill_flat_side_triangle_int(PTriangle self, PAbstractPainter abstract_pain
 	}
 
 	Vertice_destructor(OBJECT(&tmp_vertice_1));
-	Vertice_destructor(OBJECT(&tmp_vertice_1));
+	Vertice_destructor(OBJECT(&tmp_vertice_2));
 }

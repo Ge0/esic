@@ -33,6 +33,12 @@ PLcdPainter LcdPainter_constructor(PLcdPainter self) {
 	self->abstract_painter.vtable = &s_abstract_painter_vtable;
 	self->abstract_painter.raster_font = NULL;
 
+	/* Test */
+	self->abstract_painter.clipping_region.x1 = 0;
+	self->abstract_painter.clipping_region.y1 = 0;
+	self->abstract_painter.clipping_region.x2 = 0xFFFFFFFF;
+	self->abstract_painter.clipping_region.y2 = 0xFFFFFFFF;
+
 	return self;
 }
 
@@ -44,22 +50,70 @@ void LcdPainter_destructor(PObject self) {
 }
 
 /* AbstractPainter */
-void LcdPainter_drawLine(PAbstractPainter abstract_painter, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
-	LcdDrawLine(x1, y1, x2, y2, color);
+void LcdPainter_drawLine(PAbstractPainter self, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
+	//LcdDrawLine(x1, y1, x2, y2, color);
+
+	DWORD deltax;
+	DWORD deltay;
+	double error;
+	DWORD ystep;
+	DWORD x;
+	DWORD y;
+	BYTE steep;
+	
+	steep = abs((long)y2 - (long)y1) > abs((long)x2 - (long)x1);
+
+	if(steep) {
+		SWAP(x1, y1);
+		SWAP(x2, y2);
+	}
+
+	if(x1 > x2) {
+		SWAP(x1, x2);
+		SWAP(y1, y2);
+	}
+
+	deltax = x2 - x1;
+	deltay = abs((long)y2 - (long)y1);
+	error = deltax / 2;
+	y = y1;
+
+	if(y1 < y2) {
+		ystep = 1;
+	} else {
+		ystep = -1;
+	}
+
+	for(x = x1; x <= x2; ++x) {
+		if(steep) {
+			LcdPainter_drawPixel(self, y, x, color);
+		} else {
+			LcdPainter_drawPixel(self, x, y, color);
+		}
+
+
+		error -= deltay;
+
+		if(error < 0) {
+			y += ystep;
+			error += deltax;
+		}
+	}
+
 }
-void LcdPainter_drawRectangle(PAbstractPainter abstract_painter, DWORD x, DWORD y, DWORD width, DWORD height, DWORD background_color, DWORD border_color) {
+void LcdPainter_drawRectangle(PAbstractPainter self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD background_color, DWORD border_color) {
 	/* Firstly: draw the rectangle */
 	DWORD i;
 	for(i = 0; i < height; i++) {
-		LcdDrawLine(x, y + i, x + width-1, y + i, background_color);
+		LcdPainter_drawLine(self, x, y + i, x + width-1, y + i, background_color);
 	}
 
 		/* Secondly, draw the border */
 
-	LcdDrawLine(x, y, x + width-1, y, border_color);						/* top one */
-	LcdDrawLine(x + width-1, y, x + width-1, y + (height-1), border_color);	/* right one */
-	LcdDrawLine(x + width-1, y + (height-1), x, y + (height-1), border_color);	/* bottom one */
-	LcdDrawLine(x, y + (height-1), x, y, border_color);					/* left one */
+	LcdPainter_drawLine(self, x, y, x + width-1, y, border_color);						/* top one */
+	LcdPainter_drawLine(self, x + width-1, y, x + width-1, y + (height-1), border_color);	/* right one */
+	LcdPainter_drawLine(self, x + width-1, y + (height-1), x, y + (height-1), border_color);	/* bottom one */
+	LcdPainter_drawLine(self, x, y + (height-1), x, y, border_color);					/* left one */
 
 
 }
@@ -114,7 +168,7 @@ void LcdPainter_drawString(PAbstractPainter self, DWORD x, DWORD y , DWORD color
 					if(bit == 1) {
 						WORD x_dest = (x + i * character_width + (j % character_width));
 						WORD y_dest = y + (j / character_width) /* + ((x_dest / 320) * character_height) */;
-						LcdSetPixel(x_dest, y_dest, color);
+						LcdPainter_drawPixel(self, x_dest, y_dest, color);
 					}
 				}
 
@@ -125,11 +179,14 @@ void LcdPainter_drawString(PAbstractPainter self, DWORD x, DWORD y , DWORD color
 	}
 }
 
-void LcdPainter_drawPixel(PAbstractPainter abstract_painter, DWORD x , DWORD y , DWORD color) {
-	LcdSetPixel(x, y, color);
+void LcdPainter_drawPixel(PAbstractPainter self, DWORD x , DWORD y, DWORD color) {
+	if(x >= self->clipping_region.x1 && y >= self->clipping_region.y1 &&
+	x <= self->clipping_region.x2 && y <= self->clipping_region.y2) {
+		LcdSetPixel(x, y, color);
+	}
 }
 
-void LcdPainter_drawBuffer(PAbstractPainter abstract_painter, DWORD x, DWORD y, DWORD width, DWORD height, WORD* raw_buffer) {
+void LcdPainter_drawBuffer(PAbstractPainter self, DWORD x, DWORD y, DWORD width, DWORD height, WORD* raw_buffer) {
 	DWORD i, j;
 
 	for(j = 0; j < height; ++j) {

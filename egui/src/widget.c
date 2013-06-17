@@ -22,9 +22,14 @@ VTABLE_START(Object) {
 };
 
 VTABLE_START(Widget) {
+/*
 #define WIDGET_VFUNCTION(return_type, function_name, arguments) Widget_##function_name,
 	WIDGET_VIRTUAL_FUNCTIONS
 #undef WIDGET_VFUNCTION
+*/
+	Widget_defaultProc,
+	Widget_paint,
+	Widget_handleWidgetEvent
 };
 
 /*
@@ -132,6 +137,8 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 	switch(system_event->type) {
 	case EVENT_WIDGET:
 
+		WIDGET_VTABLE(self)->handleWidgetEvent(self, &system_event->real_event.widget_event);
+
 		it = self->childs.head;
 
 		/* No id? dispatch the event to every child */
@@ -139,7 +146,8 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 			PWidget chld = ((PWidgetPtr)it->data)->widget;
 			/* If the event is to the current child, forward it. */
 			if(system_event->real_event.widget_event.id == chld->id || system_event->real_event.widget_event.id == 0) {
-				WIDGET_VTABLE(chld)->defaultProc(WIDGET(chld), system_event);
+				//WIDGET_VTABLE(chld)->defaultProc(WIDGET(chld), system_event);
+				WIDGET_VTABLE(chld)->handleWidgetEvent(WIDGET(chld), &system_event->real_event.widget_event);
 			}
 			it = it->next;
 		}

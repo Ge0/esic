@@ -51,6 +51,9 @@
     <ClCompile Include="src\factories\marking_font_tt_factory.c">
       <Filter>src\factories</Filter>
     </ClCompile>
+    <ClCompile Include="src\factories\marking_file_v5_factory.c">
+      <Filter>src\factories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\e11.h">

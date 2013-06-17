@@ -8,6 +8,11 @@
 #include <esic/eapi/event.h>
 #include <esic/eresources/raster_font.h>
 
+/* Test */
+typedef struct _ClippingRegion {
+	DWORD x1, y1, x2, y2;
+} ClippingRegion, *PClippingRegion;
+
 typedef struct _AbstractPainter* PAbstractPainter;
 
 typedef struct _vtable_AbstractPainter {
@@ -23,7 +28,9 @@ typedef struct _AbstractPainter {
 	Object object;
 	const vtable_AbstractPainter* vtable;
 	PRasterFont raster_font;
+	ClippingRegion clipping_region;
 } AbstractPainter;
+
 
 
 /* Useful Macro */

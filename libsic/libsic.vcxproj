@@ -20,7 +20,7 @@
     <ClInclude Include="..\includes\libsic\marking\text_marking_variable.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="marking_font_tt.c" />
+    <ClCompile Include="src\marking\marking_font_tt.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2CD65EAC-60D3-44AE-8996-C3A459537D12}</ProjectGuid>

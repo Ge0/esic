@@ -10,9 +10,9 @@ VTABLE_START(Object) {
 };
 
 VTABLE_START(Widget) {
-#define WIDGET_VFUNCTION(return_type, function_name, arguments) CheckBox_##function_name,
-	WIDGET_VIRTUAL_FUNCTIONS
-#undef WIDGET_VFUNCTION
+	CheckBox_defaultProc,
+	CheckBox_paint,
+	CheckBox_handleWidgetEvent
 };
 
 static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event);
@@ -96,9 +96,11 @@ DWORD CheckBox_defaultProc(PWidget self, const PEvent system_event) {
 		}
 		break;
 
+	/*
 	case EVENT_WIDGET:
 		return _handle_widget_event(self, &system_event->real_event.widget_event);
 		break;
+	*/
 
 	default:	
 		return Widget_defaultProc(self, system_event);
@@ -113,7 +115,7 @@ void CheckBox_paint(PWidget self, WORD base_x, WORD base_y) {
 	GetDefaultWidgetRenderer()->vtable->paintCheckBox(GetDefaultWidgetRenderer(), (PCheckBox)self, base_x, base_y);
 }
 
-static DWORD _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
+void CheckBox_handleWidgetEvent(PWidget self, PWidgetEvent widget_event) {
 	Event custom_event;
 	Event_constructor(&custom_event);
 	switch(widget_event->type) {

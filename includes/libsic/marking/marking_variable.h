@@ -1,13 +1,17 @@
 #ifndef _MARKING_VARIABLE_H_
 #define _MARKING_VARIABLE_H_
 
+#include <esic/object.h>
 #include <esic/etools/zstring.h>
 
+typedef struct _MarkingVariable* PMarkingVariable;
+
 typedef struct _MarkingVariable {
+	Object object;
 	ZString name;
 } MarkingVariable;
 
-PMarkingFike MarkingVariable_constructor(PMarkingVariable self);
+PMarkingVariable MarkingVariable_constructor(PMarkingVariable self);
 
 /* Object virtual functions */
 void MarkingVariable_destructor(PObject self);
