@@ -112,11 +112,11 @@ DWORD CheckBox_defaultProc(PWidget self, const PEvent system_event) {
 	return 0;
 }
 
-void CheckBox_paint(PWidget self, PAbstractPainter painter, WORD base_x, WORD base_y) {
+void CheckBox_paint(PWidget self, WORD base_x, WORD base_y) {
 	//GetDefaultWidgetRenderer()->vtable->paintCheckBox(GetDefaultWidgetRenderer(), (PCheckBox)self, base_x, base_y);
 	/* Draw the rectangle */
-	ABSTRACTPAINTER_VTABLE(painter)->drawRectangle(
-		painter,
+	ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+		self->painter,
 		base_x + self->x,
 		base_y + self->y,
 		10,
@@ -127,8 +127,8 @@ void CheckBox_paint(PWidget self, PAbstractPainter painter, WORD base_x, WORD ba
 
 	/* Draw another inner rectangle if the checkbox is checked */
 	if(CHECKBOX(self)->is_checked) {
-		ABSTRACTPAINTER_VTABLE(painter)->drawRectangle(
-			painter,
+		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+			self->painter,
 			base_x + self->x + 2,
 			base_y + self->y + 2,
 			6,

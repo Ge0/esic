@@ -4,34 +4,17 @@
 
 #include <esic/eapi/event.h>
 #include <esic/egui/label.h>
-//#include <esic/egui/default_widget_renderer.h> /* Only for testing */
 
-/*
-static const vtable_Object s_object_vtable = {
-	Label_destructor,
-	Label_clone,
-	NULL,
-	NULL
-};
-
-static const vtable_Widget s_widget_vtable = {
-	Widget_defaultProc,
-	Label_paint
-};
-*/
 
 VTABLE_START(Object) {
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) Label_##function_name,
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
+	Label_destructor,
+	Label_clone,
+	Label_equalsTo,
+	Label_hash,
+	Label_type
 };
 
 VTABLE_START(Widget) {
-/*
-#define WIDGET_VFUNCTION(return_type, function_name, arguments) Label_##function_name,
-	WIDGET_VIRTUAL_FUNCTIONS
-#undef WIDGET_VFUNCTION
-*/
 	Label_defaultProc,
 	Label_paint,
 	Widget_handleWidgetEvent
@@ -78,10 +61,6 @@ PObject Label_clone(PObject self, PObject dst) {
 }
 
 void Label_paint(PWidget self, WORD base_x, WORD base_y) {
-	/* TODO */
-
-	/* TEST */
-	//GetDefaultWidgetRenderer()->vtable->paintLabel(GetDefaultWidgetRenderer(), (PLabel)self, base_x, base_y);
 
 	ABSTRACTPAINTER_VTABLE(self->painter)->drawString(
 		self->painter,

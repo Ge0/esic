@@ -88,6 +88,7 @@
     <ClInclude Include="..\includes\esic\egraphics\abstract_painter.h" />
     <ClInclude Include="..\includes\esic\egraphics\ellipse.h" />
     <ClInclude Include="..\includes\esic\egraphics\lcd_painter.h" />
+    <ClInclude Include="..\includes\esic\egraphics\painter.h" />
     <ClInclude Include="..\includes\esic\egraphics\pixel.h" />
     <ClInclude Include="..\includes\esic\egraphics\shape.h" />
     <ClInclude Include="..\includes\esic\egraphics\shape_ptr.h" />
