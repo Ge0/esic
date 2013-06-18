@@ -69,9 +69,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\egui\abstract_ui_factory.h" />
-    <ClInclude Include="..\includes\esic\egui\abstract_widget_renderer.h" />
     <ClInclude Include="..\includes\esic\egui\checkbox.h" />
-    <ClInclude Include="..\includes\esic\egui\default_widget_renderer.h" />
     <ClInclude Include="..\includes\esic\egui\graphicsview\canvas.h" />
     <ClInclude Include="..\includes\esic\egui\graphicsview\graphics_scene.h" />
     <ClInclude Include="..\includes\esic\egui\image.h" />
@@ -84,7 +82,6 @@
   <ItemGroup>
     <ClCompile Include="graphics_scene.c" />
     <ClCompile Include="src\checkbox.c" />
-    <ClCompile Include="src\default_widget_renderer.c" />
     <ClCompile Include="src\graphicsview\canvas.c" />
     <ClCompile Include="src\label.c" />
     <ClCompile Include="src\picture.c" />

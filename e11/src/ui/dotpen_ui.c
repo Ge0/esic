@@ -2,6 +2,7 @@
 #include <ui/dotpen_ui.h>
 #include <factories/xml_ui_factory.h>
 #include <esic/eapi/system.h>
+#include <esic/egraphics/lcd_painter.h>
 
 VTABLE_START(Object) {
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) DotpenUI_##function_name,
@@ -10,9 +11,14 @@ VTABLE_START(Object) {
 };
 
 VTABLE_START(Widget) {
+/*
 #define WIDGET_VFUNCTION(return_type, function_name, arguments) DotpenUI_##function_name,
 	WIDGET_VIRTUAL_FUNCTIONS
 #undef WIDGET_VFUNCTION
+*/
+	DotpenUI_defaultProc,
+	DotpenUI_paint,
+	Widget_handleWidgetEvent
 };
 
 static void (*s_onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI, void*) = {
@@ -32,7 +38,7 @@ PDotpenUI DotpenUI_constructor(PDotpenUI self) {
 
 
 	/* Build the UI */
-	XmlUiFactory_hydrateUI("dotpen_ui", &self->e11ui.widget);
+	XmlUiFactory_hydrateUI("dotpen_ui", &self->e11ui.widget, GetLcdPainter());
 
 	/* Set the 12 icons */
 	self->e11ui.icons[11]->icon = RasterIconFactory_getRasterIcon("dotpen.ilcd");
@@ -100,8 +106,8 @@ DWORD DotpenUI_defaultProc(PWidget self, const PEvent system_event) {
 	}
 }
 
-void DotpenUI_paint(PWidget self, WORD base_x, WORD base_y) {
-	E11UI_paint(self, base_x, base_y);
+void DotpenUI_paint(PWidget self, PAbstractPainter painter, WORD base_x, WORD base_y) {
+	E11UI_paint(self, painter, base_x, base_y);
 }
 
 void DotpenUI_onF1(PE11UI self, void* param) {

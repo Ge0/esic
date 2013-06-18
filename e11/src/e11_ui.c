@@ -1,6 +1,6 @@
 #include <esic/eapi/system.h>
 #include <esic/eresources/raster_icon_factory.h>
-#include <esic/egui/default_widget_renderer.h>
+//#include <esic/egui/default_widget_renderer.h>
 #include <esic/elcd/lcd.h>
 #include <esic/egui/widget_ptr.h>
 #include "e11_ui.h"
@@ -40,8 +40,11 @@ PE11UI E11UI_constructor(PE11UI self) {
 
 	/* Construct picture widgets */
 	for(i = 0; i < E11_NUMBER_OF_ICONS; i++) {
-		//Picture_constructor(&self->icons[i]);
+
 		NEW(self->icons[i], Picture);
+
+		/* Test: assign a painter */
+		self->icons[i]->widget.painter = GetLcdPainter();
 
 		/* Id : 0x8000 + i + 1 */
 		self->icons[i]->widget.id = (WORD)(E11_BASE_ID_SYSTEM_ICONS + i + 1);
@@ -164,8 +167,8 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 	LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
 
 	/* FOR SCREENSHOT */
-	DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter->abstract_painter.vtable->drawString(
-		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter),
+	self->painter->vtable->drawString(
+		self->painter,
 		5,
 		2,
 		0,
@@ -173,8 +176,8 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 		"8x12.flcd"
 	);
 
-	DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter->abstract_painter.vtable->drawString(
-		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter),
+	self->painter->vtable->drawString(
+		self->painter,
 		180,
 		4,
 		0,
@@ -184,8 +187,8 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 
 	
 	if(E11UI(self)->battery_icon != NULL) {
-		DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter->abstract_painter.vtable->drawBuffer(
-			ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter),
+		self->painter->vtable->drawBuffer(
+			self->painter,
 			300,
 			2,
 			E11UI(self)->battery_icon->header.width,
@@ -194,24 +197,8 @@ void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
 		);
 	}
 	
-
-
-	/* Draw marking window? (canvas) */
-	//LcdDrawRectangle(160-274/2, 20, 274, 92, RGB_16B(200,200,200), RGB_16B(0,0,0));
-
-	//LcdPainter_drawTriangle(160,2,5,220,300,230, RGB_16B(200,200,200), RGB_16B(0,0,0));
-
-	/*
-	DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter->abstract_painter.vtable->drawTriangle(
-		ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(GetDefaultWidgetRenderer())->painter),
-		160,2,5,220,300,230, RGB_16B(200,200,200), RGB_16B(0,0,0));
-
-	*/
-
 	/* Call parent paint */
 	Widget_paint(self, base_x, base_y);
-
-	/* Draw icons */
 }
 
 PPicture E11UI_getPicture(PE11UI self, DWORD index) {

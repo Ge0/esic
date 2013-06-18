@@ -13,6 +13,8 @@
 #include <esic/egui/textbox.h>
 #include <esic/egui/graphicsview/canvas.h>
 
+
+
 #include <string.h>
 
 static void _start_element(void *user_data, const char *name, const char **atts);
@@ -24,7 +26,7 @@ void _hydrate_label(PLabel label, const char** atts);
 void _hydrate_textbox(PTextBox textbox, const char** atts);
 void _hydrate_canvas(PCanvas canvas, const char** atts);
 
-void XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget) {
+void XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget, PAbstractPainter painter) {
 	char* path = NULL;
 	FIL ui_file;
 	XML_Parser parser = NULL;
@@ -57,6 +59,9 @@ void XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget) {
 
 	/* Set our widget as the user data so the callback would be able to hydrate it */
 	XML_SetUserData(parser, (void*)&widget);
+
+	/* Test */
+	widget->painter = painter;
 
 	XML_SetElementHandler(parser, _start_element, _end_element);
 	do {
@@ -115,6 +120,7 @@ static void _start_element(void *user_data, const char *name, const char **atts)
 
 			/* Associate the relationship */
 			new_widget->parent = *p_widget;
+			new_widget->painter = (*p_widget)->painter;
 
 			/* Append to the list of childs of the current widget */
 			Widget_addChild(*p_widget, new_widget, TRUE);

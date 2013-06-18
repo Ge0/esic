@@ -24,4 +24,8 @@ void LcdPainter_drawPixel(PAbstractPainter, DWORD, DWORD, DWORD);
 void LcdPainter_drawBuffer(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, WORD*);
 void LcdPainter_drawTriangle(PAbstractPainter, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD);
 
+/* Test */
+PAbstractPainter GetLcdPainter();
+void FreeLcdPainter();
+
 #endif /* _LCD_PAINTER_H_ */

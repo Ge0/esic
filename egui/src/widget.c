@@ -215,7 +215,7 @@ void Widget_handleWidgetEvent(PWidget self, PWidgetEvent widget_event) {
 		if(self->parent != NULL) {
 			WIDGET_VTABLE(self)->paint(WIDGET(self), self->parent->x, self->parent->y);
 		} else {
-			WIDGET_VTABLE(self)->paint(WIDGET(self), 0, 0);
+			WIDGET_VTABLE(self)->paint(WIDGET(self),0, 0);
 		}
 		break;
 	}

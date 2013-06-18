@@ -3,7 +3,8 @@
  */
 #include <esic/eapi/system.h>
 #include <esic/egui/textbox.h>
-#include <esic/egui/default_widget_renderer.h>
+//#include <esic/egui/default_widget_renderer.h>
+#include <esic/eresources/raster_font_factory.h>
 
 #include <string.h>
 
@@ -117,7 +118,94 @@ void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* TODO */
 
 	/* TEST */
-	GetDefaultWidgetRenderer()->vtable->paintTextBox(GetDefaultWidgetRenderer(), (PTextBox)self, base_x, base_y);
+	//GetDefaultWidgetRenderer()->vtable->paintTextBox(GetDefaultWidgetRenderer(), (PTextBox)self, base_x, base_y);
+
+	//ZString visible_text;
+	ZStringBuffer visible_text;
+	WORD character_width = 0;
+	PRasterFont font6x8 = NULL;
+
+	font6x8 = RasterFontFactory_getRasterFont("6x8.flcd"); /* Font to define dynamically later? */
+	if(font6x8 != NULL) {
+		character_width = font6x8->header.base_character_width;
+	}
+
+	/* Draw the surrounding rect with border */
+	ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+		self->painter,
+		base_x + self->x,
+		base_y + self->y,
+		self->width,
+		self->height + 4,
+		TEXTBOX(self)->is_focused ? TEXTBOX(self)->focused_background_color : TEXTBOX(self)->background_color,
+		TEXTBOX(self)->is_focused ? TEXTBOX(self)->focused_border_color     : TEXTBOX(self)->border_color
+	);
+	
+	/* Draw the only visible part of text */
+	//ZString_constructor(&visible_text, "");
+	ZStringBuffer_constructor(&visible_text);
+
+	//ZString_subString(&textbox->text, textbox->text_offset, textbox->widget.width / character_width, &visible_text);
+	ZStringBuffer_subString(
+		&TEXTBOX(self)->text,
+		TEXTBOX(self)->text_offset,
+		TEXTBOX(self)->widget.width / character_width,
+		&visible_text
+	); 
+
+	/* Draw the string */
+	ABSTRACTPAINTER_VTABLE(self->painter)->drawString(
+		self->painter,
+		base_x + TEXTBOX(self)->widget.x + 2,
+		base_y + TEXTBOX(self)->widget.y + 2,
+		RGB_16B(0,0,0),
+		visible_text.data,
+		"6x8.flcd"
+	);
+
+	if(TEXTBOX(self)->draw_carret && TEXTBOX(self)->is_focused) {
+		/* Draw the carret */
+		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+			self->painter,
+			//real_self->painter->abstract_painter.vtable->drawRectangle(
+			//&real_self->painter->abstract_painter,
+			base_x + TEXTBOX(self)->widget.x + 2 + ((TEXTBOX(self)->carret_position - TEXTBOX(self)->text_offset) * character_width) ,
+			base_y + TEXTBOX(self)->widget.y + 2,
+			1,
+			TEXTBOX(self)->widget.height,
+			RGB_16B(0,0,0),
+			RGB_16B(0,0,0)
+		);
+	}
+
+	/* Draw indicators at the beginning if there are characters non printed */
+	if(TEXTBOX(self)->text_offset) {
+		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+			self->painter,
+			base_x + TEXTBOX(self)->widget.x ,
+			base_y + TEXTBOX(self)->widget.y,
+			2,
+			TEXTBOX(self)->widget.height+4,
+			RGB_16B(20,20,20),
+			RGB_16B(20,20,20)
+		);
+	}
+
+	//if((WORD)(textbox->text_offset + (textbox->widget.width / character_width)) < textbox->text.size) {
+	if((WORD)(TEXTBOX(self)->text_offset + (TEXTBOX(self)->widget.width / character_width)) < TEXTBOX(self)->text.logical_size) {
+		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+			self->painter,
+			base_x + TEXTBOX(self)->widget.x + TEXTBOX(self)->widget.width-2 ,
+			base_y + TEXTBOX(self)->widget.y,
+			2,
+			TEXTBOX(self)->widget.height+4,
+			RGB_16B(20,20,20),
+			RGB_16B(20,20,20)
+		);
+	}
+
+	//ZString_destructor(OBJECT(&visible_text));
+	ZStringBuffer_destructor(OBJECT(&visible_text));
 }
 
 void TextBox_appendChar(PTextBox self, char ch) {
@@ -165,36 +253,6 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 	Event_constructor(&custom_event);
 
 	switch(system_event->type) {
-
-	/*
-	case EVENT_WIDGET:
-		_handle_widget_event(self, &system_event->real_event.widget_event);
-		break;
-
-	*/
-
-	/*
-	case EVENT_BLUR:
-
-		//real_self->is_focused  = 0;
-		real_self->is_focused = FALSE;
-		custom_event.type = EVENT_PAINT;
-		custom_event.real_event.widget_event.id = self->id;
-		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-		EsicPushEvent(&custom_event);
-		break;
-	*/
-
-	/*
-	case EVENT_FOCUS:
-		real_self->is_focused = TRUE;
-
-		custom_event.type = EVENT_PAINT;
-		custom_event.real_event.widget_event.id = self->id;
-		//singleton_system()->vtable->enqueueEvent(singleton_system(), &custom_event);
-		EsicPushEvent(&custom_event);
-		break;
-	*/
 
 	case EVENT_KEYBOARD_KDOWN:
 		/* Append the content of the textbox */

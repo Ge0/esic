@@ -95,6 +95,7 @@
   <ItemGroup>
     <ClInclude Include="..\includes\e11.h" />
     <ClInclude Include="includes\e11_ui.h" />
+    <ClInclude Include="includes\factories\marking_file_v5_factory.h" />
     <ClInclude Include="includes\factories\marking_font_tt_factory.h" />
     <ClInclude Include="includes\factories\xml_ui_factory.h" />
     <ClInclude Include="includes\toolbox.h" />

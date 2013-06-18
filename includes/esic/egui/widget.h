@@ -41,6 +41,7 @@ typedef struct _Widget {
 typedef struct _Widget {
 	Object object;
 	VTABLE(Widget);
+	PAbstractPainter painter;
 	WORD id;
 	WORD x;
 	WORD y;
@@ -66,13 +67,6 @@ BOOL Widget_equalsTo(PObject self, PObject dst);
 DWORD Widget_hash(PObject self);
 DWORD Widget_type(PObject self);
 
-/*
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
-	return_type Widget_##function_name##arguments;
-
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
-*/
 
 /* Widget */
 void Widget_paint(PWidget self, WORD base_x, WORD base_y);
@@ -87,11 +81,6 @@ void Widget_addChild(PWidget self, PWidget child, BOOL dynamic);
 /* Useful Macro */
 #define WIDGET(x)			((PWidget)x)
 #define WIDGET_VTABLE(x)	WIDGET(x)->vtable
-
-/* X-Macro */
-#define WIDGET_VIRTUAL_FUNCTIONS \
-	WIDGET_VFUNCTION(DWORD, defaultProc, (PWidget self, const PEvent)) \
-	WIDGET_VFUNCTION(void,	paint,		 (PWidget self, WORD base_x, WORD base_y)) \
 
 
 #endif /* _WIDGET_H_ */

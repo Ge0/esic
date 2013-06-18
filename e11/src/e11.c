@@ -12,9 +12,10 @@
 #include <esic/eresources/raster_font_factory.h>
 #include <esic/eresources/raster_icon_factory.h>
 #include <factories/marking_font_tt_factory.h>
-#include <esic/egui/default_widget_renderer.h>
+//#include <esic/egui/default_widget_renderer.h>
 #include <esic/etools/zstring.h>
 #include <fatfs/ff.h>
+#include <esic/egraphics/lcd_painter.h>
 /* TEST END */
 
 /* OTHER TEST START */
@@ -25,8 +26,7 @@ void TestDrawString(PMarkingFontTT font, DWORD base_x, DWORD base_y, const char*
 void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y, char ch);
 
 void e11() {
-	PDefaultWidgetRenderer widget_renderer = NULL;
-
+	//PDefaultWidgetRenderer widget_renderer = NULL;
 	
 	/* LCD INIT */
 	/*
@@ -42,8 +42,10 @@ void e11() {
 
 
 	/* WIDGET RENDERER INIT */
+	/*
 	NEW(widget_renderer, DefaultWidgetRenderer);
 	SetDefaultWidgetRenderer((PAbstractWidgetRenderer)widget_renderer);
+	*/
 
 	/* Splashscreen */
 	_e11_splashscreen();
@@ -52,7 +54,10 @@ void e11() {
 	_e11_mainloop();
 	
 	/* Free the resources */
-	DELETE(widget_renderer);
+	/*DELETE(widget_renderer);*/
+
+	/* Test */
+	FreeLcdPainter();
 
 	/* FACTORY DESTROY */
 	MarkingFontTTFactory_destroy();

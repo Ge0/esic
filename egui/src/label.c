@@ -4,7 +4,7 @@
 
 #include <esic/eapi/event.h>
 #include <esic/egui/label.h>
-#include <esic/egui/default_widget_renderer.h> /* Only for testing */
+//#include <esic/egui/default_widget_renderer.h> /* Only for testing */
 
 /*
 static const vtable_Object s_object_vtable = {
@@ -27,9 +27,14 @@ VTABLE_START(Object) {
 };
 
 VTABLE_START(Widget) {
+/*
 #define WIDGET_VFUNCTION(return_type, function_name, arguments) Label_##function_name,
 	WIDGET_VIRTUAL_FUNCTIONS
 #undef WIDGET_VFUNCTION
+*/
+	Label_defaultProc,
+	Label_paint,
+	Widget_handleWidgetEvent
 };
 
 PLabel Label_constructor(PLabel self) {
@@ -76,7 +81,16 @@ void Label_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* TODO */
 
 	/* TEST */
-	GetDefaultWidgetRenderer()->vtable->paintLabel(GetDefaultWidgetRenderer(), (PLabel)self, base_x, base_y);
+	//GetDefaultWidgetRenderer()->vtable->paintLabel(GetDefaultWidgetRenderer(), (PLabel)self, base_x, base_y);
+
+	ABSTRACTPAINTER_VTABLE(self->painter)->drawString(
+		self->painter,
+		base_x + self->x,
+		base_y + self->y,
+		self->color,
+		LABEL(self)->caption.data,
+		NULL
+	);
 }
 
 DWORD Label_defaultProc(PWidget self, const PEvent system_event) {

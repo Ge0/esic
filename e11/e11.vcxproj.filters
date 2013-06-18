@@ -77,5 +77,8 @@
     <ClInclude Include="includes\factories\marking_font_tt_factory.h">
       <Filter>includes\factories</Filter>
     </ClInclude>
+    <ClInclude Include="includes\factories\marking_file_v5_factory.h">
+      <Filter>includes\factories</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,6 +12,8 @@
 #include <esic/egui/graphicsview/canvas.h>
 #include <esic/eresources/raster_icon_factory.h>
 
+#include <esic/egraphics/lcd_painter.h>
+
 static const vtable_Object s_object_vtable = {
 	MainUI_destructor,
 	NULL,
@@ -53,7 +55,7 @@ PMainUI MainUI_constructor(PMainUI self) {
 	//E11UI(self)->vtable              = VTABLE_POINTER(E11UI);
 
 	/* Build the UI */
-	XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget);
+	XmlUiFactory_hydrateUI("main_ui", &self->e11ui.widget, GetLcdPainter());
 
 	/* Set the 12 icons */
 	self->e11ui.icons[6]->icon = RasterIconFactory_getRasterIcon("edition_black.ilcd");

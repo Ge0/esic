@@ -132,10 +132,6 @@ void LcdPainter_drawString(PAbstractPainter self, DWORD x, DWORD y , DWORD color
 		);
 	}
 
-	self->raster_font = RasterFontFactory_getRasterFont(
-		font_name
-	);
-
 	if(self->raster_font != NULL) {
 		WORD i, j;
 		DWORD len;
@@ -219,3 +215,19 @@ void LcdPainter_drawTriangle(PAbstractPainter self, DWORD x0, DWORD y0, DWORD x1
 	Triangle_paint(&triangle.shape, self);
 }
 
+/* Dummy tests */
+PAbstractPainter GetLcdPainter() {
+	static PLcdPainter s_lcd_painter = NULL;
+	if(s_lcd_painter == NULL) {
+		NEW(s_lcd_painter, LcdPainter);
+	}
+
+	return ABSTRACTPAINTER(s_lcd_painter);
+}
+
+void FreeLcdPainter() {
+	PAbstractPainter painter = GetLcdPainter();
+	if(painter != NULL) {
+		DELETE(painter);
+	}
+}
