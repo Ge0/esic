@@ -1,7 +1,7 @@
 #include <esic/egraphics/shape_ptr.h>
 #include <esic/eapi/system.h>
 #include <esic/egui/graphicsview/canvas.h>
-#include <esic/egui/default_widget_renderer.h>
+//#include <esic/egui/default_widget_renderer.h>
 
 VTABLE_START(Object) {
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) Canvas_##function_name,
@@ -55,8 +55,6 @@ void Canvas_destructor(PObject self) {
 }
 
 PObject Canvas_clone(PObject self, PObject dst) {
-	PTextBox real_self = (PTextBox)self;
-	PTextBox real_dst  = (PTextBox)dst;
 
 	/* Calling parent function */
 	Widget_clone(self, dst);
@@ -89,9 +87,9 @@ DWORD Canvas_type(PObject self) {
 }
 
 
-void Canvas_paint(PWidget self,WORD base_x, WORD base_y) {
+void Canvas_paint(PWidget self, WORD base_x, WORD base_y) {
 	//GetDefaultWidgetRenderer()->vtable->paintCanvas(GetDefaultWidgetRenderer(), (PCanvas)self, base_x, base_y);
-	ClippingRegion saved_region = ABSTRACTPAINTER(DEFAULTWIDGETRENDERER(self)->painter)->clipping_region;
+	ClippingRegion saved_region = self->painter->clipping_region;
 	PListNode current_shape = NULL;
 
 	/* Simply draw a rectangle */
