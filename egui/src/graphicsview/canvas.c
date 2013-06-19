@@ -4,17 +4,14 @@
 //#include <esic/egui/default_widget_renderer.h>
 
 VTABLE_START(Object) {
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) Canvas_##function_name,
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
+	Canvas_destructor,
+	Canvas_clone,
+	Canvas_equalsTo,
+	Canvas_hash,
+	Canvas_type
 };
 
 VTABLE_START(Widget) {
-/*
-#define WIDGET_VFUNCTION(return_type, function_name, arguments) Canvas_##function_name,
-	WIDGET_VIRTUAL_FUNCTIONS
-#undef WIDGET_VFUNCTION
-*/
 	Canvas_defaultProc,
 	Canvas_paint,
 	Widget_handleWidgetEvent
@@ -95,8 +92,6 @@ void Canvas_paint(PWidget self, WORD base_x, WORD base_y) {
 	/* Simply draw a rectangle */
 	ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
 			self->painter,
-			//real_self->painter->abstract_painter.vtable->drawRectangle(
-			//&real_self->painter->abstract_painter,
 			base_x + self->x,
 			base_y + self->y,
 			self->width,
