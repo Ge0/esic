@@ -74,7 +74,7 @@
     <ClCompile Include="src\graphicsview\canvas.c">
       <Filter>src\graphicsview</Filter>
     </ClCompile>
-    <ClCompile Include="graphics_scene.c">
+    <ClCompile Include="src\graphicsview\graphics_scene.c">
       <Filter>src\graphicsview</Filter>
     </ClCompile>
   </ItemGroup>

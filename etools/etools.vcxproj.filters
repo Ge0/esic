@@ -57,7 +57,7 @@
     <ClCompile Include="src\mvc\observer.c">
       <Filter>src\mvc</Filter>
     </ClCompile>
-    <ClCompile Include="observable.c">
+    <ClCompile Include="src\mvc\observable.c">
       <Filter>src\mvc</Filter>
     </ClCompile>
   </ItemGroup>

@@ -89,8 +89,8 @@ PObject TextBox_clone(PObject self, PObject dst) {
 	Widget_clone(self, dst);
 
 	/* Copying members */
-	ZString_clone(&real_self->text.object, &real_dst->text.object);
-	//ZStringBuffer_clone(&real_self->text.object, &real_dst->text.object);
+	//ZString_clone(&real_self->text.object, &real_dst->text.object);
+	ZStringBuffer_clone(&real_self->text.object, &real_dst->text.object);
 
 	return self;
 }

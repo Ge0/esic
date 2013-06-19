@@ -78,13 +78,13 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="observable.c" />
     <ClCompile Include="src\container.c" />
     <ClCompile Include="src\hashnode.c" />
     <ClCompile Include="src\hashtable.c" />
     <ClCompile Include="src\list.c" />
     <ClCompile Include="src\map.c" />
     <ClCompile Include="src\mvc\abstract_model.c" />
+    <ClCompile Include="src\mvc\observable.c" />
     <ClCompile Include="src\mvc\observer.c" />
     <ClCompile Include="src\mvc\observer_ptr.c" />
     <ClCompile Include="src\zstring.c" />
