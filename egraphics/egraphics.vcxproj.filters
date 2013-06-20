@@ -36,6 +36,12 @@
     <ClCompile Include="src\shape_ptr.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\painter.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometrical_renderer.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\egraphics\vertice.h">
@@ -63,6 +69,12 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\esic\egraphics\painter.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\egraphics\renderer.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\egraphics\geometrical_renderer.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

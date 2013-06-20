@@ -106,8 +106,8 @@ DWORD DotpenUI_defaultProc(PWidget self, const PEvent system_event) {
 	}
 }
 
-void DotpenUI_paint(PWidget self, PAbstractPainter painter, WORD base_x, WORD base_y) {
-	E11UI_paint(self, painter, base_x, base_y);
+void DotpenUI_paint(PWidget self, WORD base_x, WORD base_y) {
+	E11UI_paint(self, base_x, base_y);
 }
 
 void DotpenUI_onF1(PE11UI self, void* param) {

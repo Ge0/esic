@@ -3,5 +3,6 @@
 
 
 PObserver Observer_constructor(PObserver self) {
-
+	
+	return self;
 }
