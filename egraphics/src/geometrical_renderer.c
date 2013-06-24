@@ -146,6 +146,6 @@ void GeometricalRenderer_drawString(PRenderer self, PRasterFont font, DWORD x, D
 
 }
 
-void GeometricalRenderer_drawPixel(PRenderer self, DWORD x , DWORD y, DWORD color) {
+void GeometricalRenderer_drawPixel(PRenderer self, DWORD x, DWORD y, DWORD color) {
 
 }

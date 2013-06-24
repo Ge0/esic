@@ -13,6 +13,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="includes\factories">
+      <UniqueIdentifier>{2d76bb6c-47b9-46b9-9df3-eedb691c0a09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\factories">
+      <UniqueIdentifier>{c692bb0a-d6e3-4cc8-8a71-539a8c18b4e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -41,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="src\geometrical_renderer.c">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\factories\painters_factory.c">
+      <Filter>src\factories</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="..\includes\esic\egraphics\geometrical_renderer.h">
       <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\includes\esic\egraphics\factories\painters_factory.h">
+      <Filter>includes\factories</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

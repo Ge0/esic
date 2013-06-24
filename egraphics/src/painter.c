@@ -21,15 +21,23 @@ PPainter Painter_constructor(PPainter self) {
 	/* And the color is black */
 	self->color = RGB_16B(0,0,0);
 
+	self->renderer = NULL;
+
 	return self;
 }
 
 void Painter_destructor(PObject self) {
-	/* Nothing to do. */
+	if(((PPainter)(self))->renderer != NULL) {
+		DELETE(PAINTER(self)->renderer);
+	}
+
+	PAINTER(self)->renderer = NULL;
 }
 
 PObject Painter_clone(PObject self, PObject dst) {
 	/* TODO. */
+
+	return NULL;
 }
 
 BOOL Painter_equalsTo(PObject self, PObject dst) {

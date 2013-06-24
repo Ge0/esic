@@ -32,13 +32,18 @@ void Observable_addObserver(PObservable self, const PObserver observer) {
 }
 
 void Observable_notify(PObservable self, PObject data) {
-	PListNode node = self->observers.head;
 
-	while(node != NULL) {
-		PObserver observer = (OBSERVERPTR(node->data))->observer;
-		observer->vtable->update(observer, data);
+	if(self->changed == TRUE) {
+		PListNode node = self->observers.head;
 
-		node = node->next;
+		while(node != NULL) {
+			PObserver observer = (OBSERVERPTR(node->data))->observer;
+			observer->vtable->update(observer, data);
+
+			node = node->next;
+		}
+
+		self->changed = FALSE;
 	}
 }
 
@@ -73,4 +78,7 @@ DWORD Observable_type(PObject self) {
 		s_hash = Hash("Observable");
 	}
 	return s_hash;
+}
+
+void Observable_setChanged(PObservable self, BOOL changed) {
 }

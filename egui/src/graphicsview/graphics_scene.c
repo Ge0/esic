@@ -81,5 +81,5 @@ void GraphicsScene_addShape(PGraphicsScene self, PShape shape, BOOL dynamic) {
 	/* Assign the observable to 'changed' & notify the observers */
 	self->observable.changed = TRUE;
 
-	Observable_notify(&self->observable, NULL);
+	//Observable_notify(&self->observable, NULL);
 }

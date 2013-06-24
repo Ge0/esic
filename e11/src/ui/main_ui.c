@@ -171,6 +171,9 @@ void MainUI_onF8(PE11UI self, void* param) {
 	shape->coords.x = RandLong(1, 319);
 	shape->coords.y = RandLong(1, 219);
 	GraphicsScene_addShape(&E11_MAINUI(self)->marking_file_scene, SHAPE(shape), TRUE);
+
+	// notify
+	Observable_notify(OBSERVABLE(&E11_MAINUI(self)->marking_file_scene), NULL);
 }
 
 void MainUI_onF9(PE11UI self, void* param) {

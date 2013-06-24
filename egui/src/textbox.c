@@ -306,9 +306,13 @@ DWORD TextBox_defaultProc(PWidget self, const PEvent system_event) {
 			custom_event.type = EVENT_PAINT;
 			custom_event.real_event.widget_event.id = self->id;
 			*/
+
+			// for(i = 0; i < number_of_painters; ++i) {
 			custom_event.type = EVENT_WIDGET;
 			custom_event.real_event.widget_event.type = WE_PAINT;
 			custom_event.real_event.widget_event.id = self->id;
+			//custom_event.real_event.widget_event.param = (void*)painter[i]
+			// }
 			EsicPushEvent(&custom_event);
 		}
 		break;

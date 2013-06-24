@@ -20,6 +20,7 @@ PObservable Observable_constructor(PObservable self);
 void Observable_addObserver(PObservable self, const PObserver observer);
 void Observable_removeObserver(PObservable self, const PObserver observer);
 void Observable_notify(PObservable self, PObject data);
+void Observable_setChanged(PObservable self, BOOL changed);
 
 /* Virtual functions */
 /* Object */
