@@ -25,7 +25,7 @@ DWORD Canvas_hash(PObject self);
 DWORD Canvas_type(PObject self);
 
 /* Widget */
-void Canvas_paint(PWidget self, WORD base_x, WORD base_y);
+void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y);
 DWORD Canvas_defaultProc(PWidget self, const PEvent system_event);
 
 /* Observer */

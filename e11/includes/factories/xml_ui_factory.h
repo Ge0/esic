@@ -7,6 +7,6 @@
 
 #define PATH_USER_INTERFACES "system/user_interfaces/"
 
-void XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget, PAbstractPainter painter);
+void XmlUiFactory_hydrateUI(const char* ui_name, PWidget widget);
 
 #endif /* _XML_UI_FACTORY_ */

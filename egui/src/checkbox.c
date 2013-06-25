@@ -112,28 +112,30 @@ DWORD CheckBox_defaultProc(PWidget self, const PEvent system_event) {
 	return 0;
 }
 
-void CheckBox_paint(PWidget self, WORD base_x, WORD base_y) {
+void CheckBox_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	//GetDefaultWidgetRenderer()->vtable->paintCheckBox(GetDefaultWidgetRenderer(), (PCheckBox)self, base_x, base_y);
 	/* Draw the rectangle */
-	ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-		self->painter,
+	//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+	painter->color = CHECKBOX(self)->is_focused ? RGB_16B(220,220,220) : RGB_16B(180,180,180);
+	Painter_drawRectangle(
+		painter,
 		base_x + self->x,
 		base_y + self->y,
 		10,
 		10,
-		CHECKBOX(self)->is_focused ? RGB_16B(220,220,220) : RGB_16B(180,180,180),	/* Background color */
 		RGB_16B(0,0,0)			/* Border color */
 	);
 
 	/* Draw another inner rectangle if the checkbox is checked */
 	if(CHECKBOX(self)->is_checked) {
-		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-			self->painter,
+		//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+		painter->color = RGB_16B(0,255,0);
+		Painter_drawRectangle(
+			painter,
 			base_x + self->x + 2,
 			base_y + self->y + 2,
 			6,
 			6,
-			RGB_16B(0,255,0),		/* Background color */
 			RGB_16B(0,255,0)		/* Border color */
 		);
 	}

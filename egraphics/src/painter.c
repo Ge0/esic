@@ -35,9 +35,17 @@ void Painter_destructor(PObject self) {
 }
 
 PObject Painter_clone(PObject self, PObject dst) {
-	/* TODO. */
+	dst->vtable = self->vtable;
+	dst->size   = self->size;
 
-	return NULL;
+	PAINTER(dst)->clip     = PAINTER(self)->clip;
+	PAINTER(dst)->color    = PAINTER(self)->color;
+	PAINTER(dst)->font     = PAINTER(self)->font;
+	
+	PAINTER(dst)->renderer = (PRenderer)SicAlloc(PAINTER(self)->renderer->object.size);
+	OBJECT_VTABLE(PAINTER(self)->renderer)->clone(OBJECT(PAINTER(self)->renderer), OBJECT(PAINTER(dst)->renderer));
+
+	return dst;
 }
 
 BOOL Painter_equalsTo(PObject self, PObject dst) {
@@ -57,4 +65,84 @@ DWORD Painter_type(PObject self) {
 	}
 
 	return s_hash;
+}
+
+void Painter_drawLine(PPainter self, DWORD x1, DWORD y1, DWORD x2, DWORD y2) {
+	if(self->renderer != NULL) {
+		RENDERER_VTABLE(self->renderer)->drawLine(
+			self->renderer,
+			x1,
+			y1,
+			x2,
+			y2,
+			self->color
+		);
+	}
+}
+
+void Painter_drawRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD border_color) {
+	if(self->renderer != NULL) {
+		RENDERER_VTABLE(self->renderer)->drawRectangle(
+			self->renderer,
+			x,
+			y,
+			width,
+			height,
+			self->color,
+			border_color
+		);
+	}
+}
+void Painter_drawTriangle(PPainter self, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD border_color) {
+	if(self->renderer != NULL) {
+		RENDERER_VTABLE(self->renderer)->drawTriangle(
+			self->renderer,
+			x0,
+			y0,
+			x1,
+			y1,
+			x2,
+			y2,
+			self->color,
+			border_color
+		);
+	}
+}
+
+void Painter_drawBuffer(PPainter self, WORD x, DWORD y, DWORD width, DWORD height, BYTE bpp, void* raw_buffer) {
+	if(self->renderer != NULL) {
+		RENDERER_VTABLE(self->renderer)->drawBuffer(
+			self->renderer,
+			x,
+			y,
+			width,
+			height,
+			bpp,
+			raw_buffer
+		);
+	}
+}
+
+void Painter_drawPixel(PPainter self, DWORD x ,DWORD y) {
+	if(self->renderer != NULL) {
+		RENDERER_VTABLE(self->renderer)->drawPixel(
+			self->renderer,
+			x,
+			y,
+			self->color
+		);
+	}
+}
+
+void Painter_drawString(PPainter self, DWORD x, DWORD y, const char* text) {
+	if(self->renderer != NULL) {
+		RENDERER_VTABLE(self->renderer)->drawString(
+			self->renderer,
+			self->font,
+			x,
+			y,
+			self->color,
+			text
+		);
+	}
 }

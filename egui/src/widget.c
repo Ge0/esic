@@ -5,6 +5,7 @@
 #include <esic/egui/widget.h>
 #include <esic/egui/widget_ptr.h>
 #include <esic/eapi/event.h>
+#include <esic/egraphics/factories/painters_factory.h>
 
 /*
 static const vtable_Object s_vtable_object = {
@@ -170,7 +171,7 @@ DWORD Widget_defaultProc(PWidget self, const PEvent system_event) {
 }
 
 
-void Widget_paint(PWidget self, WORD base_x, WORD base_y) {
+void Widget_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	/* Default painting procedure... Simply paint every childs */
 	PListNode iterator = self->childs.head;
 
@@ -179,6 +180,7 @@ void Widget_paint(PWidget self, WORD base_x, WORD base_y) {
 
 		WIDGET_VTABLE(current_child)->paint(
 			WIDGET(current_child),
+			painter,
 			base_x + self->x,
 			base_y + self->y
 		);
@@ -210,13 +212,23 @@ PWidget Widget_findChildById(PWidget self, WORD id) {
 }
 
 void Widget_handleWidgetEvent(PWidget self, PWidgetEvent widget_event) {
+	DWORD base_x, base_y;
+	PListNode current_painter = NULL;
+	if(self->parent != NULL) {
+		base_x = self->parent->x;
+		base_y = self->parent->y;
+	} else {
+		base_x = 0;
+		base_y = 0;
+	}
+
 	switch(widget_event->type) {
 	case WE_PAINT:
-		if(self->parent != NULL) {
-			WIDGET_VTABLE(self)->paint(WIDGET(self), self->parent->x, self->parent->y);
-		} else {
-			WIDGET_VTABLE(self)->paint(WIDGET(self),0, 0);
-		}
+			current_painter = GetPainters()->head;
+			while(current_painter != NULL) {
+				WIDGET_VTABLE(self)->paint(WIDGET(self), PAINTER(current_painter->data), base_x, base_y);
+				current_painter = current_painter->next; 
+			}
 		break;
 	}
 }

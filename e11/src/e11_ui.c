@@ -1,5 +1,7 @@
 #include <esic/eapi/system.h>
 #include <esic/eresources/raster_icon_factory.h>
+#include <esic/eresources/raster_font_factory.h>
+#include <esic/egraphics/factories/painters_factory.h>
 //#include <esic/egui/default_widget_renderer.h>
 #include <esic/elcd/lcd.h>
 #include <esic/egui/widget_ptr.h>
@@ -42,9 +44,6 @@ PE11UI E11UI_constructor(PE11UI self) {
 	for(i = 0; i < E11_NUMBER_OF_ICONS; i++) {
 
 		NEW(self->icons[i], Picture);
-
-		/* Test: assign a painter */
-		self->icons[i]->widget.painter = GetLcdPainter();
 
 		/* Id : 0x8000 + i + 1 */
 		self->icons[i]->widget.id = (WORD)(E11_BASE_ID_SYSTEM_ICONS + i + 1);
@@ -161,44 +160,45 @@ DWORD E11UI_defaultProc(PWidget self, const PEvent system_event) {
 	return 0;
 }
 
-void E11UI_paint(PWidget self, WORD base_x, WORD base_y) {
+void E11UI_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	
 	/* System Top rectangle */
 	LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
 
+	painter->color = RGB_16B(0, 0, 0);
+
 	/* FOR SCREENSHOT */
-	self->painter->vtable->drawString(
-		self->painter,
+	painter->font = RasterFontFactory_getRasterFont("8x12.flcd");
+	Painter_drawString(
+		painter,
 		5,
 		2,
-		0,
-		"NO_NAME",
-		"8x12.flcd"
+		"NO_NAME"
 	);
 
-	self->painter->vtable->drawString(
-		self->painter,
+	painter->font = RasterFontFactory_getRasterFont("6x8.flcd");
+	Painter_drawString(
+		painter,
 		180,
 		4,
-		0,
-		"13:37:00 2013-10-06",
-		"6x8.flcd"
+		"13:37:00 2013-10-06"
 	);
 
 	
 	if(E11UI(self)->battery_icon != NULL) {
-		self->painter->vtable->drawBuffer(
-			self->painter,
+		Painter_drawBuffer(
+			painter,
 			300,
 			2,
 			E11UI(self)->battery_icon->header.width,
 			E11UI(self)->battery_icon->header.height,
-			(WORD*) E11UI(self)->battery_icon->data
+			2,
+			E11UI(self)->battery_icon->data
 		);
 	}
 	
 	/* Call parent paint */
-	Widget_paint(self, base_x, base_y);
+	Widget_paint(self, painter, base_x, base_y);
 }
 
 PPicture E11UI_getPicture(PE11UI self, DWORD index) {
@@ -321,6 +321,7 @@ static DWORD _handle_keyboard_keydown_event(PWidget self, PEvent system_event) {
 }
 
 static DWORD _handle_user_event(PWidget self, PUserEvent user_event) {
+	PListNode current_painter = NULL;
 	// Particular case: if there is a child which has finished to to his job, destroy it
 	//if(user_event->type == EVENT_USER) {
 
@@ -335,7 +336,11 @@ static DWORD _handle_user_event(PWidget self, PUserEvent user_event) {
 					LcdFill(RGB_16B(240,240,240));
 
 					// Repaint self ui
-					WIDGET_VTABLE(self)->paint(self, 0, 0);
+					current_painter = GetPainters()->head;
+					while(current_painter != NULL) {
+						WIDGET_VTABLE(self)->paint(self, PAINTER(current_painter->data), 0, 0);
+						current_painter = current_painter->next;
+					}
 				}
 			}
 			break;
@@ -345,7 +350,11 @@ static DWORD _handle_user_event(PWidget self, PUserEvent user_event) {
 			// Clear the lcd
 			LcdFill(RGB_16B(240,240,240));
 			// Paint the new UI
-			WIDGET_VTABLE(E11UI(self)->child_ui)->paint(WIDGET(E11UI(self)->child_ui), 0, 0);
+			current_painter = GetPainters()->head;
+			while(current_painter != NULL) {
+				WIDGET_VTABLE(E11UI(self)->child_ui)->paint(WIDGET(E11UI(self)->child_ui), PAINTER(current_painter->data), 0, 0);
+				current_painter = current_painter->next;
+			}
 			break;
 		}
 		return 0;

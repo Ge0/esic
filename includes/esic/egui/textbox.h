@@ -51,7 +51,7 @@ DWORD   TextBox_type(PObject self);
 
 /* Widget */
 
-void TextBox_paint(PWidget self, WORD base_x, WORD base_y);
+void TextBox_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y);
 DWORD TextBox_defaultProc(PWidget self, const PEvent system_event);
 void TextBox_handleWidgetEvent(PWidget self, PWidgetEvent widget_event);
 

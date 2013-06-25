@@ -27,7 +27,7 @@ DWORD DotpenUI_type(PObject self);
 #undef OBJECT_VFUNCTION
 */
 
-void DotpenUI_paint(PWidget self, WORD base_x, WORD base_y);
+void DotpenUI_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y);
 DWORD DotpenUI_defaultProc(PWidget self, const PEvent event);
 
 /* Virtual functions widget */

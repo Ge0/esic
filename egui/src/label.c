@@ -60,15 +60,14 @@ PObject Label_clone(PObject self, PObject dst) {
 	return self;
 }
 
-void Label_paint(PWidget self, WORD base_x, WORD base_y) {
-
-	ABSTRACTPAINTER_VTABLE(self->painter)->drawString(
-		self->painter,
+void Label_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
+	painter->color = self->color;
+	//ABSTRACTPAINTER_VTABLE(self->painter)->drawString(
+	Painter_drawString(
+		painter,
 		base_x + self->x,
 		base_y + self->y,
-		self->color,
-		LABEL(self)->caption.data,
-		NULL
+		LABEL(self)->caption.data
 	);
 }
 

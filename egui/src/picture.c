@@ -4,6 +4,7 @@
 #include <esic/eapi/system.h>
 #include <esic/egui/picture.h>
 //#include <esic/egui/default_widget_renderer.h>
+#include <esic/egraphics/painter.h>
 
 
 static const vtable_Object s_vtable_object = {
@@ -17,22 +18,6 @@ static const vtable_Widget s_vtable_widget = {
 	Picture_defaultProc,
 	Picture_paint
 };
-
-
-/*
-VTABLE_START(Object) {
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) Picture_##function_name,
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
-};
-
-VTABLE_START(Widget) {
-#define WIDGET_VFUNCTION(return_type, function_name, arguments) Picture_##function_name,
-	WIDGET_VIRTUAL_FUNCTIONS
-#undef WIDGET_VFUNCTION
-};
-*/
-
 
 /* Private */
 static void _handle_widget_event(PWidget self, PWidgetEvent widget_event);
@@ -67,7 +52,7 @@ PObject Picture_clone(PObject self, PObject dst) {
 	return dst;
 }
 
-void Picture_paint(PWidget self, WORD base_x, WORD base_y) {
+void Picture_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	//GetDefaultWidgetRenderer()->vtable->paintPicture(GetDefaultWidgetRenderer(), (PPicture)self, base_x, base_y);
 	WORD border_color = PICTURE(self)->border_color;
 	if(PICTURE(self)->is_focused) {
@@ -80,68 +65,68 @@ void Picture_paint(PWidget self, WORD base_x, WORD base_y) {
 	}
 
 	if(PICTURE(self)->icon != NULL) {
-		ABSTRACTPAINTER_VTABLE(self->painter)->drawBuffer(
-			self->painter,
+		Painter_drawBuffer(
+			painter,
 			//real_self->painter->abstract_painter.vtable->drawBuffer(
 			//&real_self->painter->abstract_painter,
 			base_x + PICTURE(self)->widget.x,
 			/*base_y*/0 + PICTURE(self)->widget.y,
 			PICTURE(self)->icon->header.width,
 			PICTURE(self)->icon->header.height,
-			(WORD*)PICTURE(self)->icon->data
+			2,
+			PICTURE(self)->icon->data
 		);
 
 		/* ... & the surronding rect */
 
 		/* Top border */
 		//LcdDrawRectangle(
-		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-			self->painter,
+		//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+		painter->color = border_color;
+		Painter_drawRectangle(
+			painter,
 			base_x + self->x - PICTURE(self)->border_thickness,
 			self->y - PICTURE(self)->border_thickness,
 			PICTURE(self)->icon->header.width + PICTURE(self)->border_thickness,
 			PICTURE(self)->border_thickness,
-			border_color,
 			border_color
 		);
 
 		/* Right border */
 		//LcdDrawRectangle(
-		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-			self->painter,
+		//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+		Painter_drawRectangle(
+			painter,
 			base_x + self->x + PICTURE(self)->icon->header.width,
 			/*base_y*/0 + self->y - PICTURE(self)->border_thickness,
 			PICTURE(self)->border_thickness,
 			PICTURE(self)->icon->header.height + PICTURE(self)->border_thickness,
-			border_color,
 			border_color
 		);
 
 		/* Bottom border */
 		//LcdDrawRectangle(
-		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-			self->painter,
+		Painter_drawRectangle(
+			painter,
 			//real_self->painter->abstract_painter.vtable->drawRectangle(
 			//&real_self->painter->abstract_painter,
 			base_x + self->x,
 			/*base_y*/0 + self->y + PICTURE(self)->icon->header.height,
 			PICTURE(self)->icon->header.width + PICTURE(self)->border_thickness,
 			PICTURE(self)->border_thickness,
-			border_color,
 			border_color
 		);
 
 		/* Left border */
 		//LcdDrawRectangle(
-		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-			self->painter,
+		Painter_drawRectangle(
+			painter,
 			//real_self->painter->abstract_painter.vtable->drawRectangle(
 			//&real_self->painter->abstract_painter,
 			base_x + self->x - PICTURE(self)->border_thickness,
 			/*base_y*/ 0 + self->y,
 			PICTURE(self)->border_thickness,
 			PICTURE(self)->icon->header.height + PICTURE(self)->border_thickness,
-			border_color,
 			border_color
 		);
 

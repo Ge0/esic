@@ -38,7 +38,7 @@ PDotpenUI DotpenUI_constructor(PDotpenUI self) {
 
 
 	/* Build the UI */
-	XmlUiFactory_hydrateUI("dotpen_ui", &self->e11ui.widget, GetLcdPainter());
+	XmlUiFactory_hydrateUI("dotpen_ui", &self->e11ui.widget);
 
 	/* Set the 12 icons */
 	self->e11ui.icons[11]->icon = RasterIconFactory_getRasterIcon("dotpen.ilcd");
@@ -106,8 +106,8 @@ DWORD DotpenUI_defaultProc(PWidget self, const PEvent system_event) {
 	}
 }
 
-void DotpenUI_paint(PWidget self, WORD base_x, WORD base_y) {
-	E11UI_paint(self, base_x, base_y);
+void DotpenUI_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
+	E11UI_paint(self, painter, base_x, base_y);
 }
 
 void DotpenUI_onF1(PE11UI self, void* param) {

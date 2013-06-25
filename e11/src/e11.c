@@ -30,14 +30,6 @@ void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y, char ch);
 void _init_painters();
 
 void e11() {
-	//PDefaultWidgetRenderer widget_renderer = NULL;
-	
-	/* LCD INIT */
-	/*
-	LcdInit(480, 272, 16, LCD_DOUBLEBUF);
-	LcdFill(RGB_16B(240,240,240));
-	*/
-
 	/* FACTORY INIT */
 	srand((unsigned int)time(NULL));
 	RasterFontFactory_init();
@@ -45,17 +37,8 @@ void e11() {
 	MarkingFontTTFactory_init();
 	PaintersFactory_init();
 
+	_init_painters();
 
-
-	// PainterserverInit();
-	// PainterserverRegister(NEW(GeometricalRenderer))
-
-
-	/* WIDGET RENDERER INIT */
-	/*
-	NEW(widget_renderer, DefaultWidgetRenderer);
-	SetDefaultWidgetRenderer((PAbstractWidgetRenderer)widget_renderer);
-	*/
 
 	/* Splashscreen */
 	_e11_splashscreen();
@@ -88,6 +71,7 @@ void _e11_mainloop() {
 	BOOL looping = TRUE;
 	DWORD ticks1, ticks2;
 	PMarkingFontTT ocr_font;	/* TEST */
+	PListNode current_painter;
 
 	MainUI main_ui;
 	
@@ -96,8 +80,11 @@ void _e11_mainloop() {
 	/* TEST */
 	ocr_font = MarkingFontTTFactory_getMarkingFontTT("OCR");
 
-
-	main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, 0, 0);
+	current_painter = GetPainters()->head;
+	while(current_painter != NULL) {
+		main_ui.e11ui.widget.vtable->paint(&main_ui.e11ui.widget, PAINTER(current_painter->data), 0, 0);
+		current_painter = current_painter->next;
+	}
 
 	ticks1 = EsicGetTicks();
 	while(looping) {
@@ -224,4 +211,5 @@ void _init_painters() {
 	/* Register the painter */
 	PaintersFactory_registerPainter(&painter);
 
+	Painter_destructor(OBJECT(&painter));
 }

@@ -72,7 +72,7 @@ PObject E11UI_clone(PObject self, PObject dst);
 
 /* Widget */
 DWORD E11UI_defaultProc(PWidget self, const PEvent event);
-void E11UI_paint(PWidget self, WORD base_x, WORD base_y);
+void E11UI_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y);
 
 void E11UI_accept(PE11UI self);
 

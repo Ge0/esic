@@ -1,5 +1,6 @@
 #include <esic/egraphics/geometrical_renderer.h>
 #include <esic/egraphics/triangle.h>
+#include <string.h>
 
 /* Test: direct access to the lcd first */
 #include <esic/elcd/lcd.h>
@@ -16,7 +17,9 @@ VTABLE_START(Renderer) {
 	GeometricalRenderer_drawLine,
 	GeometricalRenderer_drawRectangle,
 	GeometricalRenderer_drawTriangle,
-	GeometricalRenderer_drawBuffer
+	GeometricalRenderer_drawBuffer,
+	GeometricalRenderer_drawPixel,
+	GeometricalRenderer_drawString
 };
 
 PGeometricalRenderer GeometricalRenderer_constructor(PGeometricalRenderer self) {
@@ -30,8 +33,12 @@ void GeometricalRenderer_destructor(PObject self) {
 }
 
 PObject GeometricalRenderer_clone(PObject self, PObject dst) {
-	/* TODO. */
-	return NULL;
+	dst->size = self->size;
+	dst->vtable = self->vtable;
+
+	RENDERER(dst)->vtable = RENDERER(self)->vtable;
+
+	return dst;
 }
 
 BOOL GeometricalRenderer_equalsTo(PObject self, PObject dst) {
@@ -87,7 +94,7 @@ void GeometricalRenderer_drawLine(PRenderer self, DWORD x1, DWORD y1, DWORD x2, 
 	for(x = x1; x <= x2; ++x) {
 		if(steep) {
 			//LcdPainter_drawPixel(self, y, x, color);
-			LcdSetPixel(x, y, color);
+			LcdSetPixel(y, x, color);
 		} else {
 			//LcdPainter_drawPixel(self, x, y, color);
 			LcdSetPixel(x, y, color);
@@ -139,11 +146,78 @@ void GeometricalRenderer_drawTriangle(PRenderer self, DWORD x0, DWORD y0, DWORD 
 }
 
 void GeometricalRenderer_drawBuffer(PRenderer self, WORD x, DWORD y, DWORD width, DWORD height, BYTE bpp, void* raw_buffer) {
+	DWORD i, j;
+	BOOL condition;
+	WORD* word_buffer = (WORD*)raw_buffer;
+	for(j = 0; j < height; ++j) {
+		for(i = 0; i < width; ++i) {
+			switch(bpp) {
+			case 1:
+				condition = (BOOL)(*((BYTE*)raw_buffer + (j * width + i)) != 0xff);
+				break;
+			case 2:
+				condition = (BOOL)(*((WORD*)raw_buffer + (j * width + i)) != 0xffff);
+				LcdSetPixel(x+i, y+j, word_buffer[j * width + i]);
+				break;
 
+			case 4:
+				condition = (BOOL)(*((DWORD*)raw_buffer + (j * width + i)) != 0xffffffff);
+				break;
+
+			default:
+				condition = TRUE;
+			}
+			
+			//if(raw_buffer[j * width + i] != 0xffff) {
+			/*
+			if(condition) {
+				LcdSetPixel(x+i, y+j, (DWORD)((BYTE*)raw_buffer + ((j * width + i) * bpp)));
+			}
+			*/
+		}
+	}
 }
 
-void GeometricalRenderer_drawString(PRenderer self, PRasterFont font, DWORD x, DWORD y , DWORD color, const char* string) {
+void GeometricalRenderer_drawString(PRenderer self, PRasterFont font, DWORD x, DWORD y, DWORD color, const char* string) {
+	WORD i, j;
+	DWORD len;
+	BYTE character_width, character_height;
+	DWORD size_string = strlen(string);
+	char* character_data = NULL;
 
+
+	/* For each character */
+	for(i = 0; i < size_string; ++i) {
+		int utf8_code = 0;
+
+		/* If the code of the char is above 0x7F, then this is UTF-8) */
+		if(string[i] > 0x7F) {
+
+		} else {
+			/* Sample ASCII */
+			utf8_code = string[i];
+		}
+
+		/* Retrieve the character's data */
+		character_data = RasterFont_getCharacterData(font, utf8_code, &len, &character_width, &character_height);
+
+		/* Data found? Map it into the framebuffer ! */
+		if(character_data != NULL) {
+
+			for(j = 0; j < len*8; j++) {
+				DWORD bit = GET_BIT_STRING_BIGENDIAN(character_data, j);
+				/* If the current bit is 1, switch the pixel on */
+				if(bit == 1) {
+					WORD x_dest = (x + i * character_width + (j % character_width));
+					WORD y_dest = y + (j / character_width) /* + ((x_dest / 320) * character_height) */;
+					LcdSetPixel(x_dest, y_dest, color);
+				}
+			}
+
+			SicFree(character_data);
+
+		}
+	}
 }
 
 void GeometricalRenderer_drawPixel(PRenderer self, DWORD x, DWORD y, DWORD color) {

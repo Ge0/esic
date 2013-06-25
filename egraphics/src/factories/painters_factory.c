@@ -11,11 +11,11 @@ void PaintersFactory_destroy() {
 }
 
 void PaintersFactory_registerPainter(const PPainter painter) {
-	List_remove(CONTAINER(&s_painters_list), OBJECT(painter));
+	List_pushBack(CONTAINER(&s_painters_list), OBJECT(painter));
 }
 
 void PaintersFactory_unregisterPainter(const PPainter painter) {
-	List_pushBack(CONTAINER(&s_painters_list), OBJECT(painter));
+	List_remove(CONTAINER(&s_painters_list), OBJECT(painter));
 }
 
 const PList GetPainters() {

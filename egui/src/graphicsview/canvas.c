@@ -1,6 +1,7 @@
 #include <esic/egraphics/shape_ptr.h>
 #include <esic/eapi/system.h>
 #include <esic/egui/graphicsview/canvas.h>
+#include <esic/egraphics/painter.h>
 //#include <esic/egui/default_widget_renderer.h>
 
 VTABLE_START(Object) {
@@ -84,28 +85,30 @@ DWORD Canvas_type(PObject self) {
 }
 
 
-void Canvas_paint(PWidget self, WORD base_x, WORD base_y) {
+void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	//GetDefaultWidgetRenderer()->vtable->paintCanvas(GetDefaultWidgetRenderer(), (PCanvas)self, base_x, base_y);
-	ClippingRegion saved_region = self->painter->clipping_region;
 	PListNode current_shape = NULL;
+	ClipPainter saved_region = painter->clip;
+	
 
 	/* Simply draw a rectangle */
-	ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-			self->painter,
+	//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+	painter->color = RGB_16B(200,200,200);
+	Painter_drawRectangle(
+			painter,
 			base_x + self->x,
 			base_y + self->y,
 			self->width,
 			self->height,
-			RGB_16B(200,200,200),
-			0
+			RGB_16B(0,0,0)
 		);
 
 
 	/* Test: define a clipping region for the painter */
-	self->painter->clipping_region.x1 = base_x + self->x;
-	self->painter->clipping_region.y1 = base_y + self->y;
-	self->painter->clipping_region.x2 = base_x + self->x + self->width;
-	self->painter->clipping_region.y2 = base_y + self->y + self->height;
+	painter->clip.x      = base_x + self->x;
+	painter->clip.y      = base_y + self->y;
+	painter->clip.width  = self->width;
+	painter->clip.height = self->height;
 
 	/* TODO: get each Shape of the model & paint it */
 	if(CANVAS(self)->scene != NULL) {
@@ -114,14 +117,14 @@ void Canvas_paint(PWidget self, WORD base_x, WORD base_y) {
 		while(current_shape != NULL) {
 			PShape shape = SHAPEPTR(current_shape->data)->shape;
 
-			shape->vtable->paint(shape, self->painter);
+			//shape->vtable->paint(shape, painter);
 
 			current_shape = current_shape->next;
 		}
 
 	}
 
-	self->painter->clipping_region = saved_region;
+	painter->clip = saved_region;
 }
 
 DWORD Canvas_defaultProc(PWidget self, const PEvent system_event) {

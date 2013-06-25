@@ -35,7 +35,7 @@ DWORD   Label_type(PObject self);
 
 /* Widget */
 
-void Label_paint(PWidget self, WORD base_x, WORD base_y);
+void Label_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y);
 DWORD Label_defaultProc(PWidget self, const PEvent system_event);
 
 /*

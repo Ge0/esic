@@ -114,7 +114,7 @@ DWORD TextBox_type(PObject self) {
 	return s_hash;
 }
 
-void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
+void TextBox_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	/* TODO */
 
 	/* TEST */
@@ -131,13 +131,13 @@ void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
 	}
 
 	/* Draw the surrounding rect with border */
-	ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-		self->painter,
+	painter->color = TEXTBOX(self)->is_focused ? RGB_16B(220,220,220) : RGB_16B(200,200,200);
+	Painter_drawRectangle(
+		painter,
 		base_x + self->x,
 		base_y + self->y,
 		self->width,
 		self->height + 4,
-		TEXTBOX(self)->is_focused ? TEXTBOX(self)->focused_background_color : TEXTBOX(self)->background_color,
 		TEXTBOX(self)->is_focused ? TEXTBOX(self)->focused_border_color     : TEXTBOX(self)->border_color
 	);
 	
@@ -154,52 +154,53 @@ void TextBox_paint(PWidget self, WORD base_x, WORD base_y) {
 	); 
 
 	/* Draw the string */
-	ABSTRACTPAINTER_VTABLE(self->painter)->drawString(
-		self->painter,
+	painter->color = RGB_16B(0,0,0);
+	Painter_drawString(
+		painter,
 		base_x + TEXTBOX(self)->widget.x + 2,
 		base_y + TEXTBOX(self)->widget.y + 2,
-		RGB_16B(0,0,0),
-		visible_text.data,
-		"6x8.flcd"
+		visible_text.data
 	);
 
 	if(TEXTBOX(self)->draw_carret && TEXTBOX(self)->is_focused) {
 		/* Draw the carret */
-		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-			self->painter,
+		//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+		Painter_drawRectangle(
+			painter,
 			//real_self->painter->abstract_painter.vtable->drawRectangle(
 			//&real_self->painter->abstract_painter,
 			base_x + TEXTBOX(self)->widget.x + 2 + ((TEXTBOX(self)->carret_position - TEXTBOX(self)->text_offset) * character_width) ,
 			base_y + TEXTBOX(self)->widget.y + 2,
 			1,
 			TEXTBOX(self)->widget.height,
-			RGB_16B(0,0,0),
 			RGB_16B(0,0,0)
 		);
 	}
 
 	/* Draw indicators at the beginning if there are characters non printed */
 	if(TEXTBOX(self)->text_offset) {
-		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-			self->painter,
+		//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+		painter->color = RGB_16B(20,20,20);
+		Painter_drawRectangle(
+			painter,
 			base_x + TEXTBOX(self)->widget.x ,
 			base_y + TEXTBOX(self)->widget.y,
 			2,
 			TEXTBOX(self)->widget.height+4,
-			RGB_16B(20,20,20),
 			RGB_16B(20,20,20)
 		);
 	}
 
 	//if((WORD)(textbox->text_offset + (textbox->widget.width / character_width)) < textbox->text.size) {
 	if((WORD)(TEXTBOX(self)->text_offset + (TEXTBOX(self)->widget.width / character_width)) < TEXTBOX(self)->text.logical_size) {
-		ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-			self->painter,
+		//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
+		painter->color = RGB_16B(20,20,20);
+		Painter_drawRectangle(
+			painter,
 			base_x + TEXTBOX(self)->widget.x + TEXTBOX(self)->widget.width-2 ,
 			base_y + TEXTBOX(self)->widget.y,
 			2,
 			TEXTBOX(self)->widget.height+4,
-			RGB_16B(20,20,20),
 			RGB_16B(20,20,20)
 		);
 	}

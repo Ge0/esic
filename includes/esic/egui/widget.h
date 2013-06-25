@@ -8,40 +8,19 @@
 #include <esic/esic.h>
 #include <esic/eapi/event.h>
 #include <esic/etools/list.h>
-#include <esic/egraphics/abstract_painter.h>
+#include <esic/egraphics/painter.h>
 
 typedef struct _Widget *PWidget, **PPWidget;
 
 typedef struct _vtable_Widget {
 	DWORD (*defaultProc)(PWidget, const PEvent);
-	void (*paint)(PWidget, WORD, WORD);
+	void (*paint)(PWidget self, PPainter painter, WORD base_x, WORD base_y);
 	void (*handleWidgetEvent)(PWidget self, PWidgetEvent widget_event);
 } vtable_Widget;
-
-
-/*
-typedef struct _Widget {
-	Object object;
-	const vtable_Widget* vtable;
-	WORD id;
-	WORD x;
-	WORD y;
-	WORD width;
-	WORD height;
-	WORD color;
-	PWidget parent;
-	List childs;
-	BOOL is_focusable;
-	BOOL is_hot;
-} Widget, **PPWidget;
-*/
-
-
 
 typedef struct _Widget {
 	Object object;
 	VTABLE(Widget);
-	PAbstractPainter painter;
 	WORD id;
 	WORD x;
 	WORD y;
@@ -69,7 +48,7 @@ DWORD Widget_type(PObject self);
 
 
 /* Widget */
-void Widget_paint(PWidget self, WORD base_x, WORD base_y);
+void Widget_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y);
 DWORD Widget_defaultProc(PWidget self, const PEvent system_event);
 void Widget_handleWidgetEvent(PWidget self, PWidgetEvent widget_event);
 

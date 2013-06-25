@@ -3,6 +3,7 @@
 
 #include <esic/egraphics/renderer.h>
 
+
 typedef struct _GeometricalRenderer* PGeometricalRenderer;
 typedef struct _GeometricalRenderer {
 	Renderer renderer; /* Inherits from renderer */
@@ -23,6 +24,6 @@ void GeometricalRenderer_drawLine(PRenderer self, DWORD x1, DWORD y1, DWORD x2, 
 void GeometricalRenderer_drawRectangle(PRenderer self, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD background_color, DWORD border_color);
 void GeometricalRenderer_drawTriangle(PRenderer self, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD filling_color, DWORD border_color);
 void GeometricalRenderer_drawBuffer(PRenderer self, WORD x, DWORD y, DWORD width, DWORD height, BYTE bpp, void* raw_buffer);
-void GeometricalRenderer_drawString(PRenderer self,  DWORD x, DWORD y , DWORD color, const char* string);
+void GeometricalRenderer_drawString(PRenderer self, PRasterFont raster_font, DWORD x, DWORD y , DWORD color, const char* string);
 void GeometricalRenderer_drawPixel(PRenderer self, DWORD x , DWORD y, DWORD color);
 #endif /* _GEOMETRICAL_RENDERER_H_ */
