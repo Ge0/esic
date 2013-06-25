@@ -147,33 +147,37 @@ void GeometricalRenderer_drawTriangle(PRenderer self, DWORD x0, DWORD y0, DWORD 
 
 void GeometricalRenderer_drawBuffer(PRenderer self, WORD x, DWORD y, DWORD width, DWORD height, BYTE bpp, void* raw_buffer) {
 	DWORD i, j;
+	DWORD pixel = 0;
 	BOOL condition;
 	WORD* word_buffer = (WORD*)raw_buffer;
 	for(j = 0; j < height; ++j) {
 		for(i = 0; i < width; ++i) {
 			switch(bpp) {
 			case 1:
-				condition = (BOOL)(*((BYTE*)raw_buffer + (j * width + i)) != 0xff);
+				pixel = (BYTE)*((BYTE*)raw_buffer + (j * width + i));
+				condition = (BOOL)(pixel != 0xff);
 				break;
 			case 2:
-				condition = (BOOL)(*((WORD*)raw_buffer + (j * width + i)) != 0xffff);
-				LcdSetPixel(x+i, y+j, word_buffer[j * width + i]);
+				pixel = (WORD)*((WORD*)raw_buffer + (j * width + i));
+				condition = (BOOL)(pixel != 0xffff);
+				//LcdSetPixel(x+i, y+j, word_buffer[j * width + i]);
 				break;
 
 			case 4:
-				condition = (BOOL)(*((DWORD*)raw_buffer + (j * width + i)) != 0xffffffff);
+				pixel = *((DWORD*)raw_buffer + (j * width + i));
+				condition = (BOOL)(pixel != 0xffffffff);
 				break;
 
 			default:
-				condition = TRUE;
+				condition = FALSE;
+				pixel = 0;
 			}
 			
 			//if(raw_buffer[j * width + i] != 0xffff) {
-			/*
+			
 			if(condition) {
-				LcdSetPixel(x+i, y+j, (DWORD)((BYTE*)raw_buffer + ((j * width + i) * bpp)));
+				LcdSetPixel(x+i, y+j, pixel);
 			}
-			*/
 		}
 	}
 }
@@ -192,7 +196,7 @@ void GeometricalRenderer_drawString(PRenderer self, PRasterFont font, DWORD x, D
 
 		/* If the code of the char is above 0x7F, then this is UTF-8) */
 		if(string[i] > 0x7F) {
-
+			/* TODO: draw unicode character */
 		} else {
 			/* Sample ASCII */
 			utf8_code = string[i];
