@@ -22,6 +22,9 @@ VTABLE_START(Renderer) {
 	GeometricalRenderer_drawString
 };
 
+void _triangle_sort_vertices_ascending_by_y(PVertice v1, PVertice v2, PVertice v3);
+void _triangle_fill_flat_side_triangle_int(PGeometricalRenderer self, const PVertice v1, const PVertice v2, const PVertice v3, DWORD color);
+
 PGeometricalRenderer GeometricalRenderer_constructor(PGeometricalRenderer self) {
 	OBJECT(self)->size     = sizeof(GeometricalRenderer);
 	OBJECT(self)->vtable   = VTABLE_POINTER(Object);
@@ -126,23 +129,66 @@ void GeometricalRenderer_drawRectangle(PRenderer self, DWORD x, DWORD y, DWORD w
 }
 
 void GeometricalRenderer_drawTriangle(PRenderer self, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD filling_color, DWORD border_color) {
-	Triangle triangle;
-	
+	Vertice v1, v2, v3;
 
-	Triangle_constructor(&triangle);
-	
+	Vertice_constructor(&v1);
+	Vertice_constructor(&v2);
+	Vertice_constructor(&v3);
 
-	triangle.v1.x = x0;
-	triangle.v1.y = y0;
-	triangle.v2.x = x1;
-	triangle.v2.y = y1;
-	triangle.v3.x = x2;
-	triangle.v3.y = y2;
-	
-	triangle.shape.color        = filling_color;
-	triangle.shape.border_color = border_color;
+	v1.x = x0;
+	v1.y = y0;
+	v2.x = x1;
+	v2.y = y1;
+	v3.x = x2;
+	v3.y = y2;
 
 	//Triangle_paint(SHAPE(&triangle), self);
+
+	_triangle_sort_vertices_ascending_by_y(&v1, &v2, &v3);
+
+	if(v2.y == v3.y) {
+		_triangle_fill_flat_side_triangle_int(self, &v1, &v2, &v3, filling_color);
+	} else if(v1.y == v2.y) {
+		_triangle_fill_flat_side_triangle_int(self, &v3, &v1, &v2, filling_color);
+	} else {
+		/* general case - split the triangle in a topflat and bottom-flat one */
+		Vertice vtmp;
+		Vertice_constructor(&vtmp);
+
+		vtmp.x = (int)(v1.x + ((float)(v2.y - v1.y) / (float)(v3.y - v1.y)) * (v3.x - v1.x));
+		vtmp.y = v2.y;
+
+		_triangle_fill_flat_side_triangle_int(self, &v1, &v2, &vtmp, filling_color);
+		_triangle_fill_flat_side_triangle_int(self, &v3, &v2, &vtmp, filling_color);
+	}
+
+	/* Draw borders */
+	self->vtable->drawLine(
+		self,
+		v1.x,
+		v1.y,
+		v2.x,
+		v2.y,
+		border_color
+	);
+
+	self->vtable->drawLine(
+		self,
+		v2.x,
+		v2.y,
+		v3.x,
+		v3.y,
+		border_color
+	);
+
+	self->vtable->drawLine(
+		self,
+		v3.x,
+		v3.y,
+		v1.x,
+		v1.y,
+		border_color
+	);
 }
 
 void GeometricalRenderer_drawBuffer(PRenderer self, WORD x, DWORD y, DWORD width, DWORD height, BYTE bpp, void* raw_buffer) {
@@ -226,4 +272,124 @@ void GeometricalRenderer_drawString(PRenderer self, PRasterFont font, DWORD x, D
 
 void GeometricalRenderer_drawPixel(PRenderer self, DWORD x, DWORD y, DWORD color) {
 
+}
+
+void _triangle_sort_vertices_ascending_by_y(PVertice v1, PVertice v2, PVertice v3) {
+	if(v1->y > v2->y) {
+		VERTICE_SWAP((*v1), (*v2));
+	}
+
+	/* here v1.y <= v2.y */
+	if(v1->y > v3->y) {
+		VERTICE_SWAP((*v1), (*v3));
+	}
+
+	/* here v1.y <= v2.y and v1.y <= v3.y so test v2 vs. v3 */
+	if(v2->y > v3->y) {
+		VERTICE_SWAP((*v2), (*v3));
+	}
+}
+
+void _triangle_fill_flat_side_triangle_int(PRenderer self, const PVertice v1, const PVertice v2, const PVertice v3, DWORD color) {
+	Vertice tmp_vertice_1;
+	Vertice tmp_vertice_2;
+
+	BOOL changed1 = FALSE;
+	BOOL changed2 = FALSE;
+
+	SDWORD e1;
+	SDWORD e2;
+
+	int i;
+
+	SDWORD dx1 = abs((long long)v2->x - v1->x);
+	SDWORD dy1 = abs((long long)v2->y - v1->y);
+
+	SDWORD dx2 = abs((long long)v3->x - v1->x);
+	SDWORD dy2 = abs((long long)v3->y - v1->y);
+
+	SWORD signx1 = Sign(v2->x - v1->x);
+	SWORD signx2 = Sign(v3->x - v1->x);
+
+	SWORD signy1 = Sign(v2->y - v1->y);
+	SWORD signy2 = Sign(v3->y - v1->y);
+
+	
+	if(dy1 > dx1) {
+		/* Swap values */
+		SWAP(dx1, dy1);
+		changed1 = TRUE;
+	}
+
+	if(dy2 > dx2) {
+		/* Swap values */
+		SWAP(dx2, dy2);
+		changed2 = TRUE;
+	}
+
+	e1 = 2 * dy1 - dx1;
+	e2 = 2 * dy2 - dx2;
+
+
+	Vertice_constructor(&tmp_vertice_1);
+	Vertice_constructor(&tmp_vertice_2);
+
+	tmp_vertice_1.x = tmp_vertice_2.x = v1->x;
+	tmp_vertice_1.y = tmp_vertice_2.y = v1->y;
+
+	for(i = 0; i <= dx1; ++i) {
+
+		RENDERER_VTABLE(self)->drawLine(
+			self,
+			tmp_vertice_1.x,
+			tmp_vertice_1.y,
+			tmp_vertice_2.x,
+			tmp_vertice_2.y,
+			color
+		);
+
+		while(e1 >= 0) {
+			if(changed1) {
+				tmp_vertice_1.x += signx1;
+			} else {
+				tmp_vertice_1.y += signy1;
+			}
+
+			e1 = e1 - 2 * dx1;
+		}
+
+		if(changed1) {
+			tmp_vertice_1.y += signy1;
+		} else {
+			tmp_vertice_1.x += signx1;
+		}
+
+		e1 = e1 + 2 * dy1;
+
+		/* here we rendered the next point on line 1 so follow now line 2
+		* until we are on the same y-value as line 1.
+		*/
+		while(tmp_vertice_2.y != tmp_vertice_1.y) {
+			while(e2 >= 0) {
+				if(changed2) {
+					tmp_vertice_2.x += signx2;
+				} else {
+					tmp_vertice_2.y += signy2;
+				}
+
+				e2 = e2 - 2 * dx2;
+			}
+
+			if(changed2) {
+				tmp_vertice_2.y += signy2;
+			} else {
+				tmp_vertice_2.x += signx2;
+			}
+
+			e2 = e2 + 2 * dy2;
+		}
+	}
+
+	Vertice_destructor(OBJECT(&tmp_vertice_1));
+	Vertice_destructor(OBJECT(&tmp_vertice_2));
 }

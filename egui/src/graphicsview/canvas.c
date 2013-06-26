@@ -103,7 +103,6 @@ void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 			RGB_16B(0,0,0)
 		);
 
-
 	/* Test: define a clipping region for the painter */
 	painter->clip.x      = base_x + self->x;
 	painter->clip.y      = base_y + self->y;
@@ -117,7 +116,7 @@ void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 		while(current_shape != NULL) {
 			PShape shape = SHAPEPTR(current_shape->data)->shape;
 
-			//shape->vtable->paint(shape, painter);
+			shape->vtable->paint(shape, painter);
 
 			current_shape = current_shape->next;
 		}

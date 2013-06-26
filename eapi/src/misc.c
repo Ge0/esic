@@ -19,3 +19,7 @@ unsigned long Hash(const char* string) {
 long RandLong(long min, long max) {
 	return rand() % max - min + 1;
 }
+
+long CrossProduct(DWORD x1, DWORD y1, DWORD x2, DWORD y2) {
+	return x1 * y2 - y1 * x2;
+}

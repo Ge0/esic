@@ -8,5 +8,6 @@
 int Sign(SDWORD expr);
 unsigned long Hash(const char* string);
 long RandLong(long min, long max);
+long CrossProduct(DWORD x1, DWORD y1, DWORD x2, DWORD y2);
 
 #endif /* _MISC_H_ */
