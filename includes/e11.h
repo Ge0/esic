@@ -1,8 +1,6 @@
 #ifndef _E11_H_
 #define _E11_H_
 
-#include <esic/eapi/abstract_system.h>
-
 void e11();
 
 void _e11_splashscreen();

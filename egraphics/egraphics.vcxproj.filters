@@ -33,9 +33,6 @@
     <ClCompile Include="src\ellipse.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\lcd_painter.c">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\pixel.c">
       <Filter>src</Filter>
     </ClCompile>
@@ -63,12 +60,6 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\esic\egraphics\ellipse.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\egraphics\abstract_painter.h">
-      <Filter>includes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\includes\esic\egraphics\lcd_painter.h">
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="..\includes\esic\egraphics\pixel.h">

@@ -17,7 +17,7 @@
 //#include <esic/egui/default_widget_renderer.h>
 #include <esic/etools/zstring.h>
 #include <fatfs/ff.h>
-#include <esic/egraphics/lcd_painter.h>
+//#include <esic/egraphics/lcd_painter.h>
 /* TEST END */
 
 /* OTHER TEST START */
@@ -50,7 +50,7 @@ void e11() {
 	/*DELETE(widget_renderer);*/
 
 	/* Test */
-	FreeLcdPainter();
+	//FreeLcdPainter();
 
 	/* FACTORY DESTROY */
 	PaintersFactory_destroy();

@@ -67,8 +67,6 @@ void Picture_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	if(PICTURE(self)->icon != NULL) {
 		Painter_drawBuffer(
 			painter,
-			//real_self->painter->abstract_painter.vtable->drawBuffer(
-			//&real_self->painter->abstract_painter,
 			base_x + PICTURE(self)->widget.x,
 			/*base_y*/0 + PICTURE(self)->widget.y,
 			PICTURE(self)->icon->header.width,
@@ -80,8 +78,6 @@ void Picture_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 		/* ... & the surronding rect */
 
 		/* Top border */
-		//LcdDrawRectangle(
-		//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
 		painter->color = border_color;
 		Painter_drawRectangle(
 			painter,
@@ -93,8 +89,6 @@ void Picture_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 		);
 
 		/* Right border */
-		//LcdDrawRectangle(
-		//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
 		Painter_drawRectangle(
 			painter,
 			base_x + self->x + PICTURE(self)->icon->header.width,
@@ -105,11 +99,8 @@ void Picture_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 		);
 
 		/* Bottom border */
-		//LcdDrawRectangle(
 		Painter_drawRectangle(
 			painter,
-			//real_self->painter->abstract_painter.vtable->drawRectangle(
-			//&real_self->painter->abstract_painter,
 			base_x + self->x,
 			/*base_y*/0 + self->y + PICTURE(self)->icon->header.height,
 			PICTURE(self)->icon->header.width + PICTURE(self)->border_thickness,
@@ -118,11 +109,8 @@ void Picture_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 		);
 
 		/* Left border */
-		//LcdDrawRectangle(
 		Painter_drawRectangle(
 			painter,
-			//real_self->painter->abstract_painter.vtable->drawRectangle(
-			//&real_self->painter->abstract_painter,
 			base_x + self->x - PICTURE(self)->border_thickness,
 			/*base_y*/ 0 + self->y,
 			PICTURE(self)->border_thickness,

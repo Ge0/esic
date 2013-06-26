@@ -2,7 +2,7 @@
 #include <ui/dotpen_ui.h>
 #include <factories/xml_ui_factory.h>
 #include <esic/eapi/system.h>
-#include <esic/egraphics/lcd_painter.h>
+//#include <esic/egraphics/lcd_painter.h>
 
 VTABLE_START(Object) {
 #define OBJECT_VFUNCTION(return_type, function_name, arguments) DotpenUI_##function_name,

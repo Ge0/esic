@@ -26,7 +26,7 @@ DWORD Triangle_hash(PObject self);
 
 /* Shape */
 
-void Triangle_paint(PShape self, PAbstractPainter painter);
+void Triangle_paint(PShape self, PPainter painter);
 
 
 

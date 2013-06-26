@@ -54,6 +54,6 @@ DWORD Pixel_type(PObject self) {
 }
 
 /* Shape */
-void Pixel_paint(PShape self, PAbstractPainter painter) {
-	painter->vtable->drawPixel(painter, PIXEL(self)->coords.x, PIXEL(self)->coords.y, PIXEL(self)->color);
+void Pixel_paint(PShape self, PPainter painter) {
+	painter->renderer->vtable->drawPixel(painter->renderer, PIXEL(self)->coords.x, PIXEL(self)->coords.y, PIXEL(self)->color);
 }

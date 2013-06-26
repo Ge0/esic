@@ -164,11 +164,8 @@ void TextBox_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 
 	if(TEXTBOX(self)->draw_carret && TEXTBOX(self)->is_focused) {
 		/* Draw the carret */
-		//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
 		Painter_drawRectangle(
 			painter,
-			//real_self->painter->abstract_painter.vtable->drawRectangle(
-			//&real_self->painter->abstract_painter,
 			base_x + TEXTBOX(self)->widget.x + 2 + ((TEXTBOX(self)->carret_position - TEXTBOX(self)->text_offset) * character_width) ,
 			base_y + TEXTBOX(self)->widget.y + 2,
 			1,

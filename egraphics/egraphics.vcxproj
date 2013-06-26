@@ -80,7 +80,6 @@
     <ClCompile Include="src\ellipse.c" />
     <ClCompile Include="src\factories\painters_factory.c" />
     <ClCompile Include="src\geometrical_renderer.c" />
-    <ClCompile Include="src\lcd_painter.c" />
     <ClCompile Include="src\painter.c" />
     <ClCompile Include="src\pixel.c" />
     <ClCompile Include="src\shape_ptr.c" />
@@ -88,11 +87,9 @@
     <ClCompile Include="src\vertice.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\includes\esic\egraphics\abstract_painter.h" />
     <ClInclude Include="..\includes\esic\egraphics\ellipse.h" />
     <ClInclude Include="..\includes\esic\egraphics\factories\painters_factory.h" />
     <ClInclude Include="..\includes\esic\egraphics\geometrical_renderer.h" />
-    <ClInclude Include="..\includes\esic\egraphics\lcd_painter.h" />
     <ClInclude Include="..\includes\esic\egraphics\painter.h" />
     <ClInclude Include="..\includes\esic\egraphics\pixel.h" />
     <ClInclude Include="..\includes\esic\egraphics\renderer.h" />

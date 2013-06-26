@@ -32,9 +32,6 @@
     <ClInclude Include="..\includes\esic\eapi\heap.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\esic\eapi\abstract_system.h">
-      <Filter>includes</Filter>
-    </ClInclude>
     <ClInclude Include="..\includes\esic\eapi\event.h">
       <Filter>includes</Filter>
     </ClInclude>

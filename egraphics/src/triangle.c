@@ -15,7 +15,7 @@ static const vtable_Shape s_shape_vtable = {
 	Triangle_paint
 };
 
-void _fill_flat_side_triangle_int(PTriangle self, PAbstractPainter abstract_painter, const PVertice v1, const PVertice v2, const PVertice v3);
+void _fill_flat_side_triangle_int(PTriangle self, PPainter painter, const PVertice v1, const PVertice v2, const PVertice v3);
 void _sort_vertices_ascending_by_y(PTriangle self);
 
 PTriangle Triangle_constructor(PTriangle self) {
@@ -60,7 +60,7 @@ DWORD Triangle_hash(PObject self) {
 	return 0;
 }
 
-void Triangle_paint(PShape self, PAbstractPainter painter) {
+void Triangle_paint(PShape self, PPainter painter) {
 	_sort_vertices_ascending_by_y(TRIANGLE(self));
 
 	if(TRIANGLE(self)->v2.y == TRIANGLE(self)->v3.y) {
@@ -80,7 +80,8 @@ void Triangle_paint(PShape self, PAbstractPainter painter) {
 	}
 
 	/* Draw borders */
-	ABSTRACTPAINTER_VTABLE(painter)->drawLine(
+	/*
+	painter->drawLine(
 		painter,
 		TRIANGLE(self)->v1.x,
 		TRIANGLE(self)->v1.y,
@@ -106,7 +107,7 @@ void Triangle_paint(PShape self, PAbstractPainter painter) {
 		TRIANGLE(self)->v1.y,
 		self->border_color
 	);
-
+	*/
 }
 
 void _sort_vertices_ascending_by_y(PTriangle self) {
@@ -129,7 +130,7 @@ SDWORD _cross_product(DWORD x1, DWORD y1, DWORD x2, DWORD y2) {
 	return x1 * y2 - y1 * x2;
 }
 
-void _fill_flat_side_triangle_int(PTriangle self, PAbstractPainter abstract_painter, const PVertice v1, const PVertice v2, const PVertice v3) {
+void _fill_flat_side_triangle_int(PTriangle self, PPainter abstract_painter, const PVertice v1, const PVertice v2, const PVertice v3) {
 	Vertice tmp_vertice_1;
 	Vertice tmp_vertice_2;
 
@@ -177,6 +178,7 @@ void _fill_flat_side_triangle_int(PTriangle self, PAbstractPainter abstract_pain
 	tmp_vertice_1.y = tmp_vertice_2.y = v1->y;
 
 	for(i = 0; i <= dx1; ++i) {
+		/*
 		ABSTRACTPAINTER_VTABLE(abstract_painter)->drawLine(
 			abstract_painter,
 			tmp_vertice_1.x,
@@ -185,7 +187,7 @@ void _fill_flat_side_triangle_int(PTriangle self, PAbstractPainter abstract_pain
 			tmp_vertice_2.y,
 			self->shape.color
 		);
-
+		*/
 		while(e1 >= 0) {
 			if(changed1) {
 				tmp_vertice_1.x += signx1;

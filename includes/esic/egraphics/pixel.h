@@ -1,7 +1,7 @@
 #ifndef _PIXEL_H_
 #define _PIXEL_H_
 
-#include <esic/egraphics/abstract_painter.h>
+
 #include <esic/egraphics/vertice.h>
 #include <esic/egraphics/shape.h>
 
@@ -24,7 +24,7 @@ DWORD Pixel_hash(PObject self);
 DWORD Pixel_type(PObject self);
 
 /* Shape */
-void Pixel_paint(PShape self, PAbstractPainter painter);
+void Pixel_paint(PShape self, PPainter painter);
 
 #define PIXEL(x) ((PPixel)x)
 

@@ -1,4 +1,3 @@
-#include <esic/egraphics/abstract_painter.h>
 #include <esic/eapi/system.h>
 #include <esic/eapi/keyboard_event.h>
 #include <esic/egui/checkbox.h>

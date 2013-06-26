@@ -5,12 +5,12 @@
 #define _SHAPE_H_
 
 #include <esic/object.h>
-#include <esic/egraphics/abstract_painter.h>
+#include <esic/egraphics/painter.h>
 
 typedef struct _Shape *PShape;
 
 typedef struct _vtable_Shape {
-	void (*paint)(PShape self, PAbstractPainter painter);
+	void (*paint)(PShape self, PPainter painter);
 } vtable_Shape;
 
 typedef struct _Shape {
