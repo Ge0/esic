@@ -20,12 +20,18 @@
 //#include <esic/egraphics/lcd_painter.h>
 /* TEST END */
 
+#include <libsic/marking/text_marking_line.h>
+
 /* OTHER TEST START */
 #include <ui/main_ui.h>
 #include <factories/xml_ui_factory.h>
 
 void TestDrawString(PMarkingFontTT font, DWORD base_x, DWORD base_y, const char* string);
 void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y, char ch);
+
+PTextMarkingLine GetTestMarkingLine(void);
+void TestDrawMarkingLine(PTextMarkingLine marking_line);
+void TestDrawMarkingChar(PMarkingFontTT font, char ch, long x, long y, long width, long height);
 
 void _init_painters();
 
@@ -97,8 +103,10 @@ void _e11_mainloop() {
 
 		//TestDrawChar(ocr_font, 100, 100);
 
-		TestDrawString(ocr_font, 50, 70, "SIC MARKING");
+		//TestDrawString(ocr_font, 50, 70, "SIC MARKING");
 		//TestDrawString(ocr_font, 40, 95, "PauseEnSecondes");
+
+		TestDrawMarkingLine(GetTestMarkingLine());
 
 		if(EsicPollEvent(&system_event)) {
 			
@@ -187,6 +195,47 @@ void TestDrawString(PMarkingFontTT font, DWORD base_x, DWORD base_y, const char*
 	}
 }
 
+void TestDrawMarkingLine(PTextMarkingLine marking_line) {
+
+	int base_x = 30;
+	int base_y = 50;
+	const int resolution = 4.0;
+
+	DWORD i = 0;
+	for(i = 0; i < marking_line->content.size; ++i) {
+		char ch = marking_line->content.data[i];
+		if(ch >= ' ') {
+			TestDrawMarkingChar(
+				marking_line->marking_font,
+				ch,
+				base_x + (MARKING_LINE(marking_line)->x/10)*resolution,
+				base_y + (MARKING_LINE(marking_line)->y/10)*resolution,
+				MARKING_LINE(marking_line)->width,
+				MARKING_LINE(marking_line)->height
+			);
+			base_x += (MARKING_LINE(marking_line)->width/resolution);
+
+		}
+	}
+
+}
+
+void TestDrawMarkingChar(PMarkingFontTT font, char ch, long x, long y, long width, long height) {
+	DWORD i;
+	ch -= ' ';
+
+	for(i = 0; i < font->characters[ch].number_of_points; ++i) {
+		if(font->characters[ch].coords[i].x1 >= 0) {
+			LcdSetPixel(
+				x + (DWORD)((font->characters[ch].coords[i].x1/120.0) * (width/4.0)),
+				y + (DWORD)(((180-font->characters[ch].coords[i].y1)/120.0) * (height/4.0)),
+				0
+			);
+		}
+	}
+
+}
+
 void _init_painters() {
 	Painter painter;
 	PGeometricalRenderer renderer;
@@ -195,6 +244,7 @@ void _init_painters() {
 	Painter_constructor(&painter);
 	painter.clip.height = painter.clip.width = 0xFFFFFFFF;
 	painter.clip.x      = painter.clip.y = 0;
+
 	
 
 	/* Default color is black */
@@ -212,4 +262,20 @@ void _init_painters() {
 	PaintersFactory_registerPainter(&painter);
 
 	Painter_destructor(OBJECT(&painter));
+}
+
+PTextMarkingLine GetTestMarkingLine(void) {
+	static TextMarkingLine marking_line;
+	
+	TextMarkingLine_constructor(&marking_line);
+	
+	MARKING_LINE(&marking_line)->x      = 0;
+	MARKING_LINE(&marking_line)->y      = 0;
+	MARKING_LINE(&marking_line)->width  = 60;
+	MARKING_LINE(&marking_line)->height = 60;
+
+	ZString_setData(&marking_line.content, "SIC MARKING");
+	marking_line.marking_font = MarkingFontTTFactory_getMarkingFontTT("OCR");
+	
+	return &marking_line;
 }
