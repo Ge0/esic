@@ -23,4 +23,6 @@ BOOL TextMarkingLine_equalsTo(PObject self, PObject dst);
 DWORD TextMarkingLine_hash(PObject self);
 DWORD TextMarkingLine_type(PObject self);
 
+#define TEXTMARKINGLINE(x) ((PTextMarkingLine)x)
+
 #endif /* _TEXT_MARKING_LINE_H_ */

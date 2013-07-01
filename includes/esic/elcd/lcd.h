@@ -33,9 +33,10 @@ typedef struct _Lcd {
 
 #if defined(EMULATOR)
 #include <esic/elcd/emulator_lcd.h>
-#define LcdInit				EmulatorLcdInit
-#define	LcdDestroy			EmulatorLcdDestroy
-#define LcdUpdate			EmulatorLcdUpdate
+#define LcdInit					EmulatorLcdInit
+#define	LcdDestroy				EmulatorLcdDestroy
+#define LcdUpdate				EmulatorLcdUpdate
+#define LcdGetPixelResolution	EmulatorLcdGetPixelResolution
 #elif defined(OPEN1788)
 #include <esic/elcd/open1788_lcd.h>
 #define LcdInit				Open1788LcdInit

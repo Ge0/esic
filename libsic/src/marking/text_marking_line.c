@@ -9,17 +9,40 @@ VTABLE_START(Object) {
 };
 
 PTextMarkingLine TextMarkingLine_constructor(PTextMarkingLine self) {
-	return NULL;
+	OBJECT(self)->size   = sizeof(TextMarkingLine);
+	OBJECT(self)->vtable = VTABLE_POINTER(Object);
+
+	ZString_constructor(&self->content, "");
+
+	return self;
 }
 
 
 
 void TextMarkingLine_destructor(PObject self) {
 	/* TODO. */
+	ZString_destructor(OBJECT(&TEXTMARKINGLINE(self)->content));
 }
 
 PObject TextMarkingLine_clone(PObject self, PObject dst) {
 	/* TODO. */
+	dst->size   = self->size;
+	dst->vtable = self->vtable;
+
+	MARKINGLINE(dst)->x        = MARKINGLINE(self)->x;
+	MARKINGLINE(dst)->y        = MARKINGLINE(self)->y;
+	MARKINGLINE(dst)->z        = MARKINGLINE(self)->z;
+	MARKINGLINE(dst)->d        = MARKINGLINE(self)->d;
+	MARKINGLINE(dst)->speed    = MARKINGLINE(self)->speed;
+	MARKINGLINE(dst)->strength = MARKINGLINE(self)->strength;
+	MARKINGLINE(dst)->width    = MARKINGLINE(self)->width;
+	MARKINGLINE(dst)->height   = MARKINGLINE(dst)->height;
+
+	ZString_clone(OBJECT(&TEXTMARKINGLINE(self)->content), OBJECT(&TEXTMARKINGLINE(dst)->content));
+
+	TEXTMARKINGLINE(dst)->marking_font = TEXTMARKINGLINE(self)->marking_font;
+	TEXTMARKINGLINE(dst)->pitch        = TEXTMARKINGLINE(self)->pitch;
+
 	return NULL;
 }
 

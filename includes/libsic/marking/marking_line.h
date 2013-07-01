@@ -6,12 +6,12 @@
 
 typedef struct _MarkingLine {
 	Object  object;
-	float   x;
-	float   y;
-	float   z;
-	float   d;
-	float   width;
-	float   height;
+	long   x;
+	long   y;
+	long   z;
+	long   d;
+	long   width;
+	long   height;
 	DWORD   speed;
 	DWORD   strength;
 } MarkingLine, *PMarkingLine;
@@ -24,6 +24,6 @@ PObject MarkingLine_clone(PObject self, PObject dst);
 BOOL MarkingLine_equalsTo(PObject self, PObject dst);
 DWORD MarkingLine_hash(PObject self);
 
-#define MARKING_LINE(x) ((PMarkingLine)x)
+#define MARKINGLINE(x) ((PMarkingLine)x)
 
 #endif /* _MARKING_LINE_H_ */

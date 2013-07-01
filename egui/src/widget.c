@@ -47,8 +47,10 @@ PWidget Widget_constructor(PWidget self) {
 
 	/* Initialize properties so they don't get dummy random values */
 	self->x = self->y = self->width = self->height = self->color = 0;
-	self->is_hot = FALSE;
-	self->parent = NULL;
+	self->is_hot       = FALSE;
+	self->parent       = NULL;
+	self->is_activated = TRUE;
+	self->is_visible   = TRUE;
 
 	/* Construct the list of childs */
 	List_constructor(&self->childs, sizeof(WidgetPtr));

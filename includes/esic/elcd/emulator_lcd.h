@@ -3,6 +3,8 @@
 
 //#include <SDL/SDL.h>
 
+#define EMULATOR_LCD_PIXEL_RESOLUTION	4.71
+
 void EmulatorLcdInit(DWORD width, DWORD height, BYTE bpp, DWORD flags);
 void EmulatorLcdDestroy();
 void EmulatorLcdUpdate();

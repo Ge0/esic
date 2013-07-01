@@ -31,6 +31,8 @@ typedef struct _Widget {
 	List childs;
 	BOOL is_focusable;
 	BOOL is_hot;
+	BOOL is_activated;
+	BOOL is_visible;
 } Widget;
 
 

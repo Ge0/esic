@@ -36,3 +36,7 @@ void EmulatorLcdDestroy() {
 void EmulatorLcdUpdate() {
 	SDL_Flip(s_screen);
 }
+
+float EmulatorLcdGetPixelResolution() {
+	return (float)EMULATOR_LCD_PIXEL_RESOLUTION;
+}

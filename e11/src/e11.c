@@ -36,6 +36,9 @@ void TestDrawMarkingChar(PMarkingFontTT font, char ch, long x, long y, long widt
 void _init_painters();
 
 void e11() {
+
+	PTextMarkingLine marking_line = NULL;
+
 	/* FACTORY INIT */
 	srand((unsigned int)time(NULL));
 	RasterFontFactory_init();
@@ -58,11 +61,17 @@ void e11() {
 	/* Test */
 	//FreeLcdPainter();
 
+	marking_line = GetTestMarkingLine();
+
 	/* FACTORY DESTROY */
 	PaintersFactory_destroy();
 	MarkingFontTTFactory_destroy();
 	RasterIconFactory_destroy();
 	RasterFontFactory_destroy();
+
+	/* Test */
+	
+	DELETE(marking_line);
 
 	SicHeapDump();
 }
@@ -98,14 +107,6 @@ void _e11_mainloop() {
 
 		Event_constructor(&system_event);
 
-		/* System Top rectangle */
-		//LcdDrawRectangle(0, 0, 319, 14, RGB_16B(240,240,240), RGB_16B(0,0,0));
-
-		//TestDrawChar(ocr_font, 100, 100);
-
-		//TestDrawString(ocr_font, 50, 70, "SIC MARKING");
-		//TestDrawString(ocr_font, 40, 95, "PauseEnSecondes");
-
 		TestDrawMarkingLine(GetTestMarkingLine());
 
 		if(EsicPollEvent(&system_event)) {
@@ -115,15 +116,8 @@ void _e11_mainloop() {
  				looping = (BOOL)!looping;
 				break;
 
-			//case EVENT_SERIAL:
-			// Convert message
-			//	break;
-
-			/* Other events */
-
 			default:
 				WIDGET_VTABLE(&main_ui)->defaultProc(WIDGET(&main_ui), &system_event);
-				//main_ui.e11ui.widget.vtable->defaultProc(&main_ui.e11ui.widget, &system_event);
 			}
 		}
 
@@ -140,7 +134,6 @@ void _e11_mainloop() {
 			Event_destructor(&timer_event.object);
 		}
 
-		//EsicDelay(15);
 		LcdUpdate();
 
 		Event_destructor(&system_event.object);
@@ -208,12 +201,12 @@ void TestDrawMarkingLine(PTextMarkingLine marking_line) {
 			TestDrawMarkingChar(
 				marking_line->marking_font,
 				ch,
-				base_x + (MARKING_LINE(marking_line)->x/10)*resolution,
-				base_y + (MARKING_LINE(marking_line)->y/10)*resolution,
-				MARKING_LINE(marking_line)->width,
-				MARKING_LINE(marking_line)->height
+				base_x + (MARKINGLINE(marking_line)->x/10)*resolution,
+				base_y + (MARKINGLINE(marking_line)->y/10)*resolution,
+				MARKINGLINE(marking_line)->width,
+				MARKINGLINE(marking_line)->height
 			);
-			base_x += (MARKING_LINE(marking_line)->width/resolution);
+			base_x += (MARKINGLINE(marking_line)->width/resolution);
 
 		}
 	}
@@ -245,8 +238,6 @@ void _init_painters() {
 	painter.clip.height = painter.clip.width = 0xFFFFFFFF;
 	painter.clip.x      = painter.clip.y = 0;
 
-	
-
 	/* Default color is black */
 	painter.color = RGB_16B(0,0,0);
 	
@@ -266,16 +257,22 @@ void _init_painters() {
 
 PTextMarkingLine GetTestMarkingLine(void) {
 	static TextMarkingLine marking_line;
-	
-	TextMarkingLine_constructor(&marking_line);
-	
-	MARKING_LINE(&marking_line)->x      = 0;
-	MARKING_LINE(&marking_line)->y      = 0;
-	MARKING_LINE(&marking_line)->width  = 60;
-	MARKING_LINE(&marking_line)->height = 60;
+	static int inited = 0;
 
-	ZString_setData(&marking_line.content, "SIC MARKING");
-	marking_line.marking_font = MarkingFontTTFactory_getMarkingFontTT("OCR");
+	if(inited == 0) {
+	
+		TextMarkingLine_constructor(&marking_line);
+	
+		MARKINGLINE(&marking_line)->x      = 0;
+		MARKINGLINE(&marking_line)->y      = 0;
+		MARKINGLINE(&marking_line)->width  = 60;
+		MARKINGLINE(&marking_line)->height = 60;
+
+		ZString_setData(&marking_line.content, "SIC MARKING");
+		marking_line.marking_font = MarkingFontTTFactory_getMarkingFontTT("OCR");
+
+		inited = 1;
+	}
 	
 	return &marking_line;
 }

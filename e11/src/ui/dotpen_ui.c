@@ -11,11 +11,7 @@ VTABLE_START(Object) {
 };
 
 VTABLE_START(Widget) {
-/*
-#define WIDGET_VFUNCTION(return_type, function_name, arguments) DotpenUI_##function_name,
-	WIDGET_VIRTUAL_FUNCTIONS
-#undef WIDGET_VFUNCTION
-*/
+
 	DotpenUI_defaultProc,
 	DotpenUI_paint,
 	Widget_handleWidgetEvent
