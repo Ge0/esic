@@ -68,7 +68,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\includes\esic\egui\abstract_ui_factory.h" />
     <ClInclude Include="..\includes\esic\egui\checkbox.h" />
     <ClInclude Include="..\includes\esic\egui\graphicsview\canvas.h" />
     <ClInclude Include="..\includes\esic\egui\graphicsview\graphics_scene.h" />

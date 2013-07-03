@@ -23,6 +23,9 @@
     <path>$WS_DIR$\expat\expat.ewp</path>
   </project>
   <project>
+    <path>$WS_DIR$\libsic\libsic.ewp</path>
+  </project>
+  <project>
     <path>$WS_DIR$\open1788system\open1788system.ewp</path>
   </project>
   <batchBuild/>

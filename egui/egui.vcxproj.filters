@@ -33,9 +33,6 @@
     <ClInclude Include="..\includes\esic\egui\image.h">
       <Filter>includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\includes\esic\egui\abstract_ui_factory.h">
-      <Filter>includes</Filter>
-    </ClInclude>
     <ClInclude Include="..\includes\esic\egui\widget_ptr.h">
       <Filter>includes</Filter>
     </ClInclude>

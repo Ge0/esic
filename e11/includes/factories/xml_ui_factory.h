@@ -2,7 +2,7 @@
 #define _XML_UI_FACTORY_
 
 #include <esic/esic.h>
-#include <esic/egui/abstract_ui_factory.h>
+//#include <esic/egui/abstract_ui_factory.h>
 #include "e11_ui.h"
 
 #define PATH_USER_INTERFACES "system/user_interfaces/"
