@@ -9,7 +9,7 @@ void PaintersFactory_destroy();
 
 void PaintersFactory_registerPainter(const PPainter painter);
 void PaintersFactory_unregisterPainter(const PPainter painter);
-const PList GetPainters();
+PList GetPainters();
 
 
 #endif /* _PAINTERS_FACTORY_H_ */

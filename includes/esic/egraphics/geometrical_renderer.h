@@ -26,4 +26,7 @@ void GeometricalRenderer_drawTriangle(PRenderer self, DWORD x0, DWORD y0, DWORD 
 void GeometricalRenderer_drawBuffer(PRenderer self, WORD x, DWORD y, DWORD width, DWORD height, BYTE bpp, void* raw_buffer);
 void GeometricalRenderer_drawString(PRenderer self, PRasterFont raster_font, DWORD x, DWORD y , DWORD color, const char* string);
 void GeometricalRenderer_drawPixel(PRenderer self, DWORD x , DWORD y, DWORD color);
+
+#define GEOMETRICALRENDERER(x) ((PGeometricalRenderer)x)
+
 #endif /* _GEOMETRICAL_RENDERER_H_ */

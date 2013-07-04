@@ -17,18 +17,14 @@ typedef struct _Rectangle {
 PRectangle Rectangle_constructor(PRectangle self);
 
 /* Object vtable declaration */
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
-	return_type Rectangle_##function_name##arguments;
-
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
+void Rectangle_destructor(PObject self);
+PObject Rectangle_clone(PObject self, PObject dst);
+BOOL Rectangle_equalsTo(PObject self, PObject dst);
+DWORD Rectangle_hash(PObject self);
+DWORD Rectangle_type(PObject self);
 
 /* Shape vtable declaration */
-#define SHAPE_VFUNCTION(return_type, function_name, arguments) \
-	return_type Rectangle_##function_name##arguments;
-
-	SHAPE_VIRTUAL_FUNCTIONS
-#undef SHAPE_VFUNCTION
+void Rectangle_paint(PShape self, PPainter painter);
 
 #define RECTANGLE(x) ((PRectangle)x)
 

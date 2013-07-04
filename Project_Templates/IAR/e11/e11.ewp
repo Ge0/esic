@@ -1872,6 +1872,9 @@
       <name>$PROJ_DIR$\..\eapi\Debug\Exe\eapi.a</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\egraphics\Debug\Exe\egraphics.a</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\egui\Debug\Exe\egui.a</name>
     </file>
     <file>
@@ -1885,6 +1888,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\expat\Debug\Exe\expat.a</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\libsic\Debug\Exe\libsic.a</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\lpcusblib_device\LPCUSBlib_LPC177x_8x_Device.a</name>

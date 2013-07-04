@@ -147,9 +147,9 @@ void GeometricalRenderer_drawTriangle(PRenderer self, DWORD x0, DWORD y0, DWORD 
 	_triangle_sort_vertices_ascending_by_y(&v1, &v2, &v3);
 
 	if(v2.y == v3.y) {
-		_triangle_fill_flat_side_triangle_int(self, &v1, &v2, &v3, filling_color);
+		_triangle_fill_flat_side_triangle_int(GEOMETRICALRENDERER(self), &v1, &v2, &v3, filling_color);
 	} else if(v1.y == v2.y) {
-		_triangle_fill_flat_side_triangle_int(self, &v3, &v1, &v2, filling_color);
+		_triangle_fill_flat_side_triangle_int(GEOMETRICALRENDERER(self), &v3, &v1, &v2, filling_color);
 	} else {
 		/* general case - split the triangle in a topflat and bottom-flat one */
 		Vertice vtmp;
@@ -158,8 +158,8 @@ void GeometricalRenderer_drawTriangle(PRenderer self, DWORD x0, DWORD y0, DWORD 
 		vtmp.x = (int)(v1.x + ((float)(v2.y - v1.y) / (float)(v3.y - v1.y)) * (v3.x - v1.x));
 		vtmp.y = v2.y;
 
-		_triangle_fill_flat_side_triangle_int(self, &v1, &v2, &vtmp, filling_color);
-		_triangle_fill_flat_side_triangle_int(self, &v3, &v2, &vtmp, filling_color);
+		_triangle_fill_flat_side_triangle_int(GEOMETRICALRENDERER(self), &v1, &v2, &vtmp, filling_color);
+		_triangle_fill_flat_side_triangle_int(GEOMETRICALRENDERER(self), &v3, &v2, &vtmp, filling_color);
 	}
 
 	/* Draw borders */
@@ -290,7 +290,7 @@ void _triangle_sort_vertices_ascending_by_y(PVertice v1, PVertice v2, PVertice v
 	}
 }
 
-void _triangle_fill_flat_side_triangle_int(PRenderer self, const PVertice v1, const PVertice v2, const PVertice v3, DWORD color) {
+void _triangle_fill_flat_side_triangle_int(PGeometricalRenderer self, const PVertice v1, const PVertice v2, const PVertice v3, DWORD color) {
 	Vertice tmp_vertice_1;
 	Vertice tmp_vertice_2;
 
@@ -340,7 +340,7 @@ void _triangle_fill_flat_side_triangle_int(PRenderer self, const PVertice v1, co
 	for(i = 0; i <= dx1; ++i) {
 
 		RENDERER_VTABLE(self)->drawLine(
-			self,
+			RENDERER(self),
 			tmp_vertice_1.x,
 			tmp_vertice_1.y,
 			tmp_vertice_2.x,

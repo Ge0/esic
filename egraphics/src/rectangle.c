@@ -40,7 +40,8 @@ DWORD Rectangle_hash(PObject self) {
 	return 0;
 }
 
-void Rectangle_paint(PShape self, PAbstractPainter painter) {
+void Rectangle_paint(PShape self, PPainter painter) {
+	/*
 	ABSTRACTPAINTER_VTABLE(painter)->drawRectangle(
 		painter,
 		RECTANGLE(self)->x,
@@ -50,4 +51,5 @@ void Rectangle_paint(PShape self, PAbstractPainter painter) {
 		self->color,
 		self->border_color
 	);
+	*/
 }

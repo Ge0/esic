@@ -2,8 +2,6 @@
  * \file abstract_view_ptr.c
  */
 #include <esic/object.h>
-#include <esic/etools/mvc/abstract_view.h>
-#include <esic/etools/mvc/abstract_view_ptr.h>
 
 static const vtable_Object s_vtable_object = {
 	AbstractViewPtr_destructor,

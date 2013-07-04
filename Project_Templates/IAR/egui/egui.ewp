@@ -1837,14 +1837,17 @@
   </configuration>
   <group>
     <name>includes</name>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\includes\esic\egui\abstract_widget_renderer.h</name>
-    </file>
+    <group>
+      <name>graphicsview</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\includes\esic\egui\graphicsview\canvas.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\includes\esic\egui\graphicsview\graphics_scene.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\..\..\..\includes\esic\egui\checkbox.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\includes\esic\egui\default_widget_renderer.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\includes\esic\egui\label.h</name>
@@ -1864,11 +1867,17 @@
   </group>
   <group>
     <name>src</name>
+    <group>
+      <name>graphicsview</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\egui\src\graphicsview\canvas.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\egui\src\graphicsview\graphics_scene.c</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\..\..\..\egui\src\checkbox.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\egui\src\default_widget_renderer.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\egui\src\label.c</name>

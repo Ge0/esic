@@ -909,7 +909,7 @@
         </option>
         <option>
           <name>IarchiveOutput</name>
-          <state>M:\dev-e11\LPC1788\esic\Project_Templates\IAR\etools\Debug\Exe\etools.a</state>
+          <state>C:\Users\sic49\Documents\esic\Project_Templates\IAR\etools\Debug\Exe\etools.a</state>
         </option>
       </data>
     </settings>
@@ -1837,6 +1837,21 @@
   </configuration>
   <group>
     <name>includes</name>
+    <group>
+      <name>mvc</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\includes\esic\etools\mvc\abstract_model.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\includes\esic\etools\mvc\observable.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\includes\esic\etools\mvc\observer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\includes\esic\etools\mvc\observer_ptr.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\..\..\..\includes\esic\etools\container.h</name>
     </file>
@@ -1864,6 +1879,21 @@
   </group>
   <group>
     <name>src</name>
+    <group>
+      <name>mvc</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\etools\src\mvc\abstract_model.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\etools\src\mvc\observable.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\etools\src\mvc\observer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\etools\src\mvc\observer_ptr.c</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\..\..\..\etools\src\container.c</name>
     </file>

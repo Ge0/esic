@@ -18,6 +18,6 @@ void PaintersFactory_unregisterPainter(const PPainter painter) {
 	List_remove(CONTAINER(&s_painters_list), OBJECT(painter));
 }
 
-const PList GetPainters() {
+PList GetPainters() {
 	return &s_painters_list;
 }

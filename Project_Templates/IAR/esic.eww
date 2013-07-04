@@ -8,6 +8,9 @@
     <path>$WS_DIR$\eapi\eapi.ewp</path>
   </project>
   <project>
+    <path>$WS_DIR$\egraphics\egraphics.ewp</path>
+  </project>
+  <project>
     <path>$WS_DIR$\egui\egui.ewp</path>
   </project>
   <project>
