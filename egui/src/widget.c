@@ -17,17 +17,14 @@ static const vtable_Object s_vtable_object = {
 */
 
 VTABLE_START(Object) {
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) Widget_##function_name,
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
+	Widget_destructor,
+	Widget_clone,
+	Widget_equalsTo,
+	Widget_hash,
+	Widget_type
 };
 
 VTABLE_START(Widget) {
-/*
-#define WIDGET_VFUNCTION(return_type, function_name, arguments) Widget_##function_name,
-	WIDGET_VIRTUAL_FUNCTIONS
-#undef WIDGET_VFUNCTION
-*/
 	Widget_defaultProc,
 	Widget_paint,
 	Widget_handleWidgetEvent

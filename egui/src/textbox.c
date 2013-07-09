@@ -8,32 +8,15 @@
 
 #include <string.h>
 
-/*
-static const vtable_Object s_object_vtable = {
+VTABLE_START(Object) {
 	TextBox_destructor,
 	TextBox_clone,
-	NULL,
-	NULL
-};
-
-static const vtable_Widget s_widget_vtable = {
-	TextBox_defaultProc,
-	TextBox_paint
-};
-*/
-
-VTABLE_START(Object) {
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) TextBox_##function_name,
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
+	TextBox_equalsTo,
+	TextBox_hash,
+	TextBox_type
 };
 
 VTABLE_START(Widget) {
-/*
-#define WIDGET_VFUNCTION(return_type, function_name, arguments) TextBox_##function_name,
-	WIDGET_VIRTUAL_FUNCTIONS
-#undef WIDGET_VFUNCTION
-*/
 	TextBox_defaultProc,
 	TextBox_paint,
 	TextBox_handleWidgetEvent

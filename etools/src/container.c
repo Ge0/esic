@@ -3,15 +3,8 @@
  */
 #include <esic/etools/container.h>
 
-VTABLE_START(Object) {
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) Container_##function_name,
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
-};
 
 PContainer Container_constructor(PContainer self, size_t unit_size) {
-	/* Base structure is Object: no need to construct (Object is abstract!) */
-	OBJECT(self)->vtable = VTABLE_POINTER(Object);
 
 	/* There are not any element in the container */
 	self->unit_size = unit_size;

@@ -52,13 +52,6 @@ BOOL Vector_equalsTo(PObject self, PObject dst);
 
 DWORD Vector_hash(PObject self);
 
-/*
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
-	return_type Vector_##function_name##arguments;
-
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
-*/
 
 /* Container */
 void Vector_pushBack(PContainer self, const PObject data);

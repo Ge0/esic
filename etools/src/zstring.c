@@ -8,19 +8,13 @@
 #include <string.h>
 
 /* Vtables definition */
-/*
-static const vtable_Object s_ZString_object_vtable = {
+VTABLE_START(Object) {
+
 	ZString_destructor,
 	ZString_clone,
 	ZString_equalsTo,
-	ZString_hash
-};
-*/
-
-VTABLE_START(Object) {
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) ZString_##function_name,
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
+	ZString_hash,
+	ZString_type
 };
 
 PZString ZString_constructor(PZString self, const char* data) {

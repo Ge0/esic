@@ -25,14 +25,6 @@ DWORD   Label_type(PObject self);
 
 #define LABEL(x) ((PLabel)x)
 
-/*
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
-	return_type Label_##function_name##arguments;
-
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
-*/
-
 /* Widget */
 
 void Label_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y);

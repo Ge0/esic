@@ -19,13 +19,6 @@ DWORD DotpenUI_hash(PObject self);
 DWORD DotpenUI_type(PObject self);
 
 /* Virtual functions Object */
-/*
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
-	return_type DotpenUI_##function_name##arguments;
-
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
-*/
 
 void DotpenUI_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y);
 DWORD DotpenUI_defaultProc(PWidget self, const PEvent event);

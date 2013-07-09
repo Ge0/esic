@@ -29,15 +29,6 @@ DWORD ZStringBuffer_hash(PObject self);
 DWORD ZStringBuffer_type(PObject self);
 
 
-
-/*
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
-	return_type ZStringBuffer_##function_name##arguments;
-
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
-*/
-
 #define ZSTRINGBUFFER(x) ((PZStringBuffer)x)
 
 #endif /* _ZSTRING_BUFFER_H_ */

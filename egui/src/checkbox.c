@@ -4,9 +4,11 @@
 //#include <esic/egui/default_widget_renderer.h>
 
 VTABLE_START(Object) {
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) CheckBox_##function_name,
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
+	CheckBox_destructor,
+	CheckBox_clone,
+	CheckBox_equalsTo,
+	CheckBox_hash,
+	CheckBox_type
 };
 
 VTABLE_START(Widget) {

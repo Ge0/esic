@@ -10,22 +10,33 @@
 
 typedef struct _Container* PContainer;
 
+/**
+ * \struct _vtable_Container
+ * \brief describes the vtable handled by subclasses of containers.
+ */
 typedef struct _vtable_Container {
-	void (*pushBack)(PContainer, const PObject);
-	DWORD (*popBack)(PContainer, PObject);
-	void (*pushFront)(PContainer, const PObject);
-	DWORD (*popFront)(PContainer, PObject);
-	PObject (*at)(PContainer, DWORD);
-	void (*remove)(PContainer, PObject);
-	void (*removeAt)(PContainer, DWORD);
+	/*{@*/
+	void (*pushBack)(PContainer, const PObject);	/**< method that appends an object to a collection */
+	DWORD (*popBack)(PContainer, PObject);			/**< method that removes an object at the end of collection, and returns it */
+	void (*pushFront)(PContainer, const PObject);	/**< method that adds an object at the beginning of the collection */
+	DWORD (*popFront)(PContainer, PObject);			/**< method that removes an object at the beginning of the collection, and returns it */
+	PObject (*at)(PContainer, DWORD);				/**< method that accesses a reference to an object given the index */
+	void (*remove)(PContainer, PObject);			/**< method that removes the object provided in argument */
+	void (*removeAt)(PContainer, DWORD);			/**< method that removes the object given its index */
+	/*@}*/
 } vtable_Container;
 
-
+/**
+ * \struct _Container
+ * \brief describe a container, meaning a structure that will store objects, no matter how it manages to do so.
+ */
 typedef struct _Container {
-	Object object;						/* Base structure */
-	const vtable_Container* vtable;		/* Container's vtable */
-	size_t count;						/* logical number of elements */
-	size_t unit_size;					/* Size of any single element in the container */
+	/*{@*/
+	Object object;						/**< Base structure */
+	const vtable_Container* vtable;		/**< Container's vtable */
+	size_t count;						/**< logical number of elements */
+	size_t unit_size;					/**< Size of any single element in the container */
+	/*@}*/
 } Container;
 
 PContainer	Container_constructor(PContainer self, size_t unit_size);
@@ -36,14 +47,6 @@ PObject		Container_clone(PObject self, PObject dst);
 BOOL		Container_equalsTo(PObject self, PObject dst);
 DWORD		Container_hash(PObject self);
 DWORD		Container_type(PObject self);
-
-/*
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
-	return_type Container_##function_name##arguments;
-
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
-*/
 
 #define CONTAINER(x)			((PContainer)x)
 #define CONTAINER_VTABLE(x)		CONTAINER(x)->vtable

@@ -1,3 +1,8 @@
+/**
+ * \file esic.h
+ * \brief provides the developer with architecture independent types, macros, and so on.
+	It is one of the components that build the cornerstone of the esic framework.
+ */
 #ifndef _ESIC_H_
 #define _ESIC_H_
 

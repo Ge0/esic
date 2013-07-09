@@ -41,14 +41,6 @@ BOOL    TextBox_equalsTo(PObject self, PObject dst);
 DWORD   TextBox_hash(PObject self);
 DWORD   TextBox_type(PObject self);
 
-/*
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
-	return_type TextBox_##function_name##arguments;
-
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
-*/
-
 /* Widget */
 
 void TextBox_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y);

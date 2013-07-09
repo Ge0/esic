@@ -12,8 +12,6 @@
 #include <esic/egui/graphicsview/canvas.h>
 #include <esic/eresources/raster_icon_factory.h>
 
-//#include <esic/egraphics/lcd_painter.h>
-
 static const vtable_Object s_object_vtable = {
 	MainUI_destructor,
 	NULL,
@@ -25,14 +23,6 @@ static const vtable_Widget s_widget_vtable = {
 	MainUI_defaultProc,
 	E11UI_paint				/* Keep the parent function */
 };
-
-/*
-VTABLE_START(E11UI) {
-#define E11_UI_FUNCTION(keycode) MainUI_on##keycode,
-	E11_UI_FUNCTION_LIST
-#undef E11_UI_FUNCTION
-};
-*/
 
 static void (*s_onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI, void*) = {
 #define E11_UI_FUNCTION(keycode) MainUI_on##keycode,

@@ -136,7 +136,7 @@ void _e11_mainloop() {
 
 		LcdUpdate();
 
-		Event_destructor(&system_event.object);
+		Event_destructor(OBJECT(&system_event));
 
 	}
 	

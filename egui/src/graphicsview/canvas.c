@@ -86,13 +86,11 @@ DWORD Canvas_type(PObject self) {
 
 
 void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
-	//GetDefaultWidgetRenderer()->vtable->paintCanvas(GetDefaultWidgetRenderer(), (PCanvas)self, base_x, base_y);
 	PListNode current_shape = NULL;
 	ClipPainter saved_region = painter->clip;
 	
 
 	/* Simply draw a rectangle */
-	//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
 	painter->color = RGB_16B(200,200,200);
 	Painter_drawRectangle(
 			painter,

@@ -4,11 +4,11 @@
 #include <string.h>
 
 VTABLE_START(Object) {
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
-	ZStringBuffer_##function_name,
-
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
+	ZStringBuffer_destructor,
+	ZStringBuffer_clone,
+	ZStringBuffer_equalsTo,
+	ZStringBuffer_hash,
+	ZStringBuffer_type
 };
 
 static void _update_buffer(PZStringBuffer self, size_t desired_size);
