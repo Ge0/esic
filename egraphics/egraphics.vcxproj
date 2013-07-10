@@ -82,6 +82,7 @@
     <ClCompile Include="src\geometrical_renderer.c" />
     <ClCompile Include="src\painter.c" />
     <ClCompile Include="src\pixel.c" />
+    <ClCompile Include="src\shape.c" />
     <ClCompile Include="src\shape_ptr.c" />
     <ClCompile Include="src\triangle.c" />
     <ClCompile Include="src\vertice.c" />

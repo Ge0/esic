@@ -11,6 +11,8 @@
 #include <esic/elcd/lcd.h>
 #include <esic/egui/graphicsview/canvas.h>
 #include <esic/eresources/raster_icon_factory.h>
+#include <libsic/marking/text_marking_line.h>
+#include <factories/marking_font_tt_factory.h>
 
 static const vtable_Object s_object_vtable = {
 	MainUI_destructor,
@@ -29,6 +31,12 @@ static void (*s_onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI, void*) = {
 	E11_UI_FUNCTION_LIST
 #undef E11_UI_FUNCTION
 };
+
+/* Test */
+PTextMarkingLine GetTestMarkingLine(void);
+void _feed_canvas_markingline(PMainUI self, PTextMarkingLine marking_line);
+void _feed_canvas_markingchar(PMainUI self, PMarkingFontTT font, char ch, long x, long y, long width, long height);
+
 
 PMainUI MainUI_constructor(PMainUI self) {
 	DWORD i;
@@ -84,6 +92,9 @@ PMainUI MainUI_constructor(PMainUI self) {
 	if(canvas != NULL) {
 		Canvas_setGraphicsScene(CANVAS(canvas), &self->marking_file_scene);
 	}
+
+	// Test rendering a marking line
+	_feed_canvas_markingline(E11_MAINUI(self), GetTestMarkingLine());
 
 	return self;
 }
@@ -158,8 +169,8 @@ void MainUI_onF8(PE11UI self, void* param) {
 	PPixel shape;
 	NEW(shape, Pixel);
 	shape->color = 0; /* BLACK */
-	shape->coords.x = RandLong(1, 319);
-	shape->coords.y = RandLong(1, 219);
+	SHAPE(shape)->position.x = RandLong(1, 10);
+	SHAPE(shape)->position.y = RandLong(1, 10);
 	GraphicsScene_addShape(&E11_MAINUI(self)->marking_file_scene, SHAPE(shape), TRUE);
 
 	// notify
@@ -182,3 +193,79 @@ void MainUI_onF12(PE11UI self, void* param) {
 
 }
 
+
+// --------------------------------------------------------------------
+
+PTextMarkingLine GetTestMarkingLine(void) {
+	static TextMarkingLine marking_line;
+	static int inited = 0;
+
+	if(inited == 0) {
+	
+		TextMarkingLine_constructor(&marking_line);
+	
+		MARKINGLINE(&marking_line)->x      = 0;
+		MARKINGLINE(&marking_line)->y      = 0;
+		MARKINGLINE(&marking_line)->width  = 80;
+		MARKINGLINE(&marking_line)->height = 80;
+
+		ZString_setData(&marking_line.content, "SIC MARKING");
+		marking_line.marking_font = MarkingFontTTFactory_getMarkingFontTT("OCR");
+
+		inited = 1;
+	}
+	
+	return &marking_line;
+}
+
+void _feed_canvas_markingline(PMainUI self, PTextMarkingLine marking_line) {
+
+	const int resolution = 4.0;
+	int offset = 1;
+	DWORD i = 0;
+	for(i = 0; i < marking_line->content.size; ++i) {
+		char ch = marking_line->content.data[i];
+		if(ch >= ' ') {
+			_feed_canvas_markingchar(
+				self,
+				marking_line->marking_font,
+				ch,
+				offset + (MARKINGLINE(marking_line)->x/10)*resolution,
+				(MARKINGLINE(marking_line)->y/10)*resolution,
+				MARKINGLINE(marking_line)->width,
+				MARKINGLINE(marking_line)->height
+			);
+			offset += (MARKINGLINE(marking_line)->width/resolution);
+		}
+	}
+
+	// Notify the observer
+	Observable_notify(OBSERVABLE(&E11_MAINUI(self)->marking_file_scene), NULL);
+}
+
+void _feed_canvas_markingchar(PMainUI self, PMarkingFontTT font, char ch, long x, long y, long width, long height) {
+	DWORD i;
+	ch -= ' ';
+
+	for(i = 0; i < font->characters[ch].number_of_points; ++i) {
+		if(font->characters[ch].coords[i].x1 >= 0) {
+			/*
+			LcdSetPixel(
+				x + (DWORD)((font->characters[ch].coords[i].x1/120.0) * (width/4.0)),
+				y + (DWORD)(((180-font->characters[ch].coords[i].y1)/120.0) * (height/4.0)),
+				0
+			);
+			*/
+
+			/* TEST */
+			PPixel shape;
+			NEW(shape, Pixel);
+			shape->color = 0; /* BLACK */
+			SHAPE(shape)->position.x = x + (DWORD)((font->characters[ch].coords[i].x1/120.0) * (width/4.0));
+			SHAPE(shape)->position.y = y + (DWORD)(((180-font->characters[ch].coords[i].y1)/120.0) * (height/4.0));
+			GraphicsScene_addShape(&E11_MAINUI(self)->marking_file_scene, SHAPE(shape), TRUE);
+
+		}
+	}
+
+}

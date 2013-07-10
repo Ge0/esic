@@ -271,7 +271,7 @@ void GeometricalRenderer_drawString(PRenderer self, PRasterFont font, DWORD x, D
 }
 
 void GeometricalRenderer_drawPixel(PRenderer self, DWORD x, DWORD y, DWORD color) {
-
+	LcdSetPixel(x, y, color);
 }
 
 void _triangle_sort_vertices_ascending_by_y(PVertice v1, PVertice v2, PVertice v3) {

@@ -20,11 +20,10 @@
 //#include <esic/egraphics/lcd_painter.h>
 /* TEST END */
 
-#include <libsic/marking/text_marking_line.h>
-
 /* OTHER TEST START */
 #include <ui/main_ui.h>
 #include <factories/xml_ui_factory.h>
+#include <libsic/marking/text_marking_line.h>
 
 void TestDrawString(PMarkingFontTT font, DWORD base_x, DWORD base_y, const char* string);
 void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y, char ch);
@@ -107,7 +106,7 @@ void _e11_mainloop() {
 
 		Event_constructor(&system_event);
 
-		TestDrawMarkingLine(GetTestMarkingLine());
+		//TestDrawMarkingLine(GetTestMarkingLine());
 
 		if(EsicPollEvent(&system_event)) {
 			
@@ -144,6 +143,7 @@ void _e11_mainloop() {
 
 }
 
+/*
 void TestDrawChar(PMarkingFontTT font, DWORD base_x, DWORD base_y, char ch) {
 	DWORD i;
 
@@ -187,13 +187,15 @@ void TestDrawString(PMarkingFontTT font, DWORD base_x, DWORD base_y, const char*
 		}
 	}
 }
+*/
+
 
 void TestDrawMarkingLine(PTextMarkingLine marking_line) {
 
 	int base_x = 30;
 	int base_y = 50;
 	const int resolution = 4.0;
-
+	int offset = 0;
 	DWORD i = 0;
 	for(i = 0; i < marking_line->content.size; ++i) {
 		char ch = marking_line->content.data[i];
@@ -201,13 +203,13 @@ void TestDrawMarkingLine(PTextMarkingLine marking_line) {
 			TestDrawMarkingChar(
 				marking_line->marking_font,
 				ch,
-				base_x + (MARKINGLINE(marking_line)->x/10)*resolution,
-				base_y + (MARKINGLINE(marking_line)->y/10)*resolution,
+				base_x + /* offset + */ (MARKINGLINE(marking_line)->x/10)*resolution,
+				base_y +  (MARKINGLINE(marking_line)->y/10)*resolution,
 				MARKINGLINE(marking_line)->width,
 				MARKINGLINE(marking_line)->height
 			);
 			base_x += (MARKINGLINE(marking_line)->width/resolution);
-
+			//offset += (MARKINGLINE(marking_line)->width/resolution);
 		}
 	}
 
@@ -255,6 +257,7 @@ void _init_painters() {
 	Painter_destructor(OBJECT(&painter));
 }
 
+/*
 PTextMarkingLine GetTestMarkingLine(void) {
 	static TextMarkingLine marking_line;
 	static int inited = 0;
@@ -276,3 +279,4 @@ PTextMarkingLine GetTestMarkingLine(void) {
 	
 	return &marking_line;
 }
+*/

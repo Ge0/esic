@@ -9,7 +9,6 @@
 
 typedef struct _Triangle {
 	Shape shape;
-	Vertice v1;
 	Vertice v2;
 	Vertice v3;
 } Triangle, *PTriangle;
@@ -27,26 +26,7 @@ DWORD Triangle_hash(PObject self);
 /* Shape */
 
 void Triangle_paint(PShape self, PPainter painter);
-
-
-
-/* Object vtable declaration */
-/*
-#define OBJECT_VFUNCTION(return_type, function_name, arguments) \
-	return_type Triangle_##function_name##arguments;
-
-	OBJECT_VIRTUAL_FUNCTIONS
-#undef OBJECT_VFUNCTION
-*/
-
-/* Shape vtable declaration */
-/*
-#define SHAPE_VFUNCTION(return_type, function_name, arguments) \
-	return_type Triangle_##function_name##arguments;
-
-	SHAPE_VIRTUAL_FUNCTIONS
-#undef SHAPE_VFUNCTION
-*/
+void Triangle_translateTo(PShape self, SDWORD x, SDWORD y);
 
 #define TRIANGLE(x) ((PTriangle)x)
 

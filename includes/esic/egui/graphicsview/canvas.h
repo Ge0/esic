@@ -11,6 +11,9 @@ typedef struct _Canvas {
 	Widget widget;
 	Observer observer; /* Double inheritance (virtual for the observer) */
 	PGraphicsScene scene;
+	/* TEST: */
+	DWORD x_offset;
+	DWORD y_offset;
 } Canvas;
 
 PCanvas Canvas_constructor(PCanvas self);

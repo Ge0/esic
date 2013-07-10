@@ -45,6 +45,10 @@ PCanvas Canvas_constructor(PCanvas self) {
 	/* Canvas properties */
 	self->scene = NULL;
 
+	/* TEST */
+	self->x_offset = 0;
+	self->y_offset = 0;
+
 	return self;
 }
 
@@ -112,9 +116,20 @@ void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 		current_shape = CANVAS(self)->scene->shapes.head;
 		
 		while(current_shape != NULL) {
+
+			SDWORD x_offset_shape = 0;
+			SDWORD y_offset_shape = 0;
+
 			PShape shape = SHAPEPTR(current_shape->data)->shape;
 
+			x_offset_shape = base_x + self->x  - CANVAS(self)->x_offset;
+			y_offset_shape = base_y + self->y  - CANVAS(self)->y_offset;
+
+			shape->vtable->translateTo(shape, x_offset_shape, y_offset_shape);
+
 			shape->vtable->paint(shape, painter);
+
+			shape->vtable->translateTo(shape, -x_offset_shape, -y_offset_shape);
 
 			current_shape = current_shape->next;
 		}

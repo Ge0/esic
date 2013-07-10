@@ -9,14 +9,21 @@ VTABLE_START(Object) {
 };
 
 VTABLE_START(Shape) {
-	Pixel_paint
+	Pixel_paint,
+	Pixel_translateTo
 };
 
 PPixel Pixel_constructor(PPixel self) {
+
+	/* Calling parent constructor */
+	Shape_constructor(SHAPE(self));
+
 	OBJECT(self)->size = sizeof(Pixel);
 	OBJECT(self)->vtable = VTABLE_POINTER(Object);
 
 	SHAPE(self)->vtable = VTABLE_POINTER(Shape);
+
+	Vertice_constructor(&self->shape.position);
 
 	return self;
 }
@@ -55,5 +62,17 @@ DWORD Pixel_type(PObject self) {
 
 /* Shape */
 void Pixel_paint(PShape self, PPainter painter) {
-	painter->renderer->vtable->drawPixel(painter->renderer, PIXEL(self)->coords.x, PIXEL(self)->coords.y, PIXEL(self)->color);
+
+	painter->renderer->vtable->drawPixel(
+		painter->renderer,
+		self->position.x,
+		self->position.y,
+		PIXEL(self)->color
+	);
+
+}
+
+void Pixel_translateTo(PShape self, SDWORD x, SDWORD y) {
+	self->position.x += x;
+	self->position.y += y;
 }

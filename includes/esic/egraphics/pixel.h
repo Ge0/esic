@@ -9,7 +9,6 @@ typedef struct _Pixel *PPixel;
 
 typedef struct _Pixel {
 	Shape shape;
-	Vertice coords;
 	DWORD color;
 } Pixel;
 
@@ -25,6 +24,7 @@ DWORD Pixel_type(PObject self);
 
 /* Shape */
 void Pixel_paint(PShape self, PPainter painter);
+void Pixel_translateTo(PShape self, SDWORD x, SDWORD y);
 
 #define PIXEL(x) ((PPixel)x)
 

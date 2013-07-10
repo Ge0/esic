@@ -48,6 +48,9 @@
     <ClCompile Include="src\factories\painters_factory.c">
       <Filter>src\factories</Filter>
     </ClCompile>
+    <ClCompile Include="src\shape.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\esic\egraphics\vertice.h">

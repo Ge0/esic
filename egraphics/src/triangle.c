@@ -12,7 +12,8 @@ static const vtable_Object s_object_vtable = {
 };
 
 static const vtable_Shape s_shape_vtable = {
-	Triangle_paint
+	Triangle_paint,
+	Triangle_translateTo
 };
 
 void _fill_flat_side_triangle_int(PTriangle self, PPainter painter, const PVertice v1, const PVertice v2, const PVertice v3);
@@ -23,7 +24,7 @@ PTriangle Triangle_constructor(PTriangle self) {
 	self->shape.object.vtable = &s_object_vtable;
 	self->shape.vtable = &s_shape_vtable;
 
-	Vertice_constructor(&self->v1);
+	Vertice_constructor(&self->shape.position);
 	Vertice_constructor(&self->v2);
 	Vertice_constructor(&self->v3);
 
@@ -41,7 +42,7 @@ PObject Triangle_clone(PObject self, PObject dst) {
 	dst->vtable = self->vtable;
 	dst->size   = self->size;
 
-	real_dst->v1 = real_self->v1;
+	real_dst->shape.position = real_self->shape.position;
 	real_dst->v2 = real_self->v2;
 	real_dst->v3 = real_self->v3;
 
@@ -64,60 +65,30 @@ void Triangle_paint(PShape self, PPainter painter) {
 	_sort_vertices_ascending_by_y(TRIANGLE(self));
 
 	if(TRIANGLE(self)->v2.y == TRIANGLE(self)->v3.y) {
-		_fill_flat_side_triangle_int(TRIANGLE(self), painter, &TRIANGLE(self)->v1, &TRIANGLE(self)->v2, &TRIANGLE(self)->v3);
-	} else if(TRIANGLE(self)->v1.y == TRIANGLE(self)->v2.y) {
-		_fill_flat_side_triangle_int(TRIANGLE(self), painter, &TRIANGLE(self)->v3, &TRIANGLE(self)->v1, &TRIANGLE(self)->v2);
+		_fill_flat_side_triangle_int(TRIANGLE(self), painter, &TRIANGLE(self)->shape.position, &TRIANGLE(self)->v2, &TRIANGLE(self)->v3);
+	} else if(TRIANGLE(self)->shape.position.y == TRIANGLE(self)->v2.y) {
+		_fill_flat_side_triangle_int(TRIANGLE(self), painter, &TRIANGLE(self)->v3, &TRIANGLE(self)->shape.position, &TRIANGLE(self)->v2);
 	} else {
 		/* general case - split the triangle in a topflat and bottom-flat one */
 		Vertice vtmp;
 		Vertice_constructor(&vtmp);
 
-		vtmp.x = (int)(TRIANGLE(self)->v1.x + ((float)(TRIANGLE(self)->v2.y - TRIANGLE(self)->v1.y) / (float)(TRIANGLE(self)->v3.y - TRIANGLE(self)->v1.y)) * (TRIANGLE(self)->v3.x - TRIANGLE(self)->v1.x));
+		vtmp.x = (int)(TRIANGLE(self)->shape.position.x + ((float)(TRIANGLE(self)->v2.y - TRIANGLE(self)->shape.position.y) / (float)(TRIANGLE(self)->v3.y - TRIANGLE(self)->shape.position.y)) * (TRIANGLE(self)->v3.x - TRIANGLE(self)->shape.position.x));
 		vtmp.y = TRIANGLE(self)->v2.y;
 
-		_fill_flat_side_triangle_int(TRIANGLE(self), painter, &TRIANGLE(self)->v1, &TRIANGLE(self)->v2, &vtmp);
+		_fill_flat_side_triangle_int(TRIANGLE(self), painter, &TRIANGLE(self)->shape.position, &TRIANGLE(self)->v2, &vtmp);
 		_fill_flat_side_triangle_int(TRIANGLE(self), painter, &TRIANGLE(self)->v3, &TRIANGLE(self)->v2, &vtmp);
 	}
-
-	/* Draw borders */
-	/*
-	painter->drawLine(
-		painter,
-		TRIANGLE(self)->v1.x,
-		TRIANGLE(self)->v1.y,
-		TRIANGLE(self)->v2.x,
-		TRIANGLE(self)->v2.y,
-		self->border_color
-	);
-
-	ABSTRACTPAINTER_VTABLE(painter)->drawLine(
-		painter,
-		TRIANGLE(self)->v2.x,
-		TRIANGLE(self)->v2.y,
-		TRIANGLE(self)->v3.x,
-		TRIANGLE(self)->v3.y,
-		self->border_color
-	);
-
-	ABSTRACTPAINTER_VTABLE(painter)->drawLine(
-		painter,
-		TRIANGLE(self)->v3.x,
-		TRIANGLE(self)->v3.y,
-		TRIANGLE(self)->v1.x,
-		TRIANGLE(self)->v1.y,
-		self->border_color
-	);
-	*/
 }
 
 void _sort_vertices_ascending_by_y(PTriangle self) {
-	if(self->v1.y > self->v2.y) {
-		VERTICE_SWAP(self->v1, self->v2);
+	if(self->shape.position.y > self->v2.y) {
+		VERTICE_SWAP(self->shape.position, self->v2);
 	}
 
 	/* here v1.y <= v2.y */
-	if(self->v1.y > self->v3.y) {
-		VERTICE_SWAP(self->v1, self->v3);
+	if(self->shape.position.y > self->v3.y) {
+		VERTICE_SWAP(self->shape.position, self->v3);
 	}
 
 	/* here v1.y <= v2.y and v1.y <= v3.y so test v2 vs. v3 */
@@ -232,4 +203,16 @@ void _fill_flat_side_triangle_int(PTriangle self, PPainter abstract_painter, con
 
 	Vertice_destructor(OBJECT(&tmp_vertice_1));
 	Vertice_destructor(OBJECT(&tmp_vertice_2));
+}
+
+void Triangle_translateTo(PShape self, SDWORD x, SDWORD y) {
+	self->position.x += x;
+	self->position.y += y;
+
+	TRIANGLE(self)->v2.x += x;
+	TRIANGLE(self)->v2.y += y;
+
+	TRIANGLE(self)->v3.x += x;
+	TRIANGLE(self)->v3.y += y;
+
 }
