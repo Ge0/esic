@@ -54,6 +54,9 @@
     <ClCompile Include="src\factories\marking_file_v5_factory.c">
       <Filter>src\factories</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\preview_ui.c">
+      <Filter>src\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\e11.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="includes\factories\marking_file_v5_factory.h">
       <Filter>includes\factories</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\ui\preview_ui.h">
+      <Filter>includes\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

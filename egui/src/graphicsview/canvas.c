@@ -22,6 +22,9 @@ VTABLE_START(Observer) {
 	Canvas_update
 };
 
+void _draw_vertical_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y);
+void _draw_horizontal_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y);
+
 PCanvas Canvas_constructor(PCanvas self) {
 	Widget_constructor(WIDGET(self));
 	//Observer_constructor(&self->observer);
@@ -136,7 +139,58 @@ void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 
 	}
 
+	/* Test: draw scrollbars */
+	_draw_horizontal_scrollbar(CANVAS(self), painter, base_x, base_y);
+	_draw_vertical_scrollbar(CANVAS(self), painter, base_x, base_y);
+
 	painter->clip = saved_region;
+
+	
+}
+
+void _draw_horizontal_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
+
+	painter->color = RGB_16B(240,240,230);
+	Painter_drawRectangle(
+		painter,
+		base_x + WIDGET(self)->x,
+		base_y + WIDGET(self)->y + WIDGET(self)->height -1,
+		WIDGET(self)->width,
+		11,
+		RGB_16B(0,0,0)
+	);
+
+	
+
+
+}
+
+void _draw_vertical_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
+	painter->color = RGB_16B(240,240,230);
+	Painter_drawRectangle(
+		painter,
+		base_x + WIDGET(self)->x + WIDGET(self)->width - 1,
+		base_y + WIDGET(self)->y,
+		11,
+		WIDGET(self)->height,
+		RGB_16B(0,0,0)
+	);
+
+	painter->color = RGB_16B(128,128,128);
+	Painter_drawTriangle(
+		painter,
+
+		base_x + WIDGET(self)->x + WIDGET(self)->width + 5 - 1,
+		base_y + WIDGET(self)->y + 0,
+
+		base_x + WIDGET(self)->x + WIDGET(self)->width + 2 - 1,
+		base_y + WIDGET(self)->y + 8,
+
+		base_x + WIDGET(self)->x + WIDGET(self)->width + 8 - 1,
+		base_y + WIDGET(self)->y + 8,
+		RGB_16B(0,0,0)
+	);
+
 }
 
 DWORD Canvas_defaultProc(PWidget self, const PEvent system_event) {

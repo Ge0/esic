@@ -24,7 +24,7 @@ void MainUI_destructor(PObject self);
 /* Widget */
 DWORD MainUI_defaultProc(PWidget self, const PEvent systemEvent);
 
-#define E11_UI_FUNCTION(keycode) void MainUI_on##keycode(PE11UI, void*);
+#define E11_UI_FUNCTION(keycode) void MainUI_on##keycode(PE11UI);
 	E11_UI_FUNCTION_LIST
 #undef E11_UI_FUNCTION
 

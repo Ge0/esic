@@ -27,6 +27,8 @@ PObject Picture_clone(PObject self, PObject dst);
 void Picture_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y);
 DWORD Picture_defaultProc(PWidget self, const PEvent system_event);
 
+void Picture_setIcon(PPicture self, const PRasterIcon icon);
+
 #define PICTURE(x) ((PPicture)x)
 
 #endif /* _PICTURE_H_ */

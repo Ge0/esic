@@ -26,7 +26,7 @@ PPicture Picture_constructor(PPicture self) {
 	/* Calling parent constructor */
 	Widget_constructor(&self->widget);
 
-	self->widget.is_focusable = TRUE;
+	self->widget.is_focusable = FALSE;
 
 	/* Fill information */
 	self->widget.object.size = sizeof(Picture);
@@ -193,4 +193,11 @@ static void _handle_widget_event(PWidget self, PWidgetEvent widget_event) {
 	}
 
 	Event_destructor(OBJECT(&custom_event));
+}
+
+void Picture_setIcon(PPicture self, const PRasterIcon icon) {
+	if(icon != NULL) {
+		self->icon = icon;
+		WIDGET(self)->is_focusable = TRUE;
+	}
 }
