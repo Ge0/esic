@@ -21,11 +21,13 @@ DWORD GeometricalRenderer_type(PObject self);
 
 /* Renderer */
 void GeometricalRenderer_drawLine(PRenderer self, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color);
-void GeometricalRenderer_drawRectangle(PRenderer self, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD background_color, DWORD border_color);
+void GeometricalRenderer_drawRectangle(PRenderer self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD border_color);
 void GeometricalRenderer_drawTriangle(PRenderer self, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD filling_color, DWORD border_color);
 void GeometricalRenderer_drawBuffer(PRenderer self, WORD x, DWORD y, DWORD width, DWORD height, BYTE bpp, void* raw_buffer);
 void GeometricalRenderer_drawString(PRenderer self, PRasterFont raster_font, DWORD x, DWORD y , DWORD color, const char* string);
 void GeometricalRenderer_drawPixel(PRenderer self, DWORD x , DWORD y, DWORD color);
+
+void GeometricalRenderer_fillRectangle(PRenderer self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD color);
 
 #define GEOMETRICALRENDERER(x) ((PGeometricalRenderer)x)
 

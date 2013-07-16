@@ -80,7 +80,7 @@ void Painter_drawLine(PPainter self, DWORD x1, DWORD y1, DWORD x2, DWORD y2) {
 	}
 }
 
-void Painter_drawRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD border_color) {
+void Painter_drawRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height) {
 	if(self->renderer != NULL) {
 		RENDERER_VTABLE(self->renderer)->drawRectangle(
 			self->renderer,
@@ -88,11 +88,24 @@ void Painter_drawRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD h
 			y,
 			width,
 			height,
-			self->color,
-			border_color
+			self->color
 		);
 	}
 }
+
+void Painter_fillRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height) {
+	if(self->renderer != NULL) {
+		RENDERER_VTABLE(self->renderer)->fillRectangle(
+			self->renderer,
+			x,
+			y,
+			width,
+			height,
+			self->color
+		);
+	}
+}
+
 void Painter_drawTriangle(PPainter self, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD border_color) {
 	if(self->renderer != NULL) {
 		RENDERER_VTABLE(self->renderer)->drawTriangle(

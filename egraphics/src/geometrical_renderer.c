@@ -19,7 +19,9 @@ VTABLE_START(Renderer) {
 	GeometricalRenderer_drawTriangle,
 	GeometricalRenderer_drawBuffer,
 	GeometricalRenderer_drawPixel,
-	GeometricalRenderer_drawString
+	GeometricalRenderer_drawString,
+
+	GeometricalRenderer_fillRectangle
 };
 
 void _triangle_sort_vertices_ascending_by_y(PVertice v1, PVertice v2, PVertice v3);
@@ -113,12 +115,14 @@ void GeometricalRenderer_drawLine(PRenderer self, DWORD x1, DWORD y1, DWORD x2, 
 	}
 }
 
-void GeometricalRenderer_drawRectangle(PRenderer self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD background_color, DWORD border_color) {
+void GeometricalRenderer_drawRectangle(PRenderer self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD border_color) {
 	/* Firstly: draw the rectangle */
+	/*
 	DWORD i;
 	for(i = 0; i < height; i++) {
 		RENDERER_VTABLE(self)->drawLine(self, x, y + i, x + width-1, y + i, background_color);
 	}
+	*/
 
 		/* Secondly, draw the border */
 
@@ -126,6 +130,13 @@ void GeometricalRenderer_drawRectangle(PRenderer self, DWORD x, DWORD y, DWORD w
 	RENDERER_VTABLE(self)->drawLine(self, x + width-1, y, x + width-1, y + (height-1), border_color);	/* right one */
 	RENDERER_VTABLE(self)->drawLine(self, x + width-1, y + (height-1), x, y + (height-1), border_color);	/* bottom one */
 	RENDERER_VTABLE(self)->drawLine(self, x, y + (height-1), x, y, border_color);					/* left one */
+}
+
+void GeometricalRenderer_fillRectangle(PRenderer self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD color) {
+	DWORD i;
+	for(i = 0; i < height; i++) {
+		RENDERER_VTABLE(self)->drawLine(self, x, y + i, x + width-1, y + i, color);
+	}
 }
 
 void GeometricalRenderer_drawTriangle(PRenderer self, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD filling_color, DWORD border_color) {

@@ -32,11 +32,13 @@ DWORD Painter_hash(PObject self);
 DWORD Painter_type(PObject self);
 
 void Painter_drawLine(PPainter self, DWORD x1, DWORD y1, DWORD x2, DWORD y2);
-void Painter_drawRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD border_color);
+void Painter_drawRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height);
 void Painter_drawTriangle(PPainter self, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD border_color);
 void Painter_drawBuffer(PPainter self, WORD x, DWORD y, DWORD width, DWORD height, BYTE bpp, void* raw_buffer);
 void Painter_drawPixel(PPainter self, DWORD x ,DWORD y);
 void Painter_drawString(PPainter self, DWORD x, DWORD y, const char* text);
+
+void Painter_fillRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height);
 
 #define PAINTER(x) ((PPainter)x)
 
