@@ -20,9 +20,9 @@ int main(int argc, char** argv) {
 
 	EsicDestroy();
 
-#ifdef _WIN32
+//#ifdef _WIN32
 	_CrtDumpMemoryLeaks();
-#endif
+//#endif
 
 	return EXIT_SUCCESS;
 }
