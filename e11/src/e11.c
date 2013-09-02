@@ -71,6 +71,7 @@ void e11() {
 	/* Test */
 	
 	//DELETE(marking_line);
+	TextMarkingLine_destructor(OBJECT(marking_line));
 
 	SicHeapDump();
 }
