@@ -13,7 +13,7 @@ typedef struct _Vector* PVector;
 
 /**
   * \struct _Vector
-  * \brief the vector structure handles stuff to store data accessible by an index.
+  * \brief the vector structure handles stuff to store accessible data by indexes.
   */
 typedef struct _Vector {
 	/*@{*/
@@ -46,23 +46,103 @@ PVector Vector_constructor(PVector self, size_t unit_size);
   */
 void Vector_destructor(PObject self);
 
+/**
+  * \fn void Vector_clone(PObject self, PObject dst);
+  * \brief clones the vector self into another one dst
+  * \param self the self instance casted to PObject
+  * \param dst the destination instance casted to PObject, which has to point into a large enough buffer
+  * \return PObject: pointer to the dst instance
+  */
 PObject Vector_clone(PObject self, PObject dst);
 
+/**
+  * \fn void Vector_equalsTo(PObject self, PObject dst);
+  * \brief compares the self vector to the dst vector, by doing an element-whise comparison
+  * \param self the self instance casted to PObject
+  * \param dst the destination instance casted to PObject
+  * \return BOOL: TRUE if vectors contain the same elements, FALSE otherwise
+  */
 BOOL Vector_equalsTo(PObject self, PObject dst);
 
+
+/**
+  * \fn DWORD Vector_hash(PObject self);
+  * \brief return an unique hash that identifies the vector; useful to store it into an hashtable
+  * \param self the self instance casted to PObject
+  */
 DWORD Vector_hash(PObject self);
 
 
 /* Container */
+
+/**
+  * \fn void Vector_pushBack(PContainer self, const PObject data);
+  * \brief pushes the data element at the end of the self container
+  * \param self the instance casted to PContainer
+  * \param data the instance casted to PObject to append into the container
+  * \return void
+  */
 void Vector_pushBack(PContainer self, const PObject data);
+
+/**
+  * \fn DWORD Vector_popBack(PContainer self, PObject popped);
+  * \brief pops into popped the last element at the end of the container self
+  * \param self the instance casted to PContainer
+  * \param popped the instance casted to PObject that will handle the popped data, which has to point into a large enough buffer
+  * \return DWORD: 1 if the popping succeeded, 0 otherwise
+  */
 DWORD Vector_popBack(PContainer self, PObject popped);
+
+/**
+  * \fn void Vector_pushFront(PContainer self, const PObject data);
+  * \brief pushes the data element at the beginning of the self container
+  * \param self the instance casted to PContainer
+  * \param data the instance casted to PObject to append into the container
+  * \return void
+  */
 void Vector_pushFront(PContainer self, const PObject data);
+
+/**
+  * \fn DWORD Vector_popFront(PContainer self, PObject popped);
+  * \brief pops into popped the first element at the beginning of the self container
+  * \param self the instance casted to PContainer
+  * \param popped the instance casted to PObject that will handle the popped data, which has to point into a large enough buffer
+  * \return DWORD: 1 if the popping succeeded, 0 otherwise
+  */ 
 DWORD Vector_popFront(PContainer self, PObject popped);
+
+/**
+  * \fn PObject Vector_at(PContainer self, DWORD index);
+  * \brief Accesses the index-th element into the self container
+  * \param self the self instance casted to PContainer
+  * \param index the index of the instance to access into the container, from zero to size-1
+  * \return PObject pointer to the accessed instance - not a copy - if the index fits into the size of the container, NULL otherwise
+  */
 PObject Vector_at(PContainer self, DWORD index);
+
+/**
+  * \fn void Vector_remove(PContainer self, PObject object);
+  * \brief removes the object into the self container
+  * \param self the self container casted to PContainer
+  * \param object the object to remove
+  * \return void
+  */
 void Vector_remove(PContainer self, PObject object);
+
+/**
+  * \fn void Vector_removeAt(PContainer self, PObject index);
+  * \brief removes the object at index into the self container
+  * \param self the self instance casted to PContainer
+  * \param index the index of the instance to remove from the container, from zero to size-1
+  * \return void
+  */
 void Vector_removeAt(PContainer self, DWORD index);
 /* End of virtual functions */
 
+/**
+  * \def VECTOR
+  * \brief fancy casting for an instance to PVector
+  */
 #define VECTOR(x) ((PVector)x)
 
 #endif /* _VECTOR_H_ */

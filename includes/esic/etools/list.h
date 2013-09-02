@@ -13,10 +13,16 @@ typedef struct _ListNode {
 	PObject data;
 } ListNode, *PListNode;
 
+/**
+  * \struct _List
+  * \brief the list structure handles stuff to store data.
+  */
 typedef struct _List {
-	Container container;
-	PListNode head;
-	PListNode tail;
+	/*{@*/
+	Container container; /**< inherits from container */
+	PListNode head; /**< pointer to the first node */
+	PListNode tail; /**< pointer to the last node */
+	/*@}*/
 } List, *PList;
 
 PList List_constructor(PList self, size_t unit_size);

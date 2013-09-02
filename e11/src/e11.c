@@ -70,7 +70,7 @@ void e11() {
 
 	/* Test */
 	
-	DELETE(marking_line);
+	//DELETE(marking_line);
 
 	SicHeapDump();
 }
