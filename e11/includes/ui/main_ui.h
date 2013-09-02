@@ -10,8 +10,6 @@
 typedef struct _MainUI {
 	E11UI e11ui;
 
-	GraphicsScene marking_file_scene;
-
 } MainUI, *PMainUI;
 
 PMainUI MainUI_constructor(PMainUI self);

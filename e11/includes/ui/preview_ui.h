@@ -3,12 +3,18 @@
 
 #include <e11_ui.h>
 #include <esic/egui/graphicsview/graphics_scene.h>
+#include <libsic/marking/text_marking_line.h>
+
+#define PREVIEW_UI_ID_CANVAS 5
 
 typedef struct _PreviewUI* PPreviewUI;
 typedef struct _PreviewUI {
 	E11UI e11ui;
 
 	GraphicsScene marking_file_scene;
+
+	// Test
+	TextMarkingLine test_marking_line;
 
 } PreviewUI;
 
@@ -26,5 +32,7 @@ DWORD PreviewUI_defaultProc(PWidget self, const PEvent event);
 #define E11_UI_FUNCTION(keycode) void PreviewUI_on##keycode(PE11UI);
 	E11_UI_FUNCTION_LIST
 #undef E11_UI_FUNCTION
+
+#define E11_PREVIEWUI(x) ((PPreviewUI)x)
 
 #endif /* _PREVIEW_UI_H */
