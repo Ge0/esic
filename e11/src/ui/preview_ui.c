@@ -3,6 +3,7 @@
 #include <esic/eapi/system.h>
 #include <esic/egraphics/pixel.h>
 #include <esic/egui/graphicsview/canvas.h>
+#include <esic/egui/graphicsview/graphics_scene.h>
 #include <esic/eresources/raster_icon_factory.h>
 #include <libsic/marking/text_marking_line.h>
 #include <factories/marking_font_tt_factory.h>
@@ -33,10 +34,11 @@ static void _feed_canvas_markingline(PPreviewUI self, PTextMarkingLine marking_l
 static void _feed_canvas_markingchar(PPreviewUI self, PMarkingFontTT font, char ch, long x, long y, long width, long height);
 static void _build_test_marking_line(PTextMarkingLine marking_line);
 
+static void _repaint_canvas(PPreviewUI self);
+
 PPreviewUI PreviewUI_constructor(PPreviewUI self) {
 
 	DWORD i;
-	PWidget canvas;
 
 	/* Call parent constructor */
 	E11UI_constructor(E11UI(self));
@@ -78,11 +80,12 @@ PPreviewUI PreviewUI_constructor(PPreviewUI self) {
 	GraphicsScene_constructor(&self->marking_file_scene);
 
 	/* Assign it to our canvas */
-	canvas = Widget_findChildById(WIDGET(self), PREVIEW_UI_ID_CANVAS);
-	if(canvas != NULL) {
-		Canvas_setGraphicsScene(CANVAS(canvas), &self->marking_file_scene);
+	self->canvas = (PCanvas)Widget_findChildById(WIDGET(self), PREVIEW_UI_ID_CANVAS);
+	if(self->canvas != NULL) {
+		Canvas_setGraphicsScene(self->canvas, &self->marking_file_scene);
 	}
 
+	SicAssert(self->canvas != NULL);
 
 	// Test rendering a marking line
 	_feed_canvas_markingline(E11_PREVIEWUI(self), &self->test_marking_line);
@@ -123,7 +126,13 @@ void PreviewUI_onF3(PE11UI self) {
 }
 
 void PreviewUI_onF4(PE11UI self) {
-
+	
+	// Move to the top
+	if(E11_PREVIEWUI(self)->canvas->y_offset >= 10) {
+		E11_PREVIEWUI(self)->canvas->y_offset -= 10;
+		_repaint_canvas(E11_PREVIEWUI(self));
+	}
+	
 }
 
 void PreviewUI_onF5(PE11UI self) {
@@ -139,19 +148,27 @@ void PreviewUI_onF7(PE11UI self) {
 }
 
 void PreviewUI_onF8(PE11UI self) {
-
+	
 }
 
 void PreviewUI_onF9(PE11UI self) {
-
+	// Move to the left
+	if(E11_PREVIEWUI(self)->canvas->x_offset >= 10) {
+		E11_PREVIEWUI(self)->canvas->x_offset -= 10;
+		_repaint_canvas(E11_PREVIEWUI(self));
+	}
 }
 
 void PreviewUI_onF10(PE11UI self) {
-
+	// Move to the bottom
+	E11_PREVIEWUI(self)->canvas->y_offset += 10;
+	_repaint_canvas(E11_PREVIEWUI(self));
 }
 
 void PreviewUI_onF11(PE11UI self) {
-
+	// Move to the right
+	E11_PREVIEWUI(self)->canvas->x_offset += 10;
+	_repaint_canvas(E11_PREVIEWUI(self));
 }
 
 void PreviewUI_onF12(PE11UI self) {
@@ -168,10 +185,23 @@ void PreviewUI_onF12(PE11UI self) {
 	Event_destructor(OBJECT(&user_event));
 }
 
+static void _repaint_canvas(PPreviewUI self) {
+	Event paint_event;
+	Event_constructor(&paint_event);
 
-void _feed_canvas_markingline(PPreviewUI self, PTextMarkingLine marking_line) {
+	paint_event.type = EVENT_WIDGET;
+	paint_event.real_event.widget_event.type = WE_PAINT;
+	paint_event.real_event.widget_event.id = WIDGET(self->canvas)->id;
 
-	const int resolution = 4.0;
+	EsicPushEvent(&paint_event);
+
+	Event_destructor(OBJECT(&paint_event));
+}
+
+
+static void _feed_canvas_markingline(PPreviewUI self, PTextMarkingLine marking_line) {
+
+	const int resolution = 4;
 	int offset = 1;
 	DWORD i = 0;
 	for(i = 0; i < marking_line->content.size; ++i) {

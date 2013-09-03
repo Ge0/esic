@@ -32,5 +32,5 @@ PMarkingFile _load_file_v5(const char* filename) {
 	f_lseek(&fp, 1); /* bypass a useless byte */
 
 
-
+	return NULL;
 }

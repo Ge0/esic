@@ -62,13 +62,9 @@ DWORD Pixel_type(PObject self) {
 
 /* Shape */
 void Pixel_paint(PShape self, PPainter painter) {
+	// Check wether the pixel is within the bounds of the painter's clip
 
-	painter->renderer->vtable->drawPixel(
-		painter->renderer,
-		self->position.x,
-		self->position.y,
-		PIXEL(self)->color
-	);
+	Painter_drawPixel(painter, self->position.x, self->position.y, PIXEL(self)->color);
 
 }
 

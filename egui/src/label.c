@@ -67,6 +67,7 @@ void Label_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 		painter,
 		base_x + self->x,
 		base_y + self->y,
+		RGB_16B(0,0,0),
 		LABEL(self)->caption.data
 	);
 }

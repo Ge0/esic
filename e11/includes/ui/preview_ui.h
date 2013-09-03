@@ -4,6 +4,7 @@
 #include <e11_ui.h>
 #include <esic/egui/graphicsview/graphics_scene.h>
 #include <libsic/marking/text_marking_line.h>
+#include <esic/egui/graphicsview/canvas.h>
 
 #define PREVIEW_UI_ID_CANVAS 5
 
@@ -15,6 +16,8 @@ typedef struct _PreviewUI {
 
 	// Test
 	TextMarkingLine test_marking_line;
+
+	PCanvas canvas;
 
 } PreviewUI;
 

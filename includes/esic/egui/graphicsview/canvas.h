@@ -9,9 +9,9 @@ typedef struct _Canvas* PCanvas;
 
 typedef struct _Canvas {
 	Widget widget;
-	Observer observer; /* Double inheritance (virtual for the observer) */
+	Observer observer; /* Double inheritance */
 	PGraphicsScene scene;
-	/* TEST: */
+	/* TEST: zoom & offset */
 	DWORD x_offset;
 	DWORD y_offset;
 } Canvas;

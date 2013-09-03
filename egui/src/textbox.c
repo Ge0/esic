@@ -137,11 +137,11 @@ void TextBox_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	); 
 
 	/* Draw the string */
-	painter->color = RGB_16B(0,0,0);
 	Painter_drawString(
 		painter,
 		base_x + TEXTBOX(self)->widget.x + 2,
 		base_y + TEXTBOX(self)->widget.y + 2,
+		RGB_16B(0,0,0),
 		visible_text.data
 	);
 

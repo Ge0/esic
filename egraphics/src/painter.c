@@ -67,7 +67,7 @@ DWORD Painter_type(PObject self) {
 	return s_hash;
 }
 
-void Painter_drawLine(PPainter self, DWORD x1, DWORD y1, DWORD x2, DWORD y2) {
+void Painter_drawLine(PPainter self, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
 	if(self->renderer != NULL) {
 		RENDERER_VTABLE(self->renderer)->drawLine(
 			self->renderer,
@@ -75,12 +75,12 @@ void Painter_drawLine(PPainter self, DWORD x1, DWORD y1, DWORD x2, DWORD y2) {
 			y1,
 			x2,
 			y2,
-			self->color
+			color
 		);
 	}
 }
 
-void Painter_drawRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height) {
+void Painter_drawRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD color) {
 	if(self->renderer != NULL) {
 		RENDERER_VTABLE(self->renderer)->drawRectangle(
 			self->renderer,
@@ -88,12 +88,12 @@ void Painter_drawRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD h
 			y,
 			width,
 			height,
-			self->color
+			color
 		);
 	}
 }
 
-void Painter_fillRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height) {
+void Painter_fillRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD height, DWORD color) {
 	if(self->renderer != NULL) {
 		RENDERER_VTABLE(self->renderer)->fillRectangle(
 			self->renderer,
@@ -101,12 +101,12 @@ void Painter_fillRectangle(PPainter self, DWORD x, DWORD y, DWORD width, DWORD h
 			y,
 			width,
 			height,
-			self->color
+			color
 		);
 	}
 }
 
-void Painter_drawTriangle(PPainter self, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD border_color) {
+void Painter_drawTriangle(PPainter self, DWORD x0, DWORD y0, DWORD x1, DWORD y1, DWORD x2, DWORD y2, DWORD color) {
 	if(self->renderer != NULL) {
 		RENDERER_VTABLE(self->renderer)->drawTriangle(
 			self->renderer,
@@ -116,8 +116,8 @@ void Painter_drawTriangle(PPainter self, DWORD x0, DWORD y0, DWORD x1, DWORD y1,
 			y1,
 			x2,
 			y2,
-			self->color,
-			border_color
+			color,
+			color
 		);
 	}
 }
@@ -136,25 +136,30 @@ void Painter_drawBuffer(PPainter self, WORD x, DWORD y, DWORD width, DWORD heigh
 	}
 }
 
-void Painter_drawPixel(PPainter self, DWORD x ,DWORD y) {
-	if(self->renderer != NULL) {
-		RENDERER_VTABLE(self->renderer)->drawPixel(
-			self->renderer,
-			x,
-			y,
-			self->color
-		);
+void Painter_drawPixel(PPainter self, DWORD x ,DWORD y, DWORD color) {
+	// If the pixel is within the clip's bounds, draw it
+	if(x >= self->clip.x && x <= self->clip.x + self->clip.width &&
+		y >= self->clip.y && y <= self->clip.y + self->clip.height) {
+
+		if(self->renderer != NULL) {
+			RENDERER_VTABLE(self->renderer)->drawPixel(
+				self->renderer,
+				x,
+				y,
+				color
+			);
+		}
 	}
 }
 
-void Painter_drawString(PPainter self, DWORD x, DWORD y, const char* text) {
+void Painter_drawString(PPainter self, DWORD x, DWORD y, DWORD color, const char* text) {
 	if(self->renderer != NULL) {
 		RENDERER_VTABLE(self->renderer)->drawString(
 			self->renderer,
 			self->font,
 			x,
 			y,
-			self->color,
+			color,
 			text
 		);
 	}

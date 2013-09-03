@@ -173,6 +173,7 @@ void E11UI_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 		painter,
 		5,
 		2,
+		RGB_16B(0,0,0),
 		"NO_NAME"
 	);
 
@@ -181,6 +182,7 @@ void E11UI_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 		painter,
 		180,
 		4,
+		RGB_16B(0,0,0),
 		"13:37:00 2013-10-06"
 	);
 

@@ -98,23 +98,24 @@ void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	
 
 	/* Simply draw a rectangle */
-	painter->color = RGB_16B(200,200,200);
+	//painter->color = RGB_16B(200,200,200);
 	Painter_fillRectangle(
 		painter,
 		base_x + self->x,
 		base_y + self->y,
 		self->width,
-		self->height
+		self->height,
+		RGB_16B(200,200,200)
 	);
 
 	/* Border */
-	painter->color = RGB_16B(0,0,0);
 	Painter_drawRectangle(
 			painter,
 			base_x + self->x,
 			base_y + self->y,
 			self->width,
-			self->height
+			self->height,
+			RGB_16B(0,0,0)
 		);
 
 	/* Test: define a clipping region for the painter */
@@ -161,23 +162,25 @@ void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 
 void _draw_horizontal_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
 
-	painter->color = RGB_16B(240,240,230);
+	//painter->color = RGB_16B(240,240,230);
 	Painter_fillRectangle(
 		painter,
 		base_x + WIDGET(self)->x,
 		base_y + WIDGET(self)->y + WIDGET(self)->height -1,
 		WIDGET(self)->width,
-		11
+		11,
+		RGB_16B(240,240,230)
 	);
 
 	
-	painter->color = RGB_16B(0,0,0);
+	//painter->color = RGB_16B(0,0,0);
 	Painter_drawRectangle(
 		painter,
 		base_x + WIDGET(self)->x,
 		base_y + WIDGET(self)->y + WIDGET(self)->height -1,
 		WIDGET(self)->width,
-		11
+		11,
+		RGB_16B(0,0,0)
 	);
 
 	
@@ -186,22 +189,24 @@ void _draw_horizontal_scrollbar(PCanvas self, PPainter painter, WORD base_x, WOR
 }
 
 void _draw_vertical_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
-	painter->color = RGB_16B(240,240,230);
+	//painter->color = RGB_16B(240,240,230);
 	Painter_fillRectangle(
 		painter,
 		base_x + WIDGET(self)->x + WIDGET(self)->width - 1,
 		base_y + WIDGET(self)->y,
 		11,
-		WIDGET(self)->height
+		WIDGET(self)->height,
+		RGB_16B(240,240,230)
 	);
 
-	painter->color = RGB_16B(0,0,0);
+	//painter->color = RGB_16B(0,0,0);
 	Painter_drawRectangle(
 		painter,
 		base_x + WIDGET(self)->x + WIDGET(self)->width - 1,
 		base_y + WIDGET(self)->y,
 		11,
-		WIDGET(self)->height
+		WIDGET(self)->height,
+		RGB_16B(0,0,0)
 	);
 
 	/*

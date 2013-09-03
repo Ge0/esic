@@ -36,7 +36,6 @@ static void (*s_onFunction[E11_NUMBER_OF_FUNCTIONS])(PE11UI) = {
 
 PMainUI MainUI_constructor(PMainUI self) {
 	DWORD i;
-	PWidget canvas;
 	/* Calling parent constructor */
 	E11UI_constructor(&self->e11ui);
 
