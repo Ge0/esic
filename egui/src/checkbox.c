@@ -143,7 +143,7 @@ void CheckBox_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	painter->color = RGB_16B(0, 255, 0);
 	if(CHECKBOX(self)->is_checked) {
 		//ABSTRACTPAINTER_VTABLE(self->painter)->drawRectangle(
-		painter->color = RGB_16B(0,255,0);
+		//painter->color = RGB_16B(0,255,0);
 
 		Painter_fillRectangle(
 			painter,
@@ -151,7 +151,7 @@ void CheckBox_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 			base_y + self->y + 2,
 			6,
 			6,
-			RGB_16B(0,0,0)
+			RGB_16B(0,255,0)
 		);
 	}
 }
