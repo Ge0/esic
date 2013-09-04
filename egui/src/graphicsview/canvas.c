@@ -22,8 +22,13 @@ VTABLE_START(Observer) {
 	Canvas_update
 };
 
-void _draw_vertical_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y);
-void _draw_horizontal_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y);
+static void _draw_vertical_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y);
+static void _draw_horizontal_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y);
+static void _draw_top_scroll_arrow(PCanvas self, PPainter painter, WORD base_x, WORD base_y);
+static void _draw_bottom_scroll_arrow(PCanvas self, PPainter painter, WORD base_x, WORD base_y);
+static void _draw_left_scroll_arrow(PCanvas self, PPainter painter, WORD base_x, WORD base_y);
+static void _draw_right_scroll_arrow(PCanvas self, PPainter painter, WORD base_x, WORD base_y);
+
 
 PCanvas Canvas_constructor(PCanvas self) {
 	Widget_constructor(WIDGET(self));
@@ -151,6 +156,10 @@ void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 
 	/* Test: draw scrollbars */
 	
+	/* Enlarge painter clipping region */
+	painter->clip.width += 10;
+	painter->clip.height += 10;
+
 	_draw_horizontal_scrollbar(CANVAS(self), painter, base_x, base_y);
 	_draw_vertical_scrollbar(CANVAS(self), painter, base_x, base_y);
 	
@@ -160,7 +169,7 @@ void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	
 }
 
-void _draw_horizontal_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
+static void _draw_horizontal_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
 
 	//painter->color = RGB_16B(240,240,230);
 	Painter_fillRectangle(
@@ -183,12 +192,50 @@ void _draw_horizontal_scrollbar(PCanvas self, PPainter painter, WORD base_x, WOR
 		RGB_16B(0,0,0)
 	);
 
-	
-
+	_draw_left_scroll_arrow(self, painter, base_x, base_y);
+	_draw_right_scroll_arrow(self, painter, base_x, base_y);
 
 }
 
-void _draw_vertical_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
+static void _draw_left_scroll_arrow(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
+	DWORD i = 0;
+	WORD arrow_base_y = 4;
+	WORD arrow_base_x = 2;
+
+	for(i = 0; i < 4; i++) {
+		Painter_drawLine(
+			painter,
+			base_x + WIDGET(self)->x + base_x + arrow_base_x + i,
+			base_y + WIDGET(self)->y + WIDGET(self)->height + arrow_base_y + i,
+			base_x + WIDGET(self)->x + base_x + arrow_base_x + i,
+			base_y + WIDGET(self)->y + WIDGET(self)->height + arrow_base_y - i,
+			RGB_16B(0,0,0)
+		);
+
+	}
+}
+
+static void _draw_right_scroll_arrow(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
+	DWORD i = 0;
+	WORD arrow_base_y = 4;
+	WORD arrow_base_x = WIDGET(self)->width - 3;
+
+	for(i = 0; i < 4; i++) {
+		Painter_drawLine(
+			painter,
+			base_x + WIDGET(self)->x + base_x + arrow_base_x - i,
+			base_y + WIDGET(self)->y + WIDGET(self)->height + arrow_base_y + i,
+			base_x + WIDGET(self)->x + base_x + arrow_base_x - i,
+			base_y + WIDGET(self)->y + WIDGET(self)->height + arrow_base_y - i,
+			RGB_16B(0,0,0)
+		);
+
+	}
+}
+
+
+
+static void _draw_vertical_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
 	//painter->color = RGB_16B(240,240,230);
 	Painter_fillRectangle(
 		painter,
@@ -209,22 +256,46 @@ void _draw_vertical_scrollbar(PCanvas self, PPainter painter, WORD base_x, WORD 
 		RGB_16B(0,0,0)
 	);
 
-	/*
-	painter->color = RGB_16B(128,128,128);
-	Painter_drawTriangle(
-		painter,
+	_draw_top_scroll_arrow(self, painter, base_x, base_y);
+	_draw_bottom_scroll_arrow(self, painter, base_x, base_y);
+}
 
-		base_x + WIDGET(self)->x + WIDGET(self)->width + 5 - 1,
-		base_y + WIDGET(self)->y + 0,
 
-		base_x + WIDGET(self)->x + WIDGET(self)->width + 2 - 1,
-		base_y + WIDGET(self)->y + 8,
+static void _draw_top_scroll_arrow(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
+	// Draw top arrow
+	WORD arrow_base_y = 2;
+	WORD arrow_base_x = 4;
+	DWORD i = 0;
 
-		base_x + WIDGET(self)->x + WIDGET(self)->width + 8 - 1,
-		base_y + WIDGET(self)->y + 8,
-		RGB_16B(0,0,0)
-	);
-	*/
+	for(i = 0; i < 4; i++) {
+		Painter_drawLine(
+			painter,
+			base_x + WIDGET(self)->x + WIDGET(self)->width + arrow_base_x +  i,
+			base_y + WIDGET(self)->y + arrow_base_y + i,
+			base_x + WIDGET(self)->x + WIDGET(self)->width + arrow_base_x - i,
+			base_y + WIDGET(self)->y + arrow_base_y + i,
+			RGB_16B(0,0,0)
+		);
+	}
+
+}
+
+static void _draw_bottom_scroll_arrow(PCanvas self, PPainter painter, WORD base_x, WORD base_y) {
+	// Draw top arrow
+	WORD arrow_base_y = WIDGET(self)->height - 3;
+	WORD arrow_base_x = 4;
+	SDWORD i = 0;
+
+	for(i = 3; i >= 0; i--) {
+		Painter_drawLine(
+			painter,
+			base_x + WIDGET(self)->x + WIDGET(self)->width + arrow_base_x + i,
+			base_y + WIDGET(self)->y + arrow_base_y - i,
+			base_x + WIDGET(self)->x + WIDGET(self)->width + arrow_base_x - i,
+			base_y + WIDGET(self)->y + arrow_base_y - i,
+			RGB_16B(0,0,0)
+		);
+	}
 
 }
 
