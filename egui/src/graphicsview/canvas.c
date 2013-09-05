@@ -100,7 +100,7 @@ DWORD Canvas_type(PObject self) {
 void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 	PListNode current_shape = NULL;
 	ClipPainter saved_region = painter->clip;
-	
+	ClipPainter logical_region = { 0, 0, INT32_MIN,INT32_MIN };
 
 	/* Simply draw a rectangle */
 	//painter->color = RGB_16B(200,200,200);
@@ -140,9 +140,21 @@ void Canvas_paint(PWidget self, PPainter painter, WORD base_x, WORD base_y) {
 
 			PShape shape = SHAPEPTR(current_shape->data)->shape;
 
+			/* Update the clipping region of the model, for scrolling purpose */
+			if(shape->position.x > logical_region.width) {
+				logical_region.width = shape->position.x;
+			}
+
+			if(shape->position.y > logical_region.height) {
+				logical_region.height = shape->position.y;
+			}
+
 			x_offset_shape = base_x + self->x  - CANVAS(self)->x_offset;
 			y_offset_shape = base_y + self->y  - CANVAS(self)->y_offset;
 
+
+			// Physical translation so the shapes can be drawn
+			// TODO: zoom support... But may be tough for pixels
 			shape->vtable->translateTo(shape, x_offset_shape, y_offset_shape);
 
 			shape->vtable->paint(shape, painter);
@@ -330,3 +342,26 @@ void Canvas_setGraphicsScene(PCanvas self, PGraphicsScene scene) {
 	Observable_addObserver(OBSERVABLE(self->scene), OBSERVER(&self->observer));
 
 }
+
+void Canvas_scrollLeft(PCanvas self, SDWORD offset) {
+	if(self->x_offset >= 10) {
+		self->x_offset -= 10;
+	}
+}
+
+void Canvas_scrollRight(PCanvas self, SDWORD offset) {
+	self->x_offset += 10;
+}
+
+
+void Canvas_scrollUp(PCanvas self, SDWORD offset) {
+	if(self->y_offset >= 10) {
+		self->y_offset -= 10;
+	}
+}
+
+
+void Canvas_scrollDown(PCanvas self, SDWORD offset) {
+	self->y_offset += 10;
+}
+

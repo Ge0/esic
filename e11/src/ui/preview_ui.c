@@ -39,6 +39,7 @@ static void _repaint_canvas(PPreviewUI self);
 PPreviewUI PreviewUI_constructor(PPreviewUI self) {
 
 	DWORD i;
+	PPixel p;
 
 	/* Call parent constructor */
 	E11UI_constructor(E11UI(self));
@@ -90,6 +91,17 @@ PPreviewUI PreviewUI_constructor(PPreviewUI self) {
 	// Test rendering a marking line
 	_feed_canvas_markingline(E11_PREVIEWUI(self), &self->test_marking_line);
 
+	// Test: add a random pixel
+	NEW(p, Pixel);
+	p->shape.position.x = 400; // Will be out of the canva's bounds
+	p->shape.position.y = 20; // Should be enough to see it
+	p->color = RGB_16B(255, 0, 0); // It will be red
+
+	// Add the pixel to the scene
+	GraphicsScene_addShape(&self->marking_file_scene, SHAPE(p), TRUE);
+
+	// Note: next you can see the pixel by scrolling a couple of times to the right
+
 	return self;
 
 }
@@ -128,11 +140,9 @@ void PreviewUI_onF3(PE11UI self) {
 void PreviewUI_onF4(PE11UI self) {
 	
 	// Move to the top
-	if(E11_PREVIEWUI(self)->canvas->y_offset >= 10) {
-		E11_PREVIEWUI(self)->canvas->y_offset -= 10;
-		_repaint_canvas(E11_PREVIEWUI(self));
-	}
-	
+	Canvas_scrollUp(E11_PREVIEWUI(self)->canvas, 10);
+	_repaint_canvas(E11_PREVIEWUI(self));
+
 }
 
 void PreviewUI_onF5(PE11UI self) {
@@ -153,21 +163,19 @@ void PreviewUI_onF8(PE11UI self) {
 
 void PreviewUI_onF9(PE11UI self) {
 	// Move to the left
-	if(E11_PREVIEWUI(self)->canvas->x_offset >= 10) {
-		E11_PREVIEWUI(self)->canvas->x_offset -= 10;
-		_repaint_canvas(E11_PREVIEWUI(self));
-	}
+	Canvas_scrollLeft(E11_PREVIEWUI(self)->canvas, 10);
+	_repaint_canvas(E11_PREVIEWUI(self));
 }
 
 void PreviewUI_onF10(PE11UI self) {
 	// Move to the bottom
-	E11_PREVIEWUI(self)->canvas->y_offset += 10;
+	Canvas_scrollDown(E11_PREVIEWUI(self)->canvas, 10);
 	_repaint_canvas(E11_PREVIEWUI(self));
 }
 
 void PreviewUI_onF11(PE11UI self) {
 	// Move to the right
-	E11_PREVIEWUI(self)->canvas->x_offset += 10;
+	Canvas_scrollRight(E11_PREVIEWUI(self)->canvas, 10);
 	_repaint_canvas(E11_PREVIEWUI(self));
 }
 

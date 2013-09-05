@@ -34,6 +34,12 @@ DWORD Canvas_defaultProc(PWidget self, const PEvent system_event);
 /* Observer */
 void Canvas_update(PObserver self, PObject data);
 
+/* Canvas */
+void Canvas_scrollLeft(PCanvas self, SDWORD offset);
+void Canvas_scrollRight(PCanvas self, SDWORD offset);
+void Canvas_scrollUp(PCanvas self, SDWORD offset);
+void Canvas_scrollDown(PCanvas self, SDWORD offset);
+
 #define CANVAS(x) ((PCanvas)x)
 
 
